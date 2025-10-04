@@ -3,6 +3,24 @@
   "baseFolder": "docs",
   "articles": [
     {
+      "title": "AMC & AIME Problems Archive 01",
+      "description": "Collection of American Mathematics Competition and AIME problems with solutions",
+      "date": "2025-10-04",
+      "category": "Mathematics",
+      "tags": [
+        "mathematics",
+        "competition",
+        "problem-solving",
+        "amc",
+        "aime"
+      ],
+      "authors": [
+        "Neksha DeSilva"
+      ],
+      "folder": "amc-aime-problems-archive-01",
+      "url": "./docs/amc-aime-problems-archive-01/"
+    },
+    {
       "title": "The Suspected Hierarchy of Human Intentions and Brain Signals",
       "description": "Exploring how the brain organizes movement signals in a hierarchy of purpose, strength, and frequency",
       "date": "2025-09-11",
@@ -37,6 +55,6 @@
       "url": "./docs/timo-problems-archive-01/"
     }
   ],
-  "count": 2,
-  "generated": "2025-10-04T09:00:57.559Z"
+  "count": 3,
+  "generated": "2025-10-04T10:22:41.373Z"
 }
