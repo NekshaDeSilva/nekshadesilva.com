@@ -1,0 +1,23 @@
+# IMPORTANT: Manual Step Required
+
+## Rename the `articles` folder to `docs`
+
+**Please manually rename the folder:**
+
+1. In File Explorer, navigate to: `C:\Users\HP\Desktop\nekshadesilva.com\`
+2. Right-click the `articles` folder
+3. Select "Rename"
+4. Change the name to `docs`
+
+**Everything else is already configured!**
+
+The system is set up to use the `docs` folder:
+- ✅ `articles-config.json` updated with `"baseFolder": "docs"`
+- ✅ All article pages have Bootstrap Icons
+- ✅ Wider layout (1000px) for comfortable reading
+- ✅ Fixed header padding and alignment
+- ✅ Consistent toolbars across all pages
+- ✅ About and Notes pages created
+- ✅ Publications removed from navigation (articles shown on homepage)
+
+After renaming the folder, the website will work perfectly with the auto-discovery system!

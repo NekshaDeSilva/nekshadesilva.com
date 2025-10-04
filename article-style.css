@@ -1,0 +1,256 @@
+/* ============================================
+   Article Page Specific Styles
+   ============================================ */
+
+.article-container {
+    max-width: 1000px;
+    margin: 80px auto 0;
+    padding: 2rem;
+}
+
+.article-content {
+    background-color: var(--bg-secondary);
+    padding: 0;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    overflow: hidden;
+}
+
+.article-header {
+    margin: 0;
+    padding: 3rem 4rem 2rem 4rem;
+    border-bottom: 2px solid var(--border-color);
+    background-color: var(--bg-primary);
+}
+
+.article-header time {
+    display: block;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.article-header h1 {
+    font-size: 2.5rem;
+    margin: 0 0 1rem 0;
+    line-height: 1.2;
+}
+
+.article-subtitle {
+    font-size: 1.25rem;
+    color: var(--text-secondary);
+    margin: 0;
+    font-weight: 400;
+}
+
+.article-section {
+    padding: 2rem 4rem;
+    margin-bottom: 0;
+}
+
+.article-section h2 {
+    font-size: 1.75rem;
+    margin: 2rem 0 1rem 0;
+    color: var(--text-primary);
+}
+
+.article-section h3 {
+    font-size: 1.35rem;
+    margin: 1.5rem 0 0.75rem 0;
+    color: var(--text-primary);
+}
+
+.article-section p {
+    margin-bottom: 1.25rem;
+    line-height: 1.8;
+}
+
+.article-section ul,
+.article-section ol {
+    margin: 1rem 0 1.5rem 2rem;
+    line-height: 1.8;
+}
+
+.article-section li {
+    margin-bottom: 0.5rem;
+    color: var(--text-secondary);
+}
+
+/* Equations and Math */
+.equation {
+    margin: 1.5rem 0;
+    padding: 1.5rem;
+    background-color: var(--code-bg);
+    border-radius: 6px;
+    border-left: 4px solid var(--accent-highlight);
+    overflow-x: auto;
+}
+
+.equation .MathJax {
+    font-size: 1.1em;
+}
+
+/* Code Blocks */
+.code-block {
+    margin: 1.5rem 0;
+    background-color: var(--code-bg);
+    border-radius: 6px;
+    border: 1px solid var(--border-color);
+    overflow: hidden;
+}
+
+.code-block pre {
+    margin: 0;
+    padding: 1.5rem;
+    overflow-x: auto;
+}
+
+.code-block code {
+    font-family: 'Courier New', 'Consolas', monospace;
+    font-size: 0.9rem;
+    line-height: 1.6;
+    background: none;
+    padding: 0;
+    color: var(--text-primary);
+}
+
+/* Images and Diagrams */
+.article-image {
+    max-width: 100%;
+    height: auto;
+    margin: 2rem 0;
+    border-radius: 6px;
+    border: 1px solid var(--border-color);
+    display: block;
+}
+
+/* Back Button in Toolbar */
+.back-btn {
+    padding: 0.5rem 1rem;
+    background: transparent;
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    border-radius: 4px;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+    font-size: 0.95rem;
+}
+
+.back-btn:hover {
+    background-color: var(--bg-secondary);
+    border-color: var(--accent-highlight);
+}
+
+/* Author Badge */
+.author-badge {
+    margin-left: 1rem;
+    padding: 0.5rem 1rem;
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+    font-weight: 600;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    border: 1px solid var(--border-color);
+}
+
+/* Article Footer */
+.article-footer {
+    margin-top: 0;
+    padding: 2rem 4rem 3rem 4rem;
+    border-top: 1px solid var(--border-color);
+    text-align: center;
+}
+
+.article-footer a {
+    color: var(--link-color);
+    font-weight: 500;
+}
+
+/* Responsive Design for Articles */
+@media (max-width: 768px) {
+    .article-container {
+        padding: 1rem;
+        margin-top: 60px;
+    }
+
+    .article-content {
+        padding: 0;
+    }
+
+    .article-header {
+        padding: 2rem 1.5rem 1.5rem 1.5rem;
+    }
+
+    .article-header h1 {
+        font-size: 1.75rem;
+    }
+
+    .article-subtitle {
+        font-size: 1rem;
+    }
+
+    .article-section {
+        padding: 1.5rem;
+    }
+
+    .article-footer {
+        padding: 1.5rem;
+    }
+
+    .code-block pre {
+        padding: 1rem;
+        font-size: 0.85rem;
+    }
+}
+
+/* Tables */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1.5rem 0;
+}
+
+table th,
+table td {
+    padding: 0.75rem;
+    border: 1px solid var(--border-color);
+    text-align: left;
+}
+
+table th {
+    background-color: var(--code-bg);
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+table td {
+    color: var(--text-secondary);
+}
+
+/* Blockquotes */
+blockquote {
+    margin: 1.5rem 0;
+    padding: 1rem 1.5rem;
+    border-left: 4px solid var(--accent-highlight);
+    background-color: var(--code-bg);
+    font-style: italic;
+    color: var(--text-secondary);
+}
+
+/* Inline Code */
+p code,
+li code {
+    background-color: var(--code-bg);
+    padding: 0.2rem 0.4rem;
+    border-radius: 3px;
+    font-size: 0.9em;
+    color: var(--accent-highlight);
+}
