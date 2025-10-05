@@ -8,6 +8,19 @@ const themeIconTop = document.querySelector('.theme-icon-top');
 const themeLabel = document.querySelector('.theme-label');
 const html = document.documentElement;
 
+// Load small static utilities (favicon injector) without editing every HTML file
+(function loadStaticUtilities() {
+    try {
+        const script = document.createElement('script');
+        script.src = '/assets/static/favicon-inject.js';
+        script.async = true;
+        script.defer = false; // run as soon as downloaded; injector handles DOMContentLoaded
+        document.head.appendChild(script);
+    } catch (e) {
+        console.error('Failed to load static utilities:', e);
+    }
+})();
+
 const searchToggle = document.getElementById('searchToggle');
 const searchDropdown = document.getElementById('searchDropdown');
 const searchInput = document.getElementById('searchInput');
