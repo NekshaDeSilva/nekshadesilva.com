@@ -161,6 +161,229 @@
     border: 1px solid var(--border-color);
 }
 
+/* ============================================
+   Table of Contents Sidebar
+   ============================================ */
+
+.toc-container {
+    position: fixed;
+    z-index: 900;
+}
+
+/* Toggle Button (Mobile) */
+.toc-toggle {
+    position: fixed;
+    left: 1rem;
+    bottom: 1rem;
+    padding: 0.75rem 1rem;
+    background-color: var(--bg-secondary);
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    transition: all 0.2s ease;
+    z-index: 901;
+}
+
+.toc-toggle:hover {
+    background-color: var(--code-bg);
+    border-color: var(--accent-highlight);
+}
+
+.toc-toggle i {
+    color: var(--text-primary);
+}
+
+[data-theme="light"] .toc-toggle {
+    background-color: var(--bg-secondary);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="light"] .toc-toggle i {
+    color: var(--text-primary);
+}
+
+/* Sidebar */
+.toc-sidebar {
+    position: fixed;
+    left: -320px;
+    top: 0;
+    width: 300px;
+    height: 100vh;
+    background-color: var(--bg-primary);
+    border-right: 1px solid var(--border-color);
+    overflow-y: auto;
+    transition: left 0.3s ease;
+    z-index: 1000;
+}
+
+.toc-sidebar.open {
+    left: 0;
+}
+
+/* TOC Header */
+.toc-header {
+    padding: 1rem 1.5rem;
+    background-color: var(--header-bg);
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.toc-header h3 {
+    font-size: 1rem;
+    margin: 0;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.toc-close {
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    font-size: 1.2rem;
+    cursor: pointer;
+    padding: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.2s ease;
+}
+
+.toc-close:hover {
+    color: var(--accent-highlight);
+}
+
+/* TOC Content */
+.toc-content {
+    padding: 1.5rem;
+}
+
+.toc-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.toc-item,
+.toc-item-sub {
+    margin-bottom: 0.5rem;
+}
+
+.toc-item-sub {
+    margin-left: 1rem;
+}
+
+.toc-link {
+    display: block;
+    color: var(--text-secondary);
+    text-decoration: none;
+    padding: 0.5rem 0.75rem;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    line-height: 1.4;
+    transition: all 0.2s ease;
+    border-left: 3px solid transparent;
+}
+
+.toc-link:hover {
+    background-color: var(--bg-secondary);
+    color: var(--text-primary);
+    border-left-color: var(--accent-highlight);
+}
+
+.toc-link.active {
+    background-color: var(--code-bg);
+    color: var(--accent-highlight);
+    border-left-color: var(--accent-highlight);
+    font-weight: 600;
+}
+
+/* Overlay for mobile */
+.toc-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    z-index: 999;
+}
+
+.toc-overlay.visible {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Desktop: Always show TOC */
+@media (min-width: 1024px) {
+    .toc-toggle {
+        display: none;
+    }
+
+    .toc-sidebar {
+        left: 0;
+        top: 60px;
+        height: calc(100vh - 60px);
+    }
+
+    .toc-sidebar.open {
+        left: 0;
+    }
+
+    .toc-overlay {
+        display: none;
+    }
+
+    .toc-close {
+        display: none;
+    }
+
+    .toc-header {
+        position: sticky;
+        top: 0;
+        left: 0;
+    }
+
+    /* Adjust article container to make room for TOC */
+    .article-container {
+        margin-left: 320px;
+    }
+}
+
+/* Mobile: Author badge responsive */
+@media (max-width: 768px) {
+    .author-badge {
+        font-size: 0.75rem;
+        padding: 0.4rem 0.7rem;
+        margin-left: 0.5rem;
+    }
+    
+    .back-btn {
+        font-size: 0.85rem;
+        padding: 0.4rem 0.7rem;
+    }
+}
+
+/* Very small screens: Hide author badge */
+@media (max-width: 480px) {
+    .author-badge {
+        display: none;
+    }
+}
+
 /* Article Footer */
 .article-footer {
     margin-top: 0;
