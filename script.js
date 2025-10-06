@@ -49,7 +49,7 @@ function initTheme() {
         // Dark theme for /docs/ pages (reading mode)
         // Light theme for home/main pages
         const isDocsPage = window.location.pathname.includes('/docs/');
-        defaultTheme = isDocsPage ? 'dark' : 'light';
+        defaultTheme = isDocsPage ? 'light' : 'light';
     }
     
     html.setAttribute('data-theme', defaultTheme);
