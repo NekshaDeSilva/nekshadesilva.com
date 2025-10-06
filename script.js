@@ -35,11 +35,25 @@ const fullscreenToggle = document.getElementById('fullscreenToggle');
 // Theme Management
 // ============================================
 
-// Initialize theme from localStorage or default to dark
+// Initialize theme from localStorage or default based on page location
 function initTheme() {
-    const savedTheme = localStorage.getItem('theme') || 'dark';
-    html.setAttribute('data-theme', savedTheme);
-    updateThemeButton(savedTheme);
+    // Check if user has saved preference
+    const savedTheme = localStorage.getItem('theme');
+    
+    let defaultTheme;
+    if (savedTheme) {
+        // User has a saved preference, use it
+        defaultTheme = savedTheme;
+    } else {
+        // No saved preference - set default based on location
+        // Dark theme for /docs/ pages (reading mode)
+        // Light theme for home/main pages
+        const isDocsPage = window.location.pathname.includes('/docs/');
+        defaultTheme = isDocsPage ? 'dark' : 'light';
+    }
+    
+    html.setAttribute('data-theme', defaultTheme);
+    updateThemeButton(defaultTheme);
 }
 
 // Update theme button appearance
