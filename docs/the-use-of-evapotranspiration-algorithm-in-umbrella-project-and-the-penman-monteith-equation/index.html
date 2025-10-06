@@ -87,11 +87,11 @@ A proof-of-concept system that validated the core hypothesis - environmental par
                 <h2>Environmental Intelligence: Beyond Traditional Irrigation</h2>
                 
                 <h3>Evapotranspiration Introduction.</h3>
-                <p>Evapotranspiration is the process through which water is lost to the atmosphere in two main ways:</p>
-                <ul>
-                    <li><strong>Evaporation:</strong> Water loss directly from soil and plant surfaces, driven by heat and vapor pressure differences.</li>
-                    <li><strong>Transpiration:</strong> This is the movement of water through plants, starting from the roots and traveling through the vascular system to the leaves, where it is released into the atmosphere through tiny openings called stomata.</li>
-                </ul>
+                <p>Evapotranspiration is the process through which water is lost to the atmosphere in two main ways.</p>
+                
+                <p><strong>Evaporation:</strong> Water loss directly from soil and plant surfaces, driven by heat and vapor pressure differences.</p>
+                
+                <p><strong>Transpiration:</strong> This is the movement of water through plants, starting from the roots and traveling through the vascular system to the leaves, where it is released into the atmosphere through tiny openings called stomata.</p>
 
                 <p>This process is governed by environmental factors: temperature, humidity, solar radiation (electromagnetic energy from the sun), wind speed, and atmospheric pressure. The significance of the Penman-Monteith equation is that it quantifies this relationship mathematically (providing a computational framework for converting environmental variables into quantified water loss predictions).</p>
 
@@ -290,11 +290,7 @@ A proof-of-concept system that validated the core hypothesis - environmental par
                 <p>Implementing Penman-Monteith in an autonomous system introduces severe constraints:</p>
 
                 <h3>The Triple Constraint</h3>
-                <ol>
-                    <li><strong>Cost:</strong> Agricultural economics demand sub-$50 system costs</li>
-                    <li><strong>Power:</strong> Solar-powered operation with minimal battery capacity</li>
-                    <li><strong>Longevity:</strong> Multi-year operation in harsh environmental conditions</li>
-                </ol>
+                <p>Three things made this incredibly hard. First, <strong>cost</strong> - agricultural economics demand sub-$50 system costs. Second, <strong>power</strong> - we needed solar-powered operation with minimal battery capacity. Third, <strong>longevity</strong> - the system had to survive multi-year operation in harsh environmental conditions.</p>
 
                 <p>These constraints eliminate traditional solutions. Weather stations cost thousands of dollars. Pyranometers (instruments for measuring solar radiation flux density) alone cost $200-500. The Umbrella Project required a complete reimagining of sensor architecture.</p>
             </section>
@@ -357,12 +353,7 @@ A proof-of-concept system that validated the core hypothesis - environmental par
                 <h2>Core Sensors: The Foundation</h2>
                 
                 <h3>DHT22/BME280: The Environmental Workhorses</h3>
-                <p>These low-cost integrated sensors ($5-15) provide:</p>
-                <ul>
-                    <li>Temperature: ±0.5°C accuracy</li>
-                    <li>Humidity: ±2-3% RH accuracy</li>
-                    <li>Pressure (BME280): ±1 hPa accuracy</li>
-                </ul>
+                <p>These low-cost integrated sensors ($5-15) provide temperature with ±0.5°C accuracy, humidity with ±2-3% RH accuracy, and pressure (BME280) with ±1 hPa accuracy.</p>
 
                 <p>From humidity and temperature, the system calculates:</p>
                 
@@ -384,12 +375,7 @@ A proof-of-concept system that validated the core hypothesis - environmental par
                 <p>The GI variant used DHT22 sensors - simple, reliable, but with known reliability issues in extreme humidity. The Sci+ variant upgraded to BME280 sensors, adding pressure sensing and improved long-term stability.</p>
 
                 <h3>Fault Tolerance Through Redundancy</h3>
-                <p>The Sci+ variant implements sensor validation:</p>
-                <ul>
-                    <li>Multiple sensor comparison (outlier rejection)</li>
-                    <li>Historical data validation (sanity checking)</li>
-                    <li>Graceful degradation (fallback to conservative estimates)</li>
-                </ul>
+                <p>The Sci+ variant implements sensor validation through multiple sensor comparison (outlier rejection), historical data validation (sanity checking), and graceful degradation (fallback to conservative estimates).</p>
             </section>
 
             <!-- Virtual Radiation Sensor -->
@@ -400,13 +386,9 @@ A proof-of-concept system that validated the core hypothesis - environmental par
                 <p>Solar radiation (Rₙ) is the most critical parameter in the Penman-Monteith equation, yet pyranometers are prohibitively expensive for low-cost systems.</p>
 
                 <h3>The Solution: Sensor Fusion</h3>
-                <p>The breakthrough insight: the system's <strong>own solar panel</strong> is a radiation sensor. Combined with a thermoelectric generator (TEG), we create a virtual radiation sensor:</p>
+                <p>The breakthrough insight: the system's <strong>own solar panel</strong> is a radiation sensor. Combined with a thermoelectric generator (TEG), we create a virtual radiation sensor.</p>
 
-                <ol>
-                    <li><strong>Solar Panel Output:</strong> Photovoltaic current is proportional to solar irradiance</li>
-                    <li><strong>TEG Temperature Differential:</strong> The temperature difference across a TEG attached to the panel correlates with radiation intensity</li>
-                    <li><strong>Sensor Fusion Algorithm:</strong> Combining both signals with calibration data produces radiation estimates</li>
-                </ol>
+                <p>Here's how it works. First, the <strong>solar panel output</strong> - photovoltaic current is proportional to solar irradiance. Second, the <strong>TEG temperature differential</strong> - the temperature difference across a TEG attached to the panel correlates with radiation intensity. Third, the <strong>sensor fusion algorithm</strong> - combining both signals with calibration data produces radiation estimates.</p>
 
                 <p>The TEG voltage relationship:</p>
                 
@@ -421,12 +403,7 @@ A proof-of-concept system that validated the core hypothesis - environmental par
                 <p>Through calibration against reference pyranometers, the system achieves ±15% accuracy in radiation estimation - sufficient for irrigation scheduling.</p>
 
                 <h3>The Elegance of Dual Purpose</h3>
-                <p>The solar panel serves three functions:</p>
-                <ul>
-                    <li>Primary: System power generation</li>
-                    <li>Secondary: Solar radiation measurement</li>
-                    <li>Tertiary: Temperature reference surface for TEG</li>
-                </ul>
+                <p>The solar panel serves three functions - primary: system power generation, secondary: solar radiation measurement, and tertiary: temperature reference surface for TEG.</p>
 
                 <p>This triple-duty approach embodies the Umbrella Project's philosophy: <em>every component must justify its cost through multiple functions.</em></p>
             </section>
