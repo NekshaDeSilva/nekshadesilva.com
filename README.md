@@ -18,7 +18,59 @@ A professional academic portfolio website with auto-discovery for articles and p
 
 - **Home** (`index.html`): Main page with auto-loaded article list
 - **About** (`about.html`): Personal information and research interests
+- **Posts** (`posts/index.html`): Blog-style posts platform for thoughts and updates
 - **Notes** (`notes.html`): Study notes, resources, and useful links
+
+## Posts System
+
+### Overview
+
+The **Posts** section is a minimal, one-way communication platform inspired by Clarity Blog UI design. It features:
+- Clean, centered header without the top toolbar
+- Card-based grid layout for posts
+- No interactions (no comments, likes, or user engagement)
+- SEO-friendly structure with proper meta tags
+- Google-searchable content
+- Scientific, productive styling
+
+### How to Add a New Post
+
+1. **Create a folder** in the `posts/` directory:
+   ```
+   posts/your-post-slug/
+   ```
+
+2. **Add `metadata.json`**:
+   ```json
+   {
+     "title": "Your Post Title",
+     "description": "Full description for SEO",
+     "excerpt": "Short excerpt for the card",
+     "date": "2025-10-06",
+     "category": "Technology",
+     "tags": ["tag1", "tag2"],
+     "author": "Neksha DeSilva",
+     "readTime": "5 min read"
+   }
+   ```
+
+3. **Add `index.html`** with your post content (see templates in `posts/welcome-to-my-thoughts/`)
+
+4. **Run the build script**:
+   ```bash
+   node build-posts-list.js
+   ```
+
+   This generates `posts/posts-list.json` with all posts auto-discovered.
+
+5. **Deploy** — The posts page will automatically load from `posts-list.json`
+
+### Posts vs Articles
+
+- **Posts** (`/posts/`) — Informal thoughts, updates, reflections (blog-style)
+- **Articles** (`/docs/`) — Formal academic work, research, detailed documentation
+
+Both use the same auto-discovery pattern but different visual styles.
 
 ## How to Add a New Article
 
