@@ -21,6 +21,27 @@
       "url": "./docs/amc-aime-problems-archive-01/"
     },
     {
+      "title": "Eighty Random Problems and Solutions in Algebra (TIER 1)",
+      "description": "by Neksha DeSilva",
+      "date": "2025-09-29",
+      "category": "Mathematics",
+      "tags": [
+        "mathematics",
+        "algebra",
+        "problem-solving",
+        "amc",
+        "aime",
+        "problems",
+        "questions",
+        "book"
+      ],
+      "authors": [
+        "Neksha DeSilva"
+      ],
+      "folder": "eighty-problems-and-solutions-in-algebra-by-neksha-desilva-tier1",
+      "url": "./docs/eighty-problems-and-solutions-in-algebra-by-neksha-desilva-tier1/"
+    },
+    {
       "title": "The Suspected Hierarchy of Human Intentions and Brain Signals",
       "description": "Exploring how the brain organizes movement signals in a hierarchy of purpose, strength, and frequency",
       "date": "2025-09-11",
@@ -74,6 +95,6 @@
       "url": "./docs/timo-problems-archive-01/"
     }
   ],
-  "count": 4,
-  "generated": "2025-10-06T08:37:11.074Z"
+  "count": 5,
+  "generated": "2025-10-06T17:12:27.514Z"
 }
