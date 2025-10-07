@@ -152,12 +152,16 @@ function renderPosts(posts) {
         return;
     }
     
+    // Preserve timeline posts (static HTML content)
+    const timelinePosts = postsGrid.querySelectorAll('.timeline-post');
+    const timelineHTML = Array.from(timelinePosts).map(el => el.outerHTML).join('');
+    
     if (posts.length === 0) {
         showEmptyState();
         return;
     }
     
-    postsGrid.innerHTML = posts.map(post => {
+    const postsHTML = posts.map(post => {
         const dateObj = new Date(post.date);
         const formattedDate = dateObj.toLocaleDateString('en-US', { 
             day: 'numeric', 
@@ -199,6 +203,9 @@ function renderPosts(posts) {
         `;
     }).join('');
     
+    // Combine timeline posts with dynamic posts
+    postsGrid.innerHTML = timelineHTML + postsHTML;
+    
     if (postsEmpty) {
         postsEmpty.classList.add('hidden');
     }
@@ -213,7 +220,10 @@ function showEmptyState() {
     const postsEmpty = document.getElementById('postsEmpty');
     
     if (postsGrid) {
-        postsGrid.innerHTML = '';
+        // Preserve timeline posts even in empty state
+        const timelinePosts = postsGrid.querySelectorAll('.timeline-post');
+        const timelineHTML = Array.from(timelinePosts).map(el => el.outerHTML).join('');
+        postsGrid.innerHTML = timelineHTML;
     }
     
     if (postsEmpty) {
