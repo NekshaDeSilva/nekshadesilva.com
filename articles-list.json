@@ -21,8 +21,8 @@
       "url": "./docs/amc-aime-problems-archive-01/"
     },
     {
-      "title": "Algebra And the Mind; Eighty Problems and the Neuroscience of Learning",
-      "description": "Research by Neksha DeSilva",
+      "title": "Special problem solving attempts and rabbit holes",
+      "description": "docs.nekshadesilva.com",
       "date": "2025-09-29",
       "category": "Mathematics",
       "tags": [
@@ -32,14 +32,13 @@
         "amc",
         "aime",
         "problems",
-        "questions",
-        "book"
+        "questions"
       ],
       "authors": [
         "Neksha DeSilva"
       ],
-      "folder": "algebra-and-the-mind",
-      "url": "./docs/algebra-and-the-mind/"
+      "folder": "special-problem-solving-attempts-002",
+      "url": "./docs/special-problem-solving-attempts-002/"
     },
     {
       "title": "The Suspected Hierarchy of Human Intentions and Brain Signals",
@@ -96,5 +95,5 @@
     }
   ],
   "count": 5,
-  "generated": "2025-10-07T04:50:52.619Z"
+  "generated": "2025-10-07T11:25:06.631Z"
 }
