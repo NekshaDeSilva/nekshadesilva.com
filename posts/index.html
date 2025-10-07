@@ -149,50 +149,11 @@
             font-size: 0.875rem;
             color: var(--text-secondary);
         }
-        
-        /* Hide content until authenticated */
-        body:not(.authenticated) .posts-header,
-        body:not(.authenticated) .posts-filter-bar,
-        body:not(.authenticated) .posts-container,
-        body:not(.authenticated) .posts-footer {
-            display: none;
-        }
+
     </style>
 </head>
 <body>
-    <!-- Password Protection Overlay -->
-    <div id="passwordOverlay">
-        <div class="password-container">
-            <div class="password-icon">
-                <i class="bi bi-shield-lock-fill"></i>
-            </div>
-            <h1 class="password-title">Protected Content</h1>
-            <p class="password-subtitle">Please enter the password to access posts</p>
-            
-            <form id="passwordForm" onsubmit="return false;">
-                <div class="password-input-group">
-                    <input 
-                        type="password" 
-                        id="passwordInput" 
-                        class="password-input" 
-                        placeholder="Enter password"
-                        autocomplete="off"
-                        autofocus
-                    >
-                </div>
-                <button type="submit" class="password-btn" id="unlockBtn">
-                    <i class="bi bi-unlock-fill"></i> Unlock
-                </button>
-                <div class="password-error" id="passwordError">
-                    Incorrect password. Please try again.
-                </div>
-            </form>
-            
-            <div class="password-hint">
-                <i class="bi bi-info-circle"></i> This section contains protected intellectual property
-            </div>
-        </div>
-    </div>
+
     
     <!-- GitHub-Style Header -->
     <header class="posts-header">
@@ -245,7 +206,7 @@
         <div class="posts-empty" id="postsEmpty">
             <i class="bi bi-feather"></i>
             <h2>Posts Coming Soon</h2>
-            <p>I'm preparing thoughtful content on mathematics, research, and problem-solving. Check back soon for updates!</p>
+        
         </div>
     </main>
 
@@ -269,111 +230,7 @@
         })();
     </script>
     
-    <!-- Password Protection Script -->
-    <script>
-        // Password Protection System
-        (function() {
-            // TODO: Change this to your desired password
-            const CORRECT_PASSWORD = 'mypassword123';
-            
-            // Generate SHA-256 hash of the correct password
-            async function hashPassword(password) {
-                const encoder = new TextEncoder();
-                const data = encoder.encode(password);
-                const hashBuffer = await crypto.subtle.digest('SHA-256', data);
-                const hashArray = Array.from(new Uint8Array(hashBuffer));
-                return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
-            }
-            
-            // Store the hashed password (this will be computed once)
-            let passwordHash = null;
-            hashPassword(CORRECT_PASSWORD).then(hash => {
-                passwordHash = hash;
-            });
-            
-            // Check if already authenticated in this session
-            const isAuthenticated = sessionStorage.getItem('posts_authenticated') === 'true';
-            
-            if (isAuthenticated) {
-                unlockContent();
-            }
-            
-            // Handle password form submission
-            const form = document.getElementById('passwordForm');
-            const input = document.getElementById('passwordInput');
-            const errorMsg = document.getElementById('passwordError');
-            const unlockBtn = document.getElementById('unlockBtn');
-            
-            form.addEventListener('submit', async function(e) {
-                e.preventDefault();
-                await checkPassword();
-            });
-            
-            unlockBtn.addEventListener('click', async function(e) {
-                e.preventDefault();
-                await checkPassword();
-            });
-            
-            input.addEventListener('keypress', function(e) {
-                if (e.key === 'Enter') {
-                    e.preventDefault();
-                    checkPassword();
-                }
-            });
-            
-            // Remove error styling when user types
-            input.addEventListener('input', function() {
-                input.classList.remove('error');
-                errorMsg.classList.remove('show');
-            });
-            
-            async function checkPassword() {
-                const enteredPassword = input.value.trim();
-                
-                if (!enteredPassword) {
-                    showError();
-                    return;
-                }
-                
-                // Hash the entered password and compare
-                const enteredHash = await hashPassword(enteredPassword);
-                
-                if (enteredHash === passwordHash) {
-                    // Correct password
-                    sessionStorage.setItem('posts_authenticated', 'true');
-                    unlockContent();
-                } else {
-                    // Wrong password
-                    showError();
-                }
-            }
-            
-            function showError() {
-                input.classList.add('error');
-                errorMsg.classList.add('show');
-                input.value = '';
-                input.focus();
-                
-                // Shake animation
-                setTimeout(() => {
-                    input.classList.remove('error');
-                }, 400);
-            }
-            
-            function unlockContent() {
-                const overlay = document.getElementById('passwordOverlay');
-                document.body.classList.add('authenticated');
-                
-                // Fade out overlay
-                overlay.classList.add('hidden');
-                
-                // Remove overlay from DOM after animation
-                setTimeout(() => {
-                    overlay.remove();
-                }, 300);
-            }
-        })();
-    </script>
+
     
     <script src="posts-script.js"></script>
 </body>
