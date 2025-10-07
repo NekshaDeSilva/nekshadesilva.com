@@ -3,24 +3,6 @@
   "baseFolder": "docs",
   "articles": [
     {
-      "title": "AMC & AIME Problems Archive 01",
-      "description": "Collection of American Mathematics Competition and AIME problems with solutions",
-      "date": "2025-10-04",
-      "category": "Mathematics",
-      "tags": [
-        "mathematics",
-        "competition",
-        "problem-solving",
-        "amc",
-        "aime"
-      ],
-      "authors": [
-        "Neksha DeSilva"
-      ],
-      "folder": "amc-aime-problems-archive-01",
-      "url": "./docs/amc-aime-problems-archive-01/"
-    },
-    {
       "title": "Special problem solving attempts and rabbit holes",
       "description": "docs.nekshadesilva.com",
       "date": "2025-09-29",
@@ -92,8 +74,26 @@
       "author": "Neksha DeSilva",
       "folder": "timo-problems-archive-01",
       "url": "./docs/timo-problems-archive-01/"
+    },
+    {
+      "title": "AMC & AIME Problems Archive 01",
+      "description": "Collection of American Mathematics Competition and AIME problems with solutions",
+      "date": "2025-03-28",
+      "category": "Mathematics",
+      "tags": [
+        "mathematics",
+        "competition",
+        "problem-solving",
+        "amc",
+        "aime"
+      ],
+      "authors": [
+        "Neksha DeSilva"
+      ],
+      "folder": "amc-aime-problems-archive-01",
+      "url": "./docs/amc-aime-problems-archive-01/"
     }
   ],
   "count": 5,
-  "generated": "2025-10-07T11:25:06.631Z"
+  "generated": "2025-10-07T11:36:42.290Z"
 }
