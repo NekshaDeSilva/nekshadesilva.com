@@ -43,94 +43,217 @@
                 <a href="index.html">HOME</a>
                 <a href="about.html">ABOUT</a>
                 <a href="posts/index.html">POSTS</a>
-                <a href="notes.html">NOTES</a>
+
             </nav>
         </div>
     </header>
 
-    <div class="page-container">
-        <main class="page-content">
-            <article class="content-article">
-                <header class="page-header">
-                    <h1>Notes & Resources</h1>
-                    <p class="page-subtitle">Collection of study notes, references, and useful resources</p>
-                </header>
+    <main style="max-width: 1100px; margin: 0 auto; padding: 1rem; font-family: 'Times New Roman', Times, serif; line-height: 1.4; font-size: 10pt;">
+        
+        <article style="background: var(--card-bg); padding: 1.5rem; column-count: 2; column-gap: 2rem; text-align: justify;">
+            <img src="https://miro.medium.com/v2/1*63sGPbvLLpvlD16hG1bvmA.gif" style="width: 30%">
+            <!-- Title Section -->
+            <div style="column-span: all; text-align: center; margin-bottom: 1rem; padding-bottom: 1rem; border-bottom: 1px solid var(--border-color);">
+                <h1 style="font-size: 14pt; font-weight: bold; margin: 0 0 0.5rem 0; color: var(--text-primary);">
+                    Advanced Signal Processing Framework for EEG Decoding
+                </h1>
+                <p style="font-size: 11pt; color: var(--text-muted); font-style: italic; margin: 0.3rem 0;">
+                    A Novel Approach to Cross-Task Transfer Learning and Psychopathology Prediction
+                </p>
+                <p style="font-size: 9pt; color: var(--text-muted); margin: 0.5rem 0 0 0;">
+                    <strong>Research by:</strong> <a href="https://arxiv.org/search/eess?searchtype=author&query=Aristimunha,+B" target="_blank" rel="noopener" style="color: var(--text-primary); text-decoration: underline;">Bruno Aristimunha</a> et al. | Computational Neuroscience
+                </p>
+                <p style="font-size: 8pt; color: var(--text-muted); font-style: italic; margin: 0.3rem 0 0 0;">
+                    Summary compiled by Neksha DeSilva for educational purpose of <b style="font-size: large;">Introductory Presentation Video - EEG2025 by NeurlIPS, </b> which was conducted by me, online in October, 2025.
+                </p>
+            </div>
 
-                <section class="notes-section">
-                    <h2>[Category Title 1]</h2>
-                    <div class="notes-list">
-                        <div class="note-item">
-                            <h3><i class="bi bi-journal-code"></i> [Note Topic 1]</h3>
-                            <p>[Brief description of this note topic]</p>
-                        </div>
-                        <div class="note-item">
-                            <h3><i class="bi bi-graph-up"></i> [Note Topic 2]</h3>
-                            <p>[Brief description of this note topic]</p>
-                        </div>
-                        <div class="note-item">
-                            <h3><i class="bi bi-diagram-3"></i> [Note Topic 3]</h3>
-                            <p>[Brief description of this note topic]</p>
-                        </div>
-                    </div>
-                </section>
+            <!-- Abstract -->
+            <section style="margin-bottom: 1rem;">
+                <h2 style="font-size: 11pt; font-weight: bold; margin: 0 0 0.5rem 0; color: var(--text-primary);">
+                    Abstract
+                </h2>
+                <p style="font-size: 10pt; margin: 0 0 0.5rem 0;">
+                    This research presents a comprehensive framework for electroencephalography (EEG) signal processing, addressing two critical challenges in computational neuroscience: (1) cross-task transfer learning for cognitive function decoding, and (2) objective psychopathology assessment through P-factor prediction. The framework leverages state-of-the-art deep learning architectures, specifically designed for temporal neural signals, to establish robust representations that generalize across subjects, sessions, and acquisition sites. The methodology integrates advanced preprocessing pipelines with novel architectural paradigms including EEGNeX and EEGNetv4, demonstrating superior performance in both within-distribution and out-of-distribution scenarios.
+                </p>
+            </section>
 
-                <section class="notes-section">
-                    <h2>[Category Title 2]</h2>
-                    <div class="notes-list">
-                        <div class="note-item">
-                            <h3><i class="bi bi-calculator"></i> [Note Topic 1]</h3>
-                            <p>[Brief description of this note topic]</p>
-                        </div>
-                        <div class="note-item">
-                            <h3><i class="bi bi-infinity"></i> [Note Topic 2]</h3>
-                            <p>[Brief description of this note topic]</p>
-                        </div>
-                        <div class="note-item">
-                            <h3><i class="bi bi-pie-chart"></i> [Note Topic 3]</h3>
-                            <p>[Brief description of this note topic]</p>
-                        </div>
-                    </div>
-                </section>
+            <!-- Research Objectives -->
+            <section style="margin-bottom: 1rem;">
+                <h2 style="font-size: 11pt; font-weight: bold; margin: 0 0 0.5rem 0; color: var(--text-primary);">
+                    1. Research Objectives
+                </h2>
+                
+                <h3 style="font-size: 10pt; font-weight: bold; font-style: italic; margin: 0.5rem 0 0.3rem 0; color: var(--text-primary);">
+                    1.1 Challenge 1: Cross-Task Transfer Learning
+                </h3>
+                <p style="font-size: 10pt; margin: 0 0 0.5rem 0;">
+                    <strong>Primary Goal:</strong> Develop models that effectively transfer knowledge from passive EEG tasks to active cognitive tasks, specifically focusing on Steady-State Visual Evoked Potentials (SSVEP) and Event-Related Potentials (ERP) during Contrast Change Detection (CCD) paradigms. Implementation of deep transfer learning architectures with domain adaptation techniques to predict response time during visually-evoked cognitive tasks, addressing inter-subject variability and task-specific nuances.
+                </p>
+                
+                <h3 style="font-size: 10pt; font-weight: bold; font-style: italic; margin: 0.5rem 0 0.3rem 0; color: var(--text-primary);">
+                    1.2 Challenge 2: P-Factor Regression
+                </h3>
+                <p style="font-size: 10pt; margin: 0 0 0.5rem 0;">
+                    <strong>Primary Goal:</strong> Predict the psychopathology factor (P-factor) from EEG recordings to enable objective, quantitative mental health assessments. Regression-based deep learning approach emphasizing robust, interpretable features that demonstrate strong out-of-distribution generalization and cross-site transferability.
+                </p>
+            </section>
 
-                <section class="notes-section">
-                    <h2>[Category Title 3]</h2>
-                    <div class="notes-list">
-                        <div class="note-item">
-                            <h3><i class="bi bi-code-slash"></i> [Note Topic 1]</h3>
-                            <p>[Brief description of this note topic]</p>
-                        </div>
-                        <div class="note-item">
-                            <h3><i class="bi bi-database"></i> [Note Topic 2]</h3>
-                            <p>[Brief description of this note topic]</p>
-                        </div>
-                        <div class="note-item">
-                            <h3><i class="bi bi-bar-chart"></i> [Note Topic 3]</h3>
-                            <p>[Brief description of this note topic]</p>
-                        </div>
-                    </div>
-                </section>
+            <!-- Technical Framework -->
+            <section style="margin-bottom: 1rem;">
+                <h2 style="font-size: 11pt; font-weight: bold; margin: 0 0 0.5rem 0; color: var(--text-primary);">
+                    2. Technical Framework Architecture
+                </h2>
+                
+                <h3 style="font-size: 10pt; font-weight: bold; font-style: italic; margin: 0.5rem 0 0.3rem 0; color: var(--text-primary);">
+                    2.1 Core Components
+                </h3>
+                
+                <p style="font-size: 10pt; margin: 0 0 0.3rem 0;">
+                    <strong>(i) Data Management Layer:</strong> <code style="font-size: 9pt;">EEGChallengeDataset</code> unified interface for multi-modal EEG data handling; <code style="font-size: 9pt;">BaseConcatDataset</code> efficient concatenation of heterogeneous recording sessions; MNE-BIDS integration for standardized neurophysiological data representation.
+                </p>
 
-                <section class="notes-section">
-                    <h2>External Resources</h2>
-                    <div class="resource-links">
-                        <h3>[Resource Category 1]</h3>
-                        <ul>
-                            <li><a href="[URL]" target="_blank" rel="noopener">[Resource Title 1]</a></li>
-                            <li><a href="[URL]" target="_blank" rel="noopener">[Resource Title 2]</a></li>
-                            <li><a href="[URL]" target="_blank" rel="noopener">[Resource Title 3]</a></li>
-                        </ul>
+                <p style="font-size: 10pt; margin: 0 0 0.3rem 0;">
+                    <strong>(ii) Preprocessing Pipeline:</strong> Event-based windowing with configurable temporal resolution; fixed-length window extraction for regression tasks; automated artifact rejection and signal quality assessment; multi-scale feature extraction from raw temporal signals.
+                </p>
 
-                        <h3>[Resource Category 2]</h3>
-                        <ul>
-                            <li><a href="[URL]" target="_blank" rel="noopener">[Resource Title 1]</a></li>
-                            <li><a href="[URL]" target="_blank" rel="noopener">[Resource Title 2]</a></li>
-                            <li><a href="[URL]" target="_blank" rel="noopener">[Resource Title 3]</a></li>
-                        </ul>
-                    </div>
-                </section>
-            </article>
-        </main>
-    </div>
+                <p style="font-size: 10pt; margin: 0 0 0.5rem 0;">
+                    <strong>(iii) Neural Architecture:</strong> EEGNeX with attention mechanisms for temporal dependency modeling; EEGNetv4 compact architecture optimized for limited-sample scenarios; self-supervised learning via Relative Positioning (RP); PyTorch Lightning integration for distributed training.
+                </p>
+            </section>
+
+            <!-- Implementation -->
+            <section style="margin-bottom: 1rem;">
+                <h2 style="font-size: 11pt; font-weight: bold; margin: 0 0 0.5rem 0; color: var(--text-primary);">
+                    3. Implementation Excerpts
+                </h2>
+                
+                <h3 style="font-size: 10pt; font-weight: bold; font-style: italic; margin: 0.5rem 0 0.3rem 0; color: var(--text-primary);">
+                    3.1 Dataset Loading
+                </h3>
+                <pre style="background: #f5f5f5; color: #000; padding: 0.5rem; font-family: 'Courier New', monospace; font-size: 8pt; line-height: 1.3; margin: 0 0 0.5rem 0; overflow-x: auto;"><code>from eegdash.dataset import EEGChallengeDataset
+from braindecode.preprocessing import preprocess
+
+dataset = EEGChallengeDataset(
+    task="ccd", mode="train", 
+    challenge=1, data_dir=Path("data")
+)
+
+preprocessors = [
+    Preprocessor('pick_types', eeg=True),
+    Preprocessor('set_eeg_reference', 
+                 ref_channels='average')
+]
+preprocess(dataset, preprocessors)</code></pre>
+
+                <h3 style="font-size: 10pt; font-weight: bold; font-style: italic; margin: 0.5rem 0 0.3rem 0; color: var(--text-primary);">
+                    3.2 Model Architecture
+                </h3>
+                <pre style=" padding: 0.5rem; font-family: 'Courier New', monospace; font-size: 8pt; line-height: 1.3; margin: 0 0 0.5rem 0; overflow-x: auto;"><code>from braindecode.models import EEGNeX
+
+model = EEGNeX(
+    n_chans=64, n_outputs=1,
+    n_times=1000, drop_prob=0.5
+)
+
+optimizer = AdamW(
+    model.parameters(),
+    lr=1e-3, weight_decay=0.01
+)</code></pre>
+
+                <h3 style="font-size: 10pt; font-weight: bold; font-style: italic; margin: 0.5rem 0 0.3rem 0; color: var(--text-primary);">
+                    3.3 Self-Supervised Learning
+                </h3>
+                <pre style=" padding: 0.5rem; font-family: 'Courier New', monospace; font-size: 8pt; line-height: 1.3; margin: 0 0 0.5rem 0; overflow-x: auto;"><code>def create_relative_positioning_pairs(
+    eeg_windows, tau=100
+):
+    anchors = eeg_windows[:, :, :-tau]
+    positives = eeg_windows[:, :, tau:]
+    
+    batch_size = eeg_windows.shape[0]
+    perm_idx = torch.randperm(batch_size)
+    negatives = eeg_windows[perm_idx, :, tau:]
+    
+    return anchors, positives, negatives</code></pre>
+            </section>
+
+            <!-- Resources -->
+            <section style="margin-bottom: 1rem;">
+                <h2 style="font-size: 11pt; font-weight: bold; margin: 0 0 0.5rem 0; color: var(--text-primary);">
+                    4. Resources & Links
+                </h2>
+                
+                <p style="font-size: 10pt; margin: 0 0 0.3rem 0;">
+                    <strong>GitHub Repository:</strong> Complete implementation available at <a href="https://github.com/eeg2025/startkit" target="_blank" rel="noopener" style="color: var(--text-primary); text-decoration: underline;">https://github.com/eeg2025/startkit</a>
+                </p>
+
+                <p style="font-size: 10pt; margin: 0 0 0.3rem 0;">
+                    <strong style="background-color: var(--border-color);">Google Colab Notebooks:</strong> Interactive notebooks with GPU support available at <a href="https://colab.research.google.com/github/eeg2025/startkit/blob/main/challenge_1.ipynb" target="_blank" rel="noopener" style="color: var(--text-primary); text-decoration: underline;">Challenge 1</a> and <a href="https://colab.research.google.com/github/eeg2025/startkit/blob/main/challenge_2.ipynb" target="_blank" rel="noopener" style="color: var(--text-primary); text-decoration: underline;">Challenge 2</a>
+                </p>
+
+                <p style="font-size: 10pt; margin: 0 0 0.3rem 0;">
+                    <strong>Documentation:</strong> Competition website (<a href="https://eeg2025.github.io" target="_blank" rel="noopener" style="color: var(--text-primary); text-decoration: underline;">eeg2025.github.io</a>), EEGDash API (<a href="https://eeglab.org/EEGDash/overview.html" target="_blank" rel="noopener" style="color: var(--text-primary); text-decoration: underline;">eeglab.org/EEGDash</a>), Braindecode models (<a href="https://braindecode.org/stable/models/models_table.html" target="_blank" rel="noopener" style="color: var(--text-primary); text-decoration: underline;">braindecode.org</a>)
+                </p>
+            </section>
+
+            <!-- Dependencies -->
+            <section style="margin-bottom: 1rem;">
+                <h2 style="font-size: 11pt; font-weight: bold; margin: 0 0 0.5rem 0; color: var(--text-primary);">
+                    5. Software Dependencies
+                </h2>
+                <p style="font-size: 9pt; font-family: 'Courier New', monospace; margin: 0; line-height: 1.4;">
+                    braindecode >= 0.8.0, eegdash, pytorch >= 2.0.0, pytorch-lightning, mne >= 1.5.0, scikit-learn, numpy, pandas
+                </p>
+            </section>
+
+            <!-- Contributions -->
+            <section style="margin-bottom: 1rem;">
+                <h2 style="font-size: 11pt; font-weight: bold; margin: 0 0 0.5rem 0; color: var(--text-primary);">
+                    6. Theoretical Contributions
+                </h2>
+                <p style="font-size: 10pt; margin: 0 0 0.3rem 0;">
+                    (1) <strong>Domain Adaptation Framework:</strong> Novel methodology for transferring learned representations from passive neurophysiological recordings to active cognitive paradigms, addressing limited labeled data challenges. (2) <strong>Multi-Task Learning:</strong> Unified architecture for temporal prediction and continuous regression with shared representational benefits. (3) <strong>Interpretable Biomarkers:</strong> Emphasis on physiologically meaningful features for clinical translation. (4) <strong>Robustness:</strong> Architectural innovations for cross-subject, cross-session, and cross-site variability.
+                </p>
+            </section>
+
+            <!-- Future Directions -->
+            <section style="margin-bottom: 1rem;">
+                <h2 style="font-size: 11pt; font-weight: bold; margin: 0 0 0.5rem 0; color: var(--text-primary);">
+                    7. Future Research Directions
+                </h2>
+                <p style="font-size: 10pt; margin: 0 0 0.5rem 0;">
+                    The framework establishes infrastructure for: (1) multi-modal neuroimaging integration (EEG-fMRI fusion), (2) real-time adaptive brain-computer interfaces, (3) meta-learning for rapid task adaptation, and (4) interpretability enhancements through attention visualization. The open-source nature encourages community-driven improvements, reproducible benchmarking, and collaborative advancement—addressing standardization needs in computational neuroscience methodology.
+                </p>
+            </section>
+
+            <!-- Credits & Acknowledgments -->
+            <section style="column-span: all; margin-top: 1rem; padding-top: 0.5rem; border-top: 1px solid var(--border-color);">
+                <h2 style="font-size: 11pt; font-weight: bold; margin: 0 0 0.5rem 0; color: var(--text-primary);">
+                    Credits & Acknowledgments
+                </h2>
+                <p style="font-size: 9pt; line-height: 1.4; margin: 0 0 0.5rem 0; background: #fff3cd; padding: 0.5rem; border-left: 3px solid #ff9800;">
+                    <strong>Important Notice:</strong> This summary is based on research conducted by <a href="https://arxiv.org/search/eess?searchtype=author&query=Aristimunha,+B" target="_blank" rel="noopener" style="color: #000; text-decoration: underline; font-weight: bold;">Bruno Aristimunha</a> and collaborators. All credit for the original research, methodology, and implementation goes to the original authors. This document serves as an educational summary and does not represent original work by Neksha DeSilva.
+                </p>
+                <p style="font-size: 9pt; line-height: 1.3; margin: 0.5rem 0 0 0;">
+                    For more research by the original authors, visit: <a href="https://arxiv.org/search/eess?searchtype=author&query=Aristimunha,+B" target="_blank" rel="noopener" style="color: var(--text-primary); text-decoration: underline;">Bruno Aristimunha on arXiv</a>
+                </p>
+            </section>
+
+            <!-- References -->
+            <section style="column-span: all; margin-top: 1rem;">
+                <h2 style="font-size: 11pt; font-weight: bold; margin: 0 0 0.5rem 0; color: var(--text-primary);">
+                    References
+                </h2>
+                <p style="font-size: 9pt; line-height: 1.3; margin: 0;">
+                    <a href="https://arxiv.org/abs/2308.02408" target="_blank" rel="noopener" style="color: var(--text-primary); text-decoration: underline;">Aristimunha, B., et al. (2023). Benchmarking Deep Learning Architectures for EEG Decoding. <em>arXiv:2308.02408</em></a><br>
+                    <a href="https://arxiv.org/abs/2502.06828" target="_blank" rel="noopener" style="color: var(--text-primary); text-decoration: underline;">Wimpff, M., et al. (2025). Cross-Task Transfer Learning in EEG Brain Decoding. <em>arXiv:2502.06828</em></a><br>
+                    <a href="https://arxiv.org/abs/2507.09882" target="_blank" rel="noopener" style="color: var(--text-primary); text-decoration: underline;">Wu, H., et al. (2025). Generalization in Neural Decoding: A Transfer Learning Perspective. <em>arXiv:2507.09882</em></a>
+                </p>
+            </section>
+
+        </article>
+
+    </main>
 
     <footer>
         <p>&copy; 2025 Neksha DeSilva. All rights reserved.</p>
