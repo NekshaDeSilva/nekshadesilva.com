@@ -53,18 +53,100 @@ document.addEventListener('DOMContentLoaded', () => {
     // Initialize theme
     initPostsTheme();
     
-    // Set up search functionality
-    const searchInput = document.getElementById('postsSearchInput');
-    if (searchInput) {
-        searchInput.addEventListener('input', (e) => {
-            filterPosts(e.target.value);
-        });
-        console.log('Search input attached');
-    }
+    // Set up sticky post title on scroll
+    setupStickyPostTitles();
     
     // Load posts
     loadPosts();
 });
+
+// Setup sticky post title that appears in header when scrolling through posts
+function setupStickyPostTitles() {
+    const stickyTitleElement = document.getElementById('stickyPostTitle');
+    if (!stickyTitleElement) return;
+    
+    let currentVisiblePost = null;
+    let isFirstLoad = true;
+    
+    // Function to update title with flip animation
+    function updateTitle(newTitle) {
+        if (currentVisiblePost === newTitle) return;
+        
+        if (isFirstLoad) {
+            // First time - just show it without animation
+            stickyTitleElement.textContent = newTitle;
+            stickyTitleElement.classList.add('visible');
+            currentVisiblePost = newTitle;
+            isFirstLoad = false;
+        } else {
+            // Flip animation for subsequent changes
+            stickyTitleElement.classList.add('flip-out');
+            
+            setTimeout(() => {
+                stickyTitleElement.textContent = newTitle;
+                stickyTitleElement.classList.remove('flip-out');
+                stickyTitleElement.classList.add('flip-in');
+                currentVisiblePost = newTitle;
+                
+                setTimeout(() => {
+                    stickyTitleElement.classList.remove('flip-in');
+                }, 200);
+            }, 200);
+        }
+    }
+    
+    // Intersection Observer to detect which post is currently in view
+    const observerOptions = {
+        root: null,
+        rootMargin: '-120px 0px -50% 0px', // Trigger when post title is near top
+        threshold: 0
+    };
+    
+    const observer = new IntersectionObserver((entries) => {
+        // Find the most visible post
+        let mostVisiblePost = null;
+        let maxVisibility = 0;
+        
+        entries.forEach(entry => {
+            if (entry.isIntersecting && entry.intersectionRatio > maxVisibility) {
+                maxVisibility = entry.intersectionRatio;
+                mostVisiblePost = entry.target;
+            }
+        });
+        
+        // Update title based on most visible post
+        if (mostVisiblePost) {
+            const postTitle = mostVisiblePost.querySelector('.post-title');
+            if (postTitle) {
+                const titleText = postTitle.textContent;
+                updateTitle(titleText);
+            }
+        }
+        // Keep showing last post title even if scrolling past all posts
+        // Don't hide it - it stays persistent
+    }, observerOptions);
+    
+    // Observe all post cards
+    const observePosts = () => {
+        document.querySelectorAll('.post-card').forEach(card => {
+            observer.observe(card);
+        });
+    };
+    
+    // Initial observation
+    setTimeout(observePosts, 500);
+    
+    // Re-observe when posts are loaded/filtered
+    const originalRenderPosts = window.renderPosts;
+    if (typeof renderPosts === 'function') {
+        window.renderPosts = function(...args) {
+            const result = originalRenderPosts.apply(this, args);
+            isFirstLoad = true; // Reset for new posts
+            setTimeout(observePosts, 100);
+            return result;
+        };
+    }
+}
 
 // Load posts from posts-list.json (similar to articles system)
 async function loadPosts() {

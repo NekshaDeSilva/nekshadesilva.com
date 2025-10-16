@@ -165,10 +165,7 @@
             </div>
             
             <div class="posts-header-center">
-                <div class="posts-search-container">
-                    <i class="bi bi-search"></i>
-                    <input type="text" id="postsSearchInput" placeholder="Search" aria-label="Search posts">
-                </div>
+                <div class="sticky-post-title" id="stickyPostTitle"></div>
             </div>
             
             <div class="posts-header-right">
@@ -181,7 +178,7 @@
     </header>
 
     <!-- Filter Section -->
-    <div class="posts-filter-bar">
+    <div class="posts-filter-bar" style="display: none;">
         <div class="posts-filter-container">
             <div class="filter-section">
                 <span class="filter-label">Popular tags:</span>
@@ -194,21 +191,37 @@
 
     <!-- Main Posts Container -->
     <main class="posts-container">
-        <div class="posts-grid" id="postsGrid">
-            <!-- Posts will be dynamically loaded here -->
-            <div class="posts-loading">
-                <i class="bi bi-arrow-repeat"></i>
-                <p>Loading posts...</p>
-            </div>
-        </div>
+        <div class="posts-feed" id="postsFeed">
+            
+            <!-- Sample Post 1 -->
+            <article class="post-card">
+                <div class="post-header">
+                    <time class="post-date">11 Sep, 2024</time>
+                    <div class="post-tags">
+                        <span class="post-tag">General</span>
+                        <span class="post-tag">Mathematics</span>
+                    </div>
+                </div>
+                
+                <h2 class="post-title">nekshadesilva.com/posts</h2>
+                
+                <div class="post-content">
+                    <p>Neksha DeSilva's posts</p>
 
-        <!-- Empty State -->
-        <div class="posts-empty" id="postsEmpty">
-            <i class="bi bi-feather"></i>
-            <h2>Posts Coming Soon</h2>
-        
+                    <div class="post-image">
+                        <img src="https://www.github.com/nekshadesilva.png" alt="Image description">
+                    </div>
+                
+                </div>
+            </article>
+
         </div>
     </main>
+
+    <!-- Disclaimer Section -->
+    <div class="posts-disclaimer">
+        <p><strong>Note:</strong> These are personal thoughts and opinions. For academic work and research, please visit the <a href="../index.html">main page</a>.</p>
+    </div>
 
     <!-- Minimal Footer -->
     <footer class="posts-footer">
