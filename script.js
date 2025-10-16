@@ -206,29 +206,63 @@ async function loadArticles() {
 // Render articles to the page
 function renderArticles(articles) {
     const articlesList = document.getElementById('articlesList');
-    if (!articlesList) return;
+    const archivedArticlesList = document.getElementById('archivedArticlesList');
     
-    if (articles.length === 0) {
-        articlesList.innerHTML = '<p class="no-articles-message">No articles available yet.</p>';
-        return;
+    // Separate regular and archived articles
+    const regularArticles = articles.filter(article => !article.archived);
+    const archivedArticles = articles.filter(article => article.archived);
+    
+    // Render regular articles
+    if (articlesList) {
+        if (regularArticles.length === 0) {
+            articlesList.innerHTML = '<p class="no-articles-message">No articles available yet.</p>';
+        } else {
+            articlesList.innerHTML = regularArticles.map(article => {
+                const dateObj = new Date(article.date);
+                const formattedDate = dateObj.toLocaleDateString('en-US', { 
+                    day: 'numeric', 
+                    month: 'short', 
+                    year: 'numeric' 
+                });
+                
+                return `
+                    <article class="article-item" data-date="${article.date}" data-category="${article.category}">
+                        <time datetime="${article.date}">${formattedDate}</time>
+                        <h3><a href="${article.url}">${article.title}</a></h3>
+                        <p class="article-meta">${article.description}</p>
+                    </article>
+                `;
+            }).join('');
+        }
     }
     
-    articlesList.innerHTML = articles.map(article => {
-        const dateObj = new Date(article.date);
-        const formattedDate = dateObj.toLocaleDateString('en-US', { 
-            day: 'numeric', 
-            month: 'short', 
-            year: 'numeric' 
-        });
-        
-        return `
-            <article class="article-item" data-date="${article.date}" data-category="${article.category}">
-                <time datetime="${article.date}">${formattedDate}</time>
-                <h3><a href="${article.url}">${article.title}</a></h3>
-                <p class="article-meta">${article.description}</p>
-            </article>
-        `;
-    }).join('');
+    // Render archived articles
+    if (archivedArticlesList) {
+        if (archivedArticles.length > 0) {
+            archivedArticlesList.innerHTML = archivedArticles.map(article => {
+                const dateObj = new Date(article.date);
+                const formattedDate = dateObj.toLocaleDateString('en-US', { 
+                    day: 'numeric', 
+                    month: 'short', 
+                    year: 'numeric' 
+                });
+                
+                return `
+                    <article class="article-item" data-date="${article.date}" data-category="${article.category}" style="opacity: 0.8;">
+                        <time datetime="${article.date}">${formattedDate}</time>
+                        <h3><a href="${article.url}">${article.title}</a></h3>
+                        <p class="article-meta">${article.description}</p>
+                    </article>
+                `;
+            }).join('');
+        } else {
+            // Hide archived section if no archived articles
+            const archivedSection = document.getElementById('archived-articles');
+            if (archivedSection) {
+                archivedSection.style.display = 'none';
+            }
+        }
+    }
 }
 
 // Search and filter articles in main list
@@ -250,7 +284,13 @@ function searchArticles(query) {
     
     articlesData.forEach((article, index) => {
         const matches = article.fullText.includes(searchTerm);
-        const articleElement = articleItems[index];
+        
+        // Find the corresponding DOM element (could be in regular or archived list)
+        const allArticles = Array.from(articleItems);
+        const articleElement = allArticles.find(el => {
+            const link = el.querySelector('a');
+            return link && link.href.includes(article.folder);
+        });
         
         if (articleElement) {
             if (matches) {
