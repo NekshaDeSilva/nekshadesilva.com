@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Example Document - Archive</title>
+    <meta name="robots" content="noindex, nofollow">
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="../../style.css">
+    
+    <style>
+        /* Password Protection Overlay */
+        #passwordOverlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--background);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+        }
+        
+        #passwordOverlay.hidden {
+            display: none;
+        }
+        
+        .password-container {
+            text-align: center;
+            padding: 3rem;
+            max-width: 450px;
+            width: 90%;
+        }
+        
+        .password-icon {
+            font-size: 3rem;
+            color: var(--text-primary);
+            margin-bottom: 1.5rem;
+        }
+        
+        .password-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+        
+        .password-subtitle {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+        }
+        
+        .password-input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            font-size: 1rem;
+            border: 2px solid var(--border-color);
+            border-radius: 4px;
+            background: var(--card-bg);
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+        }
+        
+        .password-input:focus {
+            outline: none;
+            border-color: var(--text-primary);
+        }
+        
+        .password-input.error {
+            border-color: #dc3545;
+        }
+        
+        .password-btn {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            font-size: 1rem;
+            font-weight: 600;
+            background: var(--text-primary);
+            color: var(--background);
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        
+        .password-btn:hover {
+            opacity: 0.9;
+        }
+        
+        .password-error {
+            color: #dc3545;
+            font-size: 0.875rem;
+            margin-top: 0.5rem;
+            display: none;
+        }
+        
+        .password-error.show {
+            display: block;
+        }
+
+        /* Document Content */
+        #documentContent {
+            display: none;
+        }
+
+        #documentContent.visible {
+            display: block;
+        }
+
+        .document-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+            min-height: calc(100vh - 200px);
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.95rem;
+            margin-bottom: 2rem;
+        }
+
+        .back-link:hover {
+            color: var(--text-primary);
+        }
+
+        .document-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .document-meta {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .document-content {
+            color: var(--text-primary);
+            line-height: 1.8;
+            font-size: 1.05rem;
+        }
+
+        .document-content p {
+            margin-bottom: 1.5rem;
+        }
+
+        .document-content h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .document-content h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-top: 2rem;
+            margin-bottom: 0.75rem;
+            color: var(--text-primary);
+        }
+
+        .document-content ul, .document-content ol {
+            margin-bottom: 1.5rem;
+            padding-left: 2rem;
+        }
+
+        .document-content li {
+            margin-bottom: 0.5rem;
+        }
+
+        .document-content img {
+            max-width: 100%;
+            height: auto;
+            margin: 2rem 0;
+            border: 2px solid var(--border-color);
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            border-top: 2px solid var(--border-color);
+            margin-top: 4rem;
+        }
+
+        footer p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+            margin-top: 1rem;
+        }
+
+        .footer-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        .footer-links a:hover {
+            color: var(--text-primary);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Password Protection Overlay -->
+    <div id="passwordOverlay">
+        <div class="password-container">
+            <div class="password-icon">
+                <i class="bi bi-lock-fill"></i>
+            </div>
+            <h1 class="password-title">Private Document</h1>
+            <p class="password-subtitle">This document is password protected</p>
+            
+            <input type="password" id="passwordInput" class="password-input" placeholder="Enter password" autocomplete="off">
+            <button onclick="checkPassword()" class="password-btn">Access Document</button>
+            <p class="password-error" id="passwordError">Incorrect password. Redirecting...</p>
+        </div>
+    </div>
+
+    <!-- Document Content (Hidden until password verified) -->
+    <div id="documentContent">
+        <div class="document-container">
+            <a href="../index.html" class="back-link">
+                <i class="bi bi-arrow-left"></i> Back to Archive
+            </a>
+
+            <h1 class="document-title">Example Document Title</h1>
+            <div class="document-meta">October 31, 2025</div>
+
+            <div class="document-content">
+                <p>Replace this content with your actual document text.</p>
+
+                <p>This is a template for archive documents. You can add text, images, lists, and other content here.</p>
+
+                <h2>Section Heading</h2>
+                <p>Content for this section goes here.</p>
+
+                <h3>Subsection</h3>
+                <p>More detailed content.</p>
+
+                <ul>
+                    <li>List item 1</li>
+                    <li>List item 2</li>
+                    <li>List item 3</li>
+                </ul>
+
+                <p>Continue adding your content as needed.</p>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer>
+            <p>&copy; 2025 Neksha DeSilva. All rights reserved.</p>
+            <div class="footer-links">
+                <a href="../../index.html">Home</a>
+                <a href="../../about.html">About</a>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Theme Toggle Script -->
+    <script>
+        // Initialize theme
+        (function() {
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+        })();
+    </script>
+
+    <!-- Password Verification Script -->
+    <script src="../archive-auth.js"></script>
+
+</body>
+</html>
