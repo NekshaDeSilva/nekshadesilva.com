@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Publications - Neksha DeSilva</title>
+    <meta name="description" content="Publications and upcoming books by Neksha DeSilva">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="../style.css">
+    
+    <style>
+        /* Override container layout for publications */
+        .container {
+            display: block;
+            max-width: 100%;
+        }
+
+        .main-content {
+            margin-left: 0;
+            width: 100%;
+            max-width: 100%;
+        }
+
+        .publication-container {
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 3rem;
+        }
+
+        .publication-card {
+            background: var(--card-bg);
+            border: 2px solid var(--border-color);
+            padding: 3rem;
+            margin-bottom: 2rem;
+            width: 100%;
+        }
+
+        .publication-status {
+            display: inline-block;
+            background: var(--text-primary);
+            color: var(--background);
+            padding: 0.5rem 1rem;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+        }
+
+        .publication-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 0.75rem;
+            line-height: 1.3;
+        }
+
+        .publication-handle {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+        }
+
+        .publication-description {
+            color: var(--text-primary);
+            line-height: 1.8;
+            margin-bottom: 2rem;
+            font-size: 1.15rem;
+        }
+
+        .publication-meta {
+            color: var(--text-muted);
+            font-size: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .publication-meta i {
+            margin-right: 0.5rem;
+        }
+
+        .contribution-section {
+            margin-top: 2.5rem;
+            padding-top: 2.5rem;
+            border-top: 2px solid var(--border-color);
+        }
+
+        .contribution-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 1.25rem;
+        }
+
+        .contribution-text {
+            color: var(--text-muted);
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+            font-size: 1.05rem;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 1.25rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem 1.5rem;
+            background: var(--card-bg);
+            color: var(--text-primary);
+            border: 2px solid var(--border-color);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: border-color 0.2s ease;
+        }
+
+        .btn:hover {
+            border-color: var(--text-primary);
+        }
+
+        .btn i {
+            font-size: 1.2rem;
+        }
+
+        .page-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 2.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .publication-container {
+                padding: 1.5rem;
+            }
+
+            .publication-card {
+                padding: 2rem;
+            }
+
+            .publication-title {
+                font-size: 1.75rem;
+            }
+
+            .page-title {
+                font-size: 2rem;
+            }
+
+            .button-group {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Top Toolbar -->
+    <div class="top-toolbar">
+        <div class="toolbar-left">
+            <button id="searchToggle" class="toolbar-btn" aria-label="Toggle search" title="Search">
+                <i class="bi bi-search"></i>
+            </button>
+            <div id="searchDropdown" class="search-dropdown hidden">
+                <input type="text" id="topSearchInput" placeholder="Search articles..." aria-label="Search">
+                <div id="searchResults" class="search-results"></div>
+            </div>
+        </div>
+        <div class="toolbar-right">
+            <button id="highlightToggle" class="toolbar-btn" aria-label="Toggle highlighting" title="Text Highlighting">
+                <i class="bi bi-highlighter"></i>
+            </button>
+            <button id="magnifyToggle" class="toolbar-btn" aria-label="Toggle magnification" title="Magnify Text">
+                <i class="bi bi-zoom-in"></i>
+            </button>
+            <button id="fullscreenToggle" class="toolbar-btn" aria-label="Toggle fullscreen" title="Fullscreen">
+                <i class="bi bi-fullscreen"></i>
+            </button>
+            <button id="topThemeToggle" class="toolbar-btn" aria-label="Toggle theme" title="Toggle Theme">
+                <i class="bi bi-sun-fill theme-icon-top"></i>
+            </button>
+        </div>
+    </div>
+
+    <header>
+        <div class="header-content">
+            <h1 class="site-title">Neksha DeSilva</h1>
+            <nav>
+                <a href="../index.html">HOME</a>
+                <a href="../about.html">ABOUT</a>
+                <a href="../posts/index.html">POSTS</a>
+                <a href="../notes.html">NOTES</a>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <main class="main-content">
+            <div class="publication-container">
+                <h2 class="page-title">Publications</h2>
+
+                <!-- Book Announcement -->
+                <div class="publication-card">
+                    <div class="publication-status" style="color:var(--border-color);">COMING SOON</div>
+                    
+                    <h3 class="publication-title">Human Brain—In Its All Terms</h3>
+                    
+                    <p class="publication-handle">@HumanBrainAIAT on Twitter</p>
+
+                    <div class="publication-meta">
+                        
+                        <i class="bi bi-geo-alt"></i> Publishing in New York City → Earth
+                        
+                    </div>
+
+                    <p class="publication-description">
+                        A major research work bridging neuroscience, AI, and the philosophy of human consciousness. Built on patented models in AI. Be a neuroscientist. Not a reader.
+                    </p>
+
+                    <div class="contribution-section">
+                        <h4 class="contribution-title">Contribute to Public Sections</h4>
+                        <p class="contribution-text">
+                            If you have ideologies, technical corrections, ideas, or new hypotheses to contribute, please reach out:
+                        </p>
+
+                        <div class="button-group">
+                            <a href="https://x.com/HumanBrainAIAT" target="_blank" class="btn">
+                                <i class="bi bi-twitter-x"></i>
+                                Message on X
+                            </a>
+                            <a href="mailto:nekshavs@gmail.com" class="btn">
+                                <i class="bi bi-envelope"></i>
+                                nekshavs@gmail.com
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <!-- Load favicon injector -->
+    <script>
+        (function() {
+            const script = document.createElement('script');
+            script.src = '../assets/static/favicon-inject.js';
+            script.async = true;
+            document.head.appendChild(script);
+        })();
+    </script>
+
+    <script src="../script.js"></script>
+</body>
+</html>
