@@ -1,16 +1,104 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Neksha DeSilva</title>
+    <title>Computer Science - Neksha DeSilva</title>
+    <meta name="description" content="Computer Science contributions by Neksha DeSilva">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="cs-style.css">
 </head>
 <body>
-    <div style="font-family: 'Georgia', 'Times New Roman', serif; text-align: center; padding: 50px;">
-        <h1 style="font-size: 3em; font-weight: 300; letter-spacing: 2px; margin: 0;">ρ = 2.33 g/cm³ will be there.</h1>
+    <!-- Top Toolbar -->
+    <div class="top-toolbar">
+        <div class="toolbar-left">
+            <button id="searchToggle" class="toolbar-btn" aria-label="Toggle search" title="Search">
+                <i class="bi bi-search"></i>
+            </button>
+            <div id="searchDropdown" class="search-dropdown hidden">
+                <input type="text" id="topSearchInput" placeholder="Search articles..." aria-label="Search">
+                <div id="searchResults" class="search-results"></div>
+            </div>
+            <!-- Animated Header Text -->
+            <span class="animated-header" id="animatedHeader">ρ = 2.33 g/cm³ will be there.</span>
+        </div>
+        <div class="toolbar-right">
+            <button id="highlightToggle" class="toolbar-btn" aria-label="Toggle highlighting" title="Text Highlighting">
+                <i class="bi bi-highlighter"></i>
+            </button>
+            <button id="magnifyToggle" class="toolbar-btn" aria-label="Toggle magnification" title="Magnify Text">
+                <i class="bi bi-zoom-in"></i>
+            </button>
+            <button id="fullscreenToggle" class="toolbar-btn" aria-label="Toggle fullscreen" title="Fullscreen">
+                <i class="bi bi-fullscreen"></i>
+            </button>
+            <button id="topThemeToggle" class="toolbar-btn" aria-label="Toggle theme" title="Toggle Theme">
+                <i class="bi bi-sun-fill theme-icon-top"></i>
+            </button>
+        </div>
+    </div>
 
-        <h4>This is my home.</h4>
+    <!-- Main Content -->
+     
+    <div class="main-content">
+  
+        <h4>You will see interesting things here.</h4>
+        <div class="follow-text">
+        <a href="https://codeforces.com/profile/nekshavs" class="follow-link" target="_blank" rel="noopener">Codeforces</a> / <span class="username-newbie" style="cursor: default;" title="Newbie Nekshavs">Nekshavs</span> 
+        </div>
         
     </div>
+
+    <footer>
+        <p>&copy; 2025 Neksha DeSilva. All rights reserved.</p>
+        <div class="social-links">
+            <a href="https://medium.com/@nekshadesilva" title="Medium" target="_blank" rel="noopener">
+                <i class="bi bi-medium"></i> Medium
+            </a>
+            <a href="https://nekshadesilva.com" title="Website" target="_blank" rel="noopener">
+                <i class="bi bi-globe"></i> nekshadesilva.com
+            </a>
+        </div>
+    </footer>
+
+    <!-- Animation Script -->
+    <script>
+        // Initialize theme
+        (function() {
+            const savedTheme = localStorage.getItem('theme') || 'dark';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+        })();
+
+        // Header animation (morphing in place)
+        window.addEventListener('load', function() {
+            const header = document.getElementById('animatedHeader');
+            
+            // Start morphing after 2 seconds
+            setTimeout(function() {
+                header.classList.add('morphed');
+                
+                // Change text during morph
+                setTimeout(function() {
+                    header.textContent = 'Density will be there';
+                    header.classList.remove('morphed');
+                    header.classList.add('final');
+                }, 300);
+            }, 2000);
+        });
+    </script>
+
+    <!-- Load favicon injector -->
+    <script>
+        (function() {
+            const script = document.createElement('script');
+            script.src = '../assets/static/favicon-inject.js';
+            script.async = true;
+            document.head.appendChild(script);
+        })();
+    </script>
+
+    <!-- Load main script for toolbar functionality -->
+    <script src="../script.js"></script>
 </body>
 </html>

@@ -1,0 +1,99 @@
+/* CS Page Specific Styles */
+
+body {
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    overflow-x: hidden;
+}
+
+/* Animated Header in Toolbar */
+.animated-header {
+    display: inline-block;
+    margin-left: 1rem;
+
+    font-size: 1em;
+    font-weight: 300;
+    letter-spacing: 1px;
+    color: var(--text-primary);
+    opacity: 1;
+    transition: opacity 0.3s ease;
+    white-space: nowrap;
+    vertical-align: middle;
+}
+
+.animated-header.morphed {
+    opacity: 0;
+}
+
+.animated-header.final {
+    opacity: 1;
+}
+
+/* Main Content */
+.main-content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    margin-top: 10vh;
+    min-height: calc(100vh - 120px);
+    padding: 3rem 2rem;
+    text-align: left;
+}
+
+.main-content h4 {
+    
+    font-size: 1.5em;
+    font-weight: 300;
+    margin: 0 0 0.5rem 0;
+    color: var(--text-primary);
+}
+
+.follow-text {
+    margin-top: 0;
+    font-size: 1.2em;
+    color: var(--text-muted);
+    line-height: 1.6;
+}
+
+/* Codeforces Newbie Username Color */
+.username-newbie {
+    color: #808080;
+    font-weight: 600;
+}
+
+.follow-link {
+    color: var(--accent-highlight);
+    text-decoration: none;
+    font-weight: 600;
+   
+    padding-bottom: 2px;
+    transition: all 0.2s ease;
+}
+
+.follow-link:hover {
+    color: var(--text-primary);
+    border-bottom-color: var(--text-primary);
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    .animated-header {
+        display: none; /* Hide on mobile to save space */
+    }
+    
+    .main-content {
+        padding: 2rem 1rem;
+    }
+
+    .main-content h4 {
+        font-size: 1.2em;
+    }
+
+    .follow-text {
+        font-size: 1em;
+    }
+}
