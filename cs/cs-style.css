@@ -65,6 +65,35 @@ body {
     font-weight: 600;
 }
 
+.cs-posts {
+
+    width: 100%;
+    max-width: 760px;
+}
+
+.post-card {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    padding: 1rem;
+    border-radius: 6px;
+    color: var(--text-secondary);
+}
+
+.post-card h3 {
+    margin: 0 0 0.5rem 0;
+    color: var(--text-primary);
+    font-size: 1.05rem;
+}
+
+.post-card p {
+    margin: 0.4rem 0;
+    color: var(--text-secondary);
+}
+
+.username-newbie {
+    cursor: default;
+}
+
 .follow-link {
     color: var(--accent-highlight);
     text-decoration: none;
