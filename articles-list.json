@@ -3,10 +3,10 @@
   "baseFolder": "docs",
   "articles": [
     {
-      "title": "Temporal Derivative Soft-Sensing and Reconstructing Solar Radiation and Heat Flux from Common Environmental Sensors and FiaOS Engineering.",
+      "title": "Temporal Derivative Soft-Sensing and Reconstructing Solar Radiation and Heat Flux from Common Environmental Sensors",
       "description": "Transforms standard sensors into radiometers, reconstructing solar radiation and heat flux for advanced IoT applications.",
       "date": "2025-11-25",
-      "category": "Neuroscience",
+      "category": "Engineering",
       "tags": [
         "Engineering",
         "Computer Science",
@@ -36,9 +36,7 @@
         "Neksha DeSilva"
       ],
       "folder": "amc-aime-problems-archive-01",
-      "url": "./docs/amc-aime-problems-archive-01/",
-      "archived":true
-    
+      "url": "./docs/amc-aime-problems-archive-01/"
     },
     {
       "title": "The Suspected Hierarchy of Human Intentions and Brain Signals",
@@ -77,7 +75,6 @@
       "readTime": "15 min read",
       "folder": "the-use-of-evapotranspiration-algorithm-in-umbrella-project-and-the-penman-monteith-equation",
       "url": "./docs/the-use-of-evapotranspiration-algorithm-in-umbrella-project-and-the-penman-monteith-equation/"
-      
     },
     {
       "title": "TIMO problems archive(solved)",
@@ -92,11 +89,9 @@
       ],
       "author": "Neksha DeSilva",
       "folder": "timo-problems-archive-01",
-      "url": "./docs/timo-problems-archive-01/",
-      "archived":true
-    
+      "url": "./docs/timo-problems-archive-01/"
     }
   ],
   "count": 5,
-  "generated": "2025-12-04T11:38:18.079Z"
+  "generated": "2025-12-05T08:59:02.217Z"
 }
