@@ -941,3 +941,20 @@ body.magnified h3 { font-size: 1.5rem; }
 [data-theme="light"] .theme-adaptive-logo {
     filter: invert(1);
 }
+
+/* Responsive iframe for mobile */
+.responsive-iframe {
+    transition: height 0.3s ease;
+}
+
+@media (max-width: 768px) {
+    .responsive-iframe {
+        height: 90vh !important;
+        min-height: 500px;
+    }
+}
+
+/* Content full (non-collapsible) */
+.content-full {
+    opacity: 1;
+}
