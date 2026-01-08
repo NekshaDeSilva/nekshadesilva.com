@@ -805,3 +805,139 @@ body.magnified h3 { font-size: 1.5rem; }
         transition: none !important;
     }
 }
+
+/* ============================================
+   Expandable Content Section
+   ============================================ */
+.expandable-content {
+    margin: 1rem 0;
+    font-size: 9.5pt;
+    line-height: 1.7;
+    color: var(--text-secondary);
+}
+
+.expandable-content p {
+    margin-bottom: 0.8rem;
+}
+
+.expandable-content h4 {
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+.expand-toggle {
+    display: none;
+}
+
+.content-extended {
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: max-height 0.5s ease, opacity 0.3s ease;
+}
+
+.expand-toggle:checked ~ .content-extended {
+    max-height: 2000px;
+    opacity: 1;
+}
+
+.expand-label {
+    display: inline-block;
+    margin-top: 0.5rem;
+    padding: 0.4rem 1rem;
+    font-size: 8.5pt;
+    color: var(--text-muted);
+    border: 1px solid var(--border-color);
+    border-radius: 3px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    background: var(--bg-secondary);
+}
+
+.expand-label:hover {
+    color: var(--text-primary);
+    border-color: var(--accent-highlight);
+}
+
+.expand-label .collapse-text {
+    display: none;
+}
+
+.expand-toggle:checked ~ .expand-label .expand-text {
+    display: none;
+}
+
+.expand-toggle:checked ~ .expand-label .collapse-text {
+    display: inline;
+}
+
+.expandable-content {
+    margin: 1rem 0;
+    font-size: 9.5pt;
+    line-height: 1.7;
+    color: var(--text-secondary);
+}
+
+.expandable-content p {
+    margin-bottom: 0.8rem;
+}
+
+.expandable-content h4 {
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+.expand-toggle {
+    display: none;
+}
+
+.content-extended {
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: max-height 0.5s ease, opacity 0.3s ease;
+}
+
+.expand-toggle:checked ~ .content-extended {
+    max-height: 2000px;
+    opacity: 1;
+}
+
+.expand-label {
+    display: inline-block;
+    margin-top: 0.5rem;
+    padding: 0.4rem 1rem;
+    font-size: 8.5pt;
+    color: var(--text-muted);
+    border: 1px solid var(--border-color);
+    border-radius: 3px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    background: var(--bg-secondary);
+}
+
+.expand-label:hover {
+    color: var(--text-primary);
+    border-color: var(--accent-highlight);
+}
+
+.expand-label .collapse-text {
+    display: none;
+}
+
+.expand-toggle:checked ~ .expand-label .expand-text {
+    display: none;
+}
+
+.expand-toggle:checked ~ .expand-label .collapse-text {
+    display: inline;
+}
+
+/* Theme-adaptive logos (white logos that invert in light mode) */
+.theme-adaptive-logo {
+    transition: filter 0.3s ease;
+}
+
+[data-theme="light"] .theme-adaptive-logo {
+    filter: invert(1);
+}

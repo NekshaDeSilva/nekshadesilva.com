@@ -3,22 +3,26 @@
   "baseFolder": "docs",
   "articles": [
     {
-      "title": "AMC & AIME Problems Archive 01",
-      "description": "Collection of American Mathematics Competition and AIME problems with solutions",
-      "date": "2025-09-28",
-      "category": "Mathematics",
+      "title": "Temporal Derivative Soft-Sensing and Reconstructing Solar Radiation and Heat Flux from Common Environmental Sensors",
+      "description": "While we proved this works using the FiaOS architecture, the method is hardware independent. The main goal of this work is to release a high-performance, open-source software library built for professional developers. By sharing this code globally, we aim to upgrade the abilities of millions of current and future smart devices. This library allows standard electronics to go beyond simple readings and unlock a deeper understanding of environmental physics. By calculating complex energy flows using common sensors, we open a new frontier of applications, from precision engineering to automated energy management, making advanced weather science accessible to engineers.",
+      "date": "2025-11-23",
+      "category": "(Autonomous) Systems Engineering",
       "tags": [
-        "mathematics",
-        "competition",
-        "problem-solving",
-        "amc",
-        "aime"
+        "thermodynamics",
+        "differential imbalance",
+        "engineering",
+        "applied physics",
+        "sensing",
+        "soft-sensing",
+        "solar",
+        "energy"
       ],
       "authors": [
         "Neksha DeSilva"
       ],
-      "folder": "amc-aime-problems-archive-01",
-      "url": "./docs/amc-aime-problems-archive-01/"
+      "venue": "IEEE",
+      "folder": "the-temporal-derivative-soft-sensing-and-reconstructing-solar-radiation-and-heat-flux-from-common-low-cost-environmental-sensors",
+      "url": "./docs/the-temporal-derivative-soft-sensing-and-reconstructing-solar-radiation-and-heat-flux-from-common-low-cost-environmental-sensors/"
     },
     {
       "title": "The Suspected Hierarchy of Human Intentions and Brain Signals",
@@ -57,23 +61,8 @@
       "readTime": "15 min read",
       "folder": "the-use-of-evapotranspiration-algorithm-in-umbrella-project-and-the-penman-monteith-equation",
       "url": "./docs/the-use-of-evapotranspiration-algorithm-in-umbrella-project-and-the-penman-monteith-equation/"
-    },
-    {
-      "title": "TIMO problems archive(solved)",
-      "description": "updated soon.",
-      "date": "2025-07-09",
-      "category": "mathematics",
-      "tags": [
-        "geometry",
-        "algebra",
-        "number-theory",
-        "combinatorics"
-      ],
-      "author": "Neksha DeSilva",
-      "folder": "timo-problems-archive-01",
-      "url": "./docs/timo-problems-archive-01/"
     }
   ],
-  "count": 4,
-  "generated": "2025-12-25T00:51:44.492Z"
+  "count": 3,
+  "generated": "2026-01-08T12:10:31.523Z"
 }
