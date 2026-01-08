@@ -516,4 +516,25 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Load articles automatically
     loadArticles();
+    
+    // Initialize logo slideshow
+    initLogoSlideshow();
 });
+
+// ============================================
+// Logo Slideshow (one image at a time)
+// ============================================
+
+function initLogoSlideshow() {
+    const slides = document.querySelectorAll('.slide-logo');
+    if (slides.length === 0) return;
+    
+    let currentSlide = 0;
+    
+    // Rotate slides every 4 seconds
+    setInterval(() => {
+        slides[currentSlide].classList.remove('active');
+        currentSlide = (currentSlide + 1) % slides.length;
+        slides[currentSlide].classList.add('active');
+    }, 4000);
+}

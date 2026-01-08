@@ -811,7 +811,7 @@ body.magnified h3 { font-size: 1.5rem; }
    ============================================ */
 .expandable-content {
     margin: 1rem 0;
-    font-size: 9.5pt;
+    font-size: 1rem;
     line-height: 1.7;
     color: var(--text-secondary);
 }
@@ -873,7 +873,7 @@ body.magnified h3 { font-size: 1.5rem; }
 
 .expandable-content {
     margin: 1rem 0;
-    font-size: 9.5pt;
+    font-size: 1rem;
     line-height: 1.7;
     color: var(--text-secondary);
 }
@@ -957,4 +957,37 @@ body.magnified h3 { font-size: 1.5rem; }
 /* Content full (non-collapsible) */
 .content-full {
     opacity: 1;
+}
+
+/* Logo Ribbon Slideshow */
+.logo-ribbon {
+    width: 100%;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1rem;
+    width: 100%;
+}
+
+.logo-slideshow {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 50px;
+}
+
+.slide-logo {
+    position: absolute;
+    height: 50px;
+    width: auto;
+    max-width: 100%;
+    object-fit: contain;
+    display: none;
+}
+
+.slide-logo.active {
+    display: block;
 }
