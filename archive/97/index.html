@@ -132,46 +132,49 @@
 
         .prereq-content {
             display: flex;
-            gap: 2rem;
-        }
-
-        .prereq-text {
-            flex: 1;
-            text-align: justify;
-        }
-
-        .prereq-text p {
-            margin-bottom: 1rem;
-            font-size: 0.95rem;
-        }
-
-        .prereq-images {
-            width: 280px;
-            flex-shrink: 0;
-            display: flex;
             flex-direction: column;
             gap: 1.5rem;
         }
 
-        .prereq-images img {
+        .prereq-row {
+            display: flex;
+            gap: 1.5rem;
+            align-items: flex-start;
+        }
+
+        .prereq-row p {
+            flex: 1;
+            text-align: justify;
+            font-size: 0.95rem;
+            margin: 0;
+        }
+
+        .prereq-row .prereq-img {
+            width: 200px;
+            flex-shrink: 0;
+        }
+
+        .prereq-row .prereq-img img {
             width: 100%;
             height: auto;
-            border: 1px solid #000;
+            display: block;
+        }
+
+        .prereq-row .prereq-img .img-caption {
+            font-size: 0.8rem;
+            color: #555;
+            margin-top: 0.25rem;
+            text-align: center;
         }
 
         @media (max-width: 768px) {
-            .prereq-content {
+            .prereq-row {
                 flex-direction: column;
             }
 
-            .prereq-images {
+            .prereq-row .prereq-img {
                 width: 100%;
-                flex-direction: row;
-                flex-wrap: wrap;
-            }
-
-            .prereq-images img {
-                width: calc(50% - 0.75rem);
+                max-width: 300px;
             }
         }
 
@@ -202,50 +205,92 @@
         </header>
 
         <section class="prereq-section">
-            <h2 class="prereq-title">Prerequisites Before Reading</h2>
+            <h2 class="prereq-title">You Should Read This Before Reading Further</h2>
             
             <div class="prereq-content">
-                <div class="prereq-text">
+                <div class="prereq-row">
                     <p>This is not Machine Learning. This is Biological Simulation.</p>
-
-                    <p>The current industry focuses on Artificial Neural Networks, Large Language Models, machine learning algorithms, and reinforcement learning. These are statistical abstractions that run on Graphical Processing Units. Whether using an NVIDIA H100 or a GTX 5000, whether running different models or frameworks, the underlying physical logic circuit remains identical. The GPU executes the same matrix multiplications, consumes the same power, and operates at the same architectural level. When a language model is asked what zero multiplied by zero equals, the GPU burns its full capacity calculating that answer. When asked to describe the color of a shirt, it burns the same energy. The hardware does not distinguish between trivial and complex queries. It calculates everything with equal computational expense.</p>
-
-                    <p>My work diverges from this approach. I am not interested in matrix multiplication or copying pre-trained models and running inference on Google Colab or remote data centers using the same logic circuits. My work focuses on a different paradigm entirely.</p>
-
-                    <p>When searching for "Neuronal Processing Unit" or "Non-PU" on Google, Bing, Yahoo, or any search engine as of 2026, no results appear. This terminology does not exist in current research literature. I am coining this term to mark a fundamental architectural and philosophical departure from the industry-standard Neural Processing Unit.</p>
-
-                    <p>The industry standard NPU is designed for machine learning. It relies on matrix multiplications, backpropagation, and reinforcement learning algorithms running on static data. It is a mathematical abstraction. The Non-PU is designed for Biological Simulation. It does not use machine learning in the conventional sense. It does not use matrix multiplications. It does not use reinforcement learning as an algorithmic training procedure. Instead, it relies on Spiking Neural Networks and the dynamic weighting of neurons through synaptic plasticity. It uses differential equations to model the voltage and timing of actual biological neurons.</p>
-
-                    <p>This is not a calculator. This is a synthetic brain.</p>
-
-                    <p>An Artificial Neural Network calculates. It takes a static snapshot of numbers, multiplies them by learned weights, and produces an output. It has no concept of time. It has no concept of physical dynamics. It is purely mathematical abstraction.</p>
-
-                    <p>A Spiking Neuronal Network simulates. My system implements the Izhikevich neuron model, solving differential equations in real time. Each neuron has a membrane voltage that rises and falls. Each neuron has a refractory period where it cannot fire again, just like biological neurons. Each neuron communicates through discrete electrical spikes, not through continuous numerical values. This is not an approximation of intelligence through statistics. This is a replication of the physics of neural computation.</p>
-
-                    <p>When an ANN processes an image, it calculates the probability distribution of what that image represents. When the Non-PU processes an image, it simulates the physical dynamics of a brain circuit reacting to that image in real time.</p>
-
-                    <p>Organizations like NASA and defense research agencies are interested in neuromorphic computing because of energy efficiency.</p>
-
-                    <p>A GPU consumes approximately 300 watts of power continuously, regardless of the computational workload. If the input is a completely black image, the GPU still calculates zero multiplied by zero millions of times per second. It burns energy calculating nothing. This is architectural waste.</p>
-
-                    <p>The Non-PU is event-driven. If a region of an image is black, no neurons in that region spike. No spikes means no computation. No computation means no energy consumption. The system only expends power when information actually changes. For applications like CubeSats operating on limited battery power, brain-computer interfaces, edge devices, or any system where energy constraints matter, this architectural difference matters.</p>
-
-                    <p>The human brain consumes roughly 20 watts. It does this not because neurons are individually efficient, but because the brain only activates the circuits it needs, when it needs them. When you glance at a pile of clothes and identify their color, your visual cortex processes that information in milliseconds without engaging the computational machinery required for complex numerical problems. The architecture is task-adaptive. The Non-PU replicates this principle.</p>
-
-                    <p>One of my demonstration systems involves associative memory with image repair. If you show the system a corrupted or partial image, it reconstructs the complete memory. This differs from how machine learning image inpainting works.</p>
-
-                    <p>A machine learning system trained on millions of images will hallucinate statistically likely pixels to fill in missing regions. It is guessing based on patterns it has seen before. My system does not guess. It has encoded the memory as a stable state in an energy landscape. When you present a corrupted image, you are placing the system near the edge of a valley. The physical dynamics of the spiking network naturally settle into the stable attractor state, which is the complete memory. This is how biological memory retrieval is theorized to function. The network does not predict. It physically converges.</p>
-
-                    <p>I am designing the hardware architecture itself. I am defining how memory flows through the system, how parallel processing occurs, how logic gates connect, and how neurons communicate through timed electrical spikes. I am building a Neuronal Processing Unit from first principles using FPGAs, simulating the differential equations that govern biological neurons, and implementing synaptic plasticity through Spike-Timing-Dependent Plasticity.</p>
-
-                    <p>Spike-Timing-Dependent Plasticity is Hebbian learning. It is the biological principle that neurons that fire together, wire together. It happens locally at each synapse based on the precise timing of spikes, not globally through a software optimization algorithm. This is not reinforcement learning in the machine learning sense. This is how biological brains learn.</p>
+                    <div class="prereq-img"><img src="assets/prereq-1.png" alt=""><span class="img-caption"></span></div>
                 </div>
 
-                <div class="prereq-images">
-                    <img src="assets/35353535121/1.gif" alt="Biological simulation illustration">
-                    <img src="assets/35353535121/2.png" alt="Spiking neural network diagram">
-                    <img src="assets/35353535121/3.png" alt="Neuromorphic architecture">
-                    <img src="assets/35353535121/4.png" alt="FPGA implementation">
+                <div class="prereq-row">
+                    <p>The current industry focuses on Artificial Neural Networks, Large Language Models, machine learning algorithms, and reinforcement learning. These are statistical abstractions that run on Graphical Processing Units. Whether using an NVIDIA H100 or a GTX 5000, whether running different models or frameworks, the underlying physical logic circuit remains identical. The GPU executes the same matrix multiplications, consumes the same power, and operates at the same architectural level. When a language model is asked what zero multiplied by zero equals, the GPU burns its full capacity calculating that answer. When asked to describe the color of a shirt, it burns the same energy. The hardware does not distinguish between trivial and complex queries. It calculates everything with equal computational expense.</p>
+                    <div class="prereq-img"><img src="assets/35353535121/1.gif" alt=""><span class="img-caption">Figure 1. Animated diagram showing the firing dynamics of a Spiking Neuronal Network, compared with a traditional artificial neural network.</span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p>My work diverges from this approach. I am not interested in matrix multiplication or copying pre-trained models and running inference on Google Colab or remote data centers using the same logic circuits. My work focuses on a different paradigm entirely.</p>
+                    <div class="prereq-img"><img src="assets/35353535121/2.gif" alt=""><span class="img-caption">Fig 2. Animated diagram showing the matrix multiplications and semantic reasoning of Artifical Neural Networks.</span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p>When searching for "Neuronal Processing Unit" or "Non-PU" on Google, Bing, Yahoo, or any search engine as of 2026, no results appear. This terminology does not exist in current research literature. I am coining this term to mark a fundamental architectural and philosophical departure from the industry-standard Neural Processing Unit.</p>
+                    <div class="prereq-img"><img src="assets/prereq-4.png" alt=""><span class="img-caption"></span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p>The industry standard NPU is designed for machine learning. It relies on matrix multiplications, backpropagation, and reinforcement learning algorithms running on static data. It is a mathematical abstraction. The Non-PU is designed for Biological Simulation. It does not use machine learning in the conventional sense. It does not use matrix multiplications. It does not use reinforcement learning as an algorithmic training procedure. Instead, it relies on Spiking Neural Networks and the dynamic weighting of neurons through synaptic plasticity. It uses differential equations to model the voltage and timing of actual biological neurons.</p>
+                    <div class="prereq-img"><img src="assets/prereq-5.png" alt=""><span class="img-caption"></span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p>The interesting distinction is that while datacenters become more capable by multiplying the number of GPUs they contain, this linear scaling approach is not how ultra power-efficient NonPUs operate. The NonPU architecture scales through connectivity and Logic Elements, not through parallel matrix engines.</p>
+                    <div class="prereq-img"><img src="assets/prereq-6.png" alt=""><span class="img-caption"></span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p>An Artificial Neural Network calculates. It takes a static snapshot of numbers, multiplies them by learned weights, and produces an output. It has no concept of time. It has no concept of physical dynamics. It is purely mathematical abstraction.</p>
+                    <div class="prereq-img"><img src="assets/prereq-7.png" alt=""><span class="img-caption"></span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p>A Spiking Neuronal Network simulates. My system implements the Izhikevich neuron model, solving differential equations in real time. Each neuron has a membrane voltage that rises and falls. Each neuron has a refractory period where it cannot fire again, just like biological neurons. Each neuron communicates through discrete electrical spikes, not through continuous numerical values. This is not an approximation of intelligence through statistics. This is a replication of the physics of neural computation.</p>
+                    <div class="prereq-img"><img src="https://docs.neuroml.org/_images/example-single-izhikevich2007cell-sim-v.png" alt=""><span class="img-caption">Calculating spiking and unstable or stable behaviors of neurons using IzhiKevich Model<br>cite: Izhikevich.org website</span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p>When an ANN processes an image, it calculates the probability distribution of what that image represents. When the Non-PU processes an image, it simulates the physical dynamics of a brain circuit reacting to that image in real time.</p>
+                    <div class="prereq-img"><img src="assets/prereq-9.png" alt=""><span class="img-caption"></span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p>Organizations like NASA and defense research agencies are interested in neuromorphic computing because of energy efficiency.</p>
+                    <div class="prereq-img"><img src="assets/prereq-10.png" alt=""><span class="img-caption"></span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p>A GPU consumes approximately 300 watts of power continuously, regardless of the computational workload. If the input is a completely black image, the GPU still calculates zero multiplied by zero millions of times per second. It burns energy calculating nothing. This is architectural waste.</p>
+                    <div class="prereq-img"><img src="assets/prereq-11.png" alt=""><span class="img-caption"></span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p>The Non-PU is event-driven. If a region of an image is black, no neurons in that region spike. No spikes means no computation. No computation means no energy consumption. The system only expends power when information actually changes. For applications like CubeSats operating on limited battery power, brain-computer interfaces, edge devices, or any system where energy constraints matter, this architectural difference matters.</p>
+                    <div class="prereq-img"><img src="assets/prereq-12.png" alt=""><span class="img-caption"></span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p>The human brain consumes roughly 20 watts. It does this not because neurons are individually efficient, but because the brain only activates the circuits it needs, when it needs them. When you glance at a pile of clothes and identify their color, your visual cortex processes that information in milliseconds without engaging the computational machinery required for complex numerical problems. The architecture is task-adaptive. The Non-PU replicates this principle.</p>
+                    <div class="prereq-img"><img src="assets/prereq-13.png" alt=""><span class="img-caption"></span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p>One of my demonstration systems involves associative memory with image repair. If you show the system a corrupted or partial image, it reconstructs the complete memory. This differs from how machine learning image inpainting works.</p>
+                    <div class="prereq-img"><img src="assets/prereq-14.png" alt=""><span class="img-caption"></span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p>A machine learning system trained on millions of images will hallucinate statistically likely pixels to fill in missing regions. It is guessing based on patterns it has seen before. My system does not guess. It has encoded the memory as a stable state in an energy landscape. When you present a corrupted image, you are placing the system near the edge of a valley. The physical dynamics of the spiking network naturally settle into the stable attractor state, which is the complete memory. This is how biological memory retrieval is theorized to function. The network does not predict. It physically converges.</p>
+                    <div class="prereq-img"><img src="assets/prereq-15.png" alt=""><span class="img-caption"></span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p>I am designing the hardware architecture itself. I am defining how memory flows through the system, how parallel processing occurs, how logic gates connect, and how neurons communicate through timed electrical spikes. I am building a Neuronal Processing Unit from first principles using FPGAs, simulating the differential equations that govern biological neurons, and implementing synaptic plasticity through Spike-Timing-Dependent Plasticity.</p>
+                    <div class="prereq-img"><img src="assets/prereq-16.png" alt=""><span class="img-caption"></span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p>Spike-Timing-Dependent Plasticity is Hebbian learning. It is the biological principle that neurons that fire together, wire together. It happens locally at each synapse based on the precise timing of spikes, not globally through a software optimization algorithm. This is not reinforcement learning in the machine learning sense. This is how biological brains learn.</p>
+                    <div class="prereq-img"><img src="assets/prereq-17.png" alt=""><span class="img-caption"></span></div>
                 </div>
             </div>
         </section>
