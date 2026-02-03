@@ -158,6 +158,69 @@
             width: 100%;
             height: auto;
             display: block;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .prereq-row .prereq-img .img-wrapper {
+            position: relative;
+            display: inline-block;
+            width: 100%;
+        }
+
+        .prereq-row .prereq-img .img-wrapper::after {
+            content: '⛶';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 2rem;
+            color: #fff;
+            background: rgba(0, 0, 0, 0.6);
+            padding: 0.5rem 0.75rem;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .prereq-row .prereq-img .img-wrapper:hover::after {
+            opacity: 1;
+        }
+
+        .prereq-row .prereq-img .img-wrapper:hover img {
+            opacity: 0.8;
+        }
+
+        .img-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .img-overlay.active {
+            display: flex;
+        }
+
+        .img-overlay img {
+            max-width: 90%;
+            max-height: 90%;
+            object-fit: contain;
+        }
+
+        .img-overlay .close-btn {
+            position: absolute;
+            top: 1rem;
+            right: 1.5rem;
+            font-size: 2rem;
+            color: #fff;
+            cursor: pointer;
         }
 
         .prereq-row .prereq-img .img-caption {
@@ -294,7 +357,42 @@
                 </div>
             </div>
         </section>
+
+        <div class="img-overlay" id="imgOverlay">
+            <span class="close-btn">&times;</span>
+            <img src="" alt="" id="overlayImg">
+        </div>
       
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const overlay = document.getElementById('imgOverlay');
+            const overlayImg = document.getElementById('overlayImg');
+            const images = document.querySelectorAll('.prereq-img img');
+
+            images.forEach(function(img) {
+                const wrapper = document.createElement('div');
+                wrapper.className = 'img-wrapper';
+                img.parentNode.insertBefore(wrapper, img);
+                wrapper.appendChild(img);
+
+                img.addEventListener('click', function() {
+                    overlayImg.src = this.src;
+                    overlay.classList.add('active');
+                });
+            });
+
+            overlay.addEventListener('click', function() {
+                overlay.classList.remove('active');
+            });
+
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    overlay.classList.remove('active');
+                }
+            });
+        });
+    </script>
 </body>
 </html>
