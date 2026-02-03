@@ -3,95 +3,257 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Coming Soon</title>
+    <title>Documents - Phillips Academy Andover</title>
+    <meta name="description" content="Document archive for Phillips Academy Andover">
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
+        * {
             margin: 0;
-            background-color: #f5f5f5;
-            text-align: center;
+            padding: 0;
+            box-sizing: border-box;
         }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+            line-height: 1.6;
+            color: #000;
+            background-color: #fff;
+            min-height: 100vh;
+            padding: 2rem;
+        }
+
         .container {
-            padding: 40px;
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 0 1rem;
         }
+
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid #000;
+        }
+
         h1 {
-            color: #333;
-            margin-bottom: 20px;
+            font-size: 1.75rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
         }
-        .countdown {
+
+        .subtitle {
+            color: #000;
+            font-size: 0.95rem;
+        }
+
+        .documents-list {
             display: flex;
-            justify-content: center;
-            gap: 20px;
-            margin-top: 30px;
+            flex-direction: column;
+            gap: 2rem;
         }
-        .countdown-item {
-            background-color: #333;
+
+        .document-item {
+            border: 1px solid #000;
+            padding: 1.25rem;
+        }
+
+        .document-name {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .document-description {
+            color: #000;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .document-note {
+            color: #000;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .pdf-embed {
+            width: 100%;
+            height: 800px;
+            border: 1px solid #000;
+            margin-bottom: 1rem;
+            background-color: #fff;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.6rem 1rem;
+            border: 1px solid #000;
+            font-size: 0.9rem;
+            cursor: pointer;
+            text-decoration: none;
+            font-family: inherit;
+            background-color: #fff;
+            color: #000;
+        }
+
+        .btn:hover {
+            background-color: #000;
             color: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            min-width: 80px;
         }
-        .countdown-item span {
-            display: block;
-            font-size: 36px;
-            font-weight: bold;
+
+        .back-link {
+            display: inline-block;
+            color: #000;
+            margin-bottom: 2rem;
+            font-size: 0.9rem;
         }
-        .countdown-item label {
-            font-size: 14px;
-            text-transform: uppercase;
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 600px) {
+            body {
+                padding: 1rem;
+            }
+
+            .button-group {
+                flex-direction: column;
+            }
+
+            .btn {
+                text-align: center;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Dear Academy, This Page Will Be Updated Soon.</h1>
-    
-        <div class="countdown">
-            <div class="countdown-item">
-                <span id="days">3</span>
-                <label>Days</label>
+        <a href="../../index.html" class="back-link">Back to Home</a>
+
+        <header>
+            <h1><span style="color: #0031A7;">Phillips Academy Andover</span></h1>
+            
+            <p class="subtitle"></p>
+        </header>
+
+        <div class="documents-list">
+            <!-- Document 1: USACO -->
+            <div class="document-item">
+                <div class="document-name">United States of America Computing Olympiad Platinum Divisioner</div>
+                <p class="document-description">Achieved Platinum status (the highest competitive tier) in the USA Computing Olympiad, placing in the top 2% of 10,000+ global participants.
+Ranked among the most advanced 200 high school programmers in the United States and the world, demonstrating mastery in advanced data structures and algorithmic optimization in DP, Graph Theory, and Computational Geometry. Wiling to participate in the Sri Lankan National Olympiad in Informatics (NOI) Finals in March on the road towards IOI.</p>
+                <iframe class="pdf-embed" src="docs/USACO.pdf" title="USACO Document"></iframe>
+                <div class="button-group">
+                    <a href="docs/USACO.pdf" download class="btn">Download</a>
+                    <a href="docs/USACO.pdf" target="_blank" class="btn">View in New Tab</a>
+                </div>
             </div>
-            <div class="countdown-item">
-                <span id="hours">00</span>
-                <label>Hours</label>
+
+            <!-- Document 2: Email -->
+               <div class="document-item">
+                <div class="document-name">IEEE</div>
+                <p class="document-description">Acceptance notification to the IEEE SouthEastCon 2026 in AL, USA Under Track 5</p>
+                <iframe class="pdf-embed" src="docs/email3.pdf" title="Email Document"></iframe>
+                <div class="button-group">
+                    <a href="docs/email.pdf" download class="btn">Download</a>
+                    <a href="docs/email.pdf" target="_blank" class="btn">View in New Tab</a>
+                </div>
             </div>
-            <div class="countdown-item">
-                <span id="minutes">00</span>
-                <label>Minutes</label>
+
+            <div class="document-item">
+                <div class="document-name">IEEE</div>
+                <p class="document-description">Acceptance notification to the IEEE ESCI Conference.</p>
+                <iframe class="pdf-embed" src="docs/email.pdf" title="Email Document"></iframe>
+                <div class="button-group">
+                    <a href="docs/email.pdf" download class="btn">Download</a>
+                    <a href="docs/email.pdf" target="_blank" class="btn">View in New Tab</a>
+                </div>
             </div>
-            <div class="countdown-item">
-                <span id="seconds">00</span>
-                <label>Seconds</label>
+
+            <!-- Document 3: Email 2 -->
+            <div class="document-item">
+                <div class="document-name">email2.pdf</div>
+                <p class="document-description">Additional acceptance notification to the IEEE ESCI Conference.</p>
+                <iframe class="pdf-embed" src="docs/email2.pdf" title="Email 2 Document"></iframe>
+                <div class="button-group">
+                    <a href="docs/email2.pdf" download class="btn">Download</a>
+                    <a href="docs/email2.pdf" target="_blank" class="btn">View in New Tab</a>
+                </div>
+            </div>
+
+            <!-- Document 4: School Ordinary Levels -->
+            <div class="document-item">
+                <div class="document-name">schoolOrdinaryLevels.pdf</div>
+                <p class="document-description">National Ordinary Level Examination results and other related documents.</p>
+                <iframe class="pdf-embed" src="docs/schoolOrdinaryLevels.pdf" title="School Ordinary Levels"></iframe>
+                <div class="button-group">
+                    <a href="docs/schoolOrdinaryLevels.pdf" download class="btn">Download</a>
+                    <a href="docs/schoolOrdinaryLevels.pdf" target="_blank" class="btn">View in New Tab</a>
+                </div>
+            </div>
+
+            <!-- Document 5: DeSilva Visa Letter -->
+            <div class="document-item">
+                <div class="document-name">DeSilva Visa Letter.pdf</div>
+                <p class="document-description">Official letter issued to the U.S. Embassy, Confirming my Invitation</p>
+                <iframe class="pdf-embed" src="docs/DeSilva Visa Letter.pdf" title="DeSilva Visa Letter"></iframe>
+                <div class="button-group">
+                    <a href="docs/DeSilva Visa Letter.pdf" download class="btn">Download</a>
+                    <a href="docs/DeSilva Visa Letter.pdf" target="_blank" class="btn">View in New Tab</a>
+                </div>
+            </div>
+
+            <!-- Document 6: SLIIT CodeFest, CodeJam -->
+            <div class="document-item">
+                <div class="document-name">SLIIT CodeFest, CodeJam.pdf</div>
+                <p class="document-description">Competitive programming local contest results from the past.</p>
+                <iframe class="pdf-embed" src="docs/SLIIT CodeFest, CodeJam.pdf" title="SLIIT CodeFest, CodeJam"></iframe>
+                <div class="button-group">
+                    <a href="docs/SLIIT CodeFest, CodeJam.pdf" download class="btn">Download</a>
+                    <a href="docs/SLIIT CodeFest, CodeJam.pdf" target="_blank" class="btn">View in New Tab</a>
+                </div>
+            </div>
+
+            <!-- Document 7: Patent Pending Document -->
+            <div class="document-item">
+                <div class="document-name">Patent Pending Document.pdf</div>
+                <p class="document-description">Electronic payment receipt for the United States Patent and Trademark Office (USPTO). This document includes the patent file, patent number, patent pending status, diagrams, graphs, and schematics.</p>
+                <p class="document-note">Note: In the additional information PDF on page 17, I have mistakenly mentioned "granted patent status" - this should be corrected to "granted patent pending status" legally. This is the patent pending document.</p>
+                <p class="document-note">For an in-depth review of this research project, please visit the multimedia link which includes a presentation video and other materials.</p>
+                <iframe class="pdf-embed" src="docs/Untitled document (3).pdf" title="Patent Pending Document"></iframe>
+                <div class="button-group">
+                    <a href="docs/Untitled document (3).pdf" download class="btn">Download</a>
+                    <a href="docs/Untitled document (3).pdf" target="_blank" class="btn">View in New Tab</a>
+                </div>
+            </div>
+
+            <!-- Document 8: Litha, 2024 -->
+            <div class="document-item">
+                <div class="document-name">Litha, 2024</div>
+                <p class="document-description">LITHA 2024 - An initiative by Neksha DeSilva.</p>
+                <iframe class="pdf-embed" src="docs/Litha2024.pdf" title="Litha, 2024"></iframe>
+                <div class="button-group">
+                    <a href="docs/Litha2024.pdf" download class="btn">Download</a>
+                    <a href="docs/Litha2024.pdf" target="_blank" class="btn">View in New Tab</a>
+                </div>
+            </div>
+
+            <!-- Document 9: DofE Summary -->
+            <div class="document-item">
+                <div class="document-name">DofE summery.pdf</div>
+                <p class="document-description">Duke of Edinburgh's International Award - Memorable experiences PDF document.</p>
+                <iframe class="pdf-embed" src="docs/DofE summery.pdf" title="DofE Summary"></iframe>
+                <div class="button-group">
+                    <a href="docs/DofE summery.pdf" download class="btn">Download</a>
+                    <a href="docs/DofE summery.pdf" target="_blank" class="btn">View in New Tab</a>
+                </div>
             </div>
         </div>
     </div>
-
-    <script>
-        const countdownDate = new Date().getTime() + (3 * 24 * 60 * 60 * 1000);
-
-        const countdown = setInterval(function() {
-            const now = new Date().getTime();
-            const distance = countdownDate - now;
-
-            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-            document.getElementById("days").textContent = days;
-            document.getElementById("hours").textContent = hours.toString().padStart(2, '0');
-            document.getElementById("minutes").textContent = minutes.toString().padStart(2, '0');
-            document.getElementById("seconds").textContent = seconds.toString().padStart(2, '0');
-
-            if (distance < 0) {
-                clearInterval(countdown);
-                document.querySelector('.countdown').innerHTML = "<p>The wait is over!</p>";
-            }
-        }, 1000);
-    </script>
 </body>
 </html>
