@@ -265,6 +265,53 @@
             opacity: 1;
         }
 
+        .term-link {
+            display: inline;
+            border: 1px dashed #000;
+            padding: 1px 3px;
+            margin: 0 1px;
+            position: relative;
+            cursor: help;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .term-link:hover {
+            background-color: #f0f0f0;
+        }
+
+        .term-link .tooltip {
+            visibility: hidden;
+            position: absolute;
+            bottom: 125%;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #000;
+            color: #fff;
+            padding: 0.75rem 1rem;
+            border-radius: 4px;
+            font-size: 1rem;
+            white-space: nowrap;
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .term-link .tooltip::after {
+            content: "";
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            border: 5px solid transparent;
+            border-top-color: #000;
+        }
+
+        .term-link:hover .tooltip {
+            visibility: visible;
+            opacity: 1;
+        }
+
         @media (max-width: 768px) {
             .prereq-row {
                 flex-direction: column;
@@ -312,7 +359,7 @@
                 </div>
 
                 <div class="prereq-row">
-                    <p>The current industry focuses on Artificial Neural Networks, Large Language Models, machine learning algorithms, and reinforcement learning. These are statistical abstractions that run on Graphical Processing Units. Whether using an NVIDIA H100 or a GTX 5000, whether running different models or frameworks, the underlying physical logic circuit remains identical. The GPU executes the same matrix multiplications, consumes the same power, and operates at the same architectural level. When a language model is asked what zero multiplied by zero equals, the GPU burns its full capacity calculating that answer. When asked to describe the color of a shirt, it burns the same energy. The hardware does not distinguish between trivial and complex queries. It calculates everything with equal computational expense.</p>
+                    <p>The current industry focuses on <span class="term-link">Artificial Neural Networks<span class="tooltip">Statistical models inspired by biological neural networks, trained using backpropagation and gradient descent</span></span>, Large Language Models, machine learning algorithms, and reinforcement learning. These are statistical abstractions that run on Graphical Processing Units. Whether using an <span class="term-link">NVIDIA H100<span class="tooltip">High-performance GPU with 80GB HBM3 memory, designed for AI training and inference workloads</span></span> or a GTX 5000, whether running different models or frameworks, the underlying physical logic circuit remains identical. The GPU executes the same <span class="term-link">matrix multiplications<span class="tooltip">Mathematical operations multiplying matrices, the fundamental computation in artificial neural networks</span></span>, consumes the same power, and operates at the same architectural level. When a language model is asked what zero multiplied by zero equals, the GPU burns its full capacity calculating that answer. When asked to describe the color of a shirt, it burns the same energy. The hardware does not distinguish between trivial and complex queries. It calculates everything with equal computational expense.</p>
                     <div class="prereq-img"><img src="assets/35353535121/1.gif" alt=""><span class="img-caption">Figure 1. Animated diagram showing the firing dynamics of a Spiking Neuronal Network, compared with a traditional artificial neural network.</span></div>
                 </div>
 
@@ -440,12 +487,19 @@
             <div class="prereq-content">
                 <div class="prereq-row">
                     <p>The implementation runs on an AC415 development board featuring the Intel Altera Cyclone IV EP4CE15 FPGA. This chip provides 15,408 logic elements total, 504 kilobits of embedded memory, and 56 hardware multipliers. The board includes 32 megabytes of external SDRAM and VGA output capability for visualization.</p>
-                    <div class="prereq-img"><img src="assets/hardware-1.png" alt=""><span class="img-caption">Figure 2: Photo of AC415 development board with Cyclone IV FPGA</span></div>
+                    <div class="prereq-img"><img src="assets/9834924794/83743i473948.png" alt=""><span class="img-caption">Figure 2: Photo of AC415 development board with Cyclone IV FPGA</span></div>
                 </div>
 
                 <div class="prereq-row">
                     <p>These constraints shape the entire architectural approach. A single Izhikevich neuron implemented directly in hardware requires differential equation solvers, multiplication units, state registers for membrane voltage and recovery variables, and threshold detection logic. Conservative estimates place the resource cost at 200 to 300 logic elements per neuron for a fully parallel implementation. Building even 50 neurons in parallel would consume the entire chip, leaving no resources for synaptic logic, memory interfaces, or output controllers.</p>
-                    <div class="prereq-img"><img src="assets/hardware-2.png" alt=""><span class="img-caption"></span></div>
+                    <div class="prereq-img">
+                        <img src="assets/9834924794/9387493749.png" alt="">
+                        <span class="img-caption">
+                            Although the Terasic DE10-Nano with Intel Altera Cyclone V FPGA is fully capable of simulating a much higher number of neurons, we have chosen the Cyclone IV over the Cyclone V to test this in an absolutely constrained environment and to demonstrate its energy efficiency. However, the Cyclone V is the minimum viable option for <span class="term-link"><a href="https://mag.openrockets.com/p/?article=the-new-era-of-neuromorphic-intelligence-and-organoid-impulses-ml0av7f3" target="_blank" rel="noopener">my bio-computing research</a><span class="tooltip">Click to Read the Article Published on a Non-profit Magazine</a></span> </span>because it contains 110,000 logic elements, a 500 MHz logic fabric, and, most importantly, a system-on-a-chip architecture. This allows us to run a separate operating system for space deployment, satellites, and other HLS tasks.
+                            <br><br>
+                          
+                        </span>
+                    </div>
                 </div>
 
                 <div class="prereq-row">
@@ -475,7 +529,7 @@
 
                 <div class="prereq-row">
                     <p>The model equations are solved using fixed-point arithmetic with 16-bit precision for state variables and 12-bit precision for parameters. Euler integration with a timestep of 1 millisecond provides acceptable accuracy for the target application while remaining implementable in hardware. More sophisticated integration methods like Runge-Kutta would improve accuracy but require multiple evaluation steps per update, which would reduce the effective network size given the time-multiplexing constraint.</p>
-                    <div class="prereq-img"><img src="assets/neuron-2.png" alt=""><span class="img-caption">Figure 5: Oscilloscope trace showing actual spike waveforms</span></div>
+                    <div class="prereq-img"><img src="assets/9834924794/9749274874.png" alt=""><span class="img-caption">Figure 5: Oscilloscope trace showing actual spike waveforms</span></div>
                 </div>
 
                 <div class="prereq-row">
@@ -501,7 +555,7 @@
 
                 <div class="prereq-row">
                     <p>Synaptic weights determine the strength of connection between neurons. In biological systems, these weights change through learning and experience. For this implementation, weights are calculated offline using a Hebbian learning principle. Neurons corresponding to pixels that frequently appear together in training images develop strong mutual connections. This creates an associative memory where the complete pattern becomes a stable attractor state in the network dynamics.</p>
-                    <div class="prereq-img"><img src="assets/network-2.png" alt=""><span class="img-caption">Figure 6: Visualization of synaptic weight matrix</span></div>
+                    <div class="prereq-img"><img src="assets/9834924794/78274902374938.png" alt=""><span class="img-caption">Figure 6: Visualization of synaptic weight matrix</span></div>
                 </div>
 
                 <div class="prereq-row">
