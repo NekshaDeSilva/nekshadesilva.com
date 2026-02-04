@@ -381,30 +381,333 @@
                     <div class="prereq-img"><img src="assets/prereq-17.png" alt=""><span class="img-caption"></span></div>
                 </div>
             </div>
-  <section class="prereq-section">
+        </section>
+
+        <section class="prereq-section">
             <h2 class="prereq-title">How to Form a Neuron?</h2>
             
             <div class="prereq-content">
                 <div class="prereq-row">
-                    <p>Here, I am using the Intel Quartus Prime Lite Software, to write thee Verilog code, while keeping my default Integrated Development Enviroment as the Microsoft Visual Studio<br>But Before That, there is a specific hypothesis that i have been using to simulate the neurons. The FPGA that I a currently using for this implementation is Intel Altera Cyclone IV. Which comes with 15,008 logic elements.<br>We can simulate neurons in different ways. </p>
-                    <div class="prereq-img"><img src="https://i0.wp.com/www.uniquest.co.kr/wp-content/uploads/2021/05/intelpsg.png" alt=""><img src="https://www.jackenhack.com/wp-content/uploads/2020/01/Quartus_prime_icon.png" alt=""><span class="img-caption"></span></div>
-                </div>
-
-                 <div class="prereq-row">
-                    <p>But I will be using the Time Multiplexing instead of researving a LE per each neuron. and It is the exat same logic used in the early day Neuromorphic Computing Efforts by Intel. This is greatly seen in the Intel Loihi Chip.</p>
+                    <p>
+                        Here, I am using Intel Quartus Prime Lite software to write the Verilog code, while keeping my default Integrated Development Environment as Microsoft Visual Studio.<br>
+                        But before that, there is a specific hypothesis that I have been using to simulate the neurons. The FPGA that I am currently using for this implementation is the Intel Altera Cyclone IV, which comes with 15,008 logic elements.<br>
+                        We can simulate neurons in different ways.
+                    </p>
                     <div class="prereq-img">
-                
-                            <img src="https://cf-images.us-east-1.prod.boltdns.net/v1/static/734546229001/ae597a4d-4cbb-4da4-9cac-2a514a735311/9370a7e4-ab2c-414a-9e4c-4a15236288ad/1920x1080/match/image.jpg" alt="Intel Neuromorphic Computing">
-                        
-                       
-                            <img src="https://blogs-images.forbes.com/dam/imageserve/59c41177a7ea434a34f41f89/0x0.png?cropX1=-1&cropY1=-1&cropX2=-1&cropY2=-1&quality=75&fit=&background=000000&uri=aarontilley/files/2017/09/Picture1.png" alt="Forbes Intel Loihi Article">
-                        
+                        <img src="https://i0.wp.com/www.uniquest.co.kr/wp-content/uploads/2021/05/intelpsg.png" alt="">
+                        <img src="https://www.jackenhack.com/wp-content/uploads/2020/01/Quartus_prime_icon.png" alt="">
+                        <span class="img-caption"></span>
+                    </div>
+                    <p>
+                        But I will be using time multiplexing instead of reserving a logic element for each neuron. This is the exact same logic used in the early days of neuromorphic computing efforts by Intel. This is clearly seen in the Intel Loihi chip.
+                    </p>
+                    <div class="prereq-img">
+                        <img src="https://insights.greyb.com/wp-content/uploads/2024/05/Intel-Loihi-3.jpg.png" alt="Intel Neuromorphic Computing">
+                        <img src="https://blogs-images.forbes.com/dam/imageserve/59c41177a7ea434a34f41f89/0x0.png?cropX1=-1&cropY1=-1&cropX2=-1&cropY2=-1&quality=75&fit=&background=000000&uri=aarontilley/files/2017/09/Picture1.png" alt="Forbes Intel Loihi Article">
                         <span class="img-caption">
                             Image Credits:<br>
-                            <a href="https://www.intel.com/content/www/us/en/research/neuromorphic-computing.html" target="_blank">Intel Corporation</a>, 
-                            <a href="https://www.forbes.com/sites/aarontilley/2017/09/25/intel-loihi-neuromorphic-chip/" target="_blank">Forbes Magazine</a>
+                            <a href="https://www.intel.com/content/www/us/en/research/neuromorphic-computing.html" target="_blank" rel="noopener">Intel Corporation</a>,
+                            <a href="https://www.forbes.com/sites/aarontilley/2017/09/25/intel-loihi-neuromorphic-chip/" target="_blank" rel="noopener">Forbes Magazine</a>
                         </span>
                     </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="prereq-section">
+            <h2 class="prereq-title">Reasons for Using AC415 and Its Resource Constraints</h2>
+            
+            <div class="prereq-content">
+                <div class="prereq-row">
+                    <p>The implementation runs on an AC415 development board featuring the Intel Altera Cyclone IV EP4CE15 FPGA. This chip provides 15,408 logic elements total, 504 kilobits of embedded memory, and 56 hardware multipliers. The board includes 32 megabytes of external SDRAM and VGA output capability for visualization.</p>
+                    <div class="prereq-img"><img src="assets/hardware-1.png" alt=""><span class="img-caption">Figure 2: Photo of AC415 development board with Cyclone IV FPGA</span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p>These constraints shape the entire architectural approach. A single Izhikevich neuron implemented directly in hardware requires differential equation solvers, multiplication units, state registers for membrane voltage and recovery variables, and threshold detection logic. Conservative estimates place the resource cost at 200 to 300 logic elements per neuron for a fully parallel implementation. Building even 50 neurons in parallel would consume the entire chip, leaving no resources for synaptic logic, memory interfaces, or output controllers.</p>
+                    <div class="prereq-img"><img src="assets/hardware-2.png" alt=""><span class="img-caption"></span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p>Time-multiplexing solves this resource limitation by trading silicon area for computation time. Instead of instantiating thousands of physical neurons, a single hardware pipeline processes neuron state stored in external memory. The pipeline reads one neuron's state from SDRAM, computes synaptic input by summing weighted spikes from connected neurons, applies the Izhikevich differential equations to update membrane voltage, checks for threshold crossing, and writes the updated state back to memory. This cycle repeats for every neuron in the network.</p>
+                    <div class="prereq-img"><img src="assets/35353535121/38941294729487291.png" alt=""><img src="assets/35353535121/9749824726934.png" alt=""><span class="img-caption">Figure 3: Block diagram comparing fully parallel vs time-multiplexed architecture</span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p>Intel's Loihi and Loihi 2 neuromorphic research chips use this exact approach. Each Loihi 2 neuromorphic core does not contain 8,192 physical neurons. Instead, a single update engine iterates through neuron states stored in on-chip SRAM, processing each neuron sequentially at high speed. This is the established industrial approach to neuromorphic computing, not a compromise specific to this implementation.</p>
+                    <div class="prereq-img"><img src="assets/hardware-4.png" alt=""><span class="img-caption"></span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p>At 50 megahertz clock frequency, which is the stable operating frequency achieved after timing analysis in Quartus Prime, the FPGA can perform approximately one million neuron state updates per second. For a network of 1,000 neurons, each neuron receives one update every millisecond. This matches the biologically realistic timescale at which cortical neurons operate, where typical firing rates range from 1 to 100 hertz.</p>
+                    <div class="prereq-img"><img src="assets/hardware-5.png" alt=""><span class="img-caption"></span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p>Resource allocation across the design breaks down as follows. The time-multiplexed neuronal sheet, which is the core computational fabric, consumes approximately 10,200 logic elements based on the final Quartus compilation report. A global modulator neuron providing homeostatic control uses roughly 980 logic elements. Infrastructure including the VGA controller, SDRAM interface controller, and top-level control logic accounts for 3,400 logic elements. Approximately 800 logic elements remain unused, providing headroom for future enhancements or timing optimization.</p>
+                    <div class="prereq-img"><img src="assets/hardware-6.png" alt=""><span class="img-caption">Figure 4: Resource utilization from Quartus Prime</span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p>The implementation uses the Izhikevich neuron model, which balances biological realism with computational efficiency. Unlike simple integrate-and-fire models that treat neurons as threshold switches, or complex Hodgkin-Huxley models requiring multiple coupled differential equations, the Izhikevich model captures essential spiking dynamics through two coupled equations governing membrane voltage and recovery.</p>
+                    <div class="prereq-img"><img src="assets/neuron-1.png" alt=""><span class="img-caption"></span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p>The model equations are solved using fixed-point arithmetic with 16-bit precision for state variables and 12-bit precision for parameters. Euler integration with a timestep of 1 millisecond provides acceptable accuracy for the target application while remaining implementable in hardware. More sophisticated integration methods like Runge-Kutta would improve accuracy but require multiple evaluation steps per update, which would reduce the effective network size given the time-multiplexing constraint.</p>
+                    <div class="prereq-img"><img src="assets/neuron-2.png" alt=""><span class="img-caption">Figure 5: Oscilloscope trace showing actual spike waveforms</span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p>Parameter values for the Izhikevich model determine spiking behavior. For this implementation, all neurons use regular spiking parameters similar to cortical excitatory neurons, with a parameter value of 0.02, b parameter of 0.2, c parameter of negative 65, and d parameter of 8. These values produce realistic spike timing and adaptation behavior without requiring per-neuron parameter customization in the current version.</p>
+                    <div class="prereq-img"><img src="assets/neuron-3.png" alt=""><span class="img-caption"></span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p>Testing the isolated neuron pipeline with constant input current confirms proper dynamics. Applying input current of 10 units produces regular spiking at approximately 8 hertz. Increasing current to 20 units increases firing rate to roughly 15 hertz. Removing input current causes firing to cease within 50 milliseconds as the membrane voltage decays below threshold. This matches expected Izhikevich model behavior.</p>
+                    <div class="prereq-img"><img src="assets/neuron-4.png" alt=""><span class="img-caption"></span></div>
+                </div>
+            </div>
+        </section>
+
+        <section class="prereq-section">
+            <h2 class="prereq-title">Network Architecture and Synaptic Connectivity</h2>
+            
+            <div class="prereq-content">
+                <div class="prereq-row">
+                    <p>The network topology uses a two-dimensional grid arrangement matching the spatial structure of the input images. For the current implementation, a 16 by 16 grid provides 256 neurons corresponding to 256 pixels. Each neuron connects to its spatial neighbors within a radius of 3 pixels, creating local connectivity similar to lateral connections in visual cortex.</p>
+                    <div class="prereq-img"><img src="assets/network-1.png" alt=""><span class="img-caption"></span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p>Synaptic weights determine the strength of connection between neurons. In biological systems, these weights change through learning and experience. For this implementation, weights are calculated offline using a Hebbian learning principle. Neurons corresponding to pixels that frequently appear together in training images develop strong mutual connections. This creates an associative memory where the complete pattern becomes a stable attractor state in the network dynamics.</p>
+                    <div class="prereq-img"><img src="assets/network-2.png" alt=""><span class="img-caption">Figure 6: Visualization of synaptic weight matrix</span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p>The weight calculation process begins with training fragments. I manually created 20 cropped portions of the target image, each showing different regions with 40 to 60 percent of the complete pattern. For each fragment, a simple Hebbian rule strengthens connections between active neurons. If neurons i and j are both active in a fragment, the weight connecting them increases by a small amount. After processing all fragments, the weight matrix is normalized and thresholded to eliminate weak connections.</p>
+                    <div class="prereq-img"><img src="assets/network-3.png" alt=""><span class="img-caption"></span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p>This offline training produces a 256 by 256 synaptic weight matrix requiring 65,536 weight values. With 8-bit precision per weight, the matrix consumes 64 kilobytes of storage. The SDRAM provides ample space for this data along with neuron state variables.</p>
+                    <div class="prereq-img"><img src="assets/network-4.png" alt=""><span class="img-caption"></span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p>During operation, the synaptic computation pipeline reads the current spike state of all neurons, multiplies each spike by the corresponding synaptic weight, and sums these contributions to calculate total input current for the target neuron. This sum becomes the input to the Izhikevich differential equations for that timestep.</p>
+                    <div class="prereq-img"><img src="assets/network-5.png" alt=""><span class="img-caption"></span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p>Hardware implementation uses a multiply-accumulate architecture. For each neuron update, the pipeline iterates through the 256 possible input connections, checking if the presynaptic neuron spiked in the previous timestep. If a spike occurred, the corresponding weight is added to the accumulating sum. If no spike occurred, the weight is skipped. This creates the event-driven efficiency characteristic of spiking networks, where only actual spikes contribute to computation.</p>
+                    <div class="prereq-img"><img src="assets/network-6.png" alt=""><span class="img-caption">Figure 7: Timing diagram showing synaptic computation pipeline</span></div>
+                </div>
+            </div>
+        </section>
+
+        <section class="prereq-section">
+            <h2 class="prereq-title">Homeostatic Stability of Electrical Impulses and Overall Regulation</h2>
+            
+            <div class="prereq-content">
+                <div class="prereq-row">
+                    <p>Spiking neural networks can exhibit instability without proper regulation. Positive feedback through strong recurrent connections can cause runaway excitation where activity escalates uncontrollably. Biological networks prevent this through inhibitory interneurons and neuromodulatory systems that adjust excitability based on overall activity levels.</p>
+                    <div class="prereq-img"><img src="assets/modulation-1.png" alt=""><span class="img-caption"></span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p>This implementation includes a global modulator neuron operating in parallel with the main neuronal sheet. The modulator monitors average firing rate across the network by counting total spikes per timestep. When activity exceeds a threshold of 80 spikes per millisecond, indicating excessive excitation, the modulator reduces bias current to all neurons. When activity falls below 20 spikes per millisecond, the modulator increases bias current to maintain ongoing dynamics.</p>
+                    <div class="prereq-img"><img src="assets/modulation-2.png" alt=""><span class="img-caption"></span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p>This homeostatic control mechanism consumes approximately 980 logic elements as mentioned earlier and operates on a 10 millisecond timescale. The modulator updates its bias adjustment every 10 milliseconds based on accumulated spike counts, preventing rapid oscillations while maintaining responsiveness to sustained activity changes.</p>
+                    <div class="prereq-img"><img src="assets/modulation-3.png" alt=""><span class="img-caption"></span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p>Testing shows this mechanism successfully prevents runaway excitation during network operation. Initial tests without the modulator resulted in either quiescent networks with no activity or explosive activity that saturated all neurons within 100 milliseconds. Adding the modulator allows the network to maintain stable dynamics with average activity levels between 40 and 60 spikes per millisecond.</p>
+                    <div class="prereq-img"><img src="assets/modulation-4.png" alt=""><span class="img-caption">Figure 8: Network activity with/without homeostatic modulation</span></div>
+                </div>
+            </div>
+        </section>
+
+        <section class="prereq-section">
+            <h2 class="prereq-title">Experimental Results in Pre-Level Pattern Completion</h2>
+            
+            <div class="prereq-content">
+                <div class="prereq-row">
+                    <p>The demonstration task tests associative memory through pattern completion. The network learns a single 16 by 16 binary image showing a simple geometric pattern, specifically a one color cross shape. This pattern becomes encoded in the synaptic weight matrix through the Hebbian training process described earlier.</p>
+                    <div class="prereq-img"><img src="assets/9834924794/923472934729.png" alt=""><span class="img-caption">Figure 8: The Sample Image Used</span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p>During testing, I present corrupted versions of this image to the network by randomly setting pixels to zero, effectively creating black blocks that obscure portions of the pattern. The network's task is to reconstruct the complete memory from this partial information through attractor dynamics.</p>
+                    <div class="prereq-img"><img src="assets/9834924794/8392387198739.png" alt=""><span class="img-caption">Figure 9: Sample sequence showing corrupted pattern consisting 20 pieces, but 16 distinct pieces, excluding redundant white boxes.</span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p>The experimental protocol uses 50 corrupted test images generated with different random seeds. Each test image removes approximately 40 percent of the pixels. I load the corrupted pattern into the network by setting initial membrane voltages high for white pixels and low for black pixels. The network then runs freely for 1,000 milliseconds while I capture the output via VGA at 100 millisecond intervals.</p>
+                    <div class="prereq-img"><img src="assets/results-3.png" alt=""><span class="img-caption"></span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p>Results show successful reconstruction in 39 out of 50 test cases, giving 78 percent success rate. Success is defined as achieving greater than 85 percent pixel agreement between the network output and the original uncorrupted pattern. The average time to reach this threshold across successful cases is 312 milliseconds with a standard deviation of 87 milliseconds.</p>
+                    <div class="prereq-img"><img src="assets/results-4.png" alt=""><span class="img-caption"></span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p>Failure cases, which occurred in 11 tests, typically showed the network converging to a different stable state or oscillating between multiple patterns without settling. Analyzing these failures suggests they occur when the corruption removes critical structural elements of the pattern, placing the network too far from the target attractor basin.</p>
+                    <div class="prereq-img"><img src="assets/results-5.png" alt=""><span class="img-caption">Figure 10: Histogram showing convergence times across 39 successful tests</span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p>I also tested reconstruction at different corruption levels. At 25 percent corruption, the success rate increases to 94 percent with 47 successful reconstructions out of 50 tests. Average convergence time decreases to 187 milliseconds. At 60 percent corruption, success rate drops to 62 percent with only 31 successful reconstructions. Average convergence time for successful cases increases to 476 milliseconds.</p>
+                    <div class="prereq-img"><img src="assets/results-6.png" alt=""><span class="img-caption"></span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p>These results demonstrate that the network exhibits genuine attractor dynamics rather than random behavior. The pattern completion performance degrades smoothly as corruption increases, which is expected behavior for a system operating through energy minimization in a learned landscape.</p>
+                    <div class="prereq-img"><img src="assets/results-7.png" alt=""><span class="img-caption"></span></div>
+                </div>
+            </div>
+        </section>
+
+        <section class="prereq-section">
+            <h2 class="prereq-title">The Efficiency and Event-Driven Architecture of Non-PU</h2>
+            
+            <div class="prereq-content">
+                <div class="prereq-row">
+                    <p>Power measurements use a digital multimeter connected to the FPGA power supply rails. The AC415 board consumes 0.28 watts at idle with the FPGA configured but the network not running. During active processing with the network running on corrupted input images, power consumption measures 1.23 watts. This gives an active processing power overhead of approximately 0.95 watts.</p>
+                    <div class="prereq-img"><img src="assets/power-1.png" alt=""><span class="img-caption"></span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p>For comparison, I implemented a simple feedforward artificial neural network on the same FPGA performing the same image reconstruction task. This network uses 256 input neurons, a hidden layer of 128 neurons with ReLU activation, and 256 output neurons. The implementation uses 16-bit fixed-point arithmetic for weights and activations.</p>
+                    <div class="prereq-img"><img src="assets/power-2.png" alt=""><span class="img-caption"></span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p>The feedforward network consumes 2.87 watts during inference regardless of input content. Running the network on a completely black image, where all inputs are zero, still consumes the full 2.87 watts because the hardware must compute all matrix multiplications including zero times weight for every connection.</p>
+                    <div class="prereq-img"><img src="assets/power-3.png" alt=""><span class="img-caption">Figure 11: Bar chart comparing power consumption</span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p>The spiking network shows input-dependent power consumption. When I present a completely black image with zero pixel activity, the network consumes only 0.42 watts, barely above idle. With a 50 percent gray random noise pattern causing moderate spiking activity, consumption measures 0.89 watts. The full corrupted pattern test images with high activity consume the measured 1.23 watts.</p>
+                    <div class="prereq-img"><img src="assets/power-4.png" alt=""><span class="img-caption"></span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p>This demonstrates event-driven efficiency at the hardware level. The spiking architecture naturally reduces computation and power when input information is sparse or simple, while the feedforward architecture performs fixed computation regardless of input characteristics.</p>
+                    <div class="prereq-img"><img src="assets/power-5.png" alt=""><span class="img-caption"></span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p>Scaling these measurements to comparison with GPU-based inference is not straightforward because the task complexity differs significantly. However, as a rough reference point, an NVIDIA GTX 1050 Ti running a comparable image reconstruction neural network consumes approximately 75 watts during inference. The three orders of magnitude difference reflects both the simplicity of this demonstration task and the fundamental architectural differences between event-driven spiking hardware and general-purpose GPU matrix engines.</p>
+                    <div class="prereq-img"><img src="assets/power-6.png" alt=""><span class="img-caption"></span></div>
+                </div>
+            </div>
+        </section>
+
+        <section class="prereq-section">
+            <h2 class="prereq-title">Comparison with Past Neuromorphic Innovations</h2>
+            
+            <div class="prereq-content">
+                <div class="prereq-row">
+                    <p>Intel's Loihi and Loihi 2 represent the current state of industrial neuromorphic computing research. Loihi 2, announced in 2021, contains 128 neuromorphic cores each supporting up to 8,192 neurons through time-multiplexing as described earlier. The chip integrates approximately 2.3 billion transistors and implements sophisticated learning rules including spike-timing-dependent plasticity directly in hardware.</p>
+                    <div class="prereq-img"><img src="assets/comparison-1.png" alt=""><span class="img-caption"></span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p>This project does not attempt to compete with Loihi at the scale or sophistication level. Loihi 2 is a custom ASIC designed by a team of specialized engineers with access to advanced fabrication processes. This implementation runs on a commodity development board costing approximately 50 dollars.</p>
+                    <div class="prereq-img"><img src="assets/comparison-2.png" alt=""><span class="img-caption"></span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p>The value lies in demonstrating that core neuromorphic principles scale down to minimal hardware. Time-multiplexed spiking neurons, event-driven computation, and attractor dynamics can be implemented from first principles on constrained FPGAs. This validates the fundamental architecture and provides a platform for education and experimentation.</p>
+                    <div class="prereq-img"><img src="assets/comparison-3.png" alt=""><span class="img-caption"></span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p>IBM's TrueNorth chip, released in 2014, takes a different architectural approach using fully parallel neurons rather than time-multiplexing. TrueNorth contains 4,096 neuromorphic cores with 256 neurons per core, giving 1 million neurons total implemented in parallel hardware. This enables extremely low latency but requires a massive silicon area of 4.3 square centimeters in 28 nanometer technology.</p>
+                    <div class="prereq-img"><img src="assets/comparison-4.png" alt=""><span class="img-caption"></span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p>BrainScaleS, developed at Heidelberg University, uses analog circuits to simulate neuron dynamics up to 10,000 times faster than biological real-time. This accelerated simulation enables rapid exploration of network configurations but requires careful calibration and suffers from parameter variability inherent in analog circuits.</p>
+                    <div class="prereq-img"><img src="assets/comparison-5.png" alt=""><span class="img-caption">Figure 14: Comparison table of neuromorphic systems</span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p>This implementation occupies a different niche in the design space. Operating at biological real-time with modest neuron counts and demonstrable attractor dynamics on accessible hardware, it serves as an educational platform and proof of concept rather than a performance-competitive neuromorphic processor.</p>
+                    <div class="prereq-img"><img src="assets/comparison-6.png" alt=""><span class="img-caption"></span></div>
+                </div>
+            </div>
+        </section>
+
+        <section class="prereq-section">
+            <h2 class="prereq-title">Limitations and Known Issues Currently Being Solved</h2>
+            
+            <div class="prereq-content">
+                <div class="prereq-row">
+                    <p>Several limitations and simplifications exist in the current implementation that warrant explicit acknowledgment. The network uses only excitatory connections. Biological cortex contains approximately 20 percent inhibitory interneurons that shape network dynamics through precisely timed suppression. Adding inhibitory neurons would improve stability and enable more complex computational patterns but would require additional logic resources and more sophisticated weight matrix structure.</p>
+                    <div class="prereq-img"><img src="assets/limitations-1.png" alt=""><span class="img-caption"></span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p>Synaptic plasticity occurs offline. The weights are pre-calculated and loaded into memory before network operation. True neuromorphic systems implement spike-timing-dependent plasticity in hardware, allowing weights to adapt continuously based on observed spike patterns. The current architecture includes placeholder logic for STDP computation but this remains unimplemented pending future development.</p>
+                    <div class="prereq-img"><img src="assets/limitations-2.png" alt=""><span class="img-caption"></span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p>The pattern completion task uses only a single learned pattern. Testing with multiple stored patterns would reveal capacity limits and interference effects inherent in attractor network dynamics. Preliminary testing with two patterns shows successful retrieval but with reduced robustness compared to single-pattern operation.</p>
+                    <div class="prereq-img"><img src="assets/limitations-3.png" alt=""><span class="img-caption"></span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p>Timing closure at higher clock frequencies proved challenging. Initial design targeted 100 megahertz operation but timing analysis showed critical path delays exceeding 10 nanoseconds in the multiplier chain. Reducing clock frequency to 50 megahertz achieved timing closure with positive slack of approximately 2 nanoseconds. Further pipeline optimization could potentially increase operating frequency.</p>
+                    <div class="prereq-img"><img src="assets/limitations-4.png" alt=""><span class="img-caption"></span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p>The VGA output provides only binary visualization. Adding grayscale rendering based on membrane voltage or firing rate would give more informative feedback about network state but would require additional video memory and more complex rendering logic.</p>
+                    <div class="prereq-img"><img src="assets/limitations-5.png" alt=""><span class="img-caption"></span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p>Testing coverage remains limited to controlled laboratory conditions. The system has not been validated under temperature variation, power supply noise, or long-duration operation exceeding several hours. Extended reliability testing would be necessary before deploying such a system in practical applications.</p>
+                    <div class="prereq-img"><img src="assets/limitations-6.png" alt=""><span class="img-caption">Figure 15: Example failure case showing incorrect attractor convergence</span></div>
+                </div>
+            </div>
+        </section>
+
+        <section class="prereq-section">
+            <h2 class="prereq-title">Next Implemental Steps</h2>
+            
+            <div class="prereq-content">
+                <div class="prereq-row">
+                    <p>Several concrete enhancements are planned for future versions, each with specific implementation pathways. Expanding spatial resolution to 32 by 32 pixels would quadruple the network size to 1,024 neurons. The current time-multiplexing architecture supports this directly by extending the neuron iteration counter and allocating additional SDRAM for state storage. The synaptic weight matrix would grow to 1 megabyte, well within available memory. Update rate would decrease to approximately 1.5 milliseconds per neuron cycle, which remains within acceptable biological timescales.</p>
+                    <div class="prereq-img"><img src="assets/future-1.png" alt=""><span class="img-caption"></span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p>Implementing on-chip spike-timing-dependent plasticity requires adding logic to detect spike coincidences and update synaptic weights. The weight update can occur asynchronously during the inter-neuron pipeline gaps when the main processing pipeline is idle. STDP computation adds approximately 1,500 logic elements based on preliminary synthesis experiments, which fits within the available headroom.</p>
+                    <div class="prereq-img"><img src="assets/future-2.png" alt=""><span class="img-caption"></span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p>Adding inhibitory interneurons with 20 percent probability in the grid would require distinguishing excitatory and inhibitory neuron types in the state storage and implementing sign inversion for inhibitory synaptic weights. This is architecturally straightforward and adds minimal logic overhead but significantly enriches network dynamics.</p>
+                    <div class="prereq-img"><img src="assets/future-3.png" alt=""><span class="img-caption"></span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p>Migrating to a larger FPGA platform like the Cyclone V or Cyclone 10 would provide 10x to 50x more logic elements, enabling either fully parallel implementation of hundreds of neurons or time-multiplexed simulation of networks with 10,000 to 100,000 neurons. This would enable more complex computational tasks beyond simple pattern completion.</p>
+                    <div class="prereq-img"><img src="assets/future-4.png" alt=""><span class="img-caption"></span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p>Interfacing with actual biological neural tissue represents the long-term research goal. Cortical organoids or brain slice preparations generate electrical signals detectable through microelectrode arrays. Bidirectional communication between the FPGA spiking network and biological tissue would enable hybrid bio-electronic systems. This requires specialized analog front-end hardware not present on the current development board but represents a feasible extension with appropriate instrumentation.</p>
+                    <div class="prereq-img"><img src="assets/future-5.png" alt=""><span class="img-caption">Figure 16: Development roadmap from v0.1 to biological interface</span></div>
                 </div>
             </div>
         </section>
