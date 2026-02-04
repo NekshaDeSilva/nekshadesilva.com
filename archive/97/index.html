@@ -180,10 +180,25 @@
             padding: 0.5rem 0.75rem;
             opacity: 0;
             pointer-events: none;
+            transition: opacity 0.2s;
+                opacity: 0;
+            animation: anim982 2s linear 2;
         }
-
+      
+        @keyframes anim982 {
+            0% {
+            opacity: 0;
+            }
+            50% {
+            opacity: 1;
+            }
+            100% {
+            opacity: 0;
+            }
+        }
         .prereq-row .prereq-img .img-wrapper:hover::after {
             opacity: 1;
+            animation:none;
         }
 
         .prereq-row .prereq-img .img-wrapper:hover img {
@@ -197,7 +212,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.9);
+            background: rgba(255, 255, 255, 0.9);
             z-index: 9999;
             justify-content: center;
             align-items: center;
@@ -217,9 +232,11 @@
         .img-overlay .close-btn {
             position: absolute;
             top: 1rem;
-            right: 1.5rem;
-            font-size: 2rem;
-            color: #fff;
+            right: 2.5rem;
+            font-size: 3rem;
+            border-radius: 50%;
+           
+            color: #000000;
             cursor: pointer;
         }
 
