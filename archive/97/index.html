@@ -12,6 +12,11 @@
             box-sizing: border-box;
         }
 
+        html, body {
+            overflow-x: hidden;
+            max-width: 100%;
+        }
+
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
             line-height: 1.6;
@@ -291,7 +296,9 @@
             padding: 0.75rem 1rem;
             border-radius: 4px;
             font-size: 1rem;
-            white-space: nowrap;
+            white-space: normal;
+            max-width: 300px;
+            min-width: 200px;
             z-index: 1000;
             opacity: 0;
             transition: opacity 0.3s;
@@ -395,7 +402,7 @@
             
             <div class="prereq-content">
                 <div class="prereq-row">
-                    <p>This is not Machine Learning. This is Biological Simulation.</p>
+                    <p>This is not Backpropagation-Based Machine Learning. This is Biologically-Inspired Computation.</p>
                     <div class="prereq-img"><img src="assets/prereq-1.png" alt=""><span class="img-caption"></span></div>
                 </div>
 
@@ -410,12 +417,12 @@
                 </div>
 
                 <div class="prereq-row">
-                    <p>When searching for "Neuronal Processing Unit" or "Non-PU" on Google, Bing, Yahoo, or any search engine as of 2026, no results appear. This terminology does not exist in current research literature. I am coining this term to mark a fundamental architectural and philosophical departure from the industry-standard Neural Processing Unit.</p>
+                    <p>When searching for "Neuronal Processing Unit" or "Non-PU" on Google, Bing, Yahoo, or any search engine as of 2026, no results appear. This specific terminology does not exist in current research literature. I am proposing this term to distinguish biologically-faithful spiking neural network implementations from the industry-standard Neural Processing Unit, which typically refers to hardware accelerators for backpropagation-based artificial neural networks. The underlying concepts—spiking neural networks, neuromorphic computing, event-driven processing—are established research areas. This work presents a specific architectural implementation and nomenclature for educational and experimental purposes.</p>
                     <div class="prereq-img"><img src="assets/prereq-4.png" alt=""><span class="img-caption"></span></div>
                 </div>
 
                 <div class="prereq-row">
-                    <p>The industry standard NPU is designed for machine learning. It relies on matrix multiplications, <span class="term-link">backpropagation<span class="tooltip">NonPU does not use this. Instead of calculating gradients globally, NonPU implements local synaptic weight changes through STDP</span></span>, and <span class="term-link">reinforcement learning<span class="tooltip">NonPU does not use this as an algorithmic training procedure. Instead, it uses Spike-Timing-Dependent Plasticity</span></span> algorithms running on static data. It is a mathematical abstraction. The Non-PU is designed for Biological Simulation. It does not use machine learning in the conventional sense. It does not use matrix multiplications. It does not use reinforcement learning as an algorithmic training procedure. Instead, it relies on Spiking Neural Networks and the dynamic weighting of neurons through <span class="term-link">synaptic plasticity<span class="tooltip">In this implementation, weights are calculated offline using Hebbian learning from 20 cropped image fragments to create an associative memory</span></span>. It uses differential equations to model the voltage and timing of actual biological neurons.</p>
+                    <p>The industry standard NPU is designed for backpropagation-based machine learning. It relies on matrix multiplications, <span class="term-link">backpropagation<span class="tooltip">NonPU does not use this. Instead of calculating gradients globally, NonPU implements local synaptic weight changes through STDP</span></span>, and gradient descent algorithms running on static data. It is a mathematical abstraction. The Non-PU is designed for biologically-inspired computation. It does not use backpropagation or gradient-based optimization. It does not use matrix multiplications as its fundamental operation. Instead, it relies on Spiking Neural Networks and local synaptic learning rules through <span class="term-link">synaptic plasticity<span class="tooltip">In this implementation, weights are calculated offline using Hebbian learning from 20 cropped image fragments to create an associative memory</span></span>. Hebbian learning and STDP are forms of learning—just not the gradient descent paradigm that dominates current AI systems. It uses differential equations to model the voltage and timing of actual biological neurons.</p>
                     <div class="prereq-img"><img src="assets/prereq-5.png" alt=""><span class="img-caption"></span></div>
                 </div>
 
@@ -445,7 +452,7 @@
                 </div>
 
                 <div class="prereq-row">
-                    <p>A GPU consumes <span class="term-link">approximately 300 watts of power continuously<span class="tooltip">This is an approximate value. For example, GPUs like NVIDIA GeForce RTX 30 or RTX 40 series, or AMD Radeon RX 6000 or 7000 series can use 300 watts or more</span></span>, regardless of the computational workload. If the input is a completely black image, the GPU still calculates zero multiplied by zero millions of times per second. It burns energy calculating nothing. This is architectural waste.</p>
+                    <p>A GPU under load consumes <span class="term-link">approximately 300 watts of power<span class="tooltip">This is an approximate value for typical workload. For example, GPUs like NVIDIA GeForce RTX 30 or RTX 40 series, or AMD Radeon RX 6000 or 7000 series can use 300 watts or more under load, though modern GPUs do have dynamic voltage/frequency scaling that reduces power during lighter workloads</span></span>. The architectural constraint is that the GPU performs fixed-shape dense matrix operations whether the computation is meaningful or trivial. If the input is a completely black image, the GPU still calculates zero multiplied by zero millions of times per second. It burns energy calculating structurally identical operations regardless of informational content. This is architectural inefficiency.</p>
                     <div class="prereq-img"><img src="assets/prereq-11.png" alt=""><span class="img-caption"></span></div>
                 </div>
 
