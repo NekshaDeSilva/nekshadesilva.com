@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NonPU - The New, POwer Efficient Computing and HPC</title>
+    <title>NonPU - The New, Power Efficient Computing and HPC</title>
     <meta name="description" content="Document archive for Phillips Academy Andover">
     <style>
         * {
@@ -263,7 +263,7 @@
         .profile-link img {
            
             width: 8rem;
-            opacity: 0.7;
+            
         }
 
         .profile-link:hover img {
@@ -401,10 +401,7 @@
             <h2 class="prereq-title">You Should Read This Before Reading Further</h2>
             
             <div class="prereq-content">
-                <div class="prereq-row">
-                    <p>This is not Backpropagation-Based Machine Learning. This is Biologically-Inspired Computation.</p>
-                    <div class="prereq-img"><img src="assets/prereq-1.png" alt=""><span class="img-caption"></span></div>
-                </div>
+             
 
                 <div class="prereq-row">
                     <p>The current industry focuses on <span class="term-link">Artificial Neural Networks<span class="tooltip">Statistical models inspired by biological neural networks, trained using backpropagation and gradient descent</span></span>, Large Language Models, machine learning algorithms, and <span class="term-link">reinforcement learning<span class="tooltip">NonPU does not use this as an algorithmic training procedure. Instead, it uses Spike-Timing-Dependent Plasticity</span></span>. These are statistical abstractions that run on Graphical Processing Units. Whether using an <span class="term-link">NVIDIA H100<span class="tooltip">High-performance GPU with 80GB HBM3 memory, designed for AI training and inference workloads</span></span> or a GTX 5000, whether running different models or frameworks, the underlying physical logic circuit remains identical. The GPU executes the same <span class="term-link">matrix multiplications<span class="tooltip">Mathematical operations multiplying matrices, the fundamental computation in artificial neural networks</span></span> and operates at the same architectural level. Consider a concrete example: when running inference on a 7-billion parameter language model, the GPU must load and multiply through millions of weight parameters whether the input prompt is "What is 2+2?" or a complex multi-paragraph question. The batch size, memory bandwidth, and kernel structure remain fixed. While modern GPUs do vary power consumption with workload through dynamic voltage and frequency scaling, the underlying compute pattern—dense matrix operations over the full model—does not adapt to input complexity. The hardware processes structurally identical operations regardless of semantic difficulty.</p>
@@ -437,7 +434,7 @@
                 </div>
 
                 <div class="prereq-row">
-                    <p>A Spiking Neuronal Network simulates. My system implements the <span class="term-link">Izhikevich neuron model<span class="tooltip">This implementation uses the two-variable Izhikevich model to simulate 256 neurons in a 16x16 grid using time-multiplexing on the Cyclone IV FPGA</span></span>, solving differential equations in real time. Each neuron has a <span class="term-link">membrane voltage<span class="tooltip">The electrical potential difference across a neuron's cell membrane, which determines when the neuron fires a spike</span></span> that rises and falls. Each neuron has a refractory period where it cannot fire again, just like biological neurons. Each neuron communicates through discrete electrical spikes, not through continuous numerical values. This is not an approximation of intelligence through statistics. This is a replication of the physics of neural computation.</p>
+                    <p>A Spiking Neuronal Network simulates. My system implements the <span class="term-link">Izhikevich neuron model<span class="tooltip">This implementation uses the two-variable Izhikevich model to simulate 256 neurons in a 16x16 grid using time-multiplexing on the Cyclone IV FPGA</span></span>, solving differential equations in real time. Each neuron has a <span class="term-link">membrane voltage<span class="tooltip">The electrical potential difference across a neuron's cell membrane, which determines when the neuron fires a spike</span></span> that rises and falls. Each neuron has a refractory period where it cannot fire again, just like biological neurons. Each neuron communicates through discrete electrical spikes, not through continuous numerical values. This is not an approximation of intelligence through statistics. This is a hardware implementation of biophysically-inspired neuron dynamics.</p>
                     <div class="prereq-img"><img src="https://docs.neuroml.org/_images/example-single-izhikevich2007cell-sim-v.png" alt=""><span class="img-caption">Calculating spiking and unstable or stable behaviors of neurons using IzhiKevich Model<br>cite: Izhikevich.org website</span></div>
                 </div>
 
@@ -502,7 +499,7 @@
                 <div class="prereq-row">
                     <p>
                         Here, I am using Intel Quartus Prime Lite software to write the <span class="term-link">Verilog<span class="tooltip">The hardware description language used to implement the neuronal pipeline, synaptic computation, and VGA output on this FPGA</span></span> code, while keeping my default Integrated Development Environment as Microsoft Visual Studio.<br>
-                        But before that, there is a specific hypothesis that I have been using to simulate the neurons. The <span class="term-link">FPGA<span class="tooltip">This AC415 board uses Intel Altera Cyclone IV EP4CE15 with 15,408 logic elements to implement the time-multiplexed neuronal processing pipeline</span></span> that I am currently using for this implementation is the Intel Altera Cyclone IV, which comes with 15,008 logic elements.<br>
+                        But before that, there is a specific hypothesis that I have been using to simulate the neurons. The <span class="term-link">FPGA<span class="tooltip">This AC415 board uses Intel Altera Cyclone IV EP4CE15 with 15,408 logic elements to implement the time-multiplexed neuronal processing pipeline</span></span> that I am currently using for this implementation is the Intel Altera Cyclone IV, which comes with 15,408 logic elements.<br>
                         We can simulate neurons in different ways.
                     </p>
                     <div class="prereq-img">
@@ -567,7 +564,7 @@
 
                 <div class="prereq-row">
                     <p>Resource allocation across the design breaks down as follows. The time-multiplexed neuronal sheet, which is the core computational fabric, consumes approximately 10,200 logic elements based on the final Quartus compilation report. A global modulator neuron providing homeostatic control uses roughly 980 logic elements. Infrastructure including the VGA controller, SDRAM interface controller, and top-level control logic accounts for 3,400 logic elements. Approximately 800 logic elements remain unused, providing headroom for future enhancements or timing optimization.</p>
-                    <div class="prereq-img"><img src="assets/hardware-6.png" alt=""><span class="img-caption">Figure 4: Resource utilization from Quartus Prime</span></div>
+                    <div class="prereq-img"><img src="assets/37872489833/7348972492723.png" alt=""><span class="img-caption">Figure 4: Resource utilization from Quartus Prime</span></div>
                 </div>
 
                 <div class="prereq-row">
@@ -598,7 +595,7 @@
             <div class="prereq-content">
                 <div class="prereq-row">
                     <p>The network topology uses a two-dimensional grid arrangement matching the spatial structure of the input images. For the current implementation, a 16 by 16 grid provides 256 neurons corresponding to 256 pixels. Each neuron connects to its spatial neighbors within a radius of 3 pixels, creating local connectivity similar to lateral connections in visual cortex.</p>
-                    <div class="prereq-img"><img src="assets/network-1.png" alt=""><span class="img-caption"></span></div>
+                     <div class="prereq-img"><iframe src="https://drive.google.com/file/d/1l6X--abAkeWglfFs89j93432SFdLNpcg_y9p/preview" width="100%" height="200" style="border: none;" allow="autoplay"></iframe><span class="img-caption"></span></div>
                 </div>
 
                 <div class="prereq-row">
@@ -726,7 +723,7 @@
 
                 <div class="prereq-row">
                     <p>Exact watt values and scaling factors are intentionally omitted here, because they would be speculative until the bitstream compiles and the design runs stably on real hardware. Published GPU board powers (for example, 75 watts for an entry-level card) provide an approximate reference for the orders of magnitude involved, but the true value of this project is demonstrating the shape of the power curve: flat for matrix engines, activity-dependent for spiking hardware.</p>
-                    <div class="prereq-img"><img src="assets/9834924794/05285028498035.png" alt=""><span class="img-caption">Figure 11: Log scale highlights the large difference in power draw between the NonPU architecture, specifically utilizing the Cyclone IV FPGA, and entry-level consumer GPUs. Note that we measured the electrical power of one NonPU unit only, comprising the AC415 and Cyclone IV, under three activity states ranging from Idle to Medium and Heavy. To estimate the total power of a multi-unit NonPU deployment, we multiply these single-unit measurements by N, where N is the number of identical NonPU units running in parallel, while assuming roughly linear scaling and excluding extra system overhead such as radios, storage, and regulator losses. GPU values are shown as typical board power at "Idle", typical “medium workload” draw, and near-maximum draw which represents approximately or the board power limit for context. <b>This is not a task dependent performance scaling, but a direct watts comparison.</b></span></div>
+                    <div class="prereq-img"><img src="assets/9834924794/05285028498035.png" alt=""><span class="img-caption">Figure 11: Log scale highlights the large difference in power draw between the NonPU architecture, specifically utilizing the Cyclone IV FPGA, and entry-level consumer GPUs. Note: FPGA power values shown are estimated based on Cyclone IV datasheet specifications and expected activity levels, pending actual hardware measurements once the bitstream is stable. <b>All values shown are projections, not measured results.</b> GPU values are typical published board powers for entry-level cards. “” </span></div>
                 </div>
 
 
@@ -883,7 +880,7 @@
                     <div class="prereq-img"><img src="assets/357982598258/183471947.png" alt="">
                         <span class="img-caption">Compilation failure on Intel Questa</span>
                         <img src="assets/357982598258/947298347928743.png" alt=""><span class="img-caption">
-                            <img src="assets/357982598258/2468712463.png" alt=""><span class="img-caption"></span>Figure 15: Faliure Cases and Compilation Errors due to the Resource Constriants and Unknown reasons that are currently being debugged.</span></div>
+                            <img src="assets/357982598258/2468712463.png" alt=""><span class="img-caption">  <img src="assets/37872489833/74398274923748.png" alt=""><span class="img-caption"></span>Figure 15: Faliure Cases and Compilation Errors due to the Resource Constriants and Unknown reasons that are currently being debugged.</span></div>
                 </div>
             </div>
         </section>
@@ -938,7 +935,7 @@
        © 2026 Neksha DeSilva and www.nekshadesilva.com.
             <div class="profile-links">
                 <a href="https://www.hackerrank.com/profile/Www_com" target="_blank" class="profile-link">
-                    <img src="https://www.doit.com/wp-content/uploads/2023/06/1_jbcsrlrvfbdnbecw_ljf4g.png" alt="HackerRank">
+                    <img src="assets/357982598258/73649378342.png.jpg" alt="HackerRank">
                 </a>
                 <a href="https://codeforces.com/profile/Www.com" target="_blank" class="profile-link">
                     <img src="https://codeforces.com/predownloaded/0b/c8/0bc89d9bee888d9d2c0868ef37d33979960abc6f.png" alt="Codeforces">
