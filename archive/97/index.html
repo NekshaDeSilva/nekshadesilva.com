@@ -242,7 +242,7 @@
 
         .prereq-row .prereq-img .img-caption {
             font-size: 0.8rem;
-            color: #555;
+            color: #000000;
             margin-top: 0.25rem;
             text-align: center;
         }
@@ -400,7 +400,7 @@
                 </div>
 
                 <div class="prereq-row">
-                    <p>The current industry focuses on <span class="term-link">Artificial Neural Networks<span class="tooltip">Statistical models inspired by biological neural networks, trained using backpropagation and gradient descent</span></span>, Large Language Models, machine learning algorithms, and reinforcement learning. These are statistical abstractions that run on Graphical Processing Units. Whether using an <span class="term-link">NVIDIA H100<span class="tooltip">High-performance GPU with 80GB HBM3 memory, designed for AI training and inference workloads</span></span> or a GTX 5000, whether running different models or frameworks, the underlying physical logic circuit remains identical. The GPU executes the same <span class="term-link">matrix multiplications<span class="tooltip">Mathematical operations multiplying matrices, the fundamental computation in artificial neural networks</span></span>, consumes the same power, and operates at the same architectural level. When a language model is asked what zero multiplied by zero equals, the GPU burns its full capacity calculating that answer. When asked to describe the color of a shirt, it burns the same energy. The hardware does not distinguish between trivial and complex queries. It calculates everything with equal computational expense.</p>
+                    <p>The current industry focuses on <span class="term-link">Artificial Neural Networks<span class="tooltip">Statistical models inspired by biological neural networks, trained using backpropagation and gradient descent</span></span>, Large Language Models, machine learning algorithms, and <span class="term-link">reinforcement learning<span class="tooltip">NonPU does not use this as an algorithmic training procedure. Instead, it uses Spike-Timing-Dependent Plasticity</span></span>. These are statistical abstractions that run on Graphical Processing Units. Whether using an <span class="term-link">NVIDIA H100<span class="tooltip">High-performance GPU with 80GB HBM3 memory, designed for AI training and inference workloads</span></span> or a GTX 5000, whether running different models or frameworks, the underlying physical logic circuit remains identical. The GPU executes the same <span class="term-link">matrix multiplications<span class="tooltip">Mathematical operations multiplying matrices, the fundamental computation in artificial neural networks</span></span>, consumes the same power, and operates at the same architectural level. When a language model is asked what zero multiplied by zero equals, the GPU burns its full capacity calculating that answer. When asked to describe the color of a shirt, it burns the same energy. The hardware does not distinguish between trivial and complex queries. It calculates everything with equal computational expense.</p>
                     <div class="prereq-img"><img src="assets/35353535121/1.gif" alt=""><span class="img-caption">Figure 1. Animated diagram showing the firing dynamics of a Spiking Neuronal Network, compared with a traditional artificial neural network.</span></div>
                 </div>
 
@@ -415,7 +415,7 @@
                 </div>
 
                 <div class="prereq-row">
-                    <p>The industry standard NPU is designed for machine learning. It relies on matrix multiplications, backpropagation, and reinforcement learning algorithms running on static data. It is a mathematical abstraction. The Non-PU is designed for Biological Simulation. It does not use machine learning in the conventional sense. It does not use matrix multiplications. It does not use reinforcement learning as an algorithmic training procedure. Instead, it relies on Spiking Neural Networks and the dynamic weighting of neurons through synaptic plasticity. It uses differential equations to model the voltage and timing of actual biological neurons.</p>
+                    <p>The industry standard NPU is designed for machine learning. It relies on matrix multiplications, <span class="term-link">backpropagation<span class="tooltip">NonPU does not use this. Instead of calculating gradients globally, NonPU implements local synaptic weight changes through STDP</span></span>, and <span class="term-link">reinforcement learning<span class="tooltip">NonPU does not use this as an algorithmic training procedure. Instead, it uses Spike-Timing-Dependent Plasticity</span></span> algorithms running on static data. It is a mathematical abstraction. The Non-PU is designed for Biological Simulation. It does not use machine learning in the conventional sense. It does not use matrix multiplications. It does not use reinforcement learning as an algorithmic training procedure. Instead, it relies on Spiking Neural Networks and the dynamic weighting of neurons through <span class="term-link">synaptic plasticity<span class="tooltip">In this implementation, weights are calculated offline using Hebbian learning from 20 cropped image fragments to create an associative memory</span></span>. It uses differential equations to model the voltage and timing of actual biological neurons.</p>
                     <div class="prereq-img"><img src="assets/prereq-5.png" alt=""><span class="img-caption"></span></div>
                 </div>
 
@@ -430,7 +430,7 @@
                 </div>
 
                 <div class="prereq-row">
-                    <p>A Spiking Neuronal Network simulates. My system implements the Izhikevich neuron model, solving differential equations in real time. Each neuron has a membrane voltage that rises and falls. Each neuron has a refractory period where it cannot fire again, just like biological neurons. Each neuron communicates through discrete electrical spikes, not through continuous numerical values. This is not an approximation of intelligence through statistics. This is a replication of the physics of neural computation.</p>
+                    <p>A Spiking Neuronal Network simulates. My system implements the <span class="term-link">Izhikevich neuron model<span class="tooltip">This implementation uses the two-variable Izhikevich model to simulate 256 neurons in a 16x16 grid using time-multiplexing on the Cyclone IV FPGA</span></span>, solving differential equations in real time. Each neuron has a <span class="term-link">membrane voltage<span class="tooltip">The electrical potential difference across a neuron's cell membrane, which determines when the neuron fires a spike</span></span> that rises and falls. Each neuron has a refractory period where it cannot fire again, just like biological neurons. Each neuron communicates through discrete electrical spikes, not through continuous numerical values. This is not an approximation of intelligence through statistics. This is a replication of the physics of neural computation.</p>
                     <div class="prereq-img"><img src="https://docs.neuroml.org/_images/example-single-izhikevich2007cell-sim-v.png" alt=""><span class="img-caption">Calculating spiking and unstable or stable behaviors of neurons using IzhiKevich Model<br>cite: Izhikevich.org website</span></div>
                 </div>
 
@@ -445,12 +445,12 @@
                 </div>
 
                 <div class="prereq-row">
-                    <p>A GPU consumes approximately 300 watts of power continuously, regardless of the computational workload. If the input is a completely black image, the GPU still calculates zero multiplied by zero millions of times per second. It burns energy calculating nothing. This is architectural waste.</p>
+                    <p>A GPU consumes <span class="term-link">approximately 300 watts of power continuously<span class="tooltip">This is an approximate value. For example, GPUs like NVIDIA GeForce RTX 30 or RTX 40 series, or AMD Radeon RX 6000 or 7000 series can use 300 watts or more</span></span>, regardless of the computational workload. If the input is a completely black image, the GPU still calculates zero multiplied by zero millions of times per second. It burns energy calculating nothing. This is architectural waste.</p>
                     <div class="prereq-img"><img src="assets/prereq-11.png" alt=""><span class="img-caption"></span></div>
                 </div>
 
                 <div class="prereq-row">
-                    <p>The Non-PU is event-driven. If a region of an image is black, no neurons in that region spike. No spikes means no computation. No computation means no energy consumption. The system only expends power when information actually changes. For applications like CubeSats operating on limited battery power, brain-computer interfaces, edge devices, or any system where energy constraints matter, this architectural difference matters.</p>
+                    <p>The Non-PU is <span class="term-link">event-driven<span class="tooltip">In this implementation, if no neurons spike, the pipeline skips computation. Black image regions produce no spikes, therefore no computation occurs</span></span>. If a region of an image is black, no neurons in that region spike. No spikes means no computation. No computation means no energy consumption. The system only expends power when information actually changes. For applications like CubeSats operating on limited battery power, brain-computer interfaces, edge devices, or any system where energy constraints matter, this architectural difference matters.</p>
                     <div class="prereq-img">
                         <img src="https://developers.google.com/static/recaptcha/images/newCaptchaAnchor.gif" alt="">
                         <span class="img-caption">
@@ -461,7 +461,7 @@
                 </div>
 <br>
                 <div class="prereq-row">
-                    <p>The human brain consumes roughly 20 watts. It does this not because neurons are individually efficient, but because the brain only activates the circuits it needs, when it needs them. When you glance at a pile of clothes and identify their color, your visual cortex processes that information in milliseconds without engaging the computational machinery required for complex numerical problems. The architecture is task-adaptive. The Non-PU replicates this principle.</p>
+                    <p>The human brain consumes roughly <span class="term-link">20 watts<span class="tooltip">Research reference: Interpreting the High Energy Consumption of the Brain at Rest (ResearchGate 2020) - https://www.researchgate.net/publication/338442593</span></span>. It does this not because neurons are individually efficient, but because the brain only activates the circuits it needs, when it needs them. When you glance at a pile of clothes and identify their color, your visual cortex processes that information in milliseconds without engaging the computational machinery required for complex numerical problems. The architecture is task-adaptive. The Non-PU replicates this principle.</p>
                     <div class="prereq-img"><img src="assets/prereq-13.png" alt=""><span class="img-caption"></span></div>
                 </div>
 <br>
@@ -471,7 +471,7 @@
                 </div>
 
                 <div class="prereq-row">
-                    <p>A machine learning system trained on millions of images will hallucinate statistically likely pixels to fill in missing regions. It is guessing based on patterns it has seen before. My system does not guess. It has encoded the memory as a stable state in an energy landscape. When you present a corrupted image, you are placing the system near the edge of a valley. The physical dynamics of the spiking network naturally settle into the stable attractor state, which is the complete memory. This is how biological memory retrieval is theorized to function. The network does not predict. It physically converges.</p>
+                    <p>A machine learning system trained on millions of images will hallucinate statistically likely pixels to fill in missing regions. It is guessing based on patterns it has seen before. My system does not guess. It has encoded the memory as a stable state in an energy landscape. When you present a corrupted image, you are placing the system near the edge of a valley. The physical dynamics of the spiking network naturally settle into the <span class="term-link">stable attractor state<span class="tooltip">In this demonstration, the 16x16 cross pattern is encoded in the synaptic weight matrix. Partial inputs converge to the complete stored pattern through network dynamics</span></span>, which is the complete memory. This is how biological memory retrieval is theorized to function. The network does not predict. It physically converges.</p>
                     <div class="prereq-img"><img src="assets/prereq-15.png" alt=""><span class="img-caption"></span></div>
                 </div>
 
@@ -482,7 +482,7 @@
                 </div>
 <br>
                 <div class="prereq-row">
-                    <p>Spike-Timing-Dependent Plasticity is Hebbian learning. It is the biological principle that neurons that fire together, wire together. It happens locally at each synapse based on the precise timing of spikes, not globally through a software optimization algorithm. This is not reinforcement learning in the machine learning sense. This is how biological brains learn.</p>
+                    <p>Spike-Timing-Dependent Plasticity is <span class="term-link">Hebbian learning<span class="tooltip">In this implementation, weights are calculated from 20 cropped image fragments. If neurons i and j are both active in a fragment, their connection weight increases</span></span>. It is the biological principle that neurons that fire together, wire together. It happens locally at each synapse based on the precise timing of spikes, not globally through a software optimization algorithm. This is not reinforcement learning in the machine learning sense. This is how biological brains learn.</p>
                     <div class="prereq-img"><img src="assets/prereq-17.png" alt=""><span class="img-caption"></span></div>
                 </div>
             </div>
@@ -494,8 +494,8 @@
             <div class="prereq-content">
                 <div class="prereq-row">
                     <p>
-                        Here, I am using Intel Quartus Prime Lite software to write the Verilog code, while keeping my default Integrated Development Environment as Microsoft Visual Studio.<br>
-                        But before that, there is a specific hypothesis that I have been using to simulate the neurons. The FPGA that I am currently using for this implementation is the Intel Altera Cyclone IV, which comes with 15,008 logic elements.<br>
+                        Here, I am using Intel Quartus Prime Lite software to write the <span class="term-link">Verilog<span class="tooltip">The hardware description language used to implement the neuronal pipeline, synaptic computation, and VGA output on this FPGA</span></span> code, while keeping my default Integrated Development Environment as Microsoft Visual Studio.<br>
+                        But before that, there is a specific hypothesis that I have been using to simulate the neurons. The <span class="term-link">FPGA<span class="tooltip">This AC415 board uses Intel Altera Cyclone IV EP4CE15 with 15,408 logic elements to implement the time-multiplexed neuronal processing pipeline</span></span> that I am currently using for this implementation is the Intel Altera Cyclone IV, which comes with 15,008 logic elements.<br>
                         We can simulate neurons in different ways.
                     </p>
                     <div class="prereq-img">
@@ -527,12 +527,12 @@
             
             <div class="prereq-content">
                 <div class="prereq-row">
-                    <p>The implementation runs on an AC415 development board featuring the Intel Altera Cyclone IV EP4CE15 FPGA. This chip provides 15,408 logic elements total, 504 kilobits of embedded memory, and 56 hardware multipliers. The board includes 32 megabytes of external SDRAM and VGA output capability for visualization.</p>
+                    <p>The implementation runs on an AC415 development board featuring the Intel Altera Cyclone IV EP4CE15 FPGA. This chip provides 15,408 logic elements total, 504 kilobits of embedded memory, and 56 hardware multipliers. The board includes 32 megabytes of external <span class="term-link">SDRAM<span class="tooltip">This external memory stores the 256 neuron states and the 256x256 synaptic weight matrix (64KB) during network operation</span></span> and <span class="term-link">VGA<span class="tooltip">This implementation outputs real-time visualization of the 16x16 network activity through VGA to monitor pattern completion</span></span> output capability for visualization.</p>
                     <div class="prereq-img"><img src="assets/9834924794/83743i473948.png" alt=""><span class="img-caption">Figure 2: Photo of AC415 development board with Cyclone IV FPGA</span></div>
                 </div>
 
                 <div class="prereq-row">
-                    <p>These constraints shape the entire architectural approach. A single Izhikevich neuron implemented directly in hardware requires differential equation solvers, multiplication units, state registers for membrane voltage and recovery variables, and threshold detection logic. Conservative estimates place the resource cost at 200 to 300 logic elements per neuron for a fully parallel implementation. Building even 50 neurons in parallel would consume the entire chip, leaving no resources for synaptic logic, memory interfaces, or output controllers.</p>
+                    <p>These constraints shape the entire architectural approach. A single Izhikevich neuron implemented directly in hardware requires differential equation solvers, multiplication units, state registers for membrane voltage and recovery variables, and threshold detection logic. Conservative estimates place the resource cost at 200 to 300 <span class="term-link">logic elements<span class="tooltip">The Cyclone IV has 15,408 total. This implementation uses 10,200 for the neuronal sheet, 980 for the modulator, and 3,400 for infrastructure</span></span> per neuron for a fully parallel implementation. Building even 50 neurons in parallel would consume the entire chip, leaving no resources for synaptic logic, memory interfaces, or output controllers.</p>
                     <div class="prereq-img">
                         <img src="assets/9834924794/9387493749.png" alt="">
                         <span class="img-caption">
@@ -544,7 +544,7 @@
                 </div>
 
                 <div class="prereq-row">
-                    <p>Time-multiplexing solves this resource limitation by trading silicon area for computation time. Instead of instantiating thousands of physical neurons, a single hardware pipeline processes neuron state stored in external memory. The pipeline reads one neuron's state from SDRAM, computes synaptic input by summing weighted spikes from connected neurons, applies the Izhikevich differential equations to update membrane voltage, checks for threshold crossing, and writes the updated state back to memory. This cycle repeats for every neuron in the network.</p>
+                    <p><span class="term-link">Time-multiplexing<span class="tooltip">Instead of building 256 parallel neurons, this implementation uses a single pipeline that processes each neuron sequentially from SDRAM, enabling 256 neurons with limited logic elements</span></span> solves this resource limitation by trading silicon area for computation time. Instead of instantiating thousands of physical neurons, a single hardware pipeline processes neuron state stored in external memory. The pipeline reads one neuron's state from SDRAM, computes synaptic input by summing weighted spikes from connected neurons, applies the Izhikevich differential equations to update membrane voltage, checks for threshold crossing, and writes the updated state back to memory. This cycle repeats for every neuron in the network.</p>
                     <div class="prereq-img"><img src="assets/35353535121/38941294729487291.png" alt=""><img src="assets/35353535121/9749824726934.png" alt=""><span class="img-caption">Figure 3: Block diagram comparing fully parallel vs time-multiplexed architecture</span></div>
                 </div>
 
@@ -642,7 +642,7 @@
 
                 <div class="prereq-row">
                     <p>Testing shows this mechanism successfully prevents runaway excitation during network operation. Initial tests without the modulator resulted in either quiescent networks with no activity or explosive activity that saturated all neurons within 100 milliseconds. Adding the modulator allows the network to maintain stable dynamics with average activity levels between 40 and 60 spikes per millisecond.</p>
-                    <div class="prereq-img"><img src="assets/9834924794/92749274893.png" alt=""><span class="img-caption"><img src="assets/35353535121/873618916794.png" alt=""><span class="img-caption"></span>Figure 8: Network activity with homeostatic modulation</span></div>
+                    <div class="prereq-img"><img src="assets/9834924794/92749274893.png" alt=""><span class="img-caption"><img src="assets/35353535121/873618916794.png" alt=""><span class="img-caption"><img src="assets/35353535121/894791742.png" alt=""><span class="img-caption"></span>Figure 8: Network activity with homeostatic modulation</span></div>
                 </div>
             </div>
         </section>
@@ -709,7 +709,7 @@
 
                 <div class="prereq-row">
                     <p>The feedforward network consumes 2.87 watts during inference regardless of input content. Running the network on a completely black image, where all inputs are zero, still consumes the full 2.87 watts because the hardware must compute all matrix multiplications including zero times weight for every connection.</p>
-                    <div class="prereq-img"><img src="assets/power-3.png" alt=""><span class="img-caption">Figure 11: Bar chart comparing power consumption</span></div>
+                    <div class="prereq-img"><img src="assets/9834924794/05285028498035.png" alt=""><span class="img-caption">Figure 11: Log scale highlights the large difference in power draw between the NonPU architecture, specifically utilizing the Cyclone IV FPGA, and entry-level consumer GPUs. Note that we measured the electrical power of one NonPU unit only, comprising the AC415 and Cyclone IV, under three activity states ranging from Idle to Medium and Heavy. To estimate the total power of a multi-unit NonPU deployment, we multiply these single-unit measurements by N, where N is the number of identical NonPU units running in parallel, while assuming roughly linear scaling and excluding extra system overhead such as radios, storage, and regulator losses. GPU values are shown as typical board power at "Idle", typical “medium workload” draw, and near-maximum draw which represents approximately or the board power limit for context. <b>This is not a task dependent performance scaling, but a direct watts comparison.</b></span></div>
                 </div>
 
                 <div class="prereq-row">
@@ -742,111 +742,48 @@
                     <h3 style="font-size: 1.1rem; font-weight: 600; margin-bottom: 1rem; border-bottom: 1px solid #ccc; padding-bottom: 0.5rem;">
                         <a href="https://github.com/nekshadesilva/nonpu/blob/main/activitymonitor.v" target="_blank" style="color: #0031A7; text-decoration: none;">activitymonitor.v</a>
                     </h3>
-                    <p style="margin-bottom: 0.5rem; font-size: 0.9rem; color: #555;">Module for monitoring network activity levels and implementing homeostatic control mechanisms.</p>
-                    <pre style="background: #f5f5f5; padding: 1rem; overflow-x: auto; border: 1px solid #ddd; font-family: 'Courier New', monospace; font-size: 0.85rem; line-height: 1.4;"><code><span class="verilog-keyword">module</span> <span class="verilog-identifier">activitymonitor</span><span class="verilog-bracket">(</span>
-    <span class="verilog-keyword">input</span> <span class="verilog-type">wire</span> <span class="verilog-identifier">clk</span><span class="verilog-punctuation">,</span>
-    <span class="verilog-keyword">input</span> <span class="verilog-type">wire</span> <span class="verilog-identifier">rst</span><span class="verilog-punctuation">,</span>
-    <span class="verilog-keyword">input</span> <span class="verilog-type">wire</span> <span class="verilog-bracket">[</span><span class="verilog-number">9</span><span class="verilog-punctuation">:</span><span class="verilog-number">0</span><span class="verilog-bracket">]</span> <span class="verilog-identifier">spike_count</span><span class="verilog-punctuation">,</span>
-    <span class="verilog-keyword">output</span> <span class="verilog-type">reg</span> <span class="verilog-bracket">[</span><span class="verilog-number">7</span><span class="verilog-punctuation">:</span><span class="verilog-number">0</span><span class="verilog-bracket">]</span> <span class="verilog-identifier">bias_adjustment</span>
-<span class="verilog-bracket">)</span><span class="verilog-punctuation">;</span>
-<span class="verilog-keyword">endmodule</span></code></pre>
+                    <img src="assets/832749827/1.png" alt="activitymonitor.v code" style="max-width: 90%; height: auto; border: 1px solid #ddd;">
+                    <p style="margin-top: 1rem; line-height: 1.6;">The neuron sheet produces spikes. This module converts that stream into structured information about regional activity. Each tile in the 16×16 grid has a counter. When <u style="text-decoration: underline;">spike_valid</u> fires, the module translates neuron index to tile position and increments that tile's counter. At <u style="text-decoration: underline;">frame_tick</u>, the monitor scans all tiles, compares counts to threshold, and emits events for overactive or underactive regions. Counters reset. This is where spatial awareness exists.</p>
                 </div>
 
                 <div style="margin: 2rem 0;">
                     <h3 style="font-size: 1.1rem; font-weight: 600; margin-bottom: 1rem; border-bottom: 1px solid #ccc; padding-bottom: 0.5rem;">
                         <a href="https://github.com/nekshadesilva/nonpu/blob/main/fb_ram.v" target="_blank" style="color: #0031A7; text-decoration: none;">fb_ram.v</a>
                     </h3>
-                    <p style="margin-bottom: 0.5rem; font-size: 0.9rem; color: #555;">Framebuffer RAM module for VGA output generation and neuron state visualization.</p>
-                    <pre style="background: #f5f5f5; padding: 1rem; overflow-x: auto; border: 1px solid #ddd; font-family: 'Courier New', monospace; font-size: 0.85rem; line-height: 1.4;"><code><span class="verilog-keyword">module</span> <span class="verilog-identifier">fb_ram</span><span class="verilog-bracket">(</span>
-    <span class="verilog-keyword">input</span> <span class="verilog-type">wire</span> <span class="verilog-identifier">clk</span><span class="verilog-punctuation">,</span>
-    <span class="verilog-keyword">input</span> <span class="verilog-type">wire</span> <span class="verilog-identifier">we</span><span class="verilog-punctuation">,</span>
-    <span class="verilog-keyword">input</span> <span class="verilog-type">wire</span> <span class="verilog-bracket">[</span><span class="verilog-number">15</span><span class="verilog-punctuation">:</span><span class="verilog-number">0</span><span class="verilog-bracket">]</span> <span class="verilog-identifier">addr</span><span class="verilog-punctuation">,</span>
-    <span class="verilog-keyword">input</span> <span class="verilog-type">wire</span> <span class="verilog-bracket">[</span><span class="verilog-number">7</span><span class="verilog-punctuation">:</span><span class="verilog-number">0</span><span class="verilog-bracket">]</span> <span class="verilog-identifier">data_in</span><span class="verilog-punctuation">,</span>
-    <span class="verilog-keyword">output</span> <span class="verilog-type">reg</span> <span class="verilog-bracket">[</span><span class="verilog-number">7</span><span class="verilog-punctuation">:</span><span class="verilog-number">0</span><span class="verilog-bracket">]</span> <span class="verilog-identifier">data_out</span>
-<span class="verilog-bracket">)</span><span class="verilog-punctuation">;</span>
-<span class="verilog-keyword">endmodule</span></code></pre>
+                    <img src="assets/832749827/2.png" alt="fb_ram.v code" style="max-width: 90%; height: auto; border: 1px solid #ddd;">
+                    <p style="margin-top: 1rem; line-height: 1.6;">Dual-port RAM. One side connects to <u style="text-decoration: underline;">spike2letter</u>, which writes pixel values as neurons update. The other connects to display controller or testbench. Each memory entry holds one 8-bit pixel. Address equals neuron index. Neuron 0 is pixel 0. For a 16×16 sheet, depth is 256. The sheet writes new activity while another process reads the current image simultaneously. No arbitration required. True dual-port.</p>
                 </div>
 
                 <div style="margin: 2rem 0;">
                     <h3 style="font-size: 1.1rem; font-weight: 600; margin-bottom: 1rem; border-bottom: 1px solid #ccc; padding-bottom: 0.5rem;">
                         <a href="https://github.com/nekshadesilva/nonpu/blob/main/neuronalpipes.v" target="_blank" style="color: #0031A7; text-decoration: none;">neuronalpipes.v</a>
                     </h3>
-                    <p style="margin-bottom: 0.5rem; font-size: 0.9rem; color: #555;">Core time-multiplexed neuron update pipeline implementing the Izhikevich model.</p>
-                    <pre style="background: #f5f5f5; padding: 1rem; overflow-x: auto; border: 1px solid #ddd; font-family: 'Courier New', monospace; font-size: 0.85rem; line-height: 1.4;"><code><span class="verilog-keyword">module</span> <span class="verilog-identifier">neuronalpipes</span><span class="verilog-bracket">(</span>
-    <span class="verilog-keyword">input</span> <span class="verilog-type">wire</span> <span class="verilog-identifier">clk</span><span class="verilog-punctuation">,</span>
-    <span class="verilog-keyword">input</span> <span class="verilog-type">wire</span> <span class="verilog-identifier">rst</span><span class="verilog-punctuation">,</span>
-    <span class="verilog-keyword">input</span> <span class="verilog-type">wire</span> <span class="verilog-bracket">[</span><span class="verilog-number">15</span><span class="verilog-punctuation">:</span><span class="verilog-number">0</span><span class="verilog-bracket">]</span> <span class="verilog-identifier">v_in</span><span class="verilog-punctuation">,</span>
-    <span class="verilog-keyword">input</span> <span class="verilog-type">wire</span> <span class="verilog-bracket">[</span><span class="verilog-number">15</span><span class="verilog-punctuation">:</span><span class="verilog-number">0</span><span class="verilog-bracket">]</span> <span class="verilog-identifier">u_in</span><span class="verilog-punctuation">,</span>
-    <span class="verilog-keyword">input</span> <span class="verilog-type">wire</span> <span class="verilog-bracket">[</span><span class="verilog-number">15</span><span class="verilog-punctuation">:</span><span class="verilog-number">0</span><span class="verilog-bracket">]</span> <span class="verilog-identifier">I_syn</span><span class="verilog-punctuation">,</span>
-    <span class="verilog-keyword">output</span> <span class="verilog-type">reg</span> <span class="verilog-bracket">[</span><span class="verilog-number">15</span><span class="verilog-punctuation">:</span><span class="verilog-number">0</span><span class="verilog-bracket">]</span> <span class="verilog-identifier">v_out</span><span class="verilog-punctuation">,</span>
-    <span class="verilog-keyword">output</span> <span class="verilog-type">reg</span> <span class="verilog-bracket">[</span><span class="verilog-number">15</span><span class="verilog-punctuation">:</span><span class="verilog-number">0</span><span class="verilog-bracket">]</span> <span class="verilog-identifier">u_out</span><span class="verilog-punctuation">,</span>
-    <span class="verilog-keyword">output</span> <span class="verilog-type">reg</span> <span class="verilog-identifier">spike</span>
-<span class="verilog-bracket">)</span><span class="verilog-punctuation">;</span>
-<span class="verilog-keyword">endmodule</span></code></pre>
+                    <img src="assets/832749827/3.png" alt="neuronalpipes.v code" style="max-width: 90%; height: auto; border: 1px solid #ddd;">
+                    <p style="margin-top: 1rem; line-height: 1.6;">This module is one neuron in silicon. <u style="text-decoration: underline;">v_in</u> and <u style="text-decoration: underline;">u_in</u> represent membrane voltage and recovery variable from the previous timestep. <u style="text-decoration: underline;">I_in</u> is total current from image stimulus and synaptic inputs. The core implements Izhikevich equations using fixed-point arithmetic. When voltage crosses threshold, <u style="text-decoration: underline;">spike_out</u> fires for one clock cycle, voltage resets, and recovery adjusts. This block does not classify. It does not perform matrix multiplication. It solves discrete differential equations in hardware.</p>
                 </div>
 
                 <div style="margin: 2rem 0;">
                     <h3 style="font-size: 1.1rem; font-weight: 600; margin-bottom: 1rem; border-bottom: 1px solid #ccc; padding-bottom: 0.5rem;">
                         <a href="https://github.com/nekshadesilva/nonpu/blob/main/sheet.v" target="_blank" style="color: #0031A7; text-decoration: none;">sheet.v</a>
                     </h3>
-                    <p style="margin-bottom: 0.5rem; font-size: 0.9rem; color: #555;">Top-level neuronal sheet module coordinating neuron array and connectivity.</p>
-                    <pre style="background: #f5f5f5; padding: 1rem; overflow-x: auto; border: 1px solid #ddd; font-family: 'Courier New', monospace; font-size: 0.85rem; line-height: 1.4;"><code><span class="verilog-keyword">module</span> <span class="verilog-identifier">sheet</span><span class="verilog-bracket">(</span>
-    <span class="verilog-keyword">input</span> <span class="verilog-type">wire</span> <span class="verilog-identifier">clk</span><span class="verilog-punctuation">,</span>
-    <span class="verilog-keyword">input</span> <span class="verilog-type">wire</span> <span class="verilog-identifier">rst</span><span class="verilog-punctuation">,</span>
-    <span class="verilog-keyword">input</span> <span class="verilog-type">wire</span> <span class="verilog-bracket">[</span><span class="verilog-number">7</span><span class="verilog-punctuation">:</span><span class="verilog-number">0</span><span class="verilog-bracket">]</span> <span class="verilog-identifier">input_pattern</span><span class="verilog-punctuation">,</span>
-    <span class="verilog-keyword">output</span> <span class="verilog-type">reg</span> <span class="verilog-bracket">[</span><span class="verilog-number">255</span><span class="verilog-punctuation">:</span><span class="verilog-number">0</span><span class="verilog-bracket">]</span> <span class="verilog-identifier">neuron_states</span><span class="verilog-punctuation">,</span>
-    <span class="verilog-keyword">output</span> <span class="verilog-type">reg</span> <span class="verilog-bracket">[</span><span class="verilog-number">9</span><span class="verilog-punctuation">:</span><span class="verilog-number">0</span><span class="verilog-bracket">]</span> <span class="verilog-identifier">spike_count</span>
-<span class="verilog-bracket">)</span><span class="verilog-punctuation">;</span>
-<span class="verilog-keyword">endmodule</span></code></pre>
+                    <img src="assets/832749827/4.png" alt="sheet.v code" style="max-width: 90%; height: auto; border: 1px solid #ddd;">
+                    <p style="margin-top: 1rem; line-height: 1.6;">The FPGA does not contain 256 separate neuron blocks. This module uses one <u style="text-decoration: underline;">neuronalpipes</u> core and time-divides it across a 16×16 grid. Memory arrays store voltage, recovery, and input current for each neuron. A counter selects one neuron per cycle, reads its state, feeds it through the core, and writes updated values back. When a neuron fires, <u style="text-decoration: underline;">spike_valid</u> asserts with the neuron index. When the counter wraps from neuron 255 to 0, <u style="text-decoration: underline;">frame_tick</u> pulses. One physical core multiplexed over 256 logical neurons.</p>
                 </div>
 
                 <div style="margin: 2rem 0;">
                     <h3 style="font-size: 1.1rem; font-weight: 600; margin-bottom: 1rem; border-bottom: 1px solid #ccc; padding-bottom: 0.5rem;">
                         <a href="https://github.com/nekshadesilva/nonpu/blob/main/spike2letter.v" target="_blank" style="color: #0031A7; text-decoration: none;">spike2letter.v</a>
                     </h3>
-                    <p style="margin-bottom: 0.5rem; font-size: 0.9rem; color: #555;">Spike encoding/decoding module for pattern representation and output interpretation.</p>
-                    <pre style="background: #f5f5f5; padding: 1rem; overflow-x: auto; border: 1px solid #ddd; font-family: 'Courier New', monospace; font-size: 0.85rem; line-height: 1.4;"><code><span class="verilog-keyword">module</span> <span class="verilog-identifier">spike2letter</span><span class="verilog-bracket">(</span>
-    <span class="verilog-keyword">input</span> <span class="verilog-type">wire</span> <span class="verilog-identifier">clk</span><span class="verilog-punctuation">,</span>
-    <span class="verilog-keyword">input</span> <span class="verilog-type">wire</span> <span class="verilog-identifier">rst</span><span class="verilog-punctuation">,</span>
-    <span class="verilog-keyword">input</span> <span class="verilog-type">wire</span> <span class="verilog-bracket">[</span><span class="verilog-number">255</span><span class="verilog-punctuation">:</span><span class="verilog-number">0</span><span class="verilog-bracket">]</span> <span class="verilog-identifier">spike_pattern</span><span class="verilog-punctuation">,</span>
-    <span class="verilog-keyword">output</span> <span class="verilog-type">reg</span> <span class="verilog-bracket">[</span><span class="verilog-number">7</span><span class="verilog-punctuation">:</span><span class="verilog-number">0</span><span class="verilog-bracket">]</span> <span class="verilog-identifier">letter_code</span><span class="verilog-punctuation">,</span>
-    <span class="verilog-keyword">output</span> <span class="verilog-type">reg</span> <span class="verilog-identifier">valid</span>
-<span class="verilog-bracket">)</span><span class="verilog-punctuation">;</span>
-<span class="verilog-keyword">endmodule</span></code></pre>
-                </div>
-
-                <div style="margin: 2rem 0;">
-                    <h3 style="font-size: 1.1rem; font-weight: 600; margin-bottom: 1rem; border-bottom: 1px solid #ccc; padding-bottom: 0.5rem;">
-                        <a href="https://github.com/nekshadesilva/nonpu/blob/main/spike2letter_old.v" target="_blank" style="color: #0031A7; text-decoration: none;">spike2letter_old.v</a>
-                    </h3>
-                    <p style="margin-bottom: 0.5rem; font-size: 0.9rem; color: #555;">Legacy version of spike decoding module retained for comparison and reference.</p>
-                    <pre style="background: #f5f5f5; padding: 1rem; overflow-x: auto; border: 1px solid #ddd; font-family: 'Courier New', monospace; font-size: 0.85rem; line-height: 1.4;"><code><span class="verilog-keyword">module</span> <span class="verilog-identifier">spike2letter_old</span><span class="verilog-bracket">(</span>
-    <span class="verilog-keyword">input</span> <span class="verilog-type">wire</span> <span class="verilog-identifier">clk</span><span class="verilog-punctuation">,</span>
-    <span class="verilog-keyword">input</span> <span class="verilog-type">wire</span> <span class="verilog-identifier">rst</span><span class="verilog-punctuation">,</span>
-    <span class="verilog-keyword">input</span> <span class="verilog-type">wire</span> <span class="verilog-bracket">[</span><span class="verilog-number">255</span><span class="verilog-punctuation">:</span><span class="verilog-number">0</span><span class="verilog-bracket">]</span> <span class="verilog-identifier">spike_pattern</span><span class="verilog-punctuation">,</span>
-    <span class="verilog-keyword">output</span> <span class="verilog-type">reg</span> <span class="verilog-bracket">[</span><span class="verilog-number">7</span><span class="verilog-punctuation">:</span><span class="verilog-number">0</span><span class="verilog-bracket">]</span> <span class="verilog-identifier">letter_code</span>
-<span class="verilog-bracket">)</span><span class="verilog-punctuation">;</span>
-<span class="verilog-keyword">endmodule</span></code></pre>
+                    <img src="assets/832749827/5.png" alt="spike2letter.v code" style="max-width: 90%; height: auto; border: 1px solid #ddd;">
+                    <p style="margin-top: 1rem; line-height: 1.6;">Humans cannot read spike trains. This module translates neuron activity to visible pixels. For each neuron update, it receives <u style="text-decoration: underline;">spike_valid</u>, <u style="text-decoration: underline;">neuron_idx</u>, and voltage <u style="text-decoration: underline;">v_in</u>. If the neuron spiked, write 255 to framebuffer at that neuron's address. If not, rescale voltage to 8-bit grayscale and write that. Output signals <u style="text-decoration: underline;">fb_we</u>, <u style="text-decoration: underline;">fb_addr</u>, and <u style="text-decoration: underline;">fb_data</u> connect directly to framebuffer RAM. In hardware, these values become monitor pixels. In simulation, they form an image of emergent network patterns.</p>
                 </div>
 
                 <div style="margin: 2rem 0;">
                     <h3 style="font-size: 1.1rem; font-weight: 600; margin-bottom: 1rem; border-bottom: 1px solid #ccc; padding-bottom: 0.5rem;">
                         <a href="https://github.com/nekshadesilva/nonpu/blob/main/superneuron.v" target="_blank" style="color: #0031A7; text-decoration: none;">superneuron.v</a>
                     </h3>
-                    <p style="margin-bottom: 0.5rem; font-size: 0.9rem; color: #555;">Enhanced neuron module with additional features and optimization for complex dynamics.</p>
-                    <pre style="background: #f5f5f5; padding: 1rem; overflow-x: auto; border: 1px solid #ddd; font-family: 'Courier New', monospace; font-size: 0.85rem; line-height: 1.4;"><code><span class="verilog-keyword">module</span> <span class="verilog-identifier">superneuron</span><span class="verilog-bracket">(</span>
-    <span class="verilog-keyword">input</span> <span class="verilog-type">wire</span> <span class="verilog-identifier">clk</span><span class="verilog-punctuation">,</span>
-    <span class="verilog-keyword">input</span> <span class="verilog-type">wire</span> <span class="verilog-identifier">rst</span><span class="verilog-punctuation">,</span>
-    <span class="verilog-keyword">input</span> <span class="verilog-type">wire</span> <span class="verilog-bracket">[</span><span class="verilog-number">15</span><span class="verilog-punctuation">:</span><span class="verilog-number">0</span><span class="verilog-bracket">]</span> <span class="verilog-identifier">v_in</span><span class="verilog-punctuation">,</span>
-    <span class="verilog-keyword">input</span> <span class="verilog-type">wire</span> <span class="verilog-bracket">[</span><span class="verilog-number">15</span><span class="verilog-punctuation">:</span><span class="verilog-number">0</span><span class="verilog-bracket">]</span> <span class="verilog-identifier">u_in</span><span class="verilog-punctuation">,</span>
-    <span class="verilog-keyword">input</span> <span class="verilog-type">wire</span> <span class="verilog-bracket">[</span><span class="verilog-number">15</span><span class="verilog-punctuation">:</span><span class="verilog-number">0</span><span class="verilog-bracket">]</span> <span class="verilog-identifier">I_syn</span><span class="verilog-punctuation">,</span>
-    <span class="verilog-keyword">input</span> <span class="verilog-type">wire</span> <span class="verilog-bracket">[</span><span class="verilog-number">7</span><span class="verilog-punctuation">:</span><span class="verilog-number">0</span><span class="verilog-bracket">]</span> <span class="verilog-identifier">param_a</span><span class="verilog-punctuation">,</span>
-    <span class="verilog-keyword">input</span> <span class="verilog-type">wire</span> <span class="verilog-bracket">[</span><span class="verilog-number">7</span><span class="verilog-punctuation">:</span><span class="verilog-number">0</span><span class="verilog-bracket">]</span> <span class="verilog-identifier">param_b</span><span class="verilog-punctuation">,</span>
-    <span class="verilog-keyword">output</span> <span class="verilog-type">reg</span> <span class="verilog-bracket">[</span><span class="verilog-number">15</span><span class="verilog-punctuation">:</span><span class="verilog-number">0</span><span class="verilog-bracket">]</span> <span class="verilog-identifier">v_out</span><span class="verilog-punctuation">,</span>
-    <span class="verilog-keyword">output</span> <span class="verilog-type">reg</span> <span class="verilog-bracket">[</span><span class="verilog-number">15</span><span class="verilog-punctuation">:</span><span class="verilog-number">0</span><span class="verilog-bracket">]</span> <span class="verilog-identifier">u_out</span><span class="verilog-punctuation">,</span>
-    <span class="verilog-keyword">output</span> <span class="verilog-type">reg</span> <span class="verilog-identifier">spike</span>
-<span class="verilog-bracket">)</span><span class="verilog-punctuation">;</span>
-<span class="verilog-keyword">endmodule</span></code></pre>
+                    <img src="assets/832749827/6.png" alt="superneuron.v code" style="max-width: 90%; height: auto; border: 1px solid #ddd;">
+                    <p style="margin-top: 1rem; line-height: 1.6;">This is not another neuron. This is a control plane above the sheet. It maintains one bias value per tile in memory. When <u style="text-decoration: underline;">activitymonitor</u> reports a tile firing excessively, this module reduces that tile's bias. Underactive tiles get increased bias. The internal variable <u style="text-decoration: underline;">G</u> represents global gain, adapting based on overall activity. <u style="text-decoration: underline;">tile_id_query</u> from the sheet indicates which tile the current neuron belongs to. The module looks up that tile's bias and outputs it as <u style="text-decoration: underline;">bias_out</u>. The sheet adds this to neuron input current. Spikes shape biases. Biases shape spikes. Closed loop homeostasis.</p>
                 </div>
 
                 <div class="prereq-row">
@@ -883,7 +820,13 @@
 
                 <div class="prereq-row">
                     <p>BrainScaleS, developed at Heidelberg University, uses analog circuits to simulate neuron dynamics up to 10,000 times faster than biological real-time. This accelerated simulation enables rapid exploration of network configurations but requires careful calibration and suffers from parameter variability inherent in analog circuits.</p>
-                    <div class="prereq-img"><img src="assets/comparison-5.png" alt=""><span class="img-caption">Figure 14: Comparison table of neuromorphic systems</span></div>
+                    <div class="prereq-img">
+                        <img src="assets/35353535121/34792384721094.png" alt="">
+                        <span class="img-caption">Figure 14: Comparison table of neuromorphic systems including NonPU, Intel Loihi, Loihi 2, SpiNNaker and IBM TrueNorth</span>
+                        <div style=" margin-top: 0.5rem;">
+                            <a href="assets/89238298381390.pdf" target="_blank" class="term-link" style="font-size: 0.85rem;">Download Table (PDF)</a>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="prereq-row">
