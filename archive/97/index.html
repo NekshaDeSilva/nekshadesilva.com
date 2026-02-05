@@ -564,7 +564,10 @@
 
                 <div class="prereq-row">
                     <p>Resource allocation across the design breaks down as follows. The time-multiplexed neuronal sheet, which is the core computational fabric, consumes approximately 10,200 logic elements based on the final Quartus compilation report. A global modulator neuron providing homeostatic control uses roughly 980 logic elements. Infrastructure including the VGA controller, SDRAM interface controller, and top-level control logic accounts for 3,400 logic elements. Approximately 800 logic elements remain unused, providing headroom for future enhancements or timing optimization.</p>
-                    <div class="prereq-img"><img src="assets/37872489833/7348972492723.png" alt=""><span class="img-caption">Figure 4: Resource utilization from Quartus Prime</span></div>
+                    <div class="prereq-img">
+                        <img src="assets/37872489833/7348972492723.png" alt="Quartus Prime Resource Utilization Report">
+                        <span class="img-caption">Figure 4: Resource utilization report from Quartus Prime verifying the board type and core logic usage, confirming a sanity check of the design across multiple circuits.</span>
+                    </div>
                 </div>
 
                 <div class="prereq-row">
@@ -574,7 +577,7 @@
 
                 <div class="prereq-row">
                     <p>The model equations are solved using fixed-point arithmetic with 16-bit precision for state variables and 12-bit precision for parameters. Euler integration with a timestep of 1 millisecond provides acceptable accuracy for the target application while remaining implementable in hardware. More sophisticated integration methods like Runge-Kutta would improve accuracy but require multiple evaluation steps per update, which would reduce the effective network size given the time-multiplexing constraint.</p>
-                    <div class="prereq-img"><img src="assets/9834924794/9749274874.png" alt=""><span class="img-caption">Figure 5: Oscilloscope trace showing actual spike waveforms</span></div>
+                    <div class="prereq-img"><img src="assets/9834924794/9749274874.png" alt=""><span class="img-caption">Figure 5: Oscilloscope trace showing actual spike waveforms on Quartus</span></div>
                 </div>
 
                 <div class="prereq-row">
