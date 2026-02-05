@@ -312,6 +312,13 @@
             opacity: 1;
         }
 
+        .verilog-keyword { color: #0000ff; font-weight: bold; }
+        .verilog-type { color: #008080; font-weight: bold; }
+        .verilog-identifier { color: #000000; }
+        .verilog-number { color: #098658; }
+        .verilog-bracket { color: #666666; }
+        .verilog-punctuation { color: #333333; }
+
         @media (max-width: 768px) {
             .prereq-row {
                 flex-direction: column;
@@ -635,7 +642,7 @@
 
                 <div class="prereq-row">
                     <p>Testing shows this mechanism successfully prevents runaway excitation during network operation. Initial tests without the modulator resulted in either quiescent networks with no activity or explosive activity that saturated all neurons within 100 milliseconds. Adding the modulator allows the network to maintain stable dynamics with average activity levels between 40 and 60 spikes per millisecond.</p>
-                    <div class="prereq-img"><img src="assets/modulation-4.png" alt=""><span class="img-caption">Figure 8: Network activity with/without homeostatic modulation</span></div>
+                    <div class="prereq-img"><img src="assets/9834924794/92749274893.png" alt=""><span class="img-caption"><img src="assets/35353535121/873618916794.png" alt=""><span class="img-caption"></span>Figure 8: Network activity with homeostatic modulation</span></div>
                 </div>
             </div>
         </section>
@@ -722,6 +729,134 @@
             </div>
         </section>
 
+        <section class="prereq-section">
+            <h2 class="prereq-title">Engineering Implementation</h2>
+            
+            <div class="prereq-content">
+                <div class="prereq-row">
+                    <p>The complete Verilog HDL implementation is available on GitHub. The following modules comprise the NonPU architecture, each implementing specific components of the neuromorphic processing system. All source code is available at <a href="https://github.com/nekshadesilva/nonpu" target="_blank" style="text-decoration: underline;">github.com/nekshadesilva/nonpu</a> on the main branch.</p>
+                    <div class="prereq-img"><img src="assets/implementation-code-1.png" alt=""><span class="img-caption"></span></div>
+                </div>
+
+                <div style="margin: 2rem 0;">
+                    <h3 style="font-size: 1.1rem; font-weight: 600; margin-bottom: 1rem; border-bottom: 1px solid #ccc; padding-bottom: 0.5rem;">
+                        <a href="https://github.com/nekshadesilva/nonpu/blob/main/activitymonitor.v" target="_blank" style="color: #0031A7; text-decoration: none;">activitymonitor.v</a>
+                    </h3>
+                    <p style="margin-bottom: 0.5rem; font-size: 0.9rem; color: #555;">Module for monitoring network activity levels and implementing homeostatic control mechanisms.</p>
+                    <pre style="background: #f5f5f5; padding: 1rem; overflow-x: auto; border: 1px solid #ddd; font-family: 'Courier New', monospace; font-size: 0.85rem; line-height: 1.4;"><code><span class="verilog-keyword">module</span> <span class="verilog-identifier">activitymonitor</span><span class="verilog-bracket">(</span>
+    <span class="verilog-keyword">input</span> <span class="verilog-type">wire</span> <span class="verilog-identifier">clk</span><span class="verilog-punctuation">,</span>
+    <span class="verilog-keyword">input</span> <span class="verilog-type">wire</span> <span class="verilog-identifier">rst</span><span class="verilog-punctuation">,</span>
+    <span class="verilog-keyword">input</span> <span class="verilog-type">wire</span> <span class="verilog-bracket">[</span><span class="verilog-number">9</span><span class="verilog-punctuation">:</span><span class="verilog-number">0</span><span class="verilog-bracket">]</span> <span class="verilog-identifier">spike_count</span><span class="verilog-punctuation">,</span>
+    <span class="verilog-keyword">output</span> <span class="verilog-type">reg</span> <span class="verilog-bracket">[</span><span class="verilog-number">7</span><span class="verilog-punctuation">:</span><span class="verilog-number">0</span><span class="verilog-bracket">]</span> <span class="verilog-identifier">bias_adjustment</span>
+<span class="verilog-bracket">)</span><span class="verilog-punctuation">;</span>
+<span class="verilog-keyword">endmodule</span></code></pre>
+                </div>
+
+                <div style="margin: 2rem 0;">
+                    <h3 style="font-size: 1.1rem; font-weight: 600; margin-bottom: 1rem; border-bottom: 1px solid #ccc; padding-bottom: 0.5rem;">
+                        <a href="https://github.com/nekshadesilva/nonpu/blob/main/fb_ram.v" target="_blank" style="color: #0031A7; text-decoration: none;">fb_ram.v</a>
+                    </h3>
+                    <p style="margin-bottom: 0.5rem; font-size: 0.9rem; color: #555;">Framebuffer RAM module for VGA output generation and neuron state visualization.</p>
+                    <pre style="background: #f5f5f5; padding: 1rem; overflow-x: auto; border: 1px solid #ddd; font-family: 'Courier New', monospace; font-size: 0.85rem; line-height: 1.4;"><code><span class="verilog-keyword">module</span> <span class="verilog-identifier">fb_ram</span><span class="verilog-bracket">(</span>
+    <span class="verilog-keyword">input</span> <span class="verilog-type">wire</span> <span class="verilog-identifier">clk</span><span class="verilog-punctuation">,</span>
+    <span class="verilog-keyword">input</span> <span class="verilog-type">wire</span> <span class="verilog-identifier">we</span><span class="verilog-punctuation">,</span>
+    <span class="verilog-keyword">input</span> <span class="verilog-type">wire</span> <span class="verilog-bracket">[</span><span class="verilog-number">15</span><span class="verilog-punctuation">:</span><span class="verilog-number">0</span><span class="verilog-bracket">]</span> <span class="verilog-identifier">addr</span><span class="verilog-punctuation">,</span>
+    <span class="verilog-keyword">input</span> <span class="verilog-type">wire</span> <span class="verilog-bracket">[</span><span class="verilog-number">7</span><span class="verilog-punctuation">:</span><span class="verilog-number">0</span><span class="verilog-bracket">]</span> <span class="verilog-identifier">data_in</span><span class="verilog-punctuation">,</span>
+    <span class="verilog-keyword">output</span> <span class="verilog-type">reg</span> <span class="verilog-bracket">[</span><span class="verilog-number">7</span><span class="verilog-punctuation">:</span><span class="verilog-number">0</span><span class="verilog-bracket">]</span> <span class="verilog-identifier">data_out</span>
+<span class="verilog-bracket">)</span><span class="verilog-punctuation">;</span>
+<span class="verilog-keyword">endmodule</span></code></pre>
+                </div>
+
+                <div style="margin: 2rem 0;">
+                    <h3 style="font-size: 1.1rem; font-weight: 600; margin-bottom: 1rem; border-bottom: 1px solid #ccc; padding-bottom: 0.5rem;">
+                        <a href="https://github.com/nekshadesilva/nonpu/blob/main/neuronalpipes.v" target="_blank" style="color: #0031A7; text-decoration: none;">neuronalpipes.v</a>
+                    </h3>
+                    <p style="margin-bottom: 0.5rem; font-size: 0.9rem; color: #555;">Core time-multiplexed neuron update pipeline implementing the Izhikevich model.</p>
+                    <pre style="background: #f5f5f5; padding: 1rem; overflow-x: auto; border: 1px solid #ddd; font-family: 'Courier New', monospace; font-size: 0.85rem; line-height: 1.4;"><code><span class="verilog-keyword">module</span> <span class="verilog-identifier">neuronalpipes</span><span class="verilog-bracket">(</span>
+    <span class="verilog-keyword">input</span> <span class="verilog-type">wire</span> <span class="verilog-identifier">clk</span><span class="verilog-punctuation">,</span>
+    <span class="verilog-keyword">input</span> <span class="verilog-type">wire</span> <span class="verilog-identifier">rst</span><span class="verilog-punctuation">,</span>
+    <span class="verilog-keyword">input</span> <span class="verilog-type">wire</span> <span class="verilog-bracket">[</span><span class="verilog-number">15</span><span class="verilog-punctuation">:</span><span class="verilog-number">0</span><span class="verilog-bracket">]</span> <span class="verilog-identifier">v_in</span><span class="verilog-punctuation">,</span>
+    <span class="verilog-keyword">input</span> <span class="verilog-type">wire</span> <span class="verilog-bracket">[</span><span class="verilog-number">15</span><span class="verilog-punctuation">:</span><span class="verilog-number">0</span><span class="verilog-bracket">]</span> <span class="verilog-identifier">u_in</span><span class="verilog-punctuation">,</span>
+    <span class="verilog-keyword">input</span> <span class="verilog-type">wire</span> <span class="verilog-bracket">[</span><span class="verilog-number">15</span><span class="verilog-punctuation">:</span><span class="verilog-number">0</span><span class="verilog-bracket">]</span> <span class="verilog-identifier">I_syn</span><span class="verilog-punctuation">,</span>
+    <span class="verilog-keyword">output</span> <span class="verilog-type">reg</span> <span class="verilog-bracket">[</span><span class="verilog-number">15</span><span class="verilog-punctuation">:</span><span class="verilog-number">0</span><span class="verilog-bracket">]</span> <span class="verilog-identifier">v_out</span><span class="verilog-punctuation">,</span>
+    <span class="verilog-keyword">output</span> <span class="verilog-type">reg</span> <span class="verilog-bracket">[</span><span class="verilog-number">15</span><span class="verilog-punctuation">:</span><span class="verilog-number">0</span><span class="verilog-bracket">]</span> <span class="verilog-identifier">u_out</span><span class="verilog-punctuation">,</span>
+    <span class="verilog-keyword">output</span> <span class="verilog-type">reg</span> <span class="verilog-identifier">spike</span>
+<span class="verilog-bracket">)</span><span class="verilog-punctuation">;</span>
+<span class="verilog-keyword">endmodule</span></code></pre>
+                </div>
+
+                <div style="margin: 2rem 0;">
+                    <h3 style="font-size: 1.1rem; font-weight: 600; margin-bottom: 1rem; border-bottom: 1px solid #ccc; padding-bottom: 0.5rem;">
+                        <a href="https://github.com/nekshadesilva/nonpu/blob/main/sheet.v" target="_blank" style="color: #0031A7; text-decoration: none;">sheet.v</a>
+                    </h3>
+                    <p style="margin-bottom: 0.5rem; font-size: 0.9rem; color: #555;">Top-level neuronal sheet module coordinating neuron array and connectivity.</p>
+                    <pre style="background: #f5f5f5; padding: 1rem; overflow-x: auto; border: 1px solid #ddd; font-family: 'Courier New', monospace; font-size: 0.85rem; line-height: 1.4;"><code><span class="verilog-keyword">module</span> <span class="verilog-identifier">sheet</span><span class="verilog-bracket">(</span>
+    <span class="verilog-keyword">input</span> <span class="verilog-type">wire</span> <span class="verilog-identifier">clk</span><span class="verilog-punctuation">,</span>
+    <span class="verilog-keyword">input</span> <span class="verilog-type">wire</span> <span class="verilog-identifier">rst</span><span class="verilog-punctuation">,</span>
+    <span class="verilog-keyword">input</span> <span class="verilog-type">wire</span> <span class="verilog-bracket">[</span><span class="verilog-number">7</span><span class="verilog-punctuation">:</span><span class="verilog-number">0</span><span class="verilog-bracket">]</span> <span class="verilog-identifier">input_pattern</span><span class="verilog-punctuation">,</span>
+    <span class="verilog-keyword">output</span> <span class="verilog-type">reg</span> <span class="verilog-bracket">[</span><span class="verilog-number">255</span><span class="verilog-punctuation">:</span><span class="verilog-number">0</span><span class="verilog-bracket">]</span> <span class="verilog-identifier">neuron_states</span><span class="verilog-punctuation">,</span>
+    <span class="verilog-keyword">output</span> <span class="verilog-type">reg</span> <span class="verilog-bracket">[</span><span class="verilog-number">9</span><span class="verilog-punctuation">:</span><span class="verilog-number">0</span><span class="verilog-bracket">]</span> <span class="verilog-identifier">spike_count</span>
+<span class="verilog-bracket">)</span><span class="verilog-punctuation">;</span>
+<span class="verilog-keyword">endmodule</span></code></pre>
+                </div>
+
+                <div style="margin: 2rem 0;">
+                    <h3 style="font-size: 1.1rem; font-weight: 600; margin-bottom: 1rem; border-bottom: 1px solid #ccc; padding-bottom: 0.5rem;">
+                        <a href="https://github.com/nekshadesilva/nonpu/blob/main/spike2letter.v" target="_blank" style="color: #0031A7; text-decoration: none;">spike2letter.v</a>
+                    </h3>
+                    <p style="margin-bottom: 0.5rem; font-size: 0.9rem; color: #555;">Spike encoding/decoding module for pattern representation and output interpretation.</p>
+                    <pre style="background: #f5f5f5; padding: 1rem; overflow-x: auto; border: 1px solid #ddd; font-family: 'Courier New', monospace; font-size: 0.85rem; line-height: 1.4;"><code><span class="verilog-keyword">module</span> <span class="verilog-identifier">spike2letter</span><span class="verilog-bracket">(</span>
+    <span class="verilog-keyword">input</span> <span class="verilog-type">wire</span> <span class="verilog-identifier">clk</span><span class="verilog-punctuation">,</span>
+    <span class="verilog-keyword">input</span> <span class="verilog-type">wire</span> <span class="verilog-identifier">rst</span><span class="verilog-punctuation">,</span>
+    <span class="verilog-keyword">input</span> <span class="verilog-type">wire</span> <span class="verilog-bracket">[</span><span class="verilog-number">255</span><span class="verilog-punctuation">:</span><span class="verilog-number">0</span><span class="verilog-bracket">]</span> <span class="verilog-identifier">spike_pattern</span><span class="verilog-punctuation">,</span>
+    <span class="verilog-keyword">output</span> <span class="verilog-type">reg</span> <span class="verilog-bracket">[</span><span class="verilog-number">7</span><span class="verilog-punctuation">:</span><span class="verilog-number">0</span><span class="verilog-bracket">]</span> <span class="verilog-identifier">letter_code</span><span class="verilog-punctuation">,</span>
+    <span class="verilog-keyword">output</span> <span class="verilog-type">reg</span> <span class="verilog-identifier">valid</span>
+<span class="verilog-bracket">)</span><span class="verilog-punctuation">;</span>
+<span class="verilog-keyword">endmodule</span></code></pre>
+                </div>
+
+                <div style="margin: 2rem 0;">
+                    <h3 style="font-size: 1.1rem; font-weight: 600; margin-bottom: 1rem; border-bottom: 1px solid #ccc; padding-bottom: 0.5rem;">
+                        <a href="https://github.com/nekshadesilva/nonpu/blob/main/spike2letter_old.v" target="_blank" style="color: #0031A7; text-decoration: none;">spike2letter_old.v</a>
+                    </h3>
+                    <p style="margin-bottom: 0.5rem; font-size: 0.9rem; color: #555;">Legacy version of spike decoding module retained for comparison and reference.</p>
+                    <pre style="background: #f5f5f5; padding: 1rem; overflow-x: auto; border: 1px solid #ddd; font-family: 'Courier New', monospace; font-size: 0.85rem; line-height: 1.4;"><code><span class="verilog-keyword">module</span> <span class="verilog-identifier">spike2letter_old</span><span class="verilog-bracket">(</span>
+    <span class="verilog-keyword">input</span> <span class="verilog-type">wire</span> <span class="verilog-identifier">clk</span><span class="verilog-punctuation">,</span>
+    <span class="verilog-keyword">input</span> <span class="verilog-type">wire</span> <span class="verilog-identifier">rst</span><span class="verilog-punctuation">,</span>
+    <span class="verilog-keyword">input</span> <span class="verilog-type">wire</span> <span class="verilog-bracket">[</span><span class="verilog-number">255</span><span class="verilog-punctuation">:</span><span class="verilog-number">0</span><span class="verilog-bracket">]</span> <span class="verilog-identifier">spike_pattern</span><span class="verilog-punctuation">,</span>
+    <span class="verilog-keyword">output</span> <span class="verilog-type">reg</span> <span class="verilog-bracket">[</span><span class="verilog-number">7</span><span class="verilog-punctuation">:</span><span class="verilog-number">0</span><span class="verilog-bracket">]</span> <span class="verilog-identifier">letter_code</span>
+<span class="verilog-bracket">)</span><span class="verilog-punctuation">;</span>
+<span class="verilog-keyword">endmodule</span></code></pre>
+                </div>
+
+                <div style="margin: 2rem 0;">
+                    <h3 style="font-size: 1.1rem; font-weight: 600; margin-bottom: 1rem; border-bottom: 1px solid #ccc; padding-bottom: 0.5rem;">
+                        <a href="https://github.com/nekshadesilva/nonpu/blob/main/superneuron.v" target="_blank" style="color: #0031A7; text-decoration: none;">superneuron.v</a>
+                    </h3>
+                    <p style="margin-bottom: 0.5rem; font-size: 0.9rem; color: #555;">Enhanced neuron module with additional features and optimization for complex dynamics.</p>
+                    <pre style="background: #f5f5f5; padding: 1rem; overflow-x: auto; border: 1px solid #ddd; font-family: 'Courier New', monospace; font-size: 0.85rem; line-height: 1.4;"><code><span class="verilog-keyword">module</span> <span class="verilog-identifier">superneuron</span><span class="verilog-bracket">(</span>
+    <span class="verilog-keyword">input</span> <span class="verilog-type">wire</span> <span class="verilog-identifier">clk</span><span class="verilog-punctuation">,</span>
+    <span class="verilog-keyword">input</span> <span class="verilog-type">wire</span> <span class="verilog-identifier">rst</span><span class="verilog-punctuation">,</span>
+    <span class="verilog-keyword">input</span> <span class="verilog-type">wire</span> <span class="verilog-bracket">[</span><span class="verilog-number">15</span><span class="verilog-punctuation">:</span><span class="verilog-number">0</span><span class="verilog-bracket">]</span> <span class="verilog-identifier">v_in</span><span class="verilog-punctuation">,</span>
+    <span class="verilog-keyword">input</span> <span class="verilog-type">wire</span> <span class="verilog-bracket">[</span><span class="verilog-number">15</span><span class="verilog-punctuation">:</span><span class="verilog-number">0</span><span class="verilog-bracket">]</span> <span class="verilog-identifier">u_in</span><span class="verilog-punctuation">,</span>
+    <span class="verilog-keyword">input</span> <span class="verilog-type">wire</span> <span class="verilog-bracket">[</span><span class="verilog-number">15</span><span class="verilog-punctuation">:</span><span class="verilog-number">0</span><span class="verilog-bracket">]</span> <span class="verilog-identifier">I_syn</span><span class="verilog-punctuation">,</span>
+    <span class="verilog-keyword">input</span> <span class="verilog-type">wire</span> <span class="verilog-bracket">[</span><span class="verilog-number">7</span><span class="verilog-punctuation">:</span><span class="verilog-number">0</span><span class="verilog-bracket">]</span> <span class="verilog-identifier">param_a</span><span class="verilog-punctuation">,</span>
+    <span class="verilog-keyword">input</span> <span class="verilog-type">wire</span> <span class="verilog-bracket">[</span><span class="verilog-number">7</span><span class="verilog-punctuation">:</span><span class="verilog-number">0</span><span class="verilog-bracket">]</span> <span class="verilog-identifier">param_b</span><span class="verilog-punctuation">,</span>
+    <span class="verilog-keyword">output</span> <span class="verilog-type">reg</span> <span class="verilog-bracket">[</span><span class="verilog-number">15</span><span class="verilog-punctuation">:</span><span class="verilog-number">0</span><span class="verilog-bracket">]</span> <span class="verilog-identifier">v_out</span><span class="verilog-punctuation">,</span>
+    <span class="verilog-keyword">output</span> <span class="verilog-type">reg</span> <span class="verilog-bracket">[</span><span class="verilog-number">15</span><span class="verilog-punctuation">:</span><span class="verilog-number">0</span><span class="verilog-bracket">]</span> <span class="verilog-identifier">u_out</span><span class="verilog-punctuation">,</span>
+    <span class="verilog-keyword">output</span> <span class="verilog-type">reg</span> <span class="verilog-identifier">spike</span>
+<span class="verilog-bracket">)</span><span class="verilog-punctuation">;</span>
+<span class="verilog-keyword">endmodule</span></code></pre>
+                </div>
+
+                <div class="prereq-row">
+                    <p>All modules are synthesized using Intel Quartus Prime Lite Edition and target the Cyclone IV EP4CE15 FPGA. The complete source code repository includes additional documentation, testbenches, and synthesis scripts. For detailed implementation information, refer to the GitHub repository.</p>
+                    <div class="prereq-img"><img src="assets/implementation-code-2.png" alt=""><span class="img-caption"></span></div>
+                </div>
+            </div>
+        </section>
+
+        
         <section class="prereq-section">
             <h2 class="prereq-title">Comparison with Past Neuromorphic Innovations</h2>
             
