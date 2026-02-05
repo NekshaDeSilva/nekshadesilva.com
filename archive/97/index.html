@@ -554,7 +554,7 @@
                 </div>
 
                 <div class="prereq-row">
-                    <p>At 50 megahertz clock frequency, which is the stable operating frequency achieved after timing analysis in Quartus Prime, the FPGA can perform approximately one million neuron state updates per second. For a network of 1,000 neurons, each neuron receives one update every millisecond. This matches the biologically realistic timescale at which cortical neurons operate, where typical firing rates range from 1 to 100 hertz.</p>
+                    <p>For this design, I target a 50 megahertz clock frequency based on Quartus Prime timing estimates for the individual neuron and synapse pipelines. At that rate, the architecture is designed to perform on the order of one million neuron state updates per second. For a network of 1,000 neurons, each neuron would receive one update every millisecond, which sits comfortably inside biologically realistic timescales where typical cortical firing rates range from 1 to 100 hertz. Full-chip compilation and timing closure are still in progress, so these numbers describe the intended operating regime rather than final silicon measurements.</p>
                     <div class="prereq-img"><img src="assets/hardware-5.png" alt=""><span class="img-caption"></span></div>
                 </div>
 
@@ -646,18 +646,26 @@
                 </div>
             </div>
         </section>
-
+        <section class="prereq-section">
+            <h2 class="prereq-title">New Note on Current Status</h2>
+            
+            <div class="prereq-content">
+            <div class="prereq-row">
+                <p>At the time of writing, the complete NonPU design is implemented in Verilog and passes Analysis & Synthesis in Intel Quartus Prime Lite, but the full place-and-route (Fitter) stage for the AC415 target board is still failing due to low-level hardware issues (pin assignments, timing constraints and memory interface details). In other words, the architecture, resource breakdown and dynamics described above are based on the actual HDL design and module-level simulation, but I have not yet generated a stable bitstream that runs end-to-end on the physical board. I am actively debugging these compilation errors and will update this page with oscilloscope traces, HDMI  captures and measured power numbers once the hardware is fully configured.</p>
+            </div>
+            </div>
+        </section>
         <section class="prereq-section">
             <h2 class="prereq-title">Experimental Results in Pre-Level Pattern Completion</h2>
             
             <div class="prereq-content">
                 <div class="prereq-row">
-                    <p>The demonstration task tests associative memory through pattern completion. The network learns a single 16 by 16 binary image showing a simple geometric pattern, specifically a one color cross shape. This pattern becomes encoded in the synaptic weight matrix through the Hebbian training process described earlier.</p>
+                    <p>The demonstration task is designed to test associative memory through pattern completion. The network is configured to learn a single 16 by 16 binary image showing a simple geometric pattern, specifically a one-color cross shape. This pattern becomes encoded in the synaptic weight matrix through the Hebbian training process described earlier.</p>
                     <div class="prereq-img"><img src="assets/9834924794/923472934729.png" alt=""><span class="img-caption">Figure 8: The Sample Image Used</span></div>
                 </div>
 
                 <div class="prereq-row">
-                    <p>During testing, I present corrupted versions of this image to the network by randomly setting pixels to zero, effectively creating black blocks that obscure portions of the pattern. The network's task is to reconstruct the complete memory from this partial information through attractor dynamics.</p>
+                    <p>In the planned hardware demonstration, I will present corrupted versions of this image to the network by randomly setting pixels to zero, effectively creating black blocks that obscure portions of the pattern. The network’s task is to reconstruct the complete memory from this partial information through its attractor dynamics.</p>
                     <div class="prereq-img">
                         <img src="assets/9834924794/8392387198739.png" alt="">
                         <span class="img-caption">
@@ -667,27 +675,25 @@
                 </div>
 
                 <div class="prereq-row">
-                    <p>The experimental protocol uses 50 corrupted test images generated with different random seeds. Each test image removes approximately 40 percent of the pixels. I load the corrupted pattern into the network by setting initial membrane voltages high for white pixels and low for black pixels. The network then runs freely for 1,000 milliseconds while I capture the output via VGA at 100 millisecond intervals.</p>
+                    <p>The evaluation protocol is defined as follows, even though it has not yet run on the FPGA due to the compilation issues described earlier. A test set of 50 corrupted images will be generated with different random seeds. Each test image will remove approximately 40 percent of the pixels. The corrupted pattern will be loaded into the network by setting initial membrane voltages high for active pixels and low for inactive pixels. The network will then run freely for 1,000 milliseconds while VGA output is captured at 100 millisecond intervals to visualize the convergence behavior.</p>
                     <div class="prereq-img"><img src="assets/results-3.png" alt=""><span class="img-caption"></span></div>
                 </div>
 
                 <div class="prereq-row">
-                    <p>Results show successful reconstruction in 39 out of 50 test cases, giving 78 percent success rate. Success is defined as achieving greater than 85 percent pixel agreement between the network output and the original uncorrupted pattern. The average time to reach this threshold across successful cases is 312 milliseconds with a standard deviation of 87 milliseconds.</p>
+                    <p>Success will be defined as achieving greater than 85 percent pixel agreement between the network output and the original uncorrupted pattern. The plan is to log both a binary success/failure flag and a convergence time (the first timestep at which the 85 percent threshold is crossed) for each trial. In preliminary software-only experiments with a simplified version of this architecture, attractor-style behavior emerges: the network tends to settle into one of a small number of stable patterns, and performance degrades smoothly as corruption increases. The hardware implementation is intended to reproduce this regime on the AC415 board.</p>
                     <div class="prereq-img"><img src="assets/results-4.png" alt=""><span class="img-caption"></span></div>
                 </div>
 
                 <div class="prereq-row">
-                    <p>Failure cases, which occurred in 11 tests, typically showed the network converging to a different stable state or oscillating between multiple patterns without settling. Analyzing these failures suggests they occur when the corruption removes critical structural elements of the pattern, placing the network too far from the target attractor basin.</p>
+                    <p>I also intend to sweep the corruption level. At lower corruption levels (for example, 20–30 percent pixels removed), I expect higher success rates and shorter convergence times. As corruption increases beyond 50–60 percent, it becomes more likely that the initial state lies outside the basin of attraction of the learned pattern, and the network may converge to an incorrect attractor or fall into oscillatory dynamics. These “failure cases” are scientifically interesting, because they reveal where the learned energy landscape is too shallow or where additional structure (such as inhibitory interneurons) is required.</p>
                     <div class="prereq-img"><img src="assets/35353535121/87539057094534.png" alt=""><span class="img-caption">Figure 10: Histogram showing convergence times across 39 successful tests</span></div>
                 </div>
 
                 <div class="prereq-row">
-                    <p>I also tested reconstruction at different corruption levels. At 25 percent corruption, the success rate increases to 94 percent with 47 successful reconstructions out of 50 tests. Average convergence time decreases to 187 milliseconds. At 60 percent corruption, success rate drops to 62 percent with only 31 successful reconstructions. Average convergence time for successful cases increases to 476 milliseconds.</p>
+                    <p>At this stage, these descriptions should be read as the experimental design and expected qualitative behavior, not as finalized measured statistics. Once the NonPU design compiles and runs stably on the AC415, I will replace this section with real traces, numerical results, and an example failure case showing incorrect attractor convergence on the physical hardware.</p>
                     <div class="prereq-img"><img src="assets/results-6.png" alt=""><span class="img-caption"></span></div>
                 </div>
 
-                <div class="prereq-row">
-                    <p>These results demonstrate that the network exhibits genuine attractor dynamics rather than random behavior. The pattern completion performance degrades smoothly as corruption increases, which is expected behavior for a system operating through energy minimization in a learned landscape.</p>
                     <div class="prereq-img"><img src="assets/results-7.png" alt=""><span class="img-caption"></span></div>
                 </div>
             </div>
@@ -698,24 +704,20 @@
             
             <div class="prereq-content">
                 <div class="prereq-row">
-                    <p>Power measurements use a digital multimeter connected to the FPGA power supply rails. The AC415 board consumes 0.28 watts at idle with the FPGA configured but the network not running. During active processing with the network running on corrupted input images, power consumption measures 1.23 watts. This gives an active processing power overhead of approximately 0.95 watts.</p>
+                    <p>One of the central motivations for the NonPU architecture is event-driven efficiency: the idea that computation and power draw should scale with real informational content in the input, not with a fixed matrix size. The current hardware bring-up state does not yet allow me to publish final watt-meter readings from the AC415 board, but the measurement methodology and comparison framework are already defined.</p>
                     <div class="prereq-img"><img src="assets/power-1.png" alt=""><span class="img-caption"></span></div>
                 </div>
 
                 <div class="prereq-row">
-                    <p>For comparison, I implemented a simple feedforward artificial neural network on the same FPGA performing the same image reconstruction task. This network uses 256 input neurons, a hidden layer of 128 neurons with ReLU activation, and 256 output neurons. The implementation uses 16-bit fixed-point arithmetic for weights and activations.</p>
+                    <p>In the planned setup, power measures will be taken using a digital multimeter or inline power monitor connected directly to the AC415 FPGA supply rails. Three operating conditions define the test protocol beginning with Configured Idle where the bitstream is loaded and clocks are running but no external input activity or spike stimulation occurs. Moderate Activity involves input patterns with sparse spikes or low-contrast structure while High Activity introduces heavily corrupted patterns or dense random input that drives widespread spiking. For each case, the NonPU serves as a comparison against a conventional fixed-topology feedforward artificial neural network implemented on the same FPGA or a small GPU. The key quantity of interest is not raw speed but whether power consumption in the spiking system visibly tracks input activity. A mostly black image should produce close-to-idle power draw whereas a dense or noisy image should draw more current as more neurons spike and more synapses are exercised.</p>
                     <div class="prereq-img"><img src="assets/power-2.png" alt=""><span class="img-caption"></span></div>
                 </div>
 
                 <div class="prereq-row">
-                    <p>The feedforward network consumes 2.87 watts during inference regardless of input content. Running the network on a completely black image, where all inputs are zero, still consumes the full 2.87 watts because the hardware must compute all matrix multiplications including zero times weight for every connection.</p>
+                    <p>Exact watt values and scaling factors are intentionally omitted here, because they would be speculative until the bitstream compiles and the design runs stably on real hardware. Published GPU board powers (for example, 75 watts for an entry-level card) provide an approximate reference for the orders of magnitude involved, but the true value of this project is demonstrating the shape of the power curve: flat for matrix engines, activity-dependent for spiking hardware.</p>
                     <div class="prereq-img"><img src="assets/9834924794/05285028498035.png" alt=""><span class="img-caption">Figure 11: Log scale highlights the large difference in power draw between the NonPU architecture, specifically utilizing the Cyclone IV FPGA, and entry-level consumer GPUs. Note that we measured the electrical power of one NonPU unit only, comprising the AC415 and Cyclone IV, under three activity states ranging from Idle to Medium and Heavy. To estimate the total power of a multi-unit NonPU deployment, we multiply these single-unit measurements by N, where N is the number of identical NonPU units running in parallel, while assuming roughly linear scaling and excluding extra system overhead such as radios, storage, and regulator losses. GPU values are shown as typical board power at "Idle", typical “medium workload” draw, and near-maximum draw which represents approximately or the board power limit for context. <b>This is not a task dependent performance scaling, but a direct watts comparison.</b></span></div>
                 </div>
 
-                <div class="prereq-row">
-                    <p>The spiking network shows input-dependent power consumption. When I present a completely black image with zero pixel activity, the network consumes only 0.42 watts, barely above idle. With a 50 percent gray random noise pattern causing moderate spiking activity, consumption measures 0.89 watts. The full corrupted pattern test images with high activity consume the measured 1.23 watts.</p>
-                    <div class="prereq-img"><img src="assets/power-4.png" alt=""><span class="img-caption"></span></div>
-                </div>
 
                 <div class="prereq-row">
                     <p>This demonstrates event-driven efficiency at the hardware level. The spiking architecture naturally reduces computation and power when input information is sparse or simple, while the feedforward architecture performs fixed computation regardless of input characteristics.</p>
@@ -856,7 +858,7 @@
                 </div>
 
                 <div class="prereq-row">
-                    <p>Timing closure at higher clock frequencies proved challenging. Initial design targeted 100 megahertz operation but timing analysis showed critical path delays exceeding 10 nanoseconds in the multiplier chain. Reducing clock frequency to 50 megahertz achieved timing closure with positive slack of approximately 2 nanoseconds. Further pipeline optimization could potentially increase operating frequency.</p>
+                    <p>Timing closure at higher clock frequencies is expected to be challenging. The initial design target is 100 megahertz operation, but early synthesis reports and back-of-the-envelope path estimates suggest that critical paths in the multiplier chain will likely exceed 10 nanoseconds without additional pipelining. For this reason, the current NonPU design is scoped around a more conservative 50 megahertz clock, which should be attainable once the full top-level build compiles cleanly. Further pipeline optimization and restructuring of the arithmetic datapaths may allow higher operating frequencies in future revisions.</p>
                     <div class="prereq-img"><img src="assets/limitations-4.png" alt=""><span class="img-caption"></span></div>
                 </div>
 
@@ -867,7 +869,8 @@
 
                 <div class="prereq-row">
                     <p>Testing coverage remains limited to controlled laboratory conditions. The system has not been validated under temperature variation, power supply noise, or long-duration operation exceeding several hours. Extended reliability testing would be necessary before deploying such a system in practical applications.</p>
-                    <div class="prereq-img"><img src="assets/limitations-6.png" alt=""><span class="img-caption">Figure 15: Example failure case showing incorrect attractor convergence</span></div>
+                    <div class="prereq-img"><img src="assets/357982598258/183471947.png" alt="">
+                        <img src="assets/357982598258/947298347928743.png" alt=""><span class="img-caption">Figure 15: Faliure Cases and Compilation Errors due to the Resource Constriants and Unknown reasons that are currently being debugged.</span></div>
                 </div>
             </div>
         </section>
