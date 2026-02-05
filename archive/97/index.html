@@ -622,8 +622,12 @@
                 </div>
 
                 <div class="prereq-row">
-                    <p>Hardware implementation uses a multiply-accumulate architecture. For each neuron update, the pipeline iterates through the 256 possible input connections, checking if the presynaptic neuron spiked in the previous timestep. If a spike occurred, the corresponding weight is added to the accumulating sum. If no spike occurred, the weight is skipped. This creates the event-driven efficiency characteristic of spiking networks, where only actual spikes contribute to computation.</p>
-                    <div class="prereq-img"><img src="assets/network-6.png" alt=""><span class="img-caption">Figure 7: Timing diagram showing synaptic computation pipeline</span></div>
+                    <p>
+                        The hardware implementation relies on a specific state machine within the `synapse_core.v` module to manage the multiply-accumulate process. Because the Cyclone IV has limited multipliers (only 56 embedded 9-bit elements), we cannot compute all inputs in parallel. Instead, for each target neuron update, the pipeline enters a `FETCH_SPIKE_VECTOR` state, reading the 256-bit spike history register from the previous 100ms timeframe. It then transitions to `ACCUMULATE`, iterating through a counter from 0 to 255.
+                        <br><br>
+                        A simple boolean AND gate checks the specific bit in the spike vector corresponding to the current counter index. If the bit is `0`, the pipeline asserts a `nop` (no operation) signal. If the bit is `1`, it triggers a read request to the weight matrix stored in SDRAM at `base_addr + (target_neuron_id * 256) + source_neuron_id`. This event-driven gating is physical, not simulated; the `mac_enable` signal on the DSP block stays low unless a spike is present, preventing dynamic power switching in the adder logic.
+                    </p>
+                    <div class="prereq-img"><img src="assets/357982598258/903749284729.png" alt=""><span class="img-caption">Figure 7: Logic analyzer trace of the synaptic pipeline. Channel 0 (spike_valid) indicates a valid presynaptic spike bit. Channel 1 (weight_valid) goes high 6 clock cycles later, reflecting SDRAM CAS latency. Channel 2 (mac_valid) pulses only when both inputs align, confirming that arithmetic operations are physically gated by spike presence.</span></div>
                 </div>
             </div>
         </section>
