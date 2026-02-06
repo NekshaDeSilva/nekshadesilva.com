@@ -116,6 +116,15 @@
             text-decoration: underline;
         }
 
+        /* CityofGits Project Section - Constrained Width */
+        .documents-list-39588 {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            width: 60%;
+            margin: 0 auto;
+        }
+
         @media (max-width: 600px) {
             body {
                 padding: 1rem;
@@ -127,6 +136,10 @@
 
             .btn {
                 text-align: center;
+            }
+
+            .documents-list-39588 {
+                width: 100%;
             }
         }
     </style>
@@ -260,6 +273,72 @@ Ranked among the most advanced 200 high school programmers in the United States 
                 <div class="button-group">
                     <a href="https://slmathsolympiad.org" target="_blank" class="btn">Visit Sri Lankan Mathematical Olympiad Foundation</a>
                     <a href="https://docs.google.com/spreadsheets/d/1wR0zTLfDkL9_JsDnPRhdZbZBhQKCqqLu/edit?usp=sharing&ouid=114481772578722464126&rtpof=true&sd=true" target="_blank" class="btn">View Result Sheet</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Previous Projects Section -->
+        <header style="margin-top: 4rem; margin-bottom: 3rem; padding-bottom: 1.5rem; border-bottom: 1px solid #000;">
+            <h1>Previous Hands-on Projects</h1>
+            <p class="subtitle">Independent development work and creative technical solutions</p>
+        </header>
+
+        <div class="documents-list" >
+            <!-- Project: CityofGits -->
+            <div class="documents-list-39588">
+                <div class="document-name">CityofGits - 3D Developer Portfolio Platform (2022)</div>
+                <p class="document-description">Developed in 2022 during Grade 9 at Ananda College, CityofGits is a web application designed to solve the problem of static, 2D developer portfolios. I identified that many of the current portfolios developers use are very static - not inherently an issue or a market gap, but I recognized a lack of engaging options especially for teenagers and people who get into programming early. They seek a kind of engagement that traditional portfolios cannot provide. For this project, I used Three.js, which was challenging to learn at that time. I built a 3D world where developers and creators can construct personalized, interactive portfolio spaces.</p>
+                <p class="document-description">Each user can create a unique link (e.g., <a href="https://cityofgits.link/neksha" target="_blank" style="color: #0031A7;">cityofgits.link/neksha</a>) that directs visitors to their custom-built 3D environment. Users can add images, text, buildings, and custom constructions with no creative limits - the only boundary is imagination. The platform supports both public profiles and password-protected private portfolios.</p>
+                <p class="document-description">One innovative feature is the commenting system - anyone can leave appropriate comments on the main city page. When someone creates a new portfolio page, it is automatically announced in the chat, and users can also add custom messages. This creates a community-driven experience for developers showcasing their work.</p>
+                <p class="document-description">The primary technical challenge was managing the significant server-side resources required to store and render each user's 3D world state. This led me to explore and adopt Cloudflare Workers and Pages for scalable deployment - experience that later proved invaluable for subsequent projects like Litha 2024. In 2025, I integrated this project into my nonprofit, <a href="https://mag.openrockets.com" target="_blank" style="color: #0031A7;">Open Rockets Foundation</a>, and handed over maintenance to <a href="https://github.com/avincodes" target="_blank" style="color: #0031A7;">Avin Indrasoma</a>, a Google Developer Expert and GitHub Campus Expert (https://github.com/avincodes).</p>
+                
+                <div style="width: 100%; margin-bottom: 1rem;">
+                    <iframe 
+                        width="100%" 
+                        height="450" 
+                        src="https://www.youtube.com/embed/IhEjjTlsR4k?autoplay=1&mute=1&loop=1&playlist=IhEjjTlsR4k" 
+                        title="CityofGits - 3D Developer Portfolio Platform" 
+                        frameborder="0" 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                        allowfullscreen
+                        style="border: 1px solid #000;">
+                    </iframe>
+                </div>
+
+                <div style="width: 100%; margin-bottom: 1rem;">
+                    <img src="assets/23758902572905/1.png" alt="CityofGits GitHub Repository Screenshot" style="width: 100%; border: 1px solid #000;">
+                </div>
+                
+                <div class="button-group">
+                    <a href="https://cityofgits.link" target="_blank" class="btn">Visit CityofGits</a>
+                    <a href="https://github.com/NekshaDeSilva/cityofgits" target="_blank" class="btn">View GitHub Repository</a>
+                    <a href="https://github.com/NekshaDeSilva" target="_blank" class="btn">My GitHub Profile</a>
+                </div>
+            </div>
+
+            <!-- Project: Tempfy -->
+            <div class="documents-list-39588">
+                <div class="document-name">Tempfy - Bluetooth-Enabled Digital Thermometer (2022)</div>
+                <p class="document-description">Developed and presented at the Impreza Competition in 2022 at Ananda College, Tempfy is an Arduino-based digital thermometer with Bluetooth Low Energy (BLE) wireless transmission. The device uses a DHT11 temperature sensor to measure ambient temperature, displays readings on a 16x2 I2C LCD screen, and broadcasts the data via BLE using an nRF24 radio module. The system categorizes temperature as "cold" (below 27°C), "normal" (27-33°C), or "warm" (above 33°C) and includes error handling for sensor disconnection.</p>
+                
+                <div style="width: 100%; margin-bottom: 1rem;">
+                    <iframe 
+                        width="100%" 
+                        height="450" 
+                        src="https://tempfy.netlify.app" 
+                        title="Tempfy - Digital Thermometer" 
+                        frameborder="0" 
+                        style="border: 1px solid #000; overflow: auto;">
+                    </iframe>
+                </div>
+
+                <div style="width: 100%; margin-bottom: 1rem;">
+                    <img src="assets/23758902572905/2.png" alt="Tempfy GitHub Repository Screenshot" style="width: 100%; border: 1px solid #000;">
+                </div>
+                
+                <div class="button-group">
+                    <a href="https://tempfy.netlify.app" target="_blank" class="btn">Visit Tempfy</a>
+                    <a href="https://github.com/NekshaDeSilva/Tempfy" target="_blank" class="btn">View GitHub Repository</a>
                 </div>
             </div>
         </div>
