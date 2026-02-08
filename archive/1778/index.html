@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GVMA Incorporated</title>
+    <meta name="description" content="GVMA Incorporated — Public Benefit Corporation">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500&family=Product+Sans:wght@400;500&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            overflow-x: hidden;
+            max-width: 100%;
+        }
+
+        body {
+            font-family: 'Google Sans', 'Product Sans', 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            line-height: 1.6;
+            color: #fff;
+            background-color: #000;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+        }
+
+        /* ===== FOOTER ===== */
+        .gvma-footer {
+            background-color: #000;
+            color: rgba(255, 255, 255, 0.85);
+            font-family: 'Google Sans', 'Product Sans', 'Roboto', sans-serif;
+            font-size: 0.8125rem;
+            line-height: 1.6;
+            padding: 0;
+            width: 100%;
+        }
+
+        .gvma-footer a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: color 0.15s ease;
+        }
+
+        .gvma-footer a:hover {
+            color: #fff;
+        }
+
+        /* Top divider */
+        .footer-divider {
+            border: none;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin: 0;
+        }
+
+        /* Footer inner container */
+        .footer-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem 2rem 2rem;
+        }
+
+        /* Logo row */
+        .footer-logo-row {
+            display: flex;
+            align-items: center;
+            gap: 0.875rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .footer-logo-row img {
+        
+            width: 9rem;
+      
+            display: block;
+        }
+
+        .footer-logo-text {
+            font-size: 1.0625rem;
+            font-weight: 500;
+            color: #fff;
+            letter-spacing: -0.01em;
+        }
+
+        /* Terms text section */
+        .footer-terms {
+            margin-bottom: 2.5rem;
+            color: white;
+        }
+
+        .footer-terms p {
+            font-size: 0.75rem;
+            font-weight: 400;
+            color: rgb(255, 255, 255);
+            line-height: 1.85;
+            margin: 0;
+            max-width: 720px;
+        }
+
+        .footer-terms p + p {
+            margin-top: 0.625rem;
+        }
+
+        /* GitHub link with icon */
+        .footer-github-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .footer-github-link svg {
+            width: 15px;
+            height: 15px;
+            fill: rgba(255, 255, 255, 0.7);
+            transition: fill 0.15s ease;
+            flex-shrink: 0;
+        }
+
+        .footer-github-link:hover svg {
+            fill: #fff;
+        }
+
+        /* Bottom bar */
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            padding-top: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .footer-bottom-left {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-copyright {
+            color: rgba(255, 255, 255, 0.4);
+            font-size: 0.75rem;
+            font-weight: 400;
+        }
+
+        .footer-legal-links {
+            display: flex;
+            align-items: center;
+            gap: 1.25rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-legal-links a {
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        .footer-legal-links a:hover {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .footer-bottom-right {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .footer-lang {
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.4);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .footer-lang svg {
+            width: 13px;
+            height: 13px;
+            fill: rgba(255, 255, 255, 0.4);
+        }
+
+        .footer-pbc-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            font-size: 0.6875rem;
+            color: rgba(255, 255, 255, 0.3);
+            letter-spacing: 0.03em;
+            margin-top: 0.75rem;
+        }
+
+        .footer-pbc-dot {
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.25);
+            flex-shrink: 0;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 600px) {
+            .footer-inner {
+                padding: 2rem 1.25rem 1.5rem;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .footer-bottom-left {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.75rem;
+            }
+
+            .footer-legal-links {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===== GVMA INCORPORATED — FOOTER ===== -->
+    <footer class="gvma-footer">
+        <hr class="footer-divider">
+        <div class="footer-inner">
+
+            <!-- Logo -->
+            <div class="footer-logo-row">
+                <img src="encrypted-assets/937497294724.png" alt="GVMA Incorporated">
+                <span class="footer-logo-text">Global Vision for Machinery Advancement, PBC.</span>
+            </div>
+
+            <!-- Terms & Conditions -->
+            <div class="footer-terms">
+                <p>Dear Phillips Academy, This is a footnote that I have added. I know that you might or might not be reading this, but this is something I want to make real through action rather than just intentional emphasis. I have a dream that I am going to live with for the rest of my life. I am telling this to Phillips Academy here because this is not a publicly indexed link and I have nowhere else to express it. Even as a person who seeks a return on investment, I have nowhere else to seek comfort for dreams like this.<br><br>
+
+I have a specific dream of initiating my first public benefit corporation called GVMA, which stands for Global Vision for Machinery Advancement. It focuses on human longevity, space exploration, high performance computing, and Neural Engineering. In some edge cases, these are very ambitious claims, but I prefer to focus on the work itself. 
+
+This dream has been instilled in my mind for a long time. I was inspired by this idea even when I was very young and starting other specific projects. I want to help at least one human thrive and embrace the genius gift of the brain. I want to enable them to explore the universe and create miracles with their brains, the most complex matter in the known universe. It doesn't matter if I will be in my 70s, 80s, or even 90s when this happens; the goal remains the same. I will be using this company name when referring to intellectual properties like this, publishing papers to conferences, in Sri Lanka Science and Engineering Fair marketing documentation, and research journal affiliations.
+
+I am at the very beginning. I am working towards making this a success one day, and I will officially start my company when I am financially stable and in a position to do so. 
+
+I am deeply inspired by the spirit of Sir James Dyson, the founder of Dyson Private Limited. He is a decibillionaire and a recipient of the Royal Order of Honor, yet he spent over half of his life grinding in his backyard, living off his wife's salary while building over 5,000 prototypes when no one was watching. Despite his massive success, he did not idolize himself as a "superhero" or a great entrepreneur in the normal sense; he described his work ethic as being like a mule.<br><br>
+
+I see that same trait of humbleness in legendary competitive programmers like Sir Gennady Korotkevich, the greatest of all time. Even though he has been a legendary Grandmaster since age 11, by dominating Codeforces, AtCoder, CodeChef, TopCoder, Google Code Jam, Kickstart, Meta Hacker Cup, and the International Olympiad in Informatics, he still travels by train like anyone else. This level of humility in people of such great value is a trait I deeply respect and carry myself.<br><br>
+
+I am working hard to make this a reality.  It is a metaphorical dream, and while I may be getting emotional, it is because I care deeply. I hope to acquire the first asset for the corporation when I arrive at the Andover dormitory by purchasing the domain GVMA.com. Whether I am able to come or not, the map and the code remain the same; I am working hard to make this a reality. 
+            </div>
+
+            <!-- Bottom bar -->
+            <div class="footer-bottom">
+                <div class="footer-bottom-left">
+                    <span class="footer-copyright">&copy; 2026 GVMA Research Incorporated. All rights reserved.</span>
+                
+                </div>
+                <div class="footer-bottom-right">
+                 
+                </div>
+            </div>
+
+            <!-- Public Benefit Corporation badge -->
+            <div class="footer-pbc-badge">
+                
+                Copyright (C) Neksha DeSilva and www.nekshadesilva.com
+            </div>
+
+        </div>
+    </footer>
+
+</body>
+</html>
