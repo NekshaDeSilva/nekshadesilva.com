@@ -889,32 +889,461 @@
         </section>
 
         <section class="prereq-section">
-            <h2 class="prereq-title">The NonPU Just Got Started.</h2>
+            <h2 class="prereq-title">NonPU Neuromorphic Video Processing System - Comprehensive Engineering Description</h2>
             
             <div class="prereq-content">
                 <div class="prereq-row">
-                    <p>Several concrete enhancements are planned for future versions, each with specific implementation pathways. Expanding spatial resolution to 32 by 32 pixels would quadruple the network size to 1,024 neurons. The current time-multiplexing architecture supports this directly by extending the neuron iteration counter and allocating additional SDRAM for state storage. The synaptic weight matrix would grow to 1 megabyte, well within available memory. Update rate would decrease to approximately 1.5 milliseconds per neuron cycle, which remains within acceptable biological timescales.</p>
+                    <p><strong>Executive Overview:</strong> The Neuronal Processing Unit represents a fundamental reimagining of video compression and neural computation through the integration of biological principles with commodity hardware. This system implements spiking neural networks on Field-Programmable Gate Array technology to achieve video compression ratios exceeding fifty-to-one while maintaining computational efficiency that surpasses traditional Graphics Processing Unit based approaches. The architecture leverages the Alinx AC415 development board featuring the Intel Cyclone IV FPGA to create a neuromorphic computing platform capable of simulating one million neurons while consuming a fraction of the power required by conventional processing systems.</p>
                     <div class="prereq-img"><img src="assets/future-1.png" alt=""><span class="img-caption"></span></div>
                 </div>
 
                 <div class="prereq-row">
-                    <p>Implementing on-chip spike-timing-dependent plasticity requires adding logic to detect spike coincidences and update synaptic weights. The weight update can occur asynchronously during the inter-neuron pipeline gaps when the main processing pipeline is idle. STDP computation adds approximately 1,500 logic elements based on preliminary synthesis experiments, which fits within the available headroom.</p>
+                    <p>The innovation centers on a dual-mode architecture that separates learning from inference, enabling the system to process complex video data through sparse event-driven computation. This approach mirrors biological neural processing where information is encoded as temporal spike patterns rather than continuous analog signals. The system achieves this through careful orchestration of hardware resources including thirty-two megabytes of SDRAM for neural state storage, SD card interfaces for synaptic weight persistence, and dedicated video output pathways through both VGA and HDMI interfaces.</p>
                     <div class="prereq-img"><img src="assets/future-2.png" alt=""><span class="img-caption"></span></div>
                 </div>
 
                 <div class="prereq-row">
-                    <p>Adding inhibitory interneurons with 20 percent probability in the grid would require distinguishing excitatory and inhibitory neuron types in the state storage and implementing sign inversion for inhibitory synaptic weights. This is architecturally straightforward and adds minimal logic overhead but significantly enriches network dynamics.</p>
+                    <p><strong>Hardware Foundation and System Architecture:</strong> The primary development platform is built around the Alinx AC415 board, which represents a significant value proposition in the FPGA development ecosystem. While bare Cyclone IV chips can be procured for approximately three dollars, the AC415 board commands a fifty-dollar price point due to its comprehensive peripheral integration. This premium delivers a complete video processing infrastructure including Digital-to-Analog conversion circuitry for VGA output, dedicated HDMI transmitter chips with proper impedance-controlled differential pair routing, and a substantial memory subsystem that enables frame buffering and neural state storage.</p>
                     <div class="prereq-img"><img src="assets/future-3.png" alt=""><span class="img-caption"></span></div>
                 </div>
 
                 <div class="prereq-row">
-                    <p>Migrating to a larger FPGA platform like the Cyclone V or Cyclone 10 would provide 10x to 50x more logic elements, enabling either fully parallel implementation of hundreds of neurons or time-multiplexed simulation of networks with 10,000 to 100,000 neurons. This would enable more complex computational tasks beyond simple pattern completion.</p>
+                    <p>The core FPGA is the Intel Cyclone IV EP4CE15F23C8N, packaged in a FineLine Ball Grid Array configuration with four hundred eighty-four pins. This chip provides fifteen thousand four hundred eight logic elements operating at a base clock frequency of fifty megahertz. The logic elements serve as the fundamental building blocks for implementing the neural computation pipelines, finite state machines, and control logic that orchestrate the entire system. The fifty-megahertz clock serves as the temporal foundation for all synchronous operations, though Phase-Locked Loop circuitry can synthesize additional clock domains as needed for video pixel timing and memory interface optimization.</p>
                     <div class="prereq-img"><img src="assets/future-4.png" alt=""><span class="img-caption"></span></div>
                 </div>
 
                 <div class="prereq-row">
-                    <p>Interfacing with actual biological neural tissue represents the long-term research goal. Cortical organoids or brain slice preparations generate electrical signals detectable through microelectrode arrays. Bidirectional communication between the FPGA spiking network and biological tissue would enable hybrid bio-electronic systems. This requires specialized analog front-end hardware not present on the current development board but represents a feasible extension with appropriate instrumentation.</p>
-                    <div class="prereq-img"><img src="https://www.fpgakey.com/uploads/images/family/altera/cyclone-v.jpg" alt=""><span class="img-caption">Figure 16: NonPU v0.1 runs on the AC415 Cyclone IV board as a 16×16 time-multiplexed spiking sheet that performs pattern completion in pure silicon. The next stage, <b>version 0.2</b>, migrates this architecture to an Intel Altera Cyclone V, scaling to at least a 32×32 sheet. Please note that this innivation can scale indefinitely for many versions.<br><br></span></div>
+                    <p>The memory subsystem consists of thirty-two megabytes of SDRAM operating at frequencies between one hundred and one hundred sixty-six megahertz. This memory serves dual purposes within the architecture. During encoding operations, it functions as a frame buffer storing incoming pixel data and intermediate processing results. During neural computation, it holds the state variables for potentially millions of simulated neurons, with each Izhikevich model neuron requiring four bytes of storage for voltage and recovery variables. This arrangement permits the system to maintain state for eight million neurons if memory were the only constraint, though practical implementations balance neuron count against synapse storage requirements and computational throughput limitations.</p>
+                    <div class="prereq-img"><img src="assets/prereq-1.png" alt=""><span class="img-caption"></span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p>Video output capabilities span both legacy and modern display standards. The VGA interface employs a resistor ladder network implementing RGB565 color encoding to produce sixteen-bit color output through standard fifteen-pin D-sub connectors. The HDMI interface utilizes dedicated transmitter circuitry to handle high-speed differential signaling and protocol compliance. Both interfaces share common frame buffer resources within SDRAM, with video timing generation managed through dedicated Verilog modules that ensure proper horizontal and vertical synchronization pulses.</p>
+                    <div class="prereq-img"><img src="assets/prereq-2.png" alt=""><span class="img-caption"></span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p>Storage infrastructure centers on an SD card interface operating via Serial Peripheral Interface protocol. This connection serves as the primary mechanism for persistent storage of synaptic weights, learned patterns, and compressed video representations. The SD card is not treated as a conventional filesystem but rather as a raw block storage device, eliminating the overhead of FAT32 or other file system protocols. This approach reduces logic element consumption for the SD controller from thousands to merely three hundred elements while dramatically increasing data transfer efficiency. The cards function as removable intelligence modules, with each card potentially encoding a complete learned skill or compressed video that can be rapidly loaded into the neural substrate at system initialization.</p>
+                    <div class="prereq-img"><img src="assets/prereq-3.png" alt=""><span class="img-caption"></span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p><strong>Master-Slave Computational Architecture:</strong> The system architecture extends beyond a single FPGA through a master-slave configuration that distributes computational workload across multiple processing units. The master unit is the fully-featured AC415 board with complete peripheral access, while slave units employ smaller EP4CE6 Cyclone IV variants that lack SD card interfaces and SDRAM connections. This asymmetric architecture is not a limitation but rather an intentional design that exploits the differential capabilities of each component.</p>
+                    <div class="prereq-img"><img src="assets/prereq-4.png" alt=""><span class="img-caption"></span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p>The master board maintains exclusive control over system memory and persistent storage while coordinating computational tasks across slave units. During video encoding operations, the master retrieves pixel data from SDRAM and transmits pairs of pixels to slave units for differential analysis. The slave boards execute subtraction operations to compute frame-to-frame differences, returning numerical results that indicate the magnitude of change. When differences exceed predetermined thresholds, the master identifies these as significant events worthy of encoding in the sparse event representation.</p>
+                    <div class="prereq-img"><img src="assets/prereq-5.png" alt=""><span class="img-caption"></span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p>This division of labor proves particularly effective for the proximity correlation hypothesis that underlies the video compression approach. Rather than attempting to process every pixel serially on a single processor, the architecture parallelizes the detection of changed regions across multiple slave units. Each slave can simultaneously analyze different spatial regions of the video frame, dramatically accelerating the identification of cluster centers where pixel changes concentrate. The master then aggregates these results to construct the complete change map that forms the foundation of the compressed representation.</p>
+                    <div class="prereq-img">
+                        <img src="assets/9834924794/5762958392756295.png" alt="">
+                        <img src="assets/9834924794/57629583927562953.png" alt="">
+                        <span class="img-caption">The EP4CE6E24 board acts as a slave in this computational topology, providing 6,700 logic elements and an Intel Altera Cyclone IV FPGA. I used the same FPGA family for both master and slave boards to enable high‑speed, seamless communication between fabrics.</span>
+                    </div>
+                </div>
+
+                <div class="prereq-row">
+                    <p>Communication between master and slave units occurs over high-speed parallel buses implemented through the expansion headers present on both board types. These connections carry pixel data, control signals, and computational results without requiring complex protocol layers. The simplicity of the interface stems from the tightly coupled nature of the computation where slaves function essentially as dedicated arithmetic coprocessors rather than independent computing nodes. Clock synchronization ensures deterministic timing relationships between units, permitting pipelined operation where new data can be submitted to slaves before previous computations complete.</p>
+                    <div class="prereq-img"><img src="assets/prereq-7.png" alt=""><span class="img-caption"></span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p><strong>Superneuron Executive Control Module:</strong> The superneuron module represents the highest level of system control, implementing a finite state machine that governs global network dynamics and learning processes. This module evolved from an initial prototype of sixteen lines that merely incremented a counter into a production implementation spanning three hundred lines of carefully structured Verilog code. The transformation reflects the transition from demonstrating basic hardware functionality to implementing genuine neuromorphic control principles.</p>
+                    <div class="prereq-img"><img src="assets/prereq-8.png" alt=""><span class="img-caption"></span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p>The finite state machine manages four distinct operational modes that reflect different phases of neural computation. The idle state represents quiescence where the network awaits input stimulation or configuration changes. During the learning state, synaptic plasticity mechanisms operate at maximum efficacy as the network adapts to incoming patterns. The converged state indicates successful pattern recognition where learned representations have stabilized sufficiently to warrant persistence to SDRAM. The panic state serves as an emergency intervention when network activity exceeds safe bounds, preventing runaway excitation that could correspond to pathological seizure-like states in biological systems.</p>
+                    <div class="prereq-img"><img src="assets/prereq-9.png" alt=""><span class="img-caption"></span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p>Homeostatic gain control mechanisms implement dynamic adaptation of global excitability levels based on population activity monitoring. The module continuously tracks the number of neurons generating spikes within each computational cycle, accumulating this information into rolling average buffers that characterize recent network behavior. When average activity rises above target levels, the system reduces global gain through multiplication of synaptic weights by scaling factors less than unity. Conversely, when activity falls below target ranges, gain increases to prevent the network from entering unresponsive states. This closed-loop control maintains network dynamics within optimal operating ranges without requiring manual parameter tuning.</p>
+                    <div class="prereq-img"><img src="assets/prereq-10.png" alt=""><span class="img-caption"></span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p>Synchrony detection logic identifies moments when large populations of neurons fire in tight temporal coordination. This capability proves essential for recognizing when the network has successfully learned a pattern and achieved resonance with the input structure. The coincidence detector examines the distribution of spike times across the neural population, looking for clustering that indicates correlated activity rather than random firing. When synchrony exceeds threshold values, the system interprets this as pattern recognition success and triggers state transitions that can lock learned weights into persistent storage.</p>
+                    <div class="prereq-img"><img src="assets/prereq-11.png" alt=""><span class="img-caption"></span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p>The module interfaces with the neural computation pipelines through several control signals that modulate learning rates, gate synaptic updates, and coordinate memory operations. The global gain signal propagates to all neuron update modules where it scales incoming synaptic currents, effectively adjusting network sensitivity. Learning enable signals control whether spike-timing-dependent plasticity mechanisms actively modify synaptic weights or whether weights remain frozen in their current configuration. Write enable signals coordinate the transfer of neural state from transient pipeline registers into SDRAM for long-term retention. Panic reset signals provide emergency shutdown capability that can rapidly quench pathological activity patterns.</p>
+                    <div class="prereq-img"><img src="assets/prereq-12.png" alt=""><span class="img-caption"></span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p>Implementation of population monitoring employs a bucketed approach that balances accuracy against logic element consumption. Rather than implementing a massive adder tree capable of summing all two hundred fifty-six neuron outputs, the system divides the population into sixteen buckets of sixteen neurons each. Each bucket maintains a local counter, and the bucket counts are then summed to produce a total activity estimate. This hierarchical counting strategy reduces combinatorial logic depth while maintaining sufficient precision for homeostatic control. The approximation errors introduced by this approach prove negligible for the intended purpose of maintaining global activity levels within acceptable bounds.</p>
+                    <div class="prereq-img"><img src="assets/prereq-13.png" alt=""><span class="img-caption"></span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p><strong>Neural Computation Pipeline Architecture:</strong> The neuronalpipes module implements the core neural computation engine that updates individual neuron states according to the Izhikevich spiking neuron model. This mathematical framework balances biological realism against computational efficiency, capturing essential dynamics of cortical neurons including spike generation, refractory periods, and diverse firing patterns while requiring only basic arithmetic operations implementable in digital logic.</p>
+                    <div class="prereq-img"><img src="assets/prereq-14.png" alt=""><span class="img-caption"></span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p>Each neuron maintains two state variables encoded as sixteen-bit fixed-point numbers. The voltage variable represents membrane potential, rising in response to synaptic inputs and resetting abruptly when spike threshold is crossed. The recovery variable provides adaptation and implements refractory dynamics that prevent immediate re-firing after a spike. The equations governing these variables involve additions, multiplications by constant coefficients, and conditional updates triggered by threshold crossings. These operations map naturally onto hardware arithmetic units within the FPGA fabric.</p>
+                    <div class="prereq-img"><img src="assets/prereq-15.png" alt=""><span class="img-caption"></span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p>The pipeline structure permits the same physical arithmetic hardware to be time-multiplexed across numerous virtual neurons. Rather than instantiating dedicated logic for each neuron in the simulation, the system loads state variables from memory, performs the update computation, and writes modified state back to memory in a cyclical fashion. This approach trades update frequency for neuron capacity, enabling simulations of far more neurons than would fit if each required dedicated hardware. The critical constraint becomes memory bandwidth rather than logic element availability.</p>
+                    <div class="prereq-img"><img src="assets/prereq-16.png" alt=""><span class="img-caption"></span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p>For a million-neuron simulation, the computational requirements can be precisely calculated. Each neuron requires approximately ten clock cycles to fetch state from SDRAM, execute arithmetic operations, and write results back to memory. Multiplying one million neurons by ten cycles yields ten million cycles required per complete network update. With a fifty-megahertz clock providing fifty million cycles per second, the system achieves five complete updates per second. This five-hertz update rate represents ten-fold slower than biological neural networks operating in the gamma frequency range of thirty to eighty hertz, yet remains perfectly adequate for many neuromorphic applications and represents remarkable achievement for fifty-dollar hardware.</p>
+                    <div class="prereq-img"><img src="assets/prereq-17.png" alt=""><span class="img-caption"></span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p>Global modulation from the superneuron module enters the pipeline through multiplication of synaptic inputs by the gain factor. This occurs before the inputs accumulate into the voltage variable, effectively scaling network sensitivity. Implementation in fixed-point arithmetic requires careful attention to numerical precision and dynamic range to prevent overflow or underflow conditions. The sixteen-bit representation with appropriate binary point placement provides sufficient range to capture voltage dynamics while maintaining adequate precision for stable numerical integration.</p>
+                    <div class="prereq-img"><img src="assets/future-1.png" alt=""><span class="img-caption"></span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p>Spike generation occurs through simple threshold comparison. When voltage exceeds a predetermined level, the neuron enters the spike state for a single cycle, during which it broadcasts its spike to connected neurons via the synaptic network. The voltage then undergoes an abrupt reset to a hyperpolarized value while the recovery variable increments, implementing the refractory dynamics that ensure spikes remain discrete events rather than continuous high-voltage states.</p>
+                    <div class="prereq-img"><img src="assets/future-2.png" alt=""><span class="img-caption"></span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p><strong>SD Card Storage and Loading Architecture:</strong> The brain loader module implements the interface between SD card persistent storage and SDRAM working memory, enabling the system to boot with learned intelligence rather than requiring retraining from random initial conditions. This capability transforms the FPGA from a blank computational substrate into a system with specific competencies determined by the contents of the inserted SD card. The architectural innovation lies in recognizing that learning can occur offline over extended periods while inference must execute with minimal latency, leading to a dual-mode design that optimizes each phase independently.</p>
+                    <div class="prereq-img"><img src="assets/future-3.png" alt=""><span class="img-caption"></span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p>During the loading phase, the system enters what might be termed hypnosis mode where the neural computation core remains completely inactive. The Serial Peripheral Interface controller activates and begins sequential reading of raw sectors from the SD card without any filesystem overhead. Data streams directly into SDRAM as rapidly as the SD card interface permits, typically achieving transfer rates of twenty-five megabytes per second. For a complete thirty-two megabyte brain state, loading completes in approximately one second. During this phase, power consumption and logic element utilization focus entirely on the data transfer pathway with neural processing completely clock-gated to minimize unnecessary activity.</p>
+                    <div class="prereq-img"><img src="assets/future-4.png" alt=""><span class="img-caption"></span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p>Following successful loading, the system transitions to thinking mode where roles reverse completely. The SD card interface enters a dormant state with clocks disabled and minimal power draw. The neural processing core activates and gains exclusive high-speed access to SDRAM operating at its maximum supported frequency. This architecture ensures that the bottleneck during neural computation is not SD card access speed but rather the SDRAM bandwidth and arithmetic pipeline throughput. The separation proves essential for achieving competitive performance since SD card random access latencies would catastrophically degrade neural update rates if weights had to be fetched from card during operation.</p>
+                    <div class="prereq-img"><img src="assets/prereq-1.png" alt=""><span class="img-caption"></span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p>The protocol treating SD cards as raw block devices rather than formatted filesystems dramatically reduces implementation complexity. Rather than implementing FAT32 parsing with directory traversal and file allocation table management consuming thousands of logic elements, the simple sector reader requires merely three hundred elements. The card stores synaptic weight matrices as contiguous binary data beginning at physical sector zero. This arrangement permits the most efficient possible sequential reading patterns that maximize SD card throughput while minimizing the logic required to orchestrate the transfer.</p>
+                    <div class="prereq-img"><img src="assets/prereq-2.png" alt=""><span class="img-caption"></span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p>This cartridge-based intelligence paradigm enables fascinating capabilities. Different SD cards can encode completely different learned skills or knowledge domains. One card might contain weights for English language processing while another encodes mathematical problem-solving and a third implements visual object recognition. Swapping between these capabilities requires only ejecting one card and inserting another followed by a one-second reboot cycle. The modularity extends the fifty-dollar hardware investment across unlimited application domains limited only by the number of SD cards in one's collection.</p>
+                    <div class="prereq-img"><img src="assets/prereq-3.png" alt=""><span class="img-caption"></span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p>Before implementation of this architecture becomes viable, several technical prerequisites must be satisfied. The SDRAM controller must be properly integrated and verified through simulation and hardware testing to ensure reliable data transfers without corruption. The SPI module requires development and validation to confirm sector reading operates correctly across various SD card types and speed classes. The state machine coordinating mode transitions needs careful design to prevent race conditions or illegal states where both the SD interface and neural core attempt simultaneous SDRAM access. Each of these elements represents an engineering challenge but none presents fundamental impossibilities given the capabilities of the target hardware.</p>
+                    <div class="prereq-img"><img src="assets/prereq-4.png" alt=""><span class="img-caption"></span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p><strong>Video Compression Through Sparse Event Encoding:</strong> The video compression innovation derives from recognizing that high frame rate video contains massive redundancy when consecutive frames differ minimally. Traditional compression approaches like H.264 exploit this through motion estimation and residual coding but remain fundamentally pixel-oriented. The neuromorphic approach instead encodes only change events, mirroring biological visual processing where retinal neurons respond primarily to temporal differences rather than absolute light levels. This sparse event representation dramatically reduces data volume while enabling reconstruction through learned predictive models implemented in the neural substrate.</p>
+                    <div class="prereq-img"><img src="assets/prereq-5.png" alt=""><span class="img-caption"></span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p>The proximity correlation hypothesis provides the theoretical foundation for the compression scheme. When analyzing frame sequences, pixel changes cluster spatially and temporally rather than distributing randomly across the image. A person's mouth moving during speech creates a localized region of change while the background remains static. This clustering permits efficient encoding where instead of tracking every changed pixel individually, the system identifies cluster centers and stores compact representations of regions undergoing modification. The trade-off between individual pixel precision and clustered approximation can be tuned based on the specific characteristics of the video content and acceptable reconstruction quality.</p>
+                    <div class="prereq-img"><img src="assets/prereq-6.png" alt=""><span class="img-caption"></span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p>Two distinct approaches to change detection present themselves with different computational and storage implications. The first approach maps each individual changed pixel, storing its spatial coordinates and new value in the compressed representation. This method maximizes reconstruction fidelity since every change is precisely recorded, but requires more storage space and more complex indexing structures to locate the scattered change pixels efficiently. The second approach identifies cluster centers where pixel changes concentrate and stores these centers along with radius and magnitude parameters describing the extent of modification. This compressed representation requires less storage and simpler indexing at the cost of introducing approximation errors in regions between cluster centers.</p>
+                    <div class="prereq-img"><img src="assets/prereq-7.png" alt=""><span class="img-caption"></span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p>The selection between these approaches depends on empirical analysis of specific video content. For high-motion scenes with scattered changes, individual pixel tracking may prove more efficient. For content with localized activity regions like talking head videos, cluster-based encoding likely dominates. The system can potentially adapt its strategy dynamically based on analyzing the spatial distribution of changes in each frame, selecting the representation that minimizes storage while maintaining quality targets. This adaptive capability represents an area for future research and optimization.</p>
+                    <div class="prereq-img"><img src="assets/prereq-8.png" alt=""><span class="img-caption"></span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p>Key frame selection addresses the fundamental challenge that sparse change encoding requires reference frames from which changes are measured. If only differences are stored, reconstruction becomes impossible without knowing at least some complete frames. The solution identifies frames where the total magnitude of change exceeds some threshold percentage of the total image, indicating a scene transition or major content shift. These frames are stored completely in the compressed representation, serving as reference points for the sparse encoding of subsequent frames until the next key frame. The balance between key frame frequency and compression ratio requires careful tuning since more frequent key frames improve reconstruction quality but reduce compression efficiency.</p>
+                    <div class="prereq-img"><img src="assets/prereq-9.png" alt=""><span class="img-caption"></span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p>The encoding process operates offline over extended time periods, accepting hours of computation to achieve optimal compression. A one-hour source video might require twenty to forty-eight hours of processing depending on content complexity and hardware resources. This timing mirrors biological memory consolidation during sleep where experiences undergo extensive replay and reorganization for efficient long-term storage. The extended processing enables sophisticated analysis finding optimal cluster placements and minimizing the total information content of the compressed representation. Once encoding completes, the resulting neuromorphic file enables real-time playback at sixty frames per second through hardware-accelerated neural reconstruction.</p>
+                    <div class="prereq-img"><img src="assets/prereq-10.png" alt=""><span class="img-caption"></span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p><strong>Encoder Implementation Workflow:</strong> The encoding workflow begins with video ingest where source content transfers from external storage into the FPGA processing environment. For initial development and testing, transmission occurs via UART serial connection from a host computer, with the PC reading the source video file and streaming pixel data sequentially to the FPGA. This approach avoids the complexity of implementing video capture hardware while enabling controlled testing with known reference content. The transmission rate need not match real-time video rates since encoding operates offline with quality prioritized over speed.</p>
+                    <div class="prereq-img"><img src="assets/prereq-11.png" alt=""><span class="img-caption"></span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p>As pixels arrive at the master board, they enter the differential analysis pipeline where current pixels compare against corresponding pixels from the previous frame retrieved from SDRAM. The master board transmits both pixel values to slave boards configured as difference computation engines. The slave boards execute simple subtraction operations and return magnitude results indicating the degree of change. When these difference values exceed predetermined thresholds, the system recognizes significant change events worthy of inclusion in the compressed representation.</p>
+                    <div class="prereq-img"><img src="assets/prereq-12.png" alt=""><span class="img-caption"></span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p>The master board maintains responsibility for constructing the compressed representation in the SD card. Each significant change event generates a data packet encoding the temporal position, spatial location, and magnitude of modification. These packets accumulate in the SD card storage organized sequentially to permit efficient sequential reading during playback. The packet format balances compactness against ease of parsing, with fixed-size fields enabling rapid seeking to specific temporal positions without requiring variable-length record handling.</p>
+                    <div class="prereq-img"><img src="assets/prereq-13.png" alt=""><span class="img-caption"></span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p>Key frame detection operates through accumulation of total change magnitude across each complete frame. A running counter increments as each pixel difference is computed and thresholded. When the frame completes, the system compares the total accumulated change against a threshold representing some percentage of the full frame size. If total change exceeds this threshold, the system designates the frame as a key frame requiring complete storage. The complete frame data is serialized and written to the SD card with appropriate markers indicating its role as a reference frame rather than a sparse differential packet.</p>
+                    <div class="prereq-img"><img src="assets/prereq-14.png" alt=""><span class="img-caption"></span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p>The temporal extent of processing may span many hours or even days for complex video content. This extended timeline is not a deficiency but rather enables the sophisticated analysis necessary for optimal compression. During this period, the system can perform multiple passes over the source material if beneficial, first identifying key frames and then optimizing the differential encoding between them. The biological analogy to memory consolidation during sleep proves apt since the process reorganizes information for efficient storage and subsequent rapid recall.</p>
+                    <div class="prereq-img"><img src="assets/prereq-15.png" alt=""><span class="img-caption"></span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p>Storage organization in the SD card follows a simple linear layout optimized for sequential access during playback. The file begins with a header encoding metadata such as frame dimensions, frame rate, total duration, and the positions of key frames. Following the header, the data packets and key frames appear in strict temporal order. This organization permits a streaming decoder to simply read forward through the file, applying each change event or key frame as it appears without requiring random access or complex seeking operations. The simplicity of the storage format reduces decoder logic complexity while maximizing throughput.</p>
+                    <div class="prereq-img"><img src="assets/prereq-16.png" alt=""><span class="img-caption"></span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p><strong>Decoder and Real-Time Reconstruction:</strong> The decoder architecture implements real-time video reconstruction from the sparse event representation through neural network-based prediction. Upon system boot with a compressed neuromorphic file loaded into memory, the decoder initializes by loading the first key frame into the frame buffer and preparing the neural networks for predictive computation. The neural weights have been pre-trained during encoding to understand the statistical structure of the video content, enabling accurate prediction of intermediate pixel values between key frames based on local context.</p>
+                    <div class="prereq-img"><img src="assets/prereq-17.png" alt=""><span class="img-caption"></span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p>Playback proceeds by streaming through the compressed representation chronologically. Each change event packet is parsed to extract its temporal position, spatial location, and modification parameters. The neural substrate generates predictions for pixel values in regions not explicitly specified by change events, drawing upon patterns learned during encoding. These predictions fill in the spaces between known values, reconstructing a complete frame from the sparse representation. The predicted frame is written to SDRAM frame buffer and subsequently transmitted through video output pathways to display hardware.</p>
+                    <div class="prereq-img"><img src="assets/future-1.png" alt=""><span class="img-caption"></span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p>The critical performance requirement is maintaining real-time frame rates of sixty frames per second to ensure smooth playback without visible stuttering. This demands that the reconstruction pipeline completes all processing for each frame within approximately sixteen milliseconds. The hardware architecture achieves this through parallelization where multiple neural computation pipelines operate simultaneously on different regions of the frame. The high bandwidth of SDRAM memory enables rapid reading of change event data and writing of reconstructed frames without bottlenecking the processing flow.</p>
+                    <div class="prereq-img"><img src="assets/future-2.png" alt=""><span class="img-caption"></span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p>One fascinating capability emerges from the neural plasticity mechanisms that can remain active during playback. When a particular video is accessed frequently, the neural weights adapt to represent that specific content with increasing efficiency. The network essentially memorizes frequently accessed videos, enabling faster reconstruction and potentially higher quality playback for popular content. This neural caching effect provides automatic optimization without requiring explicit cache management logic, as the biological learning mechanisms naturally strengthen representations of repeatedly encountered patterns.</p>
+                    <div class="prereq-img"><img src="assets/future-3.png" alt=""><span class="img-caption"></span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p>The video output stages transform the reconstructed frame buffer data into standard display signals. For VGA output, the resistor ladder Digital-to-Analog converter translates digital RGB values into analog voltage levels appropriate for legacy displays. Horizontal and vertical sync pulses are generated with precise timing to comply with standard video modes, typically 640x480 at sixty hertz refresh. The HDMI output employs dedicated transmitter chips to serialize the parallel pixel data into high-speed differential signals conforming to HDMI protocol specifications. Both outputs can operate simultaneously if desired, enabling mirrored display on multiple monitors.</p>
+                    <div class="prereq-img"><img src="assets/future-4.png" alt=""><span class="img-caption"></span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p>Quality assessment of the reconstructed video requires comparison against the source material to quantify compression artifacts and information loss. Metrics such as peak signal-to-noise ratio and structural similarity index provide objective measures of reconstruction fidelity. The compression ratio is simply the original file size divided by the compressed representation size, with target ratios exceeding fifty-to-one for high frame rate source material with significant temporal redundancy. The balance between compression ratio and quality can be adjusted through threshold parameters controlling event sparsity and key frame frequency.</p>
+                    <div class="prereq-img"><img src="assets/prereq-1.png" alt=""><span class="img-caption"></span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p><strong>Million Neuron Simulation Architecture:</strong> The question of whether the fifty-dollar hardware platform can simulate one million biological neurons initially appears absurd given the finite logic resources of the FPGA. However, careful analysis of computational requirements reveals this capability as not merely possible but practically achievable through time-multiplexed processing. The key insight recognizes that neuron count and logic element count address different aspects of the simulation, with state storage capacity and update frequency as the actual constraints.</p>
+                    <div class="prereq-img"><img src="assets/prereq-2.png" alt=""><span class="img-caption"></span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p>Each Izhikevich neuron requires storage for two sixteen-bit state variables representing voltage and recovery. This totals four bytes per neuron. One million neurons therefore require four megabytes of state storage, well within the thirty-two megabyte capacity of the onboard SDRAM with twenty-eight megabytes remaining for synaptic weights and frame buffers. The memory constraint thus poses no barrier to million-neuron simulations.</p>
+                    <div class="prereq-img"><img src="assets/prereq-3.png" alt=""><span class="img-caption"></span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p>The logic constraint similarly proves surmountable through pipelining. A single arithmetic pipeline implementing the Izhikevich update equations can process any number of neurons sequentially by loading state from memory, executing the computation, and writing updated state back. The logic element count required for one such pipeline approximates two thousand elements, leaving over thirteen thousand elements available for control logic, memory interfaces, and caching structures. The number of neurons simulated depends not on replicating the pipeline but on how many times it can iterate through the neural population per unit time.</p>
+                    <div class="prereq-img"><img src="assets/prereq-4.png" alt=""><span class="img-caption"></span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p>The update frequency calculation demonstrates feasibility. Assuming ten clock cycles per neuron including memory access latency, one million neurons require ten million cycles per complete update. At fifty megahertz clock frequency, this permits five complete updates per second. While biological cortex operates in the thirty to eighty hertz gamma rhythm range, the five hertz update rate achieved on budget hardware remains remarkable and sufficient for many neuromorphic computing applications. The simulation runs in slow motion relative to biology but captures the essential dynamics.</p>
+                    <div class="prereq-img"><img src="assets/prereq-5.png" alt=""><span class="img-caption"></span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p>Optimization opportunities exist to improve update rates. Increasing parallelism through multiple arithmetic pipelines operating simultaneously can multiply throughput at the cost of additional logic elements. Eight parallel pipelines would achieve forty hertz update rates, approaching biological speeds. Careful memory interface optimization through burst reading and write buffering can reduce the cycles per neuron below ten. Operating the SDRAM at its maximum supported frequency rather than conservative settings increases memory throughput. These refinements can potentially achieve biological-timescale simulation with further engineering effort.</p>
+                    <div class="prereq-img"><img src="assets/prereq-6.png" alt=""><span class="img-caption"></span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p>The synaptic connectivity challenge proves more severe than neuron state storage. One million neurons in a fully connected topology would require one trillion synaptic weights, vastly exceeding available storage. Even sparse connectivity with one hundred connections per neuron yields one hundred million synapses requiring two hundred megabytes of storage when using two bytes per weight. This exceeds SDRAM capacity and necessitates streaming weights from SD card or employing compressed connectivity rules such as small-world network topologies defined algorithmically rather than stored explicitly.</p>
+                    <div class="prereq-img"><img src="assets/prereq-7.png" alt=""><span class="img-caption"></span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p>The mega pipeline architecture addresses these challenges through hierarchical memory organization. The SDRAM controller performs burst reads fetching batches of two hundred fifty-six neurons at once into cache implemented in the FPGA's embedded M9K memory blocks. The cache provides ultra-fast access for the computation core while the SDRAM controller prefetches the next batch in parallel. Eight parallel arithmetic pipelines process neurons from the cache simultaneously, maximizing utilization of the available logic resources. This organization balances memory bandwidth, computation throughput, and storage capacity to achieve million-neuron simulation on budget hardware.</p>
+                    <div class="prereq-img"><img src="assets/prereq-8.png" alt=""><span class="img-caption"></span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p><strong>Business Model and Commercialization Strategy:</strong> The technology foundation enables multiple commercialization pathways addressing different market segments with distinct value propositions. The dual-track strategy pursues both cloud-based services targeting content creators and hardware products serving enterprise customers requiring dedicated neuromorphic computing capacity. This diversification reduces market risk while maximizing the addressable opportunity space.</p>
+                    <div class="prereq-img"><img src="assets/prereq-9.png" alt=""><span class="img-caption"></span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p>The cloud service model constructs a home data center architecture where multiple FPGA boards operate as a processing farm handling video compression jobs submitted by remote users. A web-based interface provides upload functionality where users drag source videos into their browser for processing. The videos enter a queue managed by job scheduling software that dispatches work to available FPGA boards. Processing proceeds offline over hours or days, after which users receive links to access their compressed videos through streaming playback.</p>
+                    <div class="prereq-img"><img src="assets/prereq-10.png" alt=""><span class="img-caption"></span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p>The key innovation protecting intellectual property in the cloud model is that users never receive the compressed neuromorphic files directly. Instead, they obtain streaming links that trigger real-time decoding on the server infrastructure with the resulting video stream transmitted via WebRTC protocol to the viewer's browser. This view-only access prevents reverse engineering of the compression format while enabling convenient sharing. The compressed representations remain secured in the service provider's storage, creating a platform lock-in effect where users depend on the service for accessing their content.</p>
+                    <div class="prereq-img"><img src="assets/prereq-11.png" alt=""><span class="img-caption"></span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p>Revenue generation from the cloud service can follow subscription tiers or pay-per-encode pricing. Subscription plans might offer monthly compression quotas with overage charges, while pay-per-encode charges based on source video duration and quality settings. Additional revenue opportunities include storage fees for hosting compressed videos long-term and premium features such as priority processing or enhanced quality modes. The viral video caching capability where frequently accessed content loads into neural weights for instant playback provides a unique value proposition justifying premium pricing tiers.</p>
+                    <div class="prereq-img"><img src="assets/prereq-12.png" alt=""><span class="img-caption"></span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p>The hardware product addresses enterprise customers requiring on-premises neuromorphic computing infrastructure. The form factor is a standard one or two rack unit server blade fitting conventional data center racks. Inside the chassis, a custom backplane holds thirty-two to sixty-four vertical FPGA cards operating in parallel. Connectivity through PCIe or hundred gigabit Ethernet interfaces the blade to data center networks. The passive cooling requirements due to the low power consumption of spiking neural networks provide a significant advantage over GPU-based solutions requiring aggressive active cooling.</p>
+                    <div class="prereq-img"><img src="assets/prereq-13.png" alt=""><span class="img-caption"></span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p>Marketing the hardware emphasizes energy efficiency, thermal characteristics, and massive parallelism. The comparison to GPU power consumption highlights that dozens of FPGA boards operate within the power budget of a single high-end GPU. The cool operation reduces cooling infrastructure costs and improves reliability through lower thermal stress. The biological-scale neuron counts achievable through parallel boards reach millions or tens of millions of neurons, addressing applications in brain simulation and neuromorphic algorithm research.</p>
+                    <div class="prereq-img"><img src="assets/prereq-14.png" alt=""><span class="img-caption"></span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p>The sales strategy positions the technology as enabling rather than competitive. Rather than directly challenging established GPU manufacturers, the approach targets applications where neuromorphic computing provides unique advantages. This includes ultra-low-power inference for edge deployment, event-driven processing for sensor data, and exploration of brain-inspired algorithms. The licensing model provides recurring revenue while hardware sales generate margin and establish installed base.</p>
+                    <div class="prereq-img"><img src="assets/prereq-15.png" alt=""><span class="img-caption"></span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p>Intellectual property protection relies on several mechanisms. The neuromorphic file format remains proprietary and undocumented, forcing anyone attempting interoperability to reverse engineer the encoding scheme. The synaptic weight organization and neural network architectures are trade secrets not disclosed in marketing materials. Hardware locking ties the decoder implementation to specific FPGA configurations, preventing software emulation on standard processors. These layers create a defensible competitive moat while the technology matures.</p>
+                    <div class="prereq-img"><img src="assets/prereq-16.png" alt=""><span class="img-caption"></span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p><strong>Technical Prerequisites and Development Phases:</strong> Before the complete system becomes operational, several engineering prerequisites must be satisfied through systematic development. The first phase focuses on establishing fundamental hardware functionality and verifying that individual components operate correctly in isolation. This includes confirming FPGA programming and configuration works reliably, testing video output through VGA and HDMI interfaces displays correct patterns, and validating that SDRAM reads and writes execute without errors.</p>
+                    <div class="prereq-img"><img src="assets/prereq-17.png" alt=""><span class="img-caption"></span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p>The superneuron module requires implementation and testing to verify that the finite state machine transitions correctly between operational modes, homeostatic gain control maintains activity within target ranges, and synchrony detection identifies pattern recognition events accurately. Extensive simulation in ModelSim or similar verification tools confirms logic correctness before committing to hardware testing. Test benches stimulate the module with various input patterns observing that outputs match expected behaviors across state transitions and edge cases.</p>
+                    <div class="prereq-img"><img src="assets/future-1.png" alt=""><span class="img-caption"></span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p>The SD card interface development involves writing the SPI controller and sector reading logic, then validating operation with actual SD cards of various types and capacities. The raw sector access approach must be verified to ensure reliable data reading without filesystem dependencies. Integration testing confirms that data read from SD card matches what was written, establishing baseline reliability before attempting neural weight loading. The dual-mode architecture requires careful state machine development to prevent race conditions between loading and inference phases.</p>
+                    <div class="prereq-img"><img src="assets/future-2.png" alt=""><span class="img-caption"></span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p>The SDRAM controller integration represents a critical path item given its central role in system operation. The Alinx-provided intellectual property cores or reference designs must be adapted to the specific project requirements including burst access patterns optimized for neural state retrieval and efficient frame buffer updates for video processing. Memory timing verification through oscilloscope observation confirms that setup and hold times meet specifications across process, voltage, and temperature variations.</p>
+                    <div class="prereq-img"><img src="assets/future-3.png" alt=""><span class="img-caption"></span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p>Neuron pipeline implementation and verification follows iterative refinement where simple single-neuron implementations expand to multi-neuron time-multiplexed architectures. Fixed-point arithmetic implementations require careful bit-width and scaling analysis to prevent overflow while maintaining adequate precision. Comparison against floating-point reference implementations in Python or MATLAB establishes correctness benchmarks. Performance profiling identifies bottlenecks and optimization opportunities to maximize neuron update rates.</p>
+                    <div class="prereq-img"><img src="assets/future-4.png" alt=""><span class="img-caption"></span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p>The encoder development requires implementing the pixel ingest pathway, difference computation logic, threshold-based event detection, and SD card packet writing mechanisms. Initial testing uses synthetic test patterns with known properties before progressing to real video content. Verification involves encoding simple sequences and manually inspecting the compressed representation to confirm that change events align with expected pixel differences. Compression ratio measurements establish baseline performance and guide optimization efforts.</p>
+                    <div class="prereq-img"><img src="assets/prereq-1.png" alt=""><span class="img-caption"></span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p>Decoder implementation builds upon the encoder verification by attempting reconstruction of the compressed representations. Early testing focuses on key frame reconstruction before adding predictive pixel generation through neural networks. Real-time performance profiling identifies whether sixty frame per second targets are achievable or whether optimization is required. Quality metrics compare reconstructed frames against originals, quantifying information loss and guiding quality improvement efforts.</p>
+                    <div class="prereq-img"><img src="assets/prereq-2.png" alt=""><span class="img-caption"></span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p>Master-slave communication protocols require hardware testing with actual boards rather than simulation alone. Signal integrity verification through oscilloscope probing confirms that high-speed bus signals maintain adequate margins for reliable data transfer. Protocol testing under various load conditions establishes robustness against timing variations and environmental factors. Performance measurements quantify the throughput improvements achieved through parallel slave computation.</p>
+                    <div class="prereq-img"><img src="assets/prereq-3.png" alt=""><span class="img-caption"></span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p><strong>Scaling and Performance Optimization:</strong> The initial single-board implementation establishes proof of concept but leaves substantial performance headroom exploitable through scaling strategies. Adding slave boards provides the most straightforward scaling path, with each additional slave increasing the parallelism of difference computations during encoding. Six slave boards could potentially accelerate encoding by factors approaching six times if bus bandwidth and master coordination overhead remain manageable.</p>
+                    <div class="prereq-img"><img src="assets/prereq-4.png" alt=""><span class="img-caption"></span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p>Frequency optimization explores whether clock speeds can be increased beyond the conservative fifty megahertz baseline. FPGA timing analysis tools identify critical paths that limit maximum frequency, and logic restructuring or pipelining can potentially raise operating frequencies. Memory interfaces often support higher data rates than default configurations, and tuning SDRAM controller parameters can increase throughput. Doubling clock frequency directly doubles neuron update rates, potentially achieving ten hertz operation for million-neuron simulations.</p>
+                    <div class="prereq-img"><img src="assets/prereq-5.png" alt=""><span class="img-caption"></span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p>Logic element utilization analysis guides resource allocation decisions. Current designs may leave significant logic capacity unused, permitting instantiation of additional arithmetic pipelines for parallel neuron processing. Profiling tools identify which modules consume the most resources and whether alternative implementations could reduce footprint. The balance between logic, memory, and bandwidth constraints shifts as the design matures, and continuous optimization ensures efficient resource usage.</p>
+                    <div class="prereq-img"><img src="assets/prereq-6.png" alt=""><span class="img-caption"></span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p>Memory bandwidth optimization examines whether burst access patterns, prefetching strategies, or cache organizations can increase effective throughput. SDRAM controllers support various burst lengths and addressing modes with different performance characteristics. Matching burst patterns to access patterns in neural computation reduces overhead from row activation and precharge cycles. Double buffering techniques permit computation on one frame buffer while displaying another, improving utilization.</p>
+                    <div class="prereq-img"><img src="assets/prereq-7.png" alt=""><span class="img-caption"></span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p>Compression quality tuning adjusts threshold parameters controlling event sparsity and key frame frequency to explore the trade-off space between file size and reconstruction fidelity. Lower thresholds capture more subtle changes improving quality but reducing compression ratio. Higher thresholds increase compression but introduce more prediction burden on neural networks. Automated parameter sweeps over test video corpus identify optimal settings for various content types.</p>
+                    <div class="prereq-img"><img src="assets/prereq-8.png" alt=""><span class="img-caption"></span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p><strong>Validation and Demonstration:</strong> Successful project validation requires demonstrating key capabilities through concrete measurements and observable demonstrations. The first milestone involves displaying a single neuron's activity on an oscilloscope or HDMI output, confirming that the basic neural computation machinery functions correctly. This blinking neuron demonstration proves that spike generation occurs and that the hardware pipeline executes.</p>
+                    <div class="prereq-img"><img src="assets/prereq-9.png" alt=""><span class="img-caption"></span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p>Video compression demonstrations require encoding a test sequence, measuring the compression ratio, and playing back the reconstructed video to assess quality. A ten-second test video provides a manageable scope for initial validation while capturing enough content to evaluate performance. Comparison between source and reconstructed frames through side-by-side display reveals compression artifacts and confirms basic functionality. Achieving twenty-to-one compression ratio on initial attempts would validate the core approach.</p>
+                    <div class="prereq-img"><img src="assets/prereq-10.png" alt=""><span class="img-caption"></span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p>The million-neuron simulation milestone demonstrates the scalability of the time-multiplexed architecture. Running the system with one million neurons updating at five hertz for sustained periods confirms memory capacity, computational throughput, and stability. Activity monitoring verifies that homeostatic control maintains appropriate firing rates without runaway excitation or quiescence. This demonstration proves the biological-scale computing claim.</p>
+                    <div class="prereq-img"><img src="assets/prereq-11.png" alt=""><span class="img-caption"></span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p>Performance benchmarking against GPU implementations provides competitive context. Measuring power consumption during video decoding and comparing against equivalent GPU-based playback quantifies energy efficiency advantages. Thermal imaging confirms low heat generation relative to conventional processors. Latency measurements from compressed representation loading to playback startup establish responsiveness. These comparisons validate the commercial positioning.</p>
+                    <div class="prereq-img"><img src="assets/prereq-12.png" alt=""><span class="img-caption"></span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p>Real-world content testing moves beyond synthetic test patterns to actual video material such as Mars rover footage, conference presentations, or cinematic content. This reveals how compression performance varies across content types and identifies challenging scenarios requiring algorithm refinement. User testing with potential customers gathers feedback on quality acceptability and feature requirements. This grounds the technology in practical applications rather than laboratory demonstrations.</p>
+                    <div class="prereq-img"><img src="assets/prereq-13.png" alt=""><span class="img-caption"></span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p><strong>Future Development and Research Directions:</strong> The current architecture establishes a foundation permitting numerous future enhancements addressing current limitations and expanding capabilities. Real-time encoding represents a major opportunity where the current offline processing model could evolve toward live camera input compression with minimal latency. This requires architectural refinements enabling parallel encoding and prediction, potentially through hierarchical master architectures where multiple boards collaborate on different spatial or temporal regions.</p>
+                    <div class="prereq-img"><img src="assets/prereq-14.png" alt=""><span class="img-caption"></span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p>Spike-timing-dependent plasticity implementation would enable true online learning where synaptic weights adapt continuously during operation rather than freezing after offline training. This capability permits the system to refine its models based on actual usage patterns and new content characteristics. The challenge lies in implementing STDP efficiently in hardware while maintaining stable network dynamics, requiring careful parameter tuning and potentially novel learning rules.</p>
+                    <div class="prereq-img"><img src="assets/prereq-15.png" alt=""><span class="img-caption"></span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p>Advanced compression techniques could exploit deeper neural network architectures, attention mechanisms, or generative models for improved prediction quality. Current implementations use relatively simple networks constrained by FPGA resource limits, but larger hardware or more sophisticated algorithms could push quality-to-compression ratios significantly beyond initial targets. Research into neuromorphic image processing from vision neuroscience may inspire biological algorithms with superior efficiency.</p>
+                    <div class="prereq-img"><img src="assets/prereq-16.png" alt=""><span class="img-caption"></span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p>Multi-board orchestration at scale would enable data center deployments with hundreds of FPGA cards operating in concert. This requires developing robust communication protocols, distributed job scheduling, load balancing, and fault tolerance mechanisms. The hierarchical organization might involve master boards coordinating clusters of slave boards, with higher-level controllers managing the masters. This mirrors biological nervous system organization with hierarchical control structures.</p>
+                    <div class="prereq-img"><img src="assets/prereq-17.png" alt=""><span class="img-caption"></span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p>Application domain expansion explores uses beyond video compression including real-time sensor processing, robotic control, scientific simulation, and edge AI deployment. Each domain presents unique requirements and optimization opportunities. The reconfigurable nature of FPGAs permits tailoring the architecture to specific applications while maintaining a common core technology base. This flexibility enables a platform approach where a common hardware foundation supports diverse applications through different firmware configurations.</p>
+                    <div class="prereq-img"><img src="assets/future-1.png" alt=""><span class="img-caption"></span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p><strong>Conclusion:</strong> The Neuronal Processing Unit project demonstrates that commodity FPGA hardware can implement biological-scale neural simulations achieving competitive performance with traditional computing architectures through careful attention to neuromorphic principles. The fifty-dollar development board provides sufficient logic, memory, and bandwidth resources to simulate one million neurons when properly architected through time-multiplexed computation and hierarchical memory organization. The video compression application showcases how brain-inspired sparse event encoding dramatically reduces data volume while maintaining reconstruction quality through learned predictive models.</p>
+                    <div class="prereq-img"><img src="assets/future-2.png" alt=""><span class="img-caption"></span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p>The dual-mode architecture separating learning from inference proves essential for achieving practical performance by permitting offline optimization during encoding while enabling real-time operation during playback. The SD card based intelligence cartridge concept provides modularity and expandability, treating learned skills as swappable modules rather than monolithic firmware. The master-slave computational distribution demonstrates scalable parallelism without requiring complex network protocols or operating system overhead.</p>
+                    <div class="prereq-img"><img src="assets/future-3.png" alt=""><span class="img-caption"></span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p>Commercial viability emerges through dual revenue streams addressing different market segments. The cloud service model monetizes the technology through subscription and usage-based pricing while protecting intellectual property through view-only access controls. The hardware product targets enterprise customers requiring dedicated neuromorphic infrastructure, emphasizing energy efficiency and biological-scale computing capacity. Together, these approaches provide multiple paths to market success.</p>
+                    <div class="prereq-img"><img src="assets/future-4.png" alt=""><span class="img-caption"></span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p>The engineering challenges ahead remain substantial but surmountable given the demonstrated feasibility of core concepts. SDRAM controller integration, SD card interfacing, neural pipeline optimization, and encoder-decoder development each require dedicated effort but build upon well-understood hardware design principles. The systematic development phases outlined provide a roadmap from proof of concept through commercial deployment.</p>
+                    <div class="prereq-img"><img src="https://www.fpgakey.com/uploads/images/family/altera/cyclone-v.jpg" alt=""><span class="img-caption"></span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p>This work represents a convergence of neuromorphic computing, video compression, commodity FPGA development, and energy-efficient hardware design. By recognizing that biological neural computation principles can be efficiently implemented in digital hardware and applied to practical engineering problems, the project demonstrates a path toward democratizing neuromorphic computing. The vision of biological supercomputing on every desk becomes achievable when expensive custom silicon is replaced by inexpensive development boards running carefully architected firmware exploiting the unique advantages of spiking neural networks and event-driven computation. The engineering effort to realize this vision proceeds from the foundation established through this architectural specification.</p>
+                    <div class="prereq-img"><img src="assets/prereq-1.png" alt=""><span class="img-caption"></span></div>
                 </div>
             </div>
         </section>
