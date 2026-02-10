@@ -175,6 +175,13 @@
             cursor: pointer;
             position: relative;
         }
+ .prereq-row .prereq-img video {
+            width: 100%;
+            height: auto;
+            display: block;
+            cursor: pointer;
+            position: relative;
+        }
 
         .prereq-row .prereq-img .img-wrapper {
             position: relative;
@@ -816,94 +823,15 @@
         </section>
 
         
+       
         <section class="prereq-section">
-            <h2 class="prereq-title">Comparison with Past Neuromorphic Innovations</h2>
-            
-            <div class="prereq-content">
-                <div class="prereq-row">
-                    <p>Intel's Loihi and Loihi 2 represent the current state of industrial neuromorphic computing research. Loihi 2, announced in 2021, contains 128 neuromorphic cores each supporting up to 8,192 neurons through time-multiplexing as described earlier. The chip integrates approximately 2.3 billion transistors and implements sophisticated learning rules including spike-timing-dependent plasticity directly in hardware.</p>
-                    <div class="prereq-img"><img src="assets/comparison-1.png" alt=""><span class="img-caption"></span></div>
-                </div>
-
-                <div class="prereq-row">
-                    <p>This project does not attempt to compete with Loihi at the scale or sophistication level. Loihi 2 is a custom ASIC designed by a team of specialized engineers with access to advanced fabrication processes. This implementation runs on a commodity development board costing approximately 50 dollars.</p>
-                    <div class="prereq-img"><img src="assets/comparison-2.png" alt=""><span class="img-caption"></span></div>
-                </div>
-
-                <div class="prereq-row">
-                    <p>The value lies in demonstrating that core neuromorphic principles scale down to minimal hardware. Time-multiplexed spiking neurons, event-driven computation, and attractor dynamics can be implemented from first principles on constrained FPGAs. This validates the fundamental architecture and provides a platform for education and experimentation.</p>
-                    <div class="prereq-img"><img src="assets/comparison-3.png" alt=""><span class="img-caption"></span></div>
-                </div>
-
-                <div class="prereq-row">
-                    <p>IBM's TrueNorth chip, released in 2014, takes a different architectural approach using fully parallel neurons rather than time-multiplexing. TrueNorth contains 4,096 neuromorphic cores with 256 neurons per core, giving 1 million neurons total implemented in parallel hardware. This enables extremely low latency but requires a massive silicon area of 4.3 square centimeters in 28 nanometer technology.</p>
-                    <div class="prereq-img"><img src="assets/comparison-4.png" alt=""><span class="img-caption"></span></div>
-                </div>
-
-                <div class="prereq-row">
-                    <p>BrainScaleS, developed at Heidelberg University, uses analog circuits to simulate neuron dynamics up to 10,000 times faster than biological real-time. This accelerated simulation enables rapid exploration of network configurations but requires careful calibration and suffers from parameter variability inherent in analog circuits.</p>
-                    <div class="prereq-img">
-                        <img src="assets/35353535121/34792384721094.png" alt="">
-                        <span class="img-caption">Figure 14: Comparison table of neuromorphic systems including NonPU, Intel Loihi, Loihi 2, SpiNNaker and IBM TrueNorth</span>
-                        <div style=" margin-top: 0.5rem;">
-                            <a href="assets/89238298381390.pdf" target="_blank" class="term-link" style="font-size: 0.85rem;">Download Table (PDF)</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="prereq-row">
-                    <p>This implementation occupies a different niche in the design space. Operating at biological real-time with modest neuron counts and demonstrable attractor dynamics on accessible hardware, it serves as an educational platform and proof of concept rather than a performance-competitive neuromorphic processor.</p>
-                    <div class="prereq-img"><img src="assets/comparison-6.png" alt=""><span class="img-caption"></span></div>
-                </div>
-            </div>
-        </section>
-
-        <section class="prereq-section">
-            <h2 class="prereq-title">Limitations and Known Issues Currently Being Solved</h2>
-            
-            <div class="prereq-content">
-                <div class="prereq-row">
-                    <p>Several limitations and simplifications exist in the current implementation that warrant explicit acknowledgment. The network uses only excitatory connections. Biological cortex contains approximately 20 percent inhibitory interneurons that shape network dynamics through precisely timed suppression. Adding inhibitory neurons would improve stability and enable more complex computational patterns but would require additional logic resources and more sophisticated weight matrix structure.</p>
-                    <div class="prereq-img"><img src="assets/limitations-1.png" alt=""><span class="img-caption"></span></div>
-                </div>
-
-                <div class="prereq-row">
-                    <p>Synaptic plasticity occurs offline. The weights are pre-calculated and loaded into memory before network operation. True neuromorphic systems implement spike-timing-dependent plasticity in hardware, allowing weights to adapt continuously based on observed spike patterns. The current architecture includes placeholder logic for STDP computation but this remains unimplemented pending future development.</p>
-                    <div class="prereq-img"><img src="assets/limitations-2.png" alt=""><span class="img-caption"></span></div>
-                </div>
-
-                <div class="prereq-row">
-                    <p>The pattern completion task uses only a single learned pattern. Testing with multiple stored patterns would reveal capacity limits and interference effects inherent in attractor network dynamics. Preliminary testing with two patterns shows successful retrieval but with reduced robustness compared to single-pattern operation.</p>
-                    <div class="prereq-img"><img src="assets/limitations-3.png" alt=""><span class="img-caption"></span></div>
-                </div>
-
-                <div class="prereq-row">
-                    <p>Timing closure at higher clock frequencies is expected to be challenging. The initial design target is 100 megahertz operation, but early synthesis reports and back-of-the-envelope path estimates suggest that critical paths in the multiplier chain will likely exceed 10 nanoseconds without additional pipelining. For this reason, the current NonPU design is scoped around a more conservative 50 megahertz clock, which should be attainable once the full top-level build compiles cleanly. Further pipeline optimization and restructuring of the arithmetic datapaths may allow higher operating frequencies in future revisions.</p>
-                    <div class="prereq-img"><img src="assets/limitations-4.png" alt=""><span class="img-caption"></span></div>
-                </div>
-
-                <div class="prereq-row">
-                    <p>The VGA output provides only binary visualization. Adding grayscale rendering based on membrane voltage or firing rate would give more informative feedback about network state but would require additional video memory and more complex rendering logic.</p>
-                    <div class="prereq-img"><img src="assets/limitations-5.png" alt=""><span class="img-caption"></span></div>
-                </div>
-
-                <div class="prereq-row">
-                    <p>Testing coverage remains limited to controlled laboratory conditions. The system has not been validated under temperature variation, power supply noise, or long-duration operation exceeding several hours. Extended reliability testing would be necessary before deploying such a system in practical applications.</p>
-                    <div class="prereq-img"><img src="assets/357982598258/183471947.png" alt="">
-                        <span class="img-caption">Compilation failure on Intel Questa</span>
-                        <img src="assets/357982598258/947298347928743.png" alt=""><span class="img-caption">
-                            <img src="assets/357982598258/2468712463.png" alt=""><span class="img-caption">  <img src="assets/37872489833/74398274923748.png" alt=""><span class="img-caption"></span>Figure 15: Faliure Cases and Compilation Errors due to the Resource Constriants and Unknown reasons that are currently being debugged.</span></div>
-                </div>
-            </div>
-        </section>
-
-        <section class="prereq-section">
-            <h2 class="prereq-title">NonPU Neuromorphic Video Processing System - Comprehensive Engineering Description</h2>
+            <h2 class="prereq-title">First Application - NonPU Instant™<br>A Novel Neuromorphic Video Processor and Codec System Powered by NonPU®</h2>
             
             <div class="prereq-content">
     
                 <div class="prereq-row">
-                    <p>The Neuronal Processing Unit represents a fundamental reimagining of video compression and neuronal computation through the integration of biological principles with commodity hardware. This system implements spiking neuronal networks on Field-Programmable Gate Array technology to achieve video compression ratios exceeding fifty-to-one while maintaining computational efficiency that surpasses traditional Graphics Processing Unit based approaches. The architecture leverages the Alinx AC415 development board featuring the Intel Cyclone IV FPGA to create a neuromorphic computing platform capable of simulating one million neurons while consuming a fraction of the power required by conventional processing systems.</p>
+
+                    <p>This represents the first implementation before approaching the development of the main innovation, which points the trajectory  toward future brain-computer interface technologies as described in comprehensive detail in the research document provided at the end of this presentation. The Neuronal Processing Unit represents a fundamental reimagining of video compression and neuronal computation through the integration of biological principles with commodity hardware. This system implements spiking neuronal networks on Field-Programmable Gate Array technology to achieve video compression ratios exceeding fifty-to-one while maintaining computational efficiency that surpasses traditional Graphics Processing Unit based approaches. The architecture leverages the Alinx AC415 development board featuring the Intel Cyclone IV FPGA to create a neuromorphic computing platform capable of simulating one million neurons while consuming a fraction of the power required by conventional processing systems.</p>
                     <div class="prereq-img"><img src="assets/future-1.png" alt=""><span class="img-caption"></span></div>
                 </div>
 
@@ -1112,17 +1040,28 @@
 
                 <div class="prereq-row">
                     <p>The specific example of human speech illustrates the criticality of proper motion classification. A video showing a person seated at a desk in a static room where only facial features move during speaking contains minimal overall motion. If the mouth movements are incorrectly classified as ignorable background motion, the compressed representation reduces to a single static frame showing a closed mouth, completely eliminating the speech content that constitutes the entire informational value of the recording. Conversely, correctly identifying the mouth region as exhibiting sparse but non-periodic motion ensures these changes receive encoding priority, preserving the speech information.</p>
-                    <div class="prereq-img"><img src="assets/prereq-25.png" alt=""><span class="img-caption"></span></div>
+  <div class="prereq-img"><img src="assets/prereq-28.png" alt=""><span class="img-caption"></span></div>
+                    
+                   
                 </div>
-
+<hr>
                 <div class="prereq-row">
                     <p>Similarly, consider a low-resolution video showing a rotating fan where motion blur causes the fan blades to appear as a static blur rather than distinct moving objects. In such cases, the pixel values in the fan region may exhibit minimal frame-to-frame variation despite the physical rotation. The habituation logic must recognize that these regions already appear effectively static in the source material and require no special handling. The discrimination operates on actual pixel changes rather than inferred physical motion, ensuring that perceptually static regions receive static encoding regardless of the underlying physical dynamics.</p>
-                    <div class="prereq-img"><img src="assets/prereq-26.png" alt=""><span class="img-caption"></span></div>
+                      <div class="prereq-img"><img src="assets/prereq-28.png" alt=""><span class="img-caption"></span></div>
+                   
                 </div>
 
                 <div class="prereq-row">
-                    <p>The Mars rover scenario with the distant moving rock provides the most compelling demonstration of habituation filtering value. Throughout a ninety-nine gigabyte source video spanning hours of observation, perhaps ninety-eight gigabytes encode routine mechanical motion of rover components, atmospheric effects creating subtle lighting variations, and other predictable changes. The single gigabyte or less of truly novel information includes the anomalous rock movement along with any other unexpected events such as dust devils, meteorite impacts, or instrument malfunctions. Proper habituation filtering compresses the ninety-eight gigabytes of routine motion into megabytes of loop references while preserving every change event associated with the anomalous rock, achieving compression ratios exceeding one hundred to one while maintaining perfect fidelity for scientifically critical content.</p>
-                    <div class="prereq-img"><img src="assets/prereq-27.png" alt=""><span class="img-caption"></span></div>
+                    <p>The Mars rover scenario with the distant moving rock provides the most compelling demonstration of habituation filtering value. Throughout a ninety-nine gigabyte source video spanning hours of observation, perhaps ninety-eight gigabytes encode routine mechanical motion of rover components, atmospheric effects creating subtle lighting variations, and other predictable changes. The single gigabyte or less of truly novel information includes the anomalous rock movement along with any other unexpected events such as dust devils, meteorite impacts, or instrument malfunctions. Proper habituation filtering compresses the ninety-eight gigabytes of routine motion into megabytes of loop references while preserving every change event associated with the anomalous rock, achieving compression ratios exceeding one hundred to one while maintaining perfect fidelity for scientifically critical content.
+                    <br>
+                    <br>
+                    <iframe width="100%" height="360px" src="https://www.youtube.com/embed/zAUzKTIsMNU" title="Mars Report: Update on NASA's Perseverance Rover SHERLOC Instrument September 23rd, 2021" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe><br><strong>NASA's Perseverance rover is equipped with a sophisticated imaging suite of 23 cameras, featuring the Mastcam-Z system capable of high definition 3D panoramas and high-speed video. To transmit this data, the rover relies on a multi-tiered communication infrastructure: while its High-Gain Antenna can transmit directly to Earth at rates up to 32 kbps, approximately 99.9% of science data is primarily relayed via the Mars Relay Network to orbiters at speeds reaching 2 Mbps. Despite these relays, interplanetary distances consequently cause one-way signal latencies of 5 to 22 minutes, and transmitting high-resolution visual datasets can still require several hours to days. Power for these operations is provided by a Multi-Mission Radioisotope Thermoelectric Generator MMRTG, which typically produces approximately 110 watts of electrical power at a 6% efficiency rate at the mission's start. <br>Because the rover’s power demand can spike to 900 watts during intensive science activities, data transmission therefore must be carefully scheduled within a limited energy budget to preserve the rover's lithium-ion battery reserves.</strong>
+
+
+</strong></p>
+                    <div class="prereq-img"><img src="https://www.nasa.gov/wp-content/uploads/2021/09/pia24765-e2-1041_0.jpg?resize=900,427" alt=""><img src="https://www.nasa.gov/wp-content/uploads/2021/10/pia24684-e3-1041.jpg?resize=900,635 alt=""><span class="img-caption">Sudden changes and anomalies captured in images and video data from NASA's exploratory rovers and spacecraft represent extraordinarily valuable scientific information. Each individual frame and every subtle variation detected by these remote sensing platforms carries potential significance for understanding planetary geology, atmospheric phenomena, and unexpected events. The challenge of transmitting this high-value data across vast interplanetary distances makes efficient compression critical—where traditional approaches might sacrifice scientifically crucial details, the neuromorphic habituation filtering architecture preserves every anomalous change while compressing predictable patterns, ensuring that mission-critical observations reach Earth without loss of fidelity or major accuracy changes.</span></div>
+                    
+
                 </div>
 
                 <div class="prereq-row">
@@ -1479,6 +1418,87 @@
                 </div>
             </div>
         </section>
+         <section class="prereq-section">
+            <h2 class="prereq-title">Comparison with Past Neuromorphic Innovations</h2>
+            
+            <div class="prereq-content">
+                <div class="prereq-row">
+                    <p>Intel's Loihi and Loihi 2 represent the current state of industrial neuromorphic computing research. Loihi 2, announced in 2021, contains 128 neuromorphic cores each supporting up to 8,192 neurons through time-multiplexing as described earlier. The chip integrates approximately 2.3 billion transistors and implements sophisticated learning rules including spike-timing-dependent plasticity directly in hardware.</p>
+                    <div class="prereq-img"><img src="assets/comparison-1.png" alt=""><span class="img-caption"></span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p>This project does not attempt to compete with Loihi at the scale or sophistication level. Loihi 2 is a custom ASIC designed by a team of specialized engineers with access to advanced fabrication processes. This implementation runs on a commodity development board costing approximately 50 dollars.</p>
+                    <div class="prereq-img"><img src="assets/comparison-2.png" alt=""><span class="img-caption"></span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p>The value lies in demonstrating that core neuromorphic principles scale down to minimal hardware. Time-multiplexed spiking neurons, event-driven computation, and attractor dynamics can be implemented from first principles on constrained FPGAs. This validates the fundamental architecture and provides a platform for education and experimentation.</p>
+                    <div class="prereq-img"><img src="assets/comparison-3.png" alt=""><span class="img-caption"></span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p>IBM's TrueNorth chip, released in 2014, takes a different architectural approach using fully parallel neurons rather than time-multiplexing. TrueNorth contains 4,096 neuromorphic cores with 256 neurons per core, giving 1 million neurons total implemented in parallel hardware. This enables extremely low latency but requires a massive silicon area of 4.3 square centimeters in 28 nanometer technology.</p>
+                    <div class="prereq-img"><img src="assets/comparison-4.png" alt=""><span class="img-caption"></span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p>BrainScaleS, developed at Heidelberg University, uses analog circuits to simulate neuron dynamics up to 10,000 times faster than biological real-time. This accelerated simulation enables rapid exploration of network configurations but requires careful calibration and suffers from parameter variability inherent in analog circuits.</p>
+                    <div class="prereq-img">
+                        <img src="assets/35353535121/34792384721094.png" alt="">
+                        <span class="img-caption">Figure 14: Comparison table of neuromorphic systems including NonPU, Intel Loihi, Loihi 2, SpiNNaker and IBM TrueNorth</span>
+                        <div style=" margin-top: 0.5rem;">
+                            <a href="assets/89238298381390.pdf" target="_blank" class="term-link" style="font-size: 0.85rem;">Download Table (PDF)</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="prereq-row">
+                    <p>This implementation occupies a different niche in the design space. Operating at biological real-time with modest neuron counts and demonstrable attractor dynamics on accessible hardware, it serves as an educational platform and proof of concept rather than a performance-competitive neuromorphic processor.</p>
+                    <div class="prereq-img"><img src="assets/comparison-6.png" alt=""><span class="img-caption"></span></div>
+                </div>
+            </div>
+        </section>
+
+        <section class="prereq-section">
+            <h2 class="prereq-title">Limitations and Known Issues Currently Being Solved</h2>
+            
+            <div class="prereq-content">
+                <div class="prereq-row">
+                    <p>Several limitations and simplifications exist in the current implementation that warrant explicit acknowledgment. The network uses only excitatory connections. Biological cortex contains approximately 20 percent inhibitory interneurons that shape network dynamics through precisely timed suppression. Adding inhibitory neurons would improve stability and enable more complex computational patterns but would require additional logic resources and more sophisticated weight matrix structure.</p>
+                    <div class="prereq-img"><img src="assets/limitations-1.png" alt=""><span class="img-caption"></span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p>Synaptic plasticity occurs offline. The weights are pre-calculated and loaded into memory before network operation. True neuromorphic systems implement spike-timing-dependent plasticity in hardware, allowing weights to adapt continuously based on observed spike patterns. The current architecture includes placeholder logic for STDP computation but this remains unimplemented pending future development.</p>
+                    <div class="prereq-img"><img src="assets/limitations-2.png" alt=""><span class="img-caption"></span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p>The pattern completion task uses only a single learned pattern. Testing with multiple stored patterns would reveal capacity limits and interference effects inherent in attractor network dynamics. Preliminary testing with two patterns shows successful retrieval but with reduced robustness compared to single-pattern operation.</p>
+                    <div class="prereq-img"><img src="assets/limitations-3.png" alt=""><span class="img-caption"></span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p>Timing closure at higher clock frequencies is expected to be challenging. The initial design target is 100 megahertz operation, but early synthesis reports and back-of-the-envelope path estimates suggest that critical paths in the multiplier chain will likely exceed 10 nanoseconds without additional pipelining. For this reason, the current NonPU design is scoped around a more conservative 50 megahertz clock, which should be attainable once the full top-level build compiles cleanly. Further pipeline optimization and restructuring of the arithmetic datapaths may allow higher operating frequencies in future revisions.</p>
+                    <div class="prereq-img"><img src="assets/limitations-4.png" alt=""><span class="img-caption"></span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p>The VGA output provides only binary visualization. Adding grayscale rendering based on membrane voltage or firing rate would give more informative feedback about network state but would require additional video memory and more complex rendering logic.</p>
+                    <div class="prereq-img"><img src="assets/limitations-5.png" alt=""><span class="img-caption"></span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p>Testing coverage remains limited to controlled laboratory conditions. The system has not been validated under temperature variation, power supply noise, or long-duration operation exceeding several hours. Extended reliability testing would be necessary before deploying such a system in practical applications.</p>
+                    <div class="prereq-img"><img src="assets/357982598258/183471947.png" alt="">
+                        <span class="img-caption">Compilation failure on Intel Questa</span>
+                        <img src="assets/357982598258/947298347928743.png" alt=""><span class="img-caption">
+                            <img src="assets/357982598258/2468712463.png" alt=""><span class="img-caption">  <img src="assets/37872489833/74398274923748.png" alt=""><span class="img-caption"></span>Figure 15: Faliure Cases and Compilation Errors due to the Resource Constriants and Unknown reasons that are currently being debugged.</span></div>
+                </div>
+            </div>
+        </section>
+
         <hr>
 <br>
          <section class="prereq-section">
