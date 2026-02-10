@@ -407,7 +407,7 @@
         </header>
 
         <section class="prereq-section">
-            <h2 class="prereq-title">You Should Read This Before Reading Further</h2>
+            <h2 class="prereq-title">You Should Read This Before Reading The NonPU Video Compression Logic Section</h2>
             
             <div class="prereq-content">
              
@@ -1033,7 +1033,12 @@
 
                 <div class="prereq-row">
                     <p>The brain loader module implements the interface between SD card persistent storage and SDRAM working memory, enabling the system to boot with learned intelligence rather than requiring retraining from random initial conditions. This capability transforms the FPGA from a blank computational substrate into a system with specific competencies determined by the contents of the inserted SD card. The architectural innovation lies in recognizing that learning can occur offline over extended periods while inference must execute with minimal latency, leading to a dual-mode design that optimizes each phase independently.</p>
-                    <div class="prereq-img"><img src="assets/future-3.png" alt=""><span class="img-caption"></span></div>
+                    <div class="prereq-img"><img src="assets/276482736842/26857365.pbng.png" alt=""><span class="img-caption"></span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p>The implementation specifically utilizes a Samsung EVO 128GB SD card with A2 and V30 performance ratings, achieving sequential read speeds of 150 megabytes per second. This specific hardware selection addresses critical performance constraints that standard SD cards fail to satisfy. The A2 rating indicates optimization for random access patterns with minimum sustained random read performance of 4000 IOPS and random write performance of 2000 IOPS, dramatically exceeding the capabilities of conventional SD cards that struggle with non-sequential access. The V30 video speed class guarantees minimum sequential write speeds of 30 megabytes per second, ensuring reliable data capture during training phases. Standard SD cards available in the consumer market typically lack these performance characteristics, exhibiting severe slowdowns during random data retrieval and write operations that would bottleneck the neuronal state loading process. The 150 megabytes per second sequential read capability enables rapid brain state transfers, potentially reducing the thirty-two megabyte loading time from one second to under 250 milliseconds, significantly improving system responsiveness. Alternative implementations might incorporate solid-state drives through appropriate interface modules, offering even higher performance for scenarios requiring extremely rapid context switching between multiple learned models, though the SD card solution provides optimal balance between cost, power consumption, and sufficient performance for the primary use cases.</p>
+                    <div class="prereq-img"><img src="assets/276482736842/8472358947923.png" alt=""><span class="img-caption"></span></div>
                 </div>
 
                 <div class="prereq-row">
