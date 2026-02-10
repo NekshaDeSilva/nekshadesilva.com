@@ -929,7 +929,7 @@
 
                 <div class="prereq-row">
                     <p>The system architecture extends beyond a single FPGA through a master-slave configuration that distributes computational workload across multiple processing units. The master unit is the fully-featured AC415 board with complete peripheral access, while slave units employ smaller EP4CE6 Cyclone IV variants that lack SD card interfaces and SDRAM connections. This asymmetric architecture is not a limitation but rather an intentional design that exploits the differential capabilities of each component.</p>
-                    <div class="prereq-img"><img src="assets/prereq-4.png" alt=""><span class="img-caption"></span></div>
+                    <div class="prereq-img"><img src="assets\eq-839582598295825\65837946379387.png" alt=""><span class="img-caption">The system employs a standard 4-wire <a href="http://doc.simiaohub.com/p/ac415/">Serial Peripheral Interface or protocol</a> to coordinate distributed computation. The Master Board AC415, acts as the SPI bus master, transmitting raw pixel data packets via the MOSI line. The Slave Board (THE EP4CE6E22) functions as a dedicated arithmetic coprocessor, returning computed differential magnitude results via the MISO line. Clock synchronization is maintained by the Master via SCLK. <br>The architecture is designed for scalability and the distinct active but low Slave Select lines allow the Master to individually address up to three independent slave units on the same bus for future parallel processing expansion.</span></div>
                 </div>
 
                 <div class="prereq-row">
