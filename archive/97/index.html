@@ -402,7 +402,7 @@
             <span style="font-size: 2rem;">The "Neuronal" Processing Unit - N<span style="color: #0031A7;">on</span>PU</span>
             <h1><span style="color: #0031A7;">Spiking Neuronal Networks, Not Artificial Neural Networks.</span></h1>
             
-            <p class="subtitle"></p>
+            <p class="subtitle">This document contains proprietary, unpublished, non-patented intellectual property. Do not copy, reproduce.</p>
         </header>
 
         <section class="prereq-section">
@@ -1067,6 +1067,93 @@
                     <div class="prereq-img"><img src="assets/prereq-5.png" alt=""><span class="img-caption"></span></div>
                 </div>
 
+                <h3 class="prereq-subtitle">Intelligent Motion Discrimination and Habituation Filtering</h3>
+
+                <div class="prereq-row">
+                    <p>A critical refinement to the compression architecture addresses the fundamental challenge of distinguishing between information-bearing changes and repetitive background motion that consumes encoding resources without conveying useful content. This discrimination capability proves essential for achieving practical compression ratios on real-world video content where various types of motion coexist with profoundly different semantic importance.</p>
+                    <div class="prereq-img"><img src="assets/prereq-18.png" alt=""><span class="img-caption"></span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p>Consider a scientific video from a Mars rover mission where a ninety-nine gigabyte recording captures the Martian landscape over extended observation periods. The scene contains a rotating radar antenna that spins continuously throughout the entire recording duration, creating pixel changes in its spatial region every single frame. Simultaneously, the vast majority of the landscape remains static except for a single distant rock that suddenly shifts position, potentially indicating geological activity or even hypothetical extraterrestrial intervention. The naive differential encoding approach treats both sources of change identically, allocating equal encoding resources to the repetitive radar rotation and the singular anomalous rock movement.</p>
+                    <div class="prereq-img"><img src="assets/prereq-19.png" alt=""><span class="img-caption"></span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p>This resource allocation proves catastrophically inefficient. The radar antenna generates millions of change events encoding the same cyclical motion pattern repeatedly, consuming substantial portions of the compressed file to represent information that could be summarized as a simple looping animation. Meanwhile, the critical rock movement might constitute only dozens of change events representing genuinely novel information requiring preservation. Without discrimination between these motion types, the compression ratio degrades severely while the most scientifically valuable information risks being lost among the noise of routine mechanical motion.</p>
+                    <div class="prereq-img"><img src="assets/prereq-20.png" alt=""><span class="img-caption"></span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p>The solution draws direct inspiration from biological visual processing where retinal and cortical neurons exhibit adaptation to sustained stimulation. Neurons responding to constant or predictable inputs gradually reduce their firing rates through synaptic habituation mechanisms, effectively filtering out redundant information while remaining sensitive to novel stimuli. This biological principle translates directly into an engineering algorithm capable of identifying repetitive motion patterns during the pre-analysis phase and handling them through compact representation strategies rather than exhaustive change event encoding.</p>
+                    <div class="prereq-img"><img src="assets/prereq-21.png" alt=""><span class="img-caption"></span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p>The habituation filtering architecture maintains a temporal history of pixel change patterns across the pre-analysis window. For each spatial region of the frame, the system tracks not merely whether changes occur but rather the temporal statistics of those changes including frequency, magnitude consistency, and periodicity. Regions exhibiting high-frequency changes with periodic structure trigger pattern recognition logic that attempts to identify the minimal repeating cycle. Once a repeating pattern is confirmed through correlation analysis across multiple periods, the region enters habituated state where individual change events cease being encoded.</p>
+                    <div class="prereq-img"><img src="assets/prereq-22.png" alt=""><span class="img-caption"></span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p>Instead of encoding millions of individual change events for the rotating radar, the system captures a single cycle of the motion pattern comprising perhaps ten to twenty frames showing the complete rotation sequence. This reference pattern is stored once in the compressed representation along with metadata indicating its spatial location, temporal duration, and looping behavior. During playback, the decoder simply replays this captured cycle repeatedly for the duration indicated by the timeline, perfectly reconstructing the continuous rotation while consuming minimal storage. The approach mirrors animated GIF encoding strategies but operates within the neuromorphic framework at the pixel cluster level rather than requiring manual annotation.</p>
+                    <div class="prereq-img"><img src="assets/prereq-23.png" alt=""><span class="img-caption"></span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p>The discrimination between habituating patterns and information-bearing changes requires sophisticated analysis capable of distinguishing several motion categories. Repetitive periodic motion such as rotating machinery, oscillating pendulums, or reciprocating pistons exhibits strong autocorrelation at characteristic periods, enabling reliable pattern extraction and loop-based encoding. Chaotic motion such as turbulent flames, flowing water, or blowing vegetation exhibits high-frequency changes without periodicity, indicating genuine information content requiring full change event encoding despite the computational cost. Intermittent motion such as human speech where mouth movements occur against an otherwise static face represents sparse but information-critical changes that must be captured with full fidelity.</p>
+                    <div class="prereq-img"><img src="assets/prereq-24.png" alt=""><span class="img-caption"></span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p>The specific example of human speech illustrates the criticality of proper motion classification. A video showing a person seated at a desk in a static room where only facial features move during speaking contains minimal overall motion. If the mouth movements are incorrectly classified as ignorable background motion, the compressed representation reduces to a single static frame showing a closed mouth, completely eliminating the speech content that constitutes the entire informational value of the recording. Conversely, correctly identifying the mouth region as exhibiting sparse but non-periodic motion ensures these changes receive encoding priority, preserving the speech information.</p>
+                    <div class="prereq-img"><img src="assets/prereq-25.png" alt=""><span class="img-caption"></span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p>Similarly, consider a low-resolution video showing a rotating fan where motion blur causes the fan blades to appear as a static blur rather than distinct moving objects. In such cases, the pixel values in the fan region may exhibit minimal frame-to-frame variation despite the physical rotation. The habituation logic must recognize that these regions already appear effectively static in the source material and require no special handling. The discrimination operates on actual pixel changes rather than inferred physical motion, ensuring that perceptually static regions receive static encoding regardless of the underlying physical dynamics.</p>
+                    <div class="prereq-img"><img src="assets/prereq-26.png" alt=""><span class="img-caption"></span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p>The Mars rover scenario with the distant moving rock provides the most compelling demonstration of habituation filtering value. Throughout a ninety-nine gigabyte source video spanning hours of observation, perhaps ninety-eight gigabytes encode routine mechanical motion of rover components, atmospheric effects creating subtle lighting variations, and other predictable changes. The single gigabyte or less of truly novel information includes the anomalous rock movement along with any other unexpected events such as dust devils, meteorite impacts, or instrument malfunctions. Proper habituation filtering compresses the ninety-eight gigabytes of routine motion into megabytes of loop references while preserving every change event associated with the anomalous rock, achieving compression ratios exceeding one hundred to one while maintaining perfect fidelity for scientifically critical content.</p>
+                    <div class="prereq-img"><img src="assets/prereq-27.png" alt=""><span class="img-caption"></span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p>Implementation of habituation filtering occurs entirely during the offline pre-analysis phase where computational time constraints relax sufficiently to permit multi-pass analysis. The first pass performs standard differential analysis identifying all changed regions and accumulating statistics on change frequency and magnitude. The second pass performs autocorrelation analysis on high-frequency change regions to identify periodic patterns and extract minimal repeating cycles. The third pass validates identified patterns through cross-correlation with subsequent occurrences, confirming repeatability and establishing confidence in the loop representation. Final passes optimize the encoding by selecting between loop-based representation for habituated regions and sparse event encoding for non-repeating changes based on storage efficiency calculations.</p>
+                    <div class="prereq-img"><img src="assets/prereq-28.png" alt=""><span class="img-caption"></span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p>The saliency mapping concept provides the data structure organizing this analysis. Each spatial region maintains a saliency score reflecting its information content relative to encoding cost. Static regions receive minimal saliency since they require only key frame storage. Regions with sparse non-periodic changes receive high saliency since they likely represent important events. Regions with dense periodic changes receive negative saliency indicating they should be suppressed through loop encoding rather than exhaustive change tracking. The final compressed representation allocates encoding resources proportionally to saliency, ensuring maximum information preservation per bit stored.</p>
+                    <div class="prereq-img"><img src="assets/prereq-29.png" alt=""><span class="img-caption"></span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p>Threshold selection for habituation triggers requires empirical optimization across diverse content types. Setting thresholds too aggressively risks misclassifying informative chaotic motion as repetitive patterns, introducing compression artifacts through inappropriate loop-based encoding. Setting thresholds too conservatively fails to achieve compression benefits on content with substantial repetitive motion, limiting practical compression ratios. Adaptive thresholding based on global statistics of the video content provides a middle path where the habituation sensitivity adjusts to match the overall motion characteristics, becoming more aggressive on content dominated by mechanical motion while remaining conservative on content with primarily organic or chaotic dynamics.</p>
+                    <div class="prereq-img"><img src="assets/prereq-30.png" alt=""><span class="img-caption"></span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p>The flame example illustrates the chaotic motion category requiring special handling. When encoding video of a lit match, the flame exhibits continuous high-frequency pixel changes as combustion dynamics create turbulent flow patterns, color variations, and intensity fluctuations. However, unlike a rotating radar, flame motion never repeats the same pattern twice. Autocorrelation analysis reveals no significant peaks at any lag period, indicating absence of periodicity. This signature identifies the region as containing genuine information despite the high change rate, triggering full sparse event encoding rather than habituation. The resulting compressed representation captures every flame variation, preserving scientifically valuable information about combustion color, intensity evolution, and any anomalies in the burning process.</p>
+                    <div class="prereq-img"><img src="assets/prereq-31.png" alt=""><span class="img-caption"></span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p>User control over habituation filtering provides flexibility for diverse application requirements. A configuration option enables users to disable habituation filtering entirely, forcing the system to encode all detected changes regardless of periodicity. This mode suits scenarios where even repetitive motion carries scientific value or where verification of continuous mechanical operation is required. The default configuration enables habituation filtering with moderate thresholds optimized for general content. Advanced configurations expose threshold parameters for expert users requiring fine-grained control over the habituation sensitivity and pattern recognition confidence levels.</p>
+                    <div class="prereq-img"><img src="assets/prereq-32.png" alt=""><span class="img-caption"></span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p>The interaction between habituation filtering and reconstruction quality merits careful consideration. Loop-based encoding of repetitive motion introduces quantization of the loop period to match the frame timing, potentially creating subtle phase discontinuities if the actual period does not precisely align with frame boundaries. Similarly, variations in the repetitive motion such as gradual speed changes in a rotating element may not be captured if the habituation logic assumes perfect periodicity. These effects typically prove imperceptible for mechanical motion but could become noticeable in edge cases, requiring validation against quality metrics during the development phase.</p>
+                    <div class="prereq-img"><img src="assets/prereq-33.png" alt=""><span class="img-caption"></span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p>Future enhancements to the habituation architecture could incorporate machine learning techniques for motion classification, training neuronal networks to recognize semantic motion categories such as human gestures, mechanical rotation, fluid dynamics, and atmospheric effects. This semantic understanding would enable more sophisticated encoding strategies tailored to specific motion types, potentially achieving even higher compression ratios while maintaining quality for perceptually important content. However, the current correlation-based approach provides a solid foundation requiring no training data and operating reliably across arbitrary content domains.</p>
+                    <div class="prereq-img"><img src="assets/prereq-34.png" alt=""><span class="img-caption"></span></div>
+                </div>
+
                 <div class="prereq-row">
                     <p>The proximity correlation hypothesis provides the theoretical foundation for the compression scheme. When analyzing frame sequences, pixel changes cluster spatially and temporally rather than distributing randomly across the image. A person's mouth moving during speech creates a localized region of change while the background remains static. This clustering permits efficient encoding where instead of tracking every changed pixel individually, the system identifies cluster centers and stores compact representations of regions undergoing modification. The trade-off between individual pixel precision and clustered approximation can be tuned based on the specific characteristics of the video content and acceptable reconstruction quality.</p>
                     <div class="prereq-img"><img src="assets/prereq-6.png" alt=""><span class="img-caption"></span></div>
@@ -1216,7 +1303,7 @@
                 </div>
 
                 <div class="prereq-row">
-                    <p>The hardware product addresses enterprise customers requiring on-premises neuromorphic computing infrastructure. The form factor is a standard one or two rack unit server blade fitting conventional data center racks. Inside the chassis, a custom backplane holds thirty-two to sixty-four vertical FPGA cards operating in parallel. Connectivity through PCIe or hundred gigabit Ethernet interfaces the blade to data center networks. The passive cooling requirements due to the low power consumption of spiking neural networks provide a significant advantage over GPU-based solutions requiring aggressive active cooling.</p>
+                    <p>The hardware product addresses enterprise customers requiring on-premises neuromorphic computing infrastructure. The form factor is a standard one or two rack unit server blade fitting conventional data center racks. Inside the chassis, a custom backplane holds thirty-two to sixty-four vertical FPGA cards operating in parallel. Connectivity through PCIe or hundred gigabit Ethernet interfaces the blade to data center networks. The passive cooling requirements due to the low power consumption of spiking neuronal networks provide a significant advantage over GPU-based solutions requiring aggressive active cooling.</p>
                     <div class="prereq-img"><img src="assets/prereq-13.png" alt=""><span class="img-caption"></span></div>
                 </div>
 
@@ -1231,7 +1318,7 @@
                 </div>
 
                 <div class="prereq-row">
-                    <p>Intellectual property protection relies on several mechanisms. The neuromorphic file format remains proprietary and undocumented, forcing anyone attempting interoperability to reverse engineer the encoding scheme. The synaptic weight organization and neural network architectures are trade secrets not disclosed in marketing materials. Hardware locking ties the decoder implementation to specific FPGA configurations, preventing software emulation on standard processors. These layers create a defensible competitive moat while the technology matures.</p>
+                    <p>Intellectual property protection relies on several mechanisms. The neuromorphic file format remains proprietary and undocumented, forcing anyone attempting interoperability to reverse engineer the encoding scheme. The synaptic weight organization and neuronal network architectures are trade secrets not disclosed in marketing materials. Hardware locking ties the decoder implementation to specific FPGA configurations, preventing software emulation on standard processors. These layers create a defensible competitive moat while the technology matures.</p>
                     <div class="prereq-img"><img src="assets/prereq-16.png" alt=""><span class="img-caption"></span></div>
                 </div>
 
@@ -1248,12 +1335,12 @@
                 </div>
 
                 <div class="prereq-row">
-                    <p>The SD card interface development involves writing the SPI controller and sector reading logic, then validating operation with actual SD cards of various types and capacities. The raw sector access approach must be verified to ensure reliable data reading without filesystem dependencies. Integration testing confirms that data read from SD card matches what was written, establishing baseline reliability before attempting neural weight loading. The dual-mode architecture requires careful state machine development to prevent race conditions between loading and inference phases.</p>
+                    <p>The SD card interface development involves writing the SPI controller and sector reading logic, then validating operation with actual SD cards of various types and capacities. The raw sector access approach must be verified to ensure reliable data reading without filesystem dependencies. Integration testing confirms that data read from SD card matches what was written, establishing baseline reliability before attempting neuronal weight loading. The dual-mode architecture requires careful state machine development to prevent race conditions between loading and inference phases.</p>
                     <div class="prereq-img"><img src="assets/future-2.png" alt=""><span class="img-caption"></span></div>
                 </div>
 
                 <div class="prereq-row">
-                    <p>The SDRAM controller integration represents a critical path item given its central role in system operation. The Alinx-provided intellectual property cores or reference designs must be adapted to the specific project requirements including burst access patterns optimized for neural state retrieval and efficient frame buffer updates for video processing. Memory timing verification through oscilloscope observation confirms that setup and hold times meet specifications across process, voltage, and temperature variations.</p>
+                    <p>The SDRAM controller integration represents a critical path item given its central role in system operation. The Alinx-provided intellectual property cores or reference designs must be adapted to the specific project requirements including burst access patterns optimized for neuronal state retrieval and efficient frame buffer updates for video processing. Memory timing verification through oscilloscope observation confirms that setup and hold times meet specifications across process, voltage, and temperature variations.</p>
                     <div class="prereq-img"><img src="assets/future-3.png" alt=""><span class="img-caption"></span></div>
                 </div>
 
@@ -1268,7 +1355,7 @@
                 </div>
 
                 <div class="prereq-row">
-                    <p>Decoder implementation builds upon the encoder verification by attempting reconstruction of the compressed representations. Early testing focuses on key frame reconstruction before adding predictive pixel generation through neural networks. Real-time performance profiling identifies whether sixty frame per second targets are achievable or whether optimization is required. Quality metrics compare reconstructed frames against originals, quantifying information loss and guiding quality improvement efforts.</p>
+                    <p>Decoder implementation builds upon the encoder verification by attempting reconstruction of the compressed representations. Early testing focuses on key frame reconstruction before adding predictive pixel generation through neuronal networks. Real-time performance profiling identifies whether sixty frame per second targets are achievable or whether optimization is required. Quality metrics compare reconstructed frames against originals, quantifying information loss and guiding quality improvement efforts.</p>
                     <div class="prereq-img"><img src="assets/prereq-2.png" alt=""><span class="img-caption"></span></div>
                 </div>
 
@@ -1295,19 +1382,19 @@
                 </div>
 
                 <div class="prereq-row">
-                    <p>Memory bandwidth optimization examines whether burst access patterns, prefetching strategies, or cache organizations can increase effective throughput. SDRAM controllers support various burst lengths and addressing modes with different performance characteristics. Matching burst patterns to access patterns in neural computation reduces overhead from row activation and precharge cycles. Double buffering techniques permit computation on one frame buffer while displaying another, improving utilization.</p>
+                    <p>Memory bandwidth optimization examines whether burst access patterns, prefetching strategies, or cache organizations can increase effective throughput. SDRAM controllers support various burst lengths and addressing modes with different performance characteristics. Matching burst patterns to access patterns in neuronal computation reduces overhead from row activation and precharge cycles. Double buffering techniques permit computation on one frame buffer while displaying another, improving utilization.</p>
                     <div class="prereq-img"><img src="assets/prereq-7.png" alt=""><span class="img-caption"></span></div>
                 </div>
 
                 <div class="prereq-row">
-                    <p>Compression quality tuning adjusts threshold parameters controlling event sparsity and key frame frequency to explore the trade-off space between file size and reconstruction fidelity. Lower thresholds capture more subtle changes improving quality but reducing compression ratio. Higher thresholds increase compression but introduce more prediction burden on neural networks. Automated parameter sweeps over test video corpus identify optimal settings for various content types.</p>
+                    <p>Compression quality tuning adjusts threshold parameters controlling event sparsity and key frame frequency to explore the trade-off space between file size and reconstruction fidelity. Lower thresholds capture more subtle changes improving quality but reducing compression ratio. Higher thresholds increase compression but introduce more prediction burden on neuronal networks. Automated parameter sweeps over test video corpus identify optimal settings for various content types.</p>
                     <div class="prereq-img"><img src="assets/prereq-8.png" alt=""><span class="img-caption"></span></div>
                 </div>
 
                 <h3 class="prereq-subtitle">Validation and Demonstration</h3>
 
                 <div class="prereq-row">
-                    <p>Successful project validation requires demonstrating key capabilities through concrete measurements and observable demonstrations. The first milestone involves displaying a single neuron's activity on an oscilloscope or HDMI output, confirming that the basic neural computation machinery functions correctly. This blinking neuron demonstration proves that spike generation occurs and that the hardware pipeline executes.</p>
+                    <p>Successful project validation requires demonstrating key capabilities through concrete measurements and observable demonstrations. The first milestone involves displaying a single neuron's activity on an oscilloscope or HDMI output, confirming that the basic neuronal computation machinery functions correctly. This blinking neuron demonstration proves that spike generation occurs and that the hardware pipeline executes.</p>
                     <div class="prereq-img"><img src="assets/prereq-9.png" alt=""><span class="img-caption"></span></div>
                 </div>
 
@@ -1344,7 +1431,7 @@
                 </div>
 
                 <div class="prereq-row">
-                    <p>Advanced compression techniques could exploit deeper neural network architectures, attention mechanisms, or generative models for improved prediction quality. Current implementations use relatively simple networks constrained by FPGA resource limits, but larger hardware or more sophisticated algorithms could push quality-to-compression ratios significantly beyond initial targets. Research into neuromorphic image processing from vision neuroscience may inspire biological algorithms with superior efficiency.</p>
+                    <p>Advanced compression techniques could exploit deeper neuronal network architectures, attention mechanisms, or generative models for improved prediction quality. Current implementations use relatively simple networks constrained by FPGA resource limits, but larger hardware or more sophisticated algorithms could push quality-to-compression ratios significantly beyond initial targets. Research into neuromorphic image processing from vision neuroscience may inspire biological algorithms with superior efficiency.</p>
                     <div class="prereq-img"><img src="assets/prereq-16.png" alt=""><span class="img-caption"></span></div>
                 </div>
 
@@ -1361,7 +1448,7 @@
                 <h3 class="prereq-subtitle">Conclusion</h3>
 
                 <div class="prereq-row">
-                    <p>The Neuronal Processing Unit project demonstrates that commodity FPGA hardware can implement biological-scale neural simulations achieving competitive performance with traditional computing architectures through careful attention to neuromorphic principles. The fifty-dollar development board provides sufficient logic, memory, and bandwidth resources to simulate one million neurons when properly architected through time-multiplexed computation and hierarchical memory organization. The video compression application showcases how brain-inspired sparse event encoding dramatically reduces data volume while maintaining reconstruction quality through learned predictive models.</p>
+                    <p>The Neuronal Processing Unit project demonstrates that commodity FPGA hardware can implement biological-scale neuronal simulations achieving competitive performance with traditional computing architectures through careful attention to neuromorphic principles. The fifty-dollar development board provides sufficient logic, memory, and bandwidth resources to simulate one million neurons when properly architected through time-multiplexed computation and hierarchical memory organization. The video compression application showcases how brain-inspired sparse event encoding dramatically reduces data volume while maintaining reconstruction quality through learned predictive models.</p>
                     <div class="prereq-img"><img src="assets/future-2.png" alt=""><span class="img-caption"></span></div>
                 </div>
 
@@ -1376,12 +1463,12 @@
                 </div>
 
                 <div class="prereq-row">
-                    <p>The engineering challenges ahead remain substantial but surmountable given the demonstrated feasibility of core concepts. SDRAM controller integration, SD card interfacing, neural pipeline optimization, and encoder-decoder development each require dedicated effort but build upon well-understood hardware design principles. The systematic development phases outlined provide a roadmap from proof of concept through commercial deployment.</p>
+                    <p>The engineering challenges ahead remain substantial but surmountable given the demonstrated feasibility of core concepts. SDRAM controller integration, SD card interfacing, neuronal pipeline optimization, and encoder-decoder development each require dedicated effort but build upon well-understood hardware design principles. The systematic development phases outlined provide a roadmap from proof of concept through commercial deployment.</p>
                     <div class="prereq-img"><img src="https://www.fpgakey.com/uploads/images/family/altera/cyclone-v.jpg" alt=""><span class="img-caption"></span></div>
                 </div>
 
                 <div class="prereq-row">
-                    <p>This work represents a convergence of neuromorphic computing, video compression, commodity FPGA development, and energy-efficient hardware design. By recognizing that biological neural computation principles can be efficiently implemented in digital hardware and applied to practical engineering problems, the project demonstrates a path toward democratizing neuromorphic computing. The vision of biological supercomputing on every desk becomes achievable when expensive custom silicon is replaced by inexpensive development boards running carefully architected firmware exploiting the unique advantages of spiking neural networks and event-driven computation. The engineering effort to realize this vision proceeds from the foundation established through this architectural specification.</p>
+                    <p>This work represents a convergence of neuromorphic computing, video compression, commodity FPGA development, and energy-efficient hardware design. By recognizing that biological neuronal computation principles can be efficiently implemented in digital hardware and applied to practical engineering problems, the project demonstrates a path toward democratizing neuromorphic computing. The vision of biological supercomputing on every desk becomes achievable when expensive custom silicon is replaced by inexpensive development boards running carefully architected firmware exploiting the unique advantages of spiking neuronal networks and event-driven computation. The engineering effort to realize this vision proceeds from the foundation established through this architectural specification.</p>
                     <div class="prereq-img"><img src="assets/prereq-1.png" alt=""><span class="img-caption"></span></div>
                 </div>
             </div>
