@@ -948,7 +948,7 @@
 
                 <div class="prereq-row">
                     <p>Communication between master and slave units occurs over high-speed parallel buses implemented through the expansion headers present on both board types. These connections carry pixel data, control signals, and computational results without requiring complex protocol layers. The simplicity of the interface stems from the tightly coupled nature of the computation where slaves function essentially as dedicated arithmetic coprocessors rather than independent computing nodes. Clock synchronization ensures deterministic timing relationships between units, permitting pipelined operation where new data can be submitted to slaves before previous computations complete.</p>
-                    <div class="prereq-img"><img src="assets/prereq-7.png" alt=""><span class="img-caption"></span></div>
+                    <div class="prereq-img"><img src="assets/357982598258/598725927587.png" alt=""><span class="img-caption"></span></div>
                 </div>
 
                 <h3 class="prereq-subtitle">Superneuron Executive Control Module</h3>
@@ -960,7 +960,7 @@
 
                 <div class="prereq-row">
                     <p>The finite state machine manages four distinct operational modes that reflect different phases of neuronal computation. The idle state represents quiescence where the network awaits input stimulation or configuration changes. During the learning state, synaptic plasticity mechanisms operate at maximum efficacy as the network adapts to incoming patterns. The converged state indicates successful pattern recognition where learned representations have stabilized sufficiently to warrant persistence to SDRAM. The panic state serves as an emergency intervention when network activity exceeds safe bounds, preventing runaway excitation that could correspond to pathological seizure-like states in biological systems.</p>
-                    <div class="prereq-img"><img src="assets/prereq-9.png" alt=""><span class="img-caption"></span></div>
+                    <div class="prereq-img"><img src="assets/eq-839582598295825/08459023572980579.png" alt=""><span class="img-caption">This diagram illustrates the four-stage Finite State Machine System, implemented in Verilog that governs global network dynamics. The system defaults to an Idle state until stimulation triggers the Learning phase, where synaptic plasticity is active. The system transitions to Converged upon successful pattern recognition, or diverts to a Panic state if homeostatic mechanisms fail to contain runaway excitation, ensuring biological fidelity and hardware safety.</span></div>
                 </div>
 
                 <div class="prereq-row">
@@ -970,17 +970,18 @@
 
                 <div class="prereq-row">
                     <p>Synchrony detection logic identifies moments when large populations of neurons fire in tight temporal coordination. This capability proves essential for recognizing when the network has successfully learned a pattern and achieved resonance with the input structure. The coincidence detector examines the distribution of spike times across the neural population, looking for clustering that indicates correlated activity rather than random firing. When synchrony exceeds threshold values, the system interprets this as pattern recognition success and triggers state transitions that can lock learned weights into persistent storage.</p>
-                    <div class="prereq-img"><img src="assets/prereq-11.png" alt=""><span class="img-caption"></span></div>
+                    <div class="prereq-img"><img src="assets/media-9202940924/7982892758925.png" alt=""><span class="img-caption">
+The system implements a negative feedback control loop to regulate global network excitability. The Activity Monitor integrates population firing rates over a 10ms window, producing an error signal against the target setpoint between 40–60 Hz. This error modulates the Gain Controller, which dynamically scales synaptic weights, referring to "G" to dampen runaway excitation or amplify quiescent states, ensuring stability without manual parameter tuning.</span></div>
                 </div>
 
                 <div class="prereq-row">
                     <p>The module interfaces with the neuronal computation pipelines through several control signals that modulate learning rates, gate synaptic updates, and coordinate memory operations. The global gain signal propagates to all neuron update modules where it scales incoming synaptic currents, effectively adjusting network sensitivity. Learning enable signals control whether spike-timing-dependent plasticity mechanisms actively modify synaptic weights or whether weights remain frozen in their current configuration. Write enable signals coordinate the transfer of neuronal state from transient pipeline registers into SDRAM for long-term retention. Panic reset signals provide emergency shutdown capability that can rapidly quench pathological activity patterns.</p>
-                    <div class="prereq-img"><img src="assets/prereq-12.png" alt=""><span class="img-caption"></span></div>
+                    <div class="prereq-img"><img src="assets/media-9202940924/893769875984.png" alt=""><span class="img-caption">A spike raster plot demonstrating the transition from stochastic noise to synchronous oscillation. During the initial phase from 0 to 400milliseconds, neuron firing is uncorrelated to them. As Hebbian weights stabilize, the network enters a global attractor state of post 400 milliseconds state, characterized by tight vertical alignment of spike times. The Coincidence Detector module identifies these high-synchrony events to trigger the "Converged" state transition.</span></div>
                 </div>
 
                 <div class="prereq-row">
                     <p>Implementation of population monitoring employs a bucketed approach that balances accuracy against logic element consumption. Rather than implementing a massive adder tree capable of summing all two hundred fifty-six neuron outputs, the system divides the population into sixteen buckets of sixteen neurons each. Each bucket maintains a local counter, and the bucket counts are then summed to produce a total activity estimate. This hierarchical counting strategy reduces combinatorial logic depth while maintaining sufficient precision for homeostatic control. The approximation errors introduced by this approach prove negligible for the intended purpose of maintaining global activity levels within acceptable bounds.</p>
-                    <div class="prereq-img"><img src="assets/prereq-13.png" alt=""><span class="img-caption"></span></div>
+                    <div class="prereq-img"><img src="assets/media-9202940924/86973907639867897.png" alt=""><span class="img-caption">To minimize combinatorial path delay, the population monitoring circuit employs a spatial partitioning strategy. Rather than a linear accumulation of 256 inputs, the neuronal sheet is divided into 16 local Activity Buckets or Temporary Data Packets. These partial sums are aggregated via a logarithmic-depth adder tree, allowing the global activity metric to be computed within a single clock cycle with minimal logic element utilization.</span></div>
                 </div>
 
                 <h3 class="prereq-subtitle">Neuronal Computation Pipeline Architecture</h3>
@@ -1056,7 +1057,7 @@
 
                 <div class="prereq-row">
                     <p>The video compression innovation derives from recognizing that high frame rate video contains massive redundancy when consecutive frames differ minimally. Traditional compression approaches like H.264 exploit this through motion estimation and residual coding but remain fundamentally pixel-oriented. The neuromorphic approach instead encodes only change events, mirroring biological visual processing where retinal neurons respond primarily to temporal differences rather than absolute light levels. This sparse event representation dramatically reduces data volume while enabling reconstruction through learned predictive models implemented in the neuronal substrate.</p>
-                    <div class="prereq-img"><img src="assets/prereq-5.png" alt=""><span class="img-caption"></span></div>
+                    <div class="prereq-img"><img src="https://www.networkwebcams.co.uk/product_images/uploaded_images/gop-structure-for-h264-mpeg4.png" alt=""><span class="img-caption">H.264 Video Compression Generally Achieves around 2:1 or 50% reduction in file size. <br><br>Image Credits: https://www.networkwebcams.co.uk</span></div>
                 </div>
 
                 <h3 class="prereq-subtitle">Intelligent Motion Discrimination and Habituation Filtering</h3>
