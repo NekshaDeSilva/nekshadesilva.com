@@ -587,8 +587,8 @@
                 </div>
 
                 <div class="prereq-row">
-                    <p>The implementation uses the Izhikevich neuron model, which balances biological realism with computational efficiency. Unlike simple integrate-and-fire models that treat neurons as threshold switches, or complex Hodgkin-Huxley models requiring multiple coupled differential equations, the Izhikevich model captures essential spiking dynamics through two coupled equations governing membrane voltage and recovery.</p>
-                    <div class="prereq-img"><img src="assets/neuron-1.png" alt=""><span class="img-caption"></span></div>
+                    <p>The implementation uses the Izhikevich neuron model, which balances biological realism with computational efficiency.We adopt the phenomenology proposed by Izhikevich (2003), which mathematically bridges the gap between the biological accuracy of Hodgkin-Huxley and the computational speed of Integrate-and-Fire. However, while the original research validated this efficiency for software simulation, this project extends the application by porting the differential equations of Equation 1 and Equation 2, directly into a fixed-point hardware pipeline, demonstrating that these dynamics can scale to million-neuron architectures without floating-point overhead.</p>
+                    <div id="572935739857" class="prereq-img"><img src="assets/eq-839582598295825/9028709257290375298057.png" alt=""><span class="img-caption">Equation number. 1</span><br><img src="assets/eq-839582598295825/95827598248569347948373.png" alt=""><span class="img-caption">Equation number 2<br><br>Cite: https://www.izhikevich.org/publications/spikes.pdf</span></div>
                 </div>
 
                 <div class="prereq-row">
@@ -597,8 +597,8 @@
                 </div>
 
                 <div class="prereq-row">
-                    <p>Parameter values for the Izhikevich model determine spiking behavior. For this implementation, all neurons use regular spiking parameters similar to cortical excitatory neurons, with a parameter value of 0.02, b parameter of 0.2, c parameter of negative 65, and d parameter of 8. These values produce realistic spike timing and adaptation behavior without requiring per-neuron parameter customization in the current version.</p>
-                    <div class="prereq-img"><img src="assets/neuron-3.png" alt=""><span class="img-caption"></span></div>
+                    <p>Parameter values for the Izhikevich model determine spiking behavior. The network is configured to operate in the Regular Spiking or RS regime as classified by Izhikevich (REFER Figure Alpha 6). We utilize the canonical parameter set of a=0.02, b=0.2, c=-65 and d=8 to ensure biological fidelity in spike timing. <br><br>By locking these parameters into the FPGA logic fabric, we eliminate the need for per-neuron parameter RAM fetching, optimizing the memory bandwidth for the critical state variables rather than static configuration data. These values produce realistic spike timing and adaptation behavior without requiring per-neuron parameter customization in the current version.</p>
+                    <div class="prereq-img"><img src="assets/eq-839582598295825/672592865928528956295.png" alt=""><span class="img-caption">Fig. Alpha 6: Izhikevich (2003, Fig. 1)<br><br>Cite: https://www.izhikevich.org/publications/spikes.pdf</span></div>
                 </div>
 
                 <div class="prereq-row">
@@ -785,7 +785,7 @@
 
                 <div style="margin: 2rem 0;">
                     <h3 style="font-size: 1.1rem; font-weight: 600; margin-bottom: 1rem; border-bottom: 1px solid #ccc; padding-bottom: 0.5rem;">
-                        <a href="https://github.com/nekshadesilva/nonpu/blob/main/neuronalpipes.v" target="_blank" style="color: #0031A7; text-decoration: none;">neuronalpipes.v</a>
+                        <a id="4572957293" href="https://github.com/nekshadesilva/nonpu/blob/main/neuronalpipes.v" target="_blank" style="color: #0031A7; text-decoration: none;">neuronalpipes.v</a>
                     </h3>
                     <img src="assets/832749827/3.png" alt="neuronalpipes.v code" style="max-width: 90%; height: auto; border: 1px solid #ddd;">
                     <p style="margin-top: 1rem; line-height: 1.6;">This module is one neuron in silicon. <u style="text-decoration: underline;">v_in</u> and <u style="text-decoration: underline;">u_in</u> represent membrane voltage and recovery variable from the previous timestep. <u style="text-decoration: underline;">I_in</u> is total current from image stimulus and synaptic inputs. The core implements Izhikevich equations using fixed-point arithmetic. When voltage crosses threshold, <u style="text-decoration: underline;">spike_out</u> fires for one clock cycle, voltage resets, and recovery adjusts. This block does not classify. Unlike dense matrix multiplication where every weight is computed every cycle, synaptic operations here are sparse and event-gated—only active connections contribute. It solves discrete differential equations in hardware.</p>
@@ -809,7 +809,7 @@
 
                 <div style="margin: 2rem 0;">
                     <h3 style="font-size: 1.1rem; font-weight: 600; margin-bottom: 1rem; border-bottom: 1px solid #ccc; padding-bottom: 0.5rem;">
-                        <a href="https://github.com/nekshadesilva/nonpu/blob/main/superneuron.v" target="_blank" style="color: #0031A7; text-decoration: none;">superneuron.v</a>
+                        <a id="79387638673967" href="https://github.com/nekshadesilva/nonpu/blob/main/superneuron.v" target="_blank" style="color: #0031A7; text-decoration: none;">superneuron.v</a>
                     </h3>
                     <img src="assets/832749827/6.png" alt="superneuron.v code" style="max-width: 90%; height: auto; border: 1px solid #ddd;">
                     <p style="margin-top: 1rem; line-height: 1.6;">This is not another neuron. This is a control plane above the sheet. It maintains one bias value per tile in memory. When <u style="text-decoration: underline;">activitymonitor</u> reports a tile firing excessively, this module reduces that tile's bias. Underactive tiles get increased bias. The internal variable <u style="text-decoration: underline;">G</u> represents global gain, adapting based on overall activity. <u style="text-decoration: underline;">tile_id_query</u> from the sheet indicates which tile the current neuron belongs to. The module looks up that tile's bias and outputs it as <u style="text-decoration: underline;">bias_out</u>. The sheet adds this to neuron input current. Spikes shape biases. Biases shape spikes. Closed loop homeostasis.</p>
@@ -843,7 +843,7 @@
                 <h3 class="prereq-subtitle">Hardware Foundation and System Architecture</h3>
 
                 <div class="prereq-row">
-                    <p>The primary development platform is built around the Alinx AC415 board, which represents a significant value proposition in the FPGA development ecosystem. While bare Cyclone IV chips can be procured for approximately three dollars, the AC415 board commands a fifty-dollar price point due to its comprehensive peripheral integration. This premium delivers a complete video processing infrastructure including Digital-to-Analog conversion circuitry for VGA output, dedicated HDMI transmitter chips with proper impedance-controlled differential pair routing, and a substantial memory subsystem that enables frame buffering and neural state storage.</p>
+                    <p>The primary development platform is built around the Alinx AC415 board, which represents a significant value proposition in the FPGA development ecosystem. While bare Cyclone IV chips can be procured for approximately 40 dollors, the AC415 board commands a 55 dollar price point due to its comprehensive peripheral integration. This premium delivers a complete video processing infrastructure including Digital-to-Analog conversion circuitry for VGA output, dedicated HDMI transmitter chips with proper impedance-controlled differential pair routing, and a substantial memory subsystem that enables frame buffering and neural state storage.</p>
                     <div class="prereq-img"><img src="assets/future-3.png" alt=""><span class="img-caption"></span></div>
                 </div>
 
@@ -896,7 +896,7 @@
                 <h3 class="prereq-subtitle">Superneuron Executive Control Module</h3>
 
                 <div class="prereq-row">
-                    <p>The superneuron module represents the highest level of system control, implementing a finite state machine that governs global network dynamics and learning processes. This module evolved from an initial prototype of sixteen lines that merely incremented a counter into a production implementation spanning three hundred lines of carefully structured Verilog code. The transformation reflects the transition from demonstrating basic hardware functionality to implementing genuine neuromorphic control principles.</p>
+                    <p>The <a href="#79387638673967">superneuron module</a> represents the highest level of system control, implementing a finite state machine that governs global network dynamics and learning processes. This module evolved from an initial prototype of sixteen lines that merely incremented a counter into a production implementation spanning three hundred lines of carefully structured Verilog code. The transformation reflects the transition from demonstrating basic hardware functionality to implementing genuine neuromorphic control principles.</p>
                     <div class="prereq-img"><img src="assets/prereq-8.png" alt=""><span class="img-caption"></span></div>
                 </div>
 
@@ -928,12 +928,12 @@
                 <h3 class="prereq-subtitle">Neuronal Computation Pipeline Architecture</h3>
 
                 <div class="prereq-row">
-                    <p>The neuronalpipes module implements the core neuronal computation engine that updates individual neuron states according to the Izhikevich spiking neuron model. This mathematical framework balances biological realism against computational efficiency, capturing essential dynamics of cortical neurons including spike generation, refractory periods, and diverse firing patterns while requiring only basic arithmetic operations implementable in digital logic.</p>
-                    <div class="prereq-img"><img src="assets/prereq-14.png" alt=""><span class="img-caption"></span></div>
+                    <p>The <a href="#4572957293">neuronalpipes module</a> implements the core neuronal computation engine that updates individual neuron states according to the Izhikevich spiking neuron model. This mathematical framework balances biological realism against computational efficiency, capturing essential dynamics of cortical neurons including spike generation, refractory periods, and diverse firing patterns while requiring only basic arithmetic operations implementable in digital logic.</p>
+                    <div class="prereq-img"><span class="img-caption"></span></div>
                 </div>
 
                 <div class="prereq-row">
-                    <p>Each neuron maintains two state variables encoded as sixteen-bit fixed-point numbers. The voltage variable represents membrane potential, rising in response to synaptic inputs and resetting abruptly when spike threshold is crossed. The recovery variable provides adaptation and implements refractory dynamics that prevent immediate re-firing after a spike. The equations governing these variables involve additions, multiplications by constant coefficients, and conditional updates triggered by threshold crossings. These operations map naturally onto hardware arithmetic units within the FPGA fabric.</p>
+                    <p>Each neuron maintains two state variables encoded as sixteen-bit fixed-point numbers. The voltage variable represents membrane potential, rising in response to synaptic inputs and resetting abruptly when spike threshold is crossed. The recovery variable provides adaptation and implements refractory dynamics that prevent immediate re-firing after a spike. This pipeline implements the coupled differential equations defined in Izhikevich’s 'Simple Model of Spiking Neurons" paper. <br>Specifically, we solve for the <a href="#572935739857">membrane potential or "v" and the membrane recovery variable "u".</a> Where the original model assumes continuous-time floating point evaluation, our architecture derives a discrete-time, time-multiplexed solution using 16-bit fixed-point arithmetic, allowing a single physical logic core to solve the dynamics for thousands of virtual neurons sequentially. These operations map naturally onto hardware arithmetic units within the FPGA fabric.</p>
                     <div class="prereq-img"><img src="assets/prereq-15.png" alt=""><span class="img-caption"></span></div>
                 </div>
 
@@ -1424,6 +1424,13 @@ Image Credit: NASA , NASA JPL and JPL Caltech
                 <div class="prereq-row">
                     <p>This work represents a convergence of neuromorphic computing, video compression, commodity FPGA development, and energy-efficient hardware design. By recognizing that biological neuronal computation principles can be efficiently implemented in digital hardware and applied to practical engineering problems, the project demonstrates a path toward democratizing neuromorphic computing. The vision of biological supercomputing on every desk becomes achievable when expensive custom silicon is replaced by inexpensive development boards running carefully architected firmware exploiting the unique advantages of spiking neuronal networks and event-driven computation. The engineering effort to realize this vision proceeds from the foundation established through this architectural specification.</p>
                     <div class="prereq-img"><img src="assets/prereq-1.png" alt=""><span class="img-caption"></span></div>
+                </div>
+
+                <h3 class="prereq-subtitle">References</h3>
+             <img src="https://upload.wikimedia.org/wikipedia/commons/3/30/BibTeX_logo.svg"  width="100px">
+                <div class="prereq-row">
+                       
+                    <p>[1] E. M. Izhikevich, "Simple model of spiking neurons," in IEEE Transactions on Neural Networks, vol. 14, no. 6, pp. 1569-1572, Nov. 2003.</p>
                 </div>
             </div>
         </section>
