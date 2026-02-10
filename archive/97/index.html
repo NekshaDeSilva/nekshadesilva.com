@@ -848,8 +848,59 @@
                 </div>
 
                 <div class="prereq-row">
-                    <p>The core FPGA is the Intel Cyclone IV EP4CE15F23C8N, packaged in a FineLine Ball Grid Array configuration with four hundred eighty-four pins. This chip provides fifteen thousand four hundred eight logic elements operating at a base clock frequency of fifty megahertz. The logic elements serve as the fundamental building blocks for implementing the neuronal computation pipelines, finite state machines, and control logic that orchestrate the entire system. The fifty-megahertz clock serves as the temporal foundation for all synchronous operations, though Phase-Locked Loop circuitry can synthesize additional clock domains as needed for video pixel timing and memory interface optimization.</p>
-                    <div class="prereq-img"><img src="assets/future-4.png" alt=""><span class="img-caption"></span></div>
+                    <p>The system employs a heterogeneous dual-FPGA architecture consisting of a master board based on the EP4CE15F23 device and one or more slave boards utilizing the smaller EP4CE6E22 variant. This asymmetric configuration optimizes resource allocation, with the master handling memory-intensive operations while slaves perform parallel arithmetic computations. The following table presents the complete silicon-level specifications that define the computational boundaries of this architecture:</p>
+                    <div class="prereq-img"><img src="assets/prereq-36.png" alt=""><span class="img-caption"></span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <div style="flex: 1;">
+                        <img src="assets/eq-839582598295825/75982752592752875.png" alt="Hardware Specification Table" style="width: 100%; max-width: 100%; height: auto;">
+                        <div style="margin-top: 1rem; display: flex; gap: 2rem; align-items: center; flex-wrap: wrap;">
+                            <a href="https://datasheets.b-cdn.net/files/EP4CE15F17C8N-Altera-datasheet-8863098.pdf" target="_blank" rel="noopener noreferrer" style="display: flex; align-items: center; gap: 0.5rem; text-decoration: none;">
+                                <img src="https://media.idownloadblog.com/wp-content/uploads/2016/04/52ff0e80b07d28b590bbc4b30befde52.png" alt="PDF" style="width: 32px; height: 32px;">
+                                <span style="font-weight: 500;">Master FPGA 1 or EP4CE1 Datasheet</span>
+                            </a>
+                            <a href="assets/EP4CE6E22C8.PDF" target="_blank" rel="noopener noreferrer" style="display: flex; align-items: center; gap: 0.5rem; text-decoration: none;">
+                                <img src="https://media.idownloadblog.com/wp-content/uploads/2016/04/52ff0e80b07d28b590bbc4b30befde52.png" alt="PDF" style="width: 32px; height: 32px;">
+                                <span style="font-weight: 500;">Slave FPGA 1,2,3,4,5 or EP4CE6 Datasheet</span>
+                            </a>
+                            <a href="http://doc.simiaohub.com/p/ac415/" target="_blank" rel="noopener noreferrer" style="display: flex; align-items: center; gap: 0.5rem; text-decoration: none;">
+                                <img src="https://media.idownloadblog.com/wp-content/uploads/2016/04/52ff0e80b07d28b590bbc4b30befde52.png" alt="PDF" style="width: 32px; height: 32px;">
+                                <span style="font-weight: 500;">Master Board Peripherals Documentation</span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="prereq-img"><img src="assets/prereq-36.png" alt=""><span class="img-caption"></span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p>The design currently utilizes approximately 65% of the available 15,408 Logic Elements on the EP4CE15, consuming roughly 10,000 LEs for the neuronal computation pipeline, superneuron executive control, SDRAM controller, and video output modules. This resource allocation allows for future expansion of the homeostatic control plane and additional pattern recognition layers without exceeding the device's routability limits. The Quartus Prime Fitter reports that critical timing paths achieve slack margins of several nanoseconds, confirming that the 50 MHz base clock frequency provides adequate headroom for the current architecture.</p>
+                    <div class="prereq-img"><img src="assets/prereq-37.png" alt=""><span class="img-caption"></span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p>Memory bandwidth represents the primary bottleneck for million-neuron simulations rather than logic element availability. The Cyclone IV fabric theoretically supports DDR/DDR2 SDRAM interfaces operating up to 200 MHz, though the AC415 board implements standard SDRAM at 100-166 MHz. Each neuronal state update requires a read-modify-write cycle consisting of fetching two 16-bit variables, executing fixed-point arithmetic, and writing updated values back to SDRAM. At 133 MHz SDRAM clock with 16-bit data width, the theoretical peak bandwidth approaches 266 MB/s. However, accounting for refresh cycles, bank activation overhead, and controller inefficiencies, practical sustained bandwidth settles around 180 MB/s, sufficient to support approximately 5 Hz update rates for one million neurons as calculated in subsequent sections.</p>
+                    <div class="prereq-img"><img src="assets/prereq-38.png" alt=""><span class="img-caption"></span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p>The neuronal computation pipeline leverages the embedded 18×18 hardware multipliers rather than implementing multiplication through standard logic element arrays. Each Izhikevich neuron update requires multiple multiplication operations for computing voltage decay terms and recovery variable dynamics. Utilizing the dedicated DSP blocks reduces logic element consumption by approximately 200 LEs per multiplier while simultaneously achieving higher clock speeds and lower power consumption compared to soft-multiplier implementations. With 56 available multipliers on the master board, the architecture instantiates sufficient arithmetic units to time-multiplex across the entire neuronal population without serializing multiplication operations, maintaining the critical 10-cycle-per-neuron update throughput.</p>
+                    <div class="prereq-img"><img src="assets/prereq-39.png" alt=""><span class="img-caption"></span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p>Clock domain management employs the four general-purpose PLLs available on the EP4CE15 to synthesize the diverse frequency requirements of the system. The 50 MHz active crystal oscillator serves as the reference input, with PLL0 generating the 100-133 MHz SDRAM controller clock, PLL1 producing the 25.175 MHz VGA pixel clock for 640×480@60Hz output, PLL2 synthesizing the 148.5 MHz HDMI clock for 1080p video timing, and PLL3 providing the 100 MHz neuronal pipeline clock that balances computational throughput against timing closure requirements. Each clock domain crosses into others through dual-clock FIFOs implemented in M9K block RAM, ensuring data integrity across asynchronous boundaries while minimizing metastability risks.</p>
+                    <div class="prereq-img"><img src="assets/prereq-40.png" alt=""><span class="img-caption"></span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p>Timing closure and signal integrity optimization represent ongoing engineering challenges given the complexity of coordinating 343 user I/O pins across SDRAM, HDMI, VGA, SD card, and inter-FPGA communication interfaces. The Quartus Prime Fitter currently encounters placement constraints when attempting to route all signals while satisfying the timing requirements specified in the Synopsys Design Constraints files. Specific challenges include maintaining setup and hold times for the 32 MB SDRAM interface operating at 133 MHz, ensuring differential pair matching for HDMI TMDS channels within 5 mil trace length tolerance, and managing simultaneous switching noise from the 20 global clock networks. Iterative optimization through floorplanning, pin assignment refinement, and timing constraint relaxation on non-critical paths continues to improve compilation success rates while preserving functional correctness across the neuronal pipeline.</p>
+                    <div class="prereq-img"><img src="assets/prereq-41.png" alt=""><span class="img-caption"></span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p>The core FPGA is the Intel Cyclone IV EP4CE15F23C8N, packaged in a FineLine Ball Grid Array configuration with four hundred 84 pins. This chip provides 15408 logic elements operating at a base clock frequency of fifty megahertz. The logic elements serve as the fundamental building blocks for implementing the neuronal computation pipelines, finite state machines, and control logic that orchestrate the entire system. The fifty-megahertz clock serves as the temporal foundation for all synchronous operations, though Phase-Locked Loop circuitry can synthesize additional clock domains as needed for video pixel timing and memory interface optimization.</p>
+                    <div class="prereq-img"><img src="assets/media-9202940924/37982379572.png" alt=""><span class="img-caption">Figure: Dimensions of the Master Board Alinx AC415 Cyclone IV FPGA SoM</span></div>
                 </div>
 
                 <div class="prereq-row">
@@ -858,7 +909,14 @@
                 </div>
 
                 <div class="prereq-row">
-                    <p>Video output capabilities span both legacy and modern display standards. The VGA interface employs a resistor ladder network implementing RGB565 color encoding to produce sixteen-bit color output through standard fifteen-pin D-sub connectors. The HDMI interface utilizes dedicated transmitter circuitry to handle high-speed differential signaling and protocol compliance. Both interfaces share common frame buffer resources within SDRAM, with video timing generation managed through dedicated Verilog modules that ensure proper horizontal and vertical synchronization pulses.</p>
+                    <div style="flex: 1;">
+                        <img src="assets/eq-839582598295825/857294572953.png" alt="VGA vs HDMI Comparison Table" style="width: 100%; max-width: 100%; height: auto;">
+                    </div>
+                    <div class="prereq-img"><img src="assets/prereq-2.png" alt=""><span class="img-caption"></span></div>
+                </div>
+
+                <div class="prereq-row">
+                    <p>Video output capabilities are available on <SPAN class="term-link">both legacy and modern display standards.</SPAN> The VGA interface employs a resistor ladder network implementing RGB565 color encoding to produce sixteen-bit color output through standard fifteen-pin D-sub connectors, requiring only a custom Verilog state machine that generates horizontal and vertical synchronization pulses with nanosecond timing precision for the 640×480 at 60Hz standard. This bare-metal approach to video generation proves optimal for initial demonstrations because it avoids the clock domain crossing complexity, PLL frequency synthesis overhead, and external transmitter chip configuration protocols inherent in HDMI implementations. The HDMI pathway, when activated in later development phases, will utilize dedicated transmitter circuitry to handle Transition-Minimized Differential Signaling and protocol compliance, requiring I2C bus communication for chip initialization and a Phase-Locked Loop to synthesize the 148.5 MHz pixel clock from the 50 MHz base oscillator. The current implementation prioritizes VGA to maximize logic element availability for the neuronal processing pipeline while maintaining the capability to transition to HDMI once computational resource allocation stabilizes and the additional six hundred logic elements can be allocated to high-speed serialization infrastructure without compromising the core neuromorphic computation throughput. Both interfaces share common frame buffer resources within SDRAM, with video timing generation managed through dedicated Verilog modules that ensure proper horizontal and vertical synchronization pulses regardless of the selected output pathway.</p>
                     <div class="prereq-img"><img src="assets/prereq-2.png" alt=""><span class="img-caption"></span></div>
                 </div>
 
