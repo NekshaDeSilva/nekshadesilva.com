@@ -1268,12 +1268,12 @@ Image Credit: NASA , NASA JPL and JPL Caltech
 
                 <div class="prereq-row">
                     <p>Each Izhikevich neuron requires storage for two sixteen-bit state variables representing voltage and recovery. This totals four bytes per neuron. One million neurons therefore require four megabytes of state storage, well within the thirty-two megabyte capacity of the onboard SDRAM with twenty-eight megabytes remaining for synaptic weights and frame buffers. The memory constraint thus poses no barrier to million-neuron simulations.</p>
-                    <div class="prereq-img"><img src="assets/prereq-3.png" alt=""><span class="img-caption"></span></div>
+                    <div class="prereq-img"><img src="assets/357982598258/7394763984673.jpg" alt=""><span class="img-caption">The memory allocation breakdown for million-neuron simulation. The 32 megabyte SDRAM capacity is divided into segments showing the modest four megabyte requirement for storing all neuron state variables, leaving twenty-eight megabytes available for synaptic weight matrices, video frame buffers, and intermediate computation storage. This visualization demonstrates that memory capacity presents no fundamental barrier to biological-scale neuronal simulation on the AC415 platform.</span></div>
                 </div>
 
                 <div class="prereq-row">
                     <p>The logic constraint similarly proves surmountable through pipelining. A single arithmetic pipeline implementing the Izhikevich update equations can process any number of neurons sequentially by loading state from memory, executing the computation, and writing updated state back. The logic element count required for one such pipeline approximates two thousand elements, leaving over thirteen thousand elements available for control logic, memory interfaces, and caching structures. The number of neurons simulated depends not on replicating the pipeline but on how many times it can iterate through the neural population per unit time.</p>
-                    <div class="prereq-img"><img src="assets/prereq-4.png" alt=""><span class="img-caption"></span></div>
+                    <div class="prereq-img"><img src="assets/eq-839582598295825/897958729857239.png" alt=""><span class="img-caption">The logic element budget breakdown for the EP4CE15 FPGA. The Izhikevich arithmetic pipeline consumes approximately two thousand logic elements for implementing the membrane voltage and recovery variable update equations. The remaining thirteen thousand elements accommodate the SDRAM controller, video output timing generators, state machine control logic, and M9K cache interfaces. This distribution leaves substantial headroom for future expansion of parallel pipelines or additional processing modules without exceeding the device capacity.</span></div>
                 </div>
 
                 <div class="prereq-row">
@@ -1293,7 +1293,7 @@ Image Credit: NASA , NASA JPL and JPL Caltech
 
                 <div class="prereq-row">
                     <p>The mega pipeline architecture addresses these challenges through hierarchical memory organization. The SDRAM controller performs burst reads fetching batches of two hundred fifty-six neurons at once into cache implemented in the FPGA's embedded M9K memory blocks. The cache provides ultra-fast access for the computation core while the SDRAM controller prefetches the next batch in parallel. Eight parallel arithmetic pipelines process neurons from the cache simultaneously, maximizing utilization of the available logic resources. This organization balances memory bandwidth, computation throughput, and storage capacity to achieve million-neuron simulation on budget hardware.</p>
-                    <div class="prereq-img"><img src="assets/prereq-8.png" alt=""><span class="img-caption"></span></div>
+                    <div class="prereq-img"><img src="assets/eq-839582598295825/90729572957.jpg" alt=""><span class="img-caption">The hierarchical mega pipeline architecture enabling million-neuron throughput. The diagram shows the data flow from the 32 megabyte SDRAM through the burst-read controller into the on-chip M9K cache, where batches of 256 neurons are staged for rapid access. Eight parallel arithmetic pipelines draw from this cache simultaneously, each executing Izhikevich update equations on different neurons within the batch. While the pipelines process the current batch, the SDRAM controller prefetches the next 256 neurons in the background, hiding memory latency behind computation time. This overlapped execution pattern maximizes both memory bandwidth utilization and arithmetic throughput.</span></div>
                 </div>
 
                 <h3 class="prereq-subtitle">Business Model and Commercialization Strategy</h3>
@@ -1305,7 +1305,12 @@ Image Credit: NASA , NASA JPL and JPL Caltech
 
                 <div class="prereq-row">
                     <p>The cloud service model constructs a home data center architecture where multiple FPGA boards operate as a processing farm handling video compression jobs submitted by remote users. A web-based interface provides upload functionality where users drag source videos into their browser for processing. The videos enter a queue managed by job scheduling software that dispatches work to available FPGA boards. Processing proceeds offline over hours or days, after which users receive links to access their compressed videos through streaming playback.</p>
-                    <div class="prereq-img"><img src="assets/prereq-10.png" alt=""><span class="img-caption"></span></div>
+                    <div class="prereq-img">
+                        <img src="assets/eq-839582598295825/2795623526856258.png" alt="">
+                        <span class="img-caption">
+                            A key capability of NonPU® Instant™ is its ability to achieve fundamental compression by reducing the number of stored frames while maintaining or even increasing the perceived frame rate (FPS). Unlike traditional codecs that decode a fixed number of frames per second, NonPU employs variable frame rate reconstruction where the playback speed adapts dynamically based on real-time resource allocation and content complexity and load on Neuronal Processing Unit (NonPU). This adaptive approach allows the system to allocate more computational resources to complex scenes while efficiently handling static or repetitive content, resulting in superior compression ratios without sacrificing visual quality.
+                        </span>
+                    </div>
                 </div>
 
                 <div class="prereq-row">
@@ -1315,7 +1320,7 @@ Image Credit: NASA , NASA JPL and JPL Caltech
 
                 <div class="prereq-row">
                     <p>Revenue generation from the cloud service can follow subscription tiers or pay-per-encode pricing. Subscription plans might offer monthly compression quotas with overage charges, while pay-per-encode charges based on source video duration and quality settings. Additional revenue opportunities include storage fees for hosting compressed videos long-term and premium features such as priority processing or enhanced quality modes. The viral video caching capability where frequently accessed content loads into neural weights for instant playback provides a unique value proposition justifying premium pricing tiers.</p>
-                    <div class="prereq-img"><img src="assets/prereq-12.png" alt=""><span class="img-caption"></span></div>
+                    <div class="prereq-img"><img src="assets/eq-839582598295825/894752957625.png" alt=""><img src="assets/eq-839582598295825/78362963862.png" alt=""><span class="img-caption">Third Party News Content. <br>Cite: Forbes Australia and https://www.forbes.com.au</span></div>
                 </div>
 
                 <div class="prereq-row">
