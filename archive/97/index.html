@@ -421,7 +421,7 @@
 
                 <div class="prereq-row">
                     <p>The current industry focuses on <span class="term-link">Artificial Neural Networks<span class="tooltip">Statistical models inspired by biological neural networks, trained using backpropagation and gradient descent</span></span>, Large Language Models, machine learning algorithms, and <span class="term-link">reinforcement learning<span class="tooltip">NonPU does not use this as an algorithmic training procedure. Instead, it uses Spike-Timing-Dependent Plasticity</span></span>. These are statistical abstractions that run on Graphical Processing Units. Whether using an <span class="term-link">NVIDIA H100<span class="tooltip">High-performance GPU with 80GB HBM3 memory, designed for AI training and inference workloads</span></span> or a GTX 5000, whether running different models or frameworks, the underlying physical logic circuit remains identical. The GPU executes the same <span class="term-link">matrix multiplications<span class="tooltip">Mathematical operations multiplying matrices, the fundamental computation in artificial neural networks</span></span> and operates at the same architectural level. Consider a concrete example: when running inference on a 7-billion parameter language model, the GPU must load and multiply through millions of weight parameters whether the input prompt is "What is 2+2?" or a complex multi-paragraph question. The batch size, memory bandwidth, and kernel structure remain fixed. While modern GPUs do vary power consumption with workload through dynamic voltage and frequency scaling, the underlying compute pattern—dense matrix operations over the full model—does not adapt to input complexity. The hardware processes structurally identical operations regardless of semantic difficulty.</p>
-                    <div class="prereq-img"><img src="assets/35353535121/1.gif" alt=""><span class="img-caption">Figure 1. Animated diagram showing the firing dynamics of a Spiking Neuronal Network, compared with a traditional artificial neural network.</span></div>
+                    <div class="prereq-img"><img src="assets/35353535121/1.gif" alt=""><span class="img-caption">Animated diagram showing the firing dynamics of a Spiking Neuronal Network, compared with a traditional artificial neural network.</span></div>
                 </div>
 
                 <div class="prereq-row">
@@ -548,7 +548,7 @@
             <div class="prereq-content">
                 <div class="prereq-row">
                     <p>The implementation runs on an AC415 development board featuring the Intel Altera Cyclone IV EP4CE15 FPGA. This chip provides 15,408 logic elements total, 504 kilobits of embedded memory, and 56 hardware multipliers. The board includes 32 megabytes of external <span class="term-link">SDRAM<span class="tooltip">This external memory stores the 256 neuron states and the 256x256 synaptic weight matrix (64KB) during network operation</span></span> and <span class="term-link">VGA<span class="tooltip">This implementation outputs real-time visualization of the 16x16 network activity through VGA to monitor pattern completion</span></span> output capability for visualization.</p>
-                    <div class="prereq-img"><img src="assets/9834924794/83743i473948.png" alt=""><span class="img-caption">Figure 2: Photo of AC415 development board with Cyclone IV FPGA</span></div>
+                    <div class="prereq-img"><img src="assets/9834924794/83743i473948.png" alt=""><span class="img-caption">Photo of AC415 development board with Cyclone IV FPGA</span></div>
                 </div>
 
                 <div class="prereq-row">
@@ -565,7 +565,7 @@
 
                 <div class="prereq-row">
                     <p><span class="term-link">Time-multiplexing<span class="tooltip">Instead of building 256 parallel neurons, this implementation uses a single pipeline that processes each neuron sequentially from SDRAM, enabling 256 neurons with limited logic elements</span></span> solves this resource limitation by trading silicon area for computation time. Instead of instantiating thousands of physical neurons, a single hardware pipeline processes neuron state stored in external memory. The pipeline reads one neuron's state from SDRAM, computes synaptic input by summing weighted spikes from connected neurons, applies the Izhikevich differential equations to update membrane voltage, checks for threshold crossing, and writes the updated state back to memory. This cycle repeats for every neuron in the network.</p>
-                    <div class="prereq-img"><img src="assets/35353535121/38941294729487291.png" alt=""><img src="assets/35353535121/9749824726934.png" alt=""><span class="img-caption">Figure 3: Block diagram comparing fully parallel vs time-multiplexed architecture</span></div>
+                    <div class="prereq-img"><img src="assets/35353535121/38941294729487291.png" alt=""><img src="assets/35353535121/9749824726934.png" alt=""><span class="img-caption">Block diagram comparing fully parallel vs time-multiplexed architecture</span></div>
                 </div>
 
                 <div class="prereq-row">
@@ -582,7 +582,7 @@
                     <p>Resource allocation across the design breaks down as follows. The time-multiplexed neuronal sheet, which is the core computational fabric, consumes approximately 10,200 logic elements based on the final Quartus compilation report. A global modulator neuron providing homeostatic control uses roughly 980 logic elements. Infrastructure including the VGA controller, SDRAM interface controller, and top-level control logic accounts for 3,400 logic elements. Approximately 800 logic elements remain unused, providing headroom for future enhancements or timing optimization.</p>
                     <div class="prereq-img">
                         <img src="assets/37872489833/7348972492723.png" alt="Quartus Prime Resource Utilization Report">
-                        <span class="img-caption">Figure 4: Resource utilization report from Quartus Prime verifying the board type and core logic usage, confirming a sanity check of the design across multiple circuits.</span>
+                        <span class="img-caption">Resource utilization report from Quartus Prime verifying the board type and core logic usage, confirming a sanity check of the design across multiple circuits.</span>
                     </div>
                 </div>
 
@@ -593,7 +593,7 @@
 
                 <div class="prereq-row">
                     <p>The model equations are solved using fixed-point arithmetic with 16-bit precision for state variables and 12-bit precision for parameters. Euler integration with a timestep of 1 millisecond provides acceptable accuracy for the target application while remaining implementable in hardware. More sophisticated integration methods like Runge-Kutta would improve accuracy but require multiple evaluation steps per update, which would reduce the effective network size given the time-multiplexing constraint.</p>
-                    <div class="prereq-img"><img src="assets/9834924794/9749274874.png" alt=""><span class="img-caption">Figure 5: Oscilloscope trace showing actual spike waveforms on Quartus</span></div>
+                    <div class="prereq-img"><img src="assets/9834924794/9749274874.png" alt=""><span class="img-caption">Oscilloscope trace showing actual spike waveforms on Quartus</span></div>
                 </div>
 
                 <div class="prereq-row">
@@ -619,7 +619,7 @@
 
                 <div class="prereq-row">
                     <p>Synaptic weights determine the strength of connection between neurons. In biological systems, these weights change through learning and experience. For this implementation, weights are calculated offline using a Hebbian learning principle. Neurons corresponding to pixels that frequently appear together in training images develop strong mutual connections. This creates an associative memory where the complete pattern becomes a stable attractor state in the network dynamics.</p>
-                    <div class="prereq-img"><img src="assets/9834924794/78274902374938.png" alt=""><span class="img-caption">Figure 6: Visualization of synaptic weight matrix</span></div>
+                    <div class="prereq-img"><img src="assets/9834924794/78274902374938.png" alt=""><span class="img-caption">Visualization of synaptic weight matrix</span></div>
                 </div>
 
                 <div class="prereq-row">
@@ -643,7 +643,7 @@
                         <br><br>
                         A simple boolean AND gate checks the specific bit in the spike vector corresponding to the current counter index. If the bit is `0`, the pipeline asserts a `nop` (no operation) signal. If the bit is `1`, it triggers a read request to the weight matrix stored in SDRAM at `base_addr + (target_neuron_id * 256) + source_neuron_id`. This event-driven gating is physical, not simulated; the `mac_enable` signal on the DSP block stays low unless a spike is present, preventing dynamic power switching in the adder logic.
                     </p>
-                    <div class="prereq-img"><img src="assets/357982598258/903749284729.png" alt=""><span class="img-caption">Figure 7: Logic analyzer trace of the synaptic pipeline. Channel 0 (spike_valid) indicates a valid presynaptic spike bit. Channel 1 (weight_valid) goes high 6 clock cycles later, reflecting SDRAM CAS latency. Channel 2 (mac_valid) pulses only when both inputs align, confirming that arithmetic operations are physically gated by spike presence.</span></div>
+                    <div class="prereq-img"><img src="assets/357982598258/903749284729.png" alt=""><span class="img-caption">Logic analyzer trace of the synaptic pipeline. Channel 0 (spike_valid) indicates a valid presynaptic spike bit. Channel 1 (weight_valid) goes high 6 clock cycles later, reflecting SDRAM CAS latency. Channel 2 (mac_valid) pulses only when both inputs align, confirming that arithmetic operations are physically gated by spike presence.</span></div>
                 </div>
             </div>
         </section>
@@ -669,7 +669,7 @@
 
                 <div class="prereq-row">
                     <p>Testing shows this mechanism successfully prevents runaway excitation during network operation. Initial tests without the modulator resulted in either quiescent networks with no activity or explosive activity that saturated all neurons within 100 milliseconds. Adding the modulator allows the network to maintain stable dynamics with average activity levels between 40 and 60 spikes per millisecond.</p>
-                    <div class="prereq-img"><img src="assets/9834924794/92749274893.png" alt=""><span class="img-caption"><img src="assets/35353535121/873618916794.png" alt=""><span class="img-caption"><img src="assets/35353535121/894791742.png" alt=""><span class="img-caption"></span>Figure 8: Network activity with homeostatic modulation</span></div>
+                    <div class="prereq-img"><img src="assets/9834924794/92749274893.png" alt=""><span class="img-caption"><img src="assets/35353535121/873618916794.png" alt=""><span class="img-caption"><img src="assets/35353535121/894791742.png" alt=""><span class="img-caption"></span>Network activity with homeostatic modulation</span></div>
                 </div>
             </div>
         </section>
@@ -691,7 +691,7 @@
             <div class="prereq-content">
                 <div class="prereq-row">
                     <p>The demonstration task is designed to test associative memory through pattern completion, <strong>which is a key benchmark that I identified that must be passed in order to map video frames,</strong> which is discussed in Application 1, NonPU® Instant™ Architecture. The network is configured to learn a single 16 by 16 binary image showing a simple geometric pattern, specifically a one-color cross shape. This pattern becomes encoded in the synaptic weight matrix through the Hebbian training process described earlier.</p>
-                    <div class="prereq-img"><img src="assets/9834924794/923472934729.png" alt=""><span class="img-caption">Figure 8: The Sample Image Used</span></div>
+                    <div class="prereq-img"><img src="assets/9834924794/923472934729.png" alt=""><span class="img-caption">The Sample Image Used</span></div>
                 </div>
 
                 <div class="prereq-row">
@@ -699,7 +699,7 @@
                     <div class="prereq-img">
                         <img src="assets/9834924794/8392387198739.png" alt="">
                         <span class="img-caption">
-                            Figure 9: Sample sequence showing a corrupted pattern consisting of 20 pieces, but only 16 distinct pieces, excluding redundant white boxes. Note the two boxes in the middle; currently, they can be identified directly because of their large surface area. We understand that the difference is too error-prone. We are working to further improve and broaden the pattern recognition.
+                            Sample sequence showing a corrupted pattern consisting of 20 pieces, but only 16 distinct pieces, excluding redundant white boxes. Note the two boxes in the middle; currently, they can be identified directly because of their large surface area. We understand that the difference is too error-prone. We are working to further improve and broaden the pattern recognition.
                         </span>
                     </div>
                 </div>
@@ -716,7 +716,7 @@
 
                 <div class="prereq-row">
                     <p>I also intend to sweep the corruption level. At lower corruption levels (for example, 20–30 percent pixels removed), I expect higher success rates and shorter convergence times. As corruption increases beyond 50–60 percent, it becomes more likely that the initial state lies outside the basin of attraction of the learned pattern, and the network may converge to an incorrect attractor or fall into oscillatory dynamics. These “failure cases” are scientifically interesting, because they reveal where the learned energy landscape is too shallow or where additional structure (such as inhibitory interneurons) is required.</p>
-                    <div class="prereq-img"><img src="assets/35353535121/87539057094534.png" alt=""><span class="img-caption">Figure 10: Histogram showing convergence times across 39 successful tests</span></div>
+                    <div class="prereq-img"><img src="assets/35353535121/87539057094534.png" alt=""><span class="img-caption">Histogram showing convergence times across 39 successful tests</span></div>
                 </div>
 
                 <div class="prereq-row">
@@ -1536,7 +1536,7 @@ Image Credit: NASA , NASA JPL and JPL Caltech
                     <p>BrainScaleS, developed at Heidelberg University, uses analog circuits to simulate neuron dynamics up to 10,000 times faster than biological real-time. This accelerated simulation enables rapid exploration of network configurations but requires careful calibration and suffers from parameter variability inherent in analog circuits.</p>
                     <div class="prereq-img">
                         <img src="assets/35353535121/34792384721094.png" alt="">
-                        <span class="img-caption">Figure 14: Comparison table of neuromorphic systems including NonPU, Intel Loihi, Loihi 2, SpiNNaker and IBM TrueNorth</span>
+                        <span class="img-caption">Comparison table of neuromorphic systems including NonPU, Intel Loihi, Loihi 2, SpiNNaker and IBM TrueNorth</span>
                         <div style=" margin-top: 0.5rem;">
                             <a href="assets/89238298381390.pdf" target="_blank" class="term-link" style="font-size: 0.85rem;">Download Table (PDF)</a>
                         </div>
@@ -1584,7 +1584,7 @@ Image Credit: NASA , NASA JPL and JPL Caltech
                     <div class="prereq-img"><img src="assets/357982598258/183471947.png" alt="">
                         <span class="img-caption">Compilation failure on Intel Questa</span>
                         <img src="assets/357982598258/947298347928743.png" alt=""><span class="img-caption">
-                            <img src="assets/357982598258/2468712463.png" alt=""><span class="img-caption">  <img src="assets/37872489833/74398274923748.png" alt=""><span class="img-caption"></span>Figure 15: Fitter stage failures and compilation errors due to timing constraints across clock domain boundaries. These issues are actively being debugged through iterative floorplanning and SDC constraint adjustments.</span></div>
+                            <img src="assets/357982598258/2468712463.png" alt=""><span class="img-caption">  <img src="assets/37872489833/74398274923748.png" alt=""><span class="img-caption"></span>Fitter stage failures and compilation errors due to timing constraints across clock domain boundaries. These issues are actively being debugged through iterative floorplanning and SDC constraint adjustments.</span></div>
                 </div>
             </div>
         </section>
