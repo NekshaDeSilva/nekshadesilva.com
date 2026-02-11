@@ -45,27 +45,30 @@
 
        
         <div class="follow-text">
-            <img src="./dynamic/dynamic.png" style="width: 10rem;" alt="dynamic">
-            <br>
-                        <span class="username-newbie" style="cursor: default;" title="Newbie Nekshavs">Www.Com</span> 
-                        <br>
-            <a href="https://codeforces.com/profile/www.com" class="follow-link" target="_blank" rel="noopener">Codeforces</a> /
-            <a href="https://atcoder.jp/users/Nekshavs" class="follow-link" target="_blank" rel="noopener">AtCoder</a>
-
+            <span class="username-newbie" style="cursor: default;" title="Newbie Nekshavs">Www.Com</span> 
+            <br><br>
+            <div class="platform-links">
+                <a href="https://codeforces.com/profile/www.com" class="platform-link" target="_blank" rel="noopener" title="Codeforces">
+                    <img src="https://cdn.simpleicons.org/codeforces/000000" alt="Codeforces" class="platform-icon">
+                    <span>Codeforces</span>
+                </a>
+                <a href="https://atcoder.jp/users/Nekshavs" class="platform-link" target="_blank" rel="noopener" title="AtCoder">
+                    <i class="bi bi-alphabet-uppercase platform-icon-letter">A</i>
+                    <span>AtCoder</span>
+                </a>
+                <a href="https://www.hackerrank.com/" class="platform-link" target="_blank" rel="noopener" title="HackerRank">
+                    <img src="https://cdn.simpleicons.org/hackerrank/000000" alt="HackerRank" class="platform-icon">
+                    <span>HackerRank</span>
+                </a>
+            </div>
         </div>
 
 <br><br>
-         <h4>Recent Updates</h4>
-        <section class="cs-posts" aria-label="Posts">
-            <article class="post-card">
-                <p>FiaOS.org launched</p>
-                <p>FiaOS.org launched today, marking a benchmark in environmental research. The FiaOS libraries and all dependencies are open-source, so I've decided to make FiaOS an open-source project as it evolves in the future.</p>
-                <p>Future is Autonomous.</p>
-                <p><a href="http://cloud.fiaos.org" target="_blank" rel="noopener noreferrer">http://cloud.fiaos.org</a></p>
-            </article>
-        </section>
+         <h4>Competitive Programming is the definition of programming.</h4>
+      
 
     </div>
+
 
         
 
@@ -84,30 +87,13 @@
         </div>
     </footer>
 
-    <!-- Animation Script -->
+    <!-- Theme Script -->
     <script>
         // Initialize theme
         (function() {
             const savedTheme = localStorage.getItem('theme') || 'dark';
             document.documentElement.setAttribute('data-theme', savedTheme);
         })();
-
-        // Header animation (morphing in place)
-        window.addEventListener('load', function() {
-            const header = document.getElementById('animatedHeader');
-            
-            // Start morphing after 2 seconds
-            setTimeout(function() {
-                header.classList.add('morphed');
-                
-                // Change text during morph
-                setTimeout(function() {
-                    header.textContent = 'Density will be there';
-                    header.classList.remove('morphed');
-                    header.classList.add('final');
-                }, 300);
-            }, 2000);
-        });
     </script>
 
     <!-- Load favicon injector -->

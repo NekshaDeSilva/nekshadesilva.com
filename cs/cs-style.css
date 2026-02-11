@@ -108,6 +108,52 @@ body {
     border-bottom-color: var(--text-primary);
 }
 
+/* Platform Links with Logos */
+.platform-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    margin-top: 0.5rem;
+}
+
+.platform-link {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    text-decoration: none;
+    color: #000;
+    padding: 0.6rem 1rem;
+    background: #fff;
+}
+
+.platform-link:hover {
+    opacity: 0.7;
+}
+
+.platform-icon {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+}
+
+.platform-icon-letter {
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 1.1rem;
+    font-style: normal;
+    color: #000;
+}
+
+.platform-link span {
+    font-weight: 500;
+    font-size: 0.95rem;
+    color: #000;
+}
+
 /* Mobile Responsive */
 @media (max-width: 768px) {
     .animated-header {
@@ -124,5 +170,14 @@ body {
 
     .follow-text {
         font-size: 1em;
+    }
+
+    .platform-links {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .platform-link {
+        justify-content: center;
     }
 }
