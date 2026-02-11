@@ -409,8 +409,6 @@
         <header>
             <span style="font-size: 2rem;">The "Neuronal" Processing Unit - N<span style="color: #0031A7;">on</span>PU</span>
             <h1><span style="color: #0031A7;">Spiking Neuronal Networks, Not Artificial Neural Networks.</span></h1>
-            
-            <p class="subtitle">This document contains proprietary, unpublished, non-patented intellectual property. Do not copy, reproduce.</p>
         </header>
 
         <section class="prereq-section">
@@ -588,7 +586,7 @@
 
                 <div class="prereq-row">
                     <p>The implementation uses the Izhikevich neuron model, which balances biological realism with computational efficiency.We adopt the phenomenology proposed by Izhikevich (2003), which mathematically bridges the gap between the biological accuracy of Hodgkin-Huxley and the computational speed of Integrate-and-Fire. However, while the original research validated this efficiency for software simulation, this project extends the application by porting the differential equations of Equation 1 and Equation 2, directly into a fixed-point hardware pipeline, demonstrating that these dynamics can scale to million-neuron architectures without floating-point overhead.</p>
-                    <div id="572935739857" class="prereq-img"><img src="assets/eq-839582598295825/9028709257290375298057.png" alt=""><span class="img-caption">Equation number. 1</span><br><img src="assets/eq-839582598295825/95827598248569347948373.png" alt=""><span class="img-caption">Equation number 2<br><br>Cite: https://www.izhikevich.org/publications/spikes.pdf</span></div>
+                    <div id="572935739857" class="prereq-img"><img src="assets/eq-839582598295825/9028709257290375298057.png" alt=""><span class="img-caption">The first Izhikevich differential equation describing how the membrane voltage changes over time based on current input and the recovery variable.</span><br><img src="assets/eq-839582598295825/95827598248569347948373.png" alt=""><span class="img-caption">The second Izhikevich equation governing the recovery variable dynamics, which models the slow potassium currents that cause spike-frequency adaptation in biological neurons. Reference: Izhikevich, E.M. (2003) Simple Model of Spiking Neurons.</span></div>
                 </div>
 
                 <div class="prereq-row">
@@ -690,7 +688,7 @@
             
             <div class="prereq-content">
                 <div class="prereq-row">
-                    <p>The demonstration task is designed to test associative memory through pattern completion, <strong>which is a key benchmark that I identified that must be passed in order to map video frames,</strong> which is discussed in Application 1, NonPU® Instant™ Architecture. The network is configured to learn a single 16 by 16 binary image showing a simple geometric pattern, specifically a one-color cross shape. This pattern becomes encoded in the synaptic weight matrix through the Hebbian training process described earlier.</p>
+                    <p>The demonstration task is designed to test associative memory through pattern completion, <strong>which is a key benchmark that I identified that must be passed in order to map video frames,</strong> which is discussed in Application 1, NonPU Instant Architecture. The network is configured to learn a single 16 by 16 binary image showing a simple geometric pattern, specifically a one-color cross shape. This pattern becomes encoded in the synaptic weight matrix through the Hebbian training process described earlier.</p>
                     <div class="prereq-img"><img src="assets/9834924794/923472934729.png" alt=""><span class="img-caption">The Sample Image Used</span></div>
                 </div>
 
@@ -828,7 +826,7 @@
         
        
         <section class="prereq-section">
-            <h2 class="prereq-title">First Application - NonPU Instant™<br>A Novel Neuromorphic Video Processor and Codec System Powered by NonPU®</h2>
+            <h2 class="prereq-title">First Application - NonPU Instant<br>A Novel Neuromorphic Video Processor and Codec System Powered by NonPU</h2>
             
             <div class="prereq-content">
     
@@ -1308,7 +1306,7 @@ Image Credit: NASA , NASA JPL and JPL Caltech
                     <div class="prereq-img">
                         <img src="assets/eq-839582598295825/2795623526856258.png" alt="">
                         <span class="img-caption">
-                            A key capability of NonPU® Instant™ is its ability to achieve fundamental compression by reducing the number of stored frames while maintaining or even increasing the perceived frame rate (FPS). Unlike traditional codecs that decode a fixed number of frames per second, NonPU employs variable frame rate reconstruction where the playback speed adapts dynamically based on real-time resource allocation and content complexity and load on Neuronal Processing Unit (NonPU). This adaptive approach allows the system to allocate more computational resources to complex scenes while efficiently handling static or repetitive content, resulting in superior compression ratios without sacrificing visual quality.
+                            A key capability of NonPU Instant is its ability to achieve fundamental compression by reducing the number of stored frames while maintaining or even increasing the perceived frame rate (FPS). Unlike traditional codecs that decode a fixed number of frames per second, NonPU employs variable frame rate reconstruction where the playback speed adapts dynamically based on real-time resource allocation and content complexity and load on Neuronal Processing Unit (NonPU). This adaptive approach allows the system to allocate more computational resources to complex scenes while efficiently handling static or repetitive content, resulting in superior compression ratios without sacrificing visual quality.
                         </span>
                     </div>
                 </div>
