@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign In — NonPU Instant</title>
+    <meta name="description" content="Sign in to access NonPU Instant software - GVMA Incorporated">
+    <meta name="robots" content="noindex">
+    
+    <!-- Theme-aware Favicon -->
+    <link rel="icon" id="favicon" type="image/png" href="assets/NonPU_icon.png">
+    <script>
+        // Theme-aware favicon - runs immediately
+        (function() {
+            const setFavicon = () => {
+                const favicon = document.getElementById('favicon');
+                if (favicon) {
+                    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                        favicon.href = 'assets/NonPU_taskbar_and_desktop_dark_mode_icon.png';
+                    } else {
+                        favicon.href = 'assets/NonPU_icon.png';
+                    }
+                }
+            };
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', setFavicon);
+            } else {
+                setFavicon();
+            }
+            window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', setFavicon);
+        })();
+    </script>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+    
+    <!-- Supabase Client -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="css/account.css">
+</head>
+<body>
+    <!-- Loading Bar -->
+    <div class="loading-bar" id="loadingBar"></div>
+
+    <div class="auth-container">
+        <!-- Pending License Notice -->
+        <div class="pending-license-notice" id="pendingLicenseNotice" style="display: none;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+            </svg>
+            <span>License key detected: <strong id="pendingKeyDisplay">NP-XXXX-XXXX-XXXX-XXXX</strong></span>
+        </div>
+
+        <div class="auth-card animate-fadeIn">
+            <!-- Header with NonPU Instant Text Logo -->
+            <div class="auth-header">
+                <img src="assets/NonPU_Instant.png" alt="NonPU Instant" class="auth-logo" id="headerLogo">
+                <h1 class="auth-title">Sign in</h1>
+                <p class="auth-subtitle">Access your NonPU Instant account</p>
+            </div>
+
+            <!-- Error Message -->
+            <div class="error-message" id="errorMessage" style="display: none;">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+                </svg>
+                <span id="errorText">Error message here</span>
+            </div>
+
+            <!-- Step 1: Email Form -->
+            <form id="emailForm" class="auth-form">
+                <div class="form-group">
+                    <div class="input-container">
+                        <input type="email" id="email" name="email" required autocomplete="email" placeholder=" ">
+                        <label for="email">Email address</label>
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <a href="signup/" class="text-btn">Create account</a>
+                    <button type="submit" class="primary-btn">Continue</button>
+                </div>
+            </form>
+
+            <!-- Step 2: Password Form (hidden initially) -->
+            <form id="passwordForm" class="auth-form" style="display: none;">
+                <div class="user-chip" id="userChip">
+                    <div class="user-chip-avatar" id="userChipAvatar">U</div>
+                    <span id="userChipEmail">user@example.com</span>
+                    <button type="button" class="user-chip-change" id="changeEmail" title="Change email">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M7 10l5 5 5-5z"/>
+                        </svg>
+                    </button>
+                </div>
+
+                <div class="form-group">
+                    <div class="input-container">
+                        <input type="password" id="password" name="password" required autocomplete="current-password" placeholder=" ">
+                        <label for="password">Password</label>
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <a href="#" class="text-btn">Forgot password?</a>
+                    <button type="submit" class="primary-btn">Sign in</button>
+                </div>
+            </form>
+
+            <!-- Footer -->
+            <div class="auth-footer">
+                <div class="footer-links">
+                    <a href="/legal/license.html">License</a>
+                    <a href="/legal/license.html">Terms</a>
+                    <a href="/legal/license.html">Privacy</a>
+                </div>
+                <div class="footer-brand">
+                    <img src="assets/brand_logo.png" alt="GVMA" class="footer-logo" id="footerLogo">
+                    <span>GVMA Incorporated</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/auth.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize Supabase
+            NonPUAuth.initSupabase();
+            
+            // Handle license key from URL
+            const pendingKey = NonPUAuth.handleLicenseKeyFromURL();
+            
+            // Show pending license notice if exists
+            if (pendingKey) {
+                document.getElementById('pendingLicenseNotice').style.display = 'flex';
+                document.getElementById('pendingKeyDisplay').textContent = pendingKey;
+            }
+            
+            // Check if already logged in
+            NonPUAuth.getSession().then(session => {
+                if (session) {
+                    window.location.href = 'dashboard/';
+                }
+            });
+            
+            // UI Elements
+            const loadingBar = document.getElementById('loadingBar');
+            const errorMessage = document.getElementById('errorMessage');
+            const errorText = document.getElementById('errorText');
+            const emailForm = document.getElementById('emailForm');
+            const passwordForm = document.getElementById('passwordForm');
+            const userChipEmail = document.getElementById('userChipEmail');
+            const userChipAvatar = document.getElementById('userChipAvatar');
+            const changeEmailBtn = document.getElementById('changeEmail');
+            
+            let currentEmail = '';
+            
+            function showLoading() {
+                loadingBar.classList.add('active');
+            }
+            
+            function hideLoading() {
+                loadingBar.classList.remove('active');
+            }
+            
+            function showError(message) {
+                errorText.textContent = message;
+                errorMessage.style.display = 'flex';
+            }
+            
+            function hideError() {
+                errorMessage.style.display = 'none';
+            }
+            
+            // Step 1: Email submission
+            emailForm.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                hideError();
+                showLoading();
+                
+                currentEmail = document.getElementById('email').value;
+                
+                // Brief delay for loading animation
+                await new Promise(resolve => setTimeout(resolve, 400));
+                
+                hideLoading();
+                
+                // Show password form
+                userChipEmail.textContent = currentEmail;
+                userChipAvatar.textContent = currentEmail.charAt(0).toUpperCase();
+                emailForm.style.display = 'none';
+                passwordForm.style.display = 'block';
+                passwordForm.classList.add('animate-slideUp');
+                document.getElementById('password').focus();
+            });
+            
+            // Change email button
+            changeEmailBtn.addEventListener('click', function() {
+                passwordForm.style.display = 'none';
+                emailForm.style.display = 'block';
+                document.getElementById('email').focus();
+            });
+            
+            // Step 2: Password submission
+            passwordForm.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                hideError();
+                showLoading();
+                
+                const password = document.getElementById('password').value;
+                
+                try {
+                    const { data, error } = await NonPUAuth.signIn(currentEmail, password);
+                    
+                    hideLoading();
+                    
+                    if (error) {
+                        showError(error.message || 'Invalid email or password');
+                        return;
+                    }
+                    
+                    // Check for redirect URL
+                    const urlParams = new URLSearchParams(window.location.search);
+                    const redirect = urlParams.get('redirect');
+                    
+                    if (redirect) {
+                        window.location.href = redirect;
+                    } else {
+                        window.location.href = 'dashboard/';
+                    }
+                    
+                } catch (err) {
+                    hideLoading();
+                    showError(err.message || 'An error occurred. Please try again.');

@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create your NonPU Account</title>
+    <meta name="description" content="Create your NonPU Account - GVMA Incorporated">
+    <meta name="robots" content="noindex">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="../assets/NonPU_icon.png">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;600&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    
+    <!-- Supabase Client -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="css/account.css">
+</head>
+<body>
+    <!-- Loading Bar -->
+    <div class="loading-bar" id="loadingBar">
+        <div class="loading-bar-inner"></div>
+    </div>
+
+    <div class="account-container">
+        <!-- Logo Section -->
+        <div class="logo-section">
+            <img src="../assets/NonPU_icon.png" alt="NonPU" class="logo-icon">
+        </div>
+
+        <!-- Card Container -->
+        <div class="account-card" style="max-width: 520px;">
+            <!-- Step Progress -->
+            <div class="step-progress" id="stepProgress">
+                <div class="step-dot active" data-step="1"></div>
+                <div class="step-dot" data-step="2"></div>
+                <div class="step-dot" data-step="3"></div>
+                <div class="step-dot" data-step="4"></div>
+                <div class="step-dot" data-step="5"></div>
+            </div>
+
+            <!-- Step 1: Entity Type Selection -->
+            <div class="form-step" id="step1">
+                <div class="card-header">
+                    <h1>Create your NonPU Account</h1>
+                    <p>How will you be using NonPU?</p>
+                </div>
+
+                <div class="entity-type-grid">
+                    <label class="entity-type-card" data-type="personal-individual">
+                        <input type="radio" name="entityType" value="personal-individual">
+                        <svg class="entity-type-icon" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16">
+                            <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+                        </svg>
+                        <span class="entity-type-name">Personal Use</span>
+                        <span class="entity-type-desc">For individual developers</span>
+                    </label>
+
+                    <label class="entity-type-card" data-type="personal-team">
+                        <input type="radio" name="entityType" value="personal-team">
+                        <svg class="entity-type-icon" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16">
+                            <path d="M15 14s1 0 1-1-1-4-5-4-5 3-5 4 1 1 1 1h8zm-7.978-1A.261.261 0 0 1 7 12.996c.001-.264.167-1.03.76-1.72C8.312 10.629 9.282 10 11 10c1.717 0 2.687.63 3.24 1.276.593.69.758 1.457.76 1.72l-.008.002a.274.274 0 0 1-.014.002H7.022zM11 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm3-2a3 3 0 1 1-6 0 3 3 0 0 1 6 0zM6.936 9.28a5.88 5.88 0 0 0-1.23-.247A7.35 7.35 0 0 0 5 9c-4 0-5 3-5 4 0 .667.333 1 1 1h4.216A2.238 2.238 0 0 1 5 13c0-1.01.377-2.042 1.09-2.904.243-.294.526-.569.846-.816zM4.92 10A5.493 5.493 0 0 0 4 13H1c0-.26.164-1.03.76-1.724.545-.636 1.492-1.256 3.16-1.275zM1.5 5.5a3 3 0 1 1 6 0 3 3 0 0 1-6 0zm3-2a2 2 0 1 0 0 4 2 2 0 0 0 0-4z"/>
+                        </svg>
+                        <span class="entity-type-name">Team Use</span>
+                        <span class="entity-type-desc">For small teams & families</span>
+                    </label>
+
+                    <label class="entity-type-card" data-type="corporate">
+                        <input type="radio" name="entityType" value="corporate">
+                        <svg class="entity-type-icon" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16">
+                            <path d="M4 2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm3.5-.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1zM4 5.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm3.5-.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1zM4 8.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm3.5-.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1zM4 11.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm3.5-.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1z"/>
+                            <path d="M2 1a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V1zm11 0H3v14h3v-2.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 .5.5V15h3V1z"/>
+                        </svg>
+                        <span class="entity-type-name">Corporate</span>
+                        <span class="entity-type-desc">For companies & enterprises</span>
+                    </label>
+
+                    <label class="entity-type-card" data-type="non-profit">
+                        <input type="radio" name="entityType" value="non-profit">
+                        <svg class="entity-type-icon" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16">
+                            <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/>
+                        </svg>
+                        <span class="entity-type-name">Nonprofit / Institution</span>
+                        <span class="entity-type-desc">For NGOs, schools & universities</span>
+                    </label>
+                </div>
+
+                <div class="form-actions">
+                    <a href="index.html" class="btn-text">Sign in instead</a>
+                    <button type="button" class="btn-primary" id="step1Next" disabled>Next</button>
+                </div>
+            </div>
+
+            <!-- Step 2: Nonprofit Subtype (Conditional) -->
+            <div class="form-step" id="step2nonprofit" style="display: none;">
+                <div class="card-header">
+                    <h1>What type of organization?</h1>
+                    <p>Help us understand your organization better</p>
+                </div>
+
+                <div class="entity-type-grid">
+                    <label class="entity-type-card" data-subtype="educational-university">
+                        <input type="radio" name="nonprofitType" value="educational-university">
+                        <svg class="entity-type-icon" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16">
+                            <path d="M8.211 2.047a.5.5 0 0 0-.422 0l-7.5 3.5a.5.5 0 0 0 .025.917l7.5 3a.5.5 0 0 0 .372 0L14 7.14V13a1 1 0 0 0-1 1v2h3v-2a1 1 0 0 0-1-1V6.739l.686-.275a.5.5 0 0 0 .025-.917l-7.5-3.5Z"/>
+                            <path d="M4.176 9.032a.5.5 0 0 0-.656.327l-.5 1.7a.5.5 0 0 0 .294.605l4.5 1.8a.5.5 0 0 0 .372 0l4.5-1.8a.5.5 0 0 0 .294-.605l-.5-1.7a.5.5 0 0 0-.656-.327L8 10.466 4.176 9.032Z"/>
+                        </svg>
+                        <span class="entity-type-name">University / College</span>
+                        <span class="entity-type-desc">Higher education institution</span>
+                    </label>
+
+                    <label class="entity-type-card" data-subtype="educational-school">
+                        <input type="radio" name="nonprofitType" value="educational-school">
+                        <svg class="entity-type-icon" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16">
+                            <path d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L2 8.207V13.5A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5V8.207l.646.647a.5.5 0 0 0 .708-.708L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.707 1.5ZM13 7.207V13.5a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5V7.207l5-5 5 5Z"/>
+                        </svg>
+                        <span class="entity-type-name">School</span>
+                        <span class="entity-type-desc">K-12, high school, etc.</span>
+                    </label>
+
+                    <label class="entity-type-card" data-subtype="nonprofit-organization">
+                        <input type="radio" name="nonprofitType" value="nonprofit-organization">
+                        <svg class="entity-type-icon" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16">
+                            <path d="M8 1a5 5 0 0 0-5 5v1h1a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V6a6 6 0 1 1 12 0v6a2.5 2.5 0 0 1-2.5 2.5H9.366a1 1 0 0 1-.866.5h-1a1 1 0 1 1 0-2h1a1 1 0 0 1 .866.5H11.5A1.5 1.5 0 0 0 13 12h-1a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1h1V6a5 5 0 0 0-5-5z"/>
+                        </svg>
+                        <span class="entity-type-name">Nonprofit Organization</span>
+                        <span class="entity-type-desc">NGO, charity, foundation</span>
+                    </label>
+
+                    <label class="entity-type-card" data-subtype="research-institution">
+                        <input type="radio" name="nonprofitType" value="research-institution">
+                        <svg class="entity-type-icon" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16">
+                            <path d="M8 4a.5.5 0 0 1 .5.5V6a.5.5 0 0 1-1 0V4.5A.5.5 0 0 1 8 4zM3.732 5.732a.5.5 0 0 1 .707 0l.915.914a.5.5 0 1 1-.708.708l-.914-.915a.5.5 0 0 1 0-.707zM2 10a.5.5 0 0 1 .5-.5h1.586a.5.5 0 0 1 0 1H2.5A.5.5 0 0 1 2 10zm9.5 0a.5.5 0 0 1 .5-.5h1.5a.5.5 0 0 1 0 1H12a.5.5 0 0 1-.5-.5zm.754-4.246a.389.389 0 0 0-.527-.02L7.547 9.31a.91.91 0 1 0 1.302 1.258l3.434-4.297a.389.389 0 0 0-.029-.518z"/>
+                            <path fill-rule="evenodd" d="M0 10a8 8 0 1 1 15.547 2.661c-.442 1.253-1.845 1.602-2.932 1.25C11.309 13.488 9.475 13 8 13c-1.474 0-3.31.488-4.615.911-1.087.352-2.49.003-2.932-1.25A7.988 7.988 0 0 1 0 10zm8-7a7 7 0 0 0-6.603 9.329c.203.575.923.876 1.68.63C4.397 12.533 6.358 12 8 12s3.604.532 4.923.96c.757.245 1.477-.056 1.68-.631A7 7 0 0 0 8 3z"/>
+                        </svg>
+                        <span class="entity-type-name">Research Institution</span>
+                        <span class="entity-type-desc">Research lab, institute</span>
+                    </label>
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" class="btn-text" id="step2nonprofitBack">Back</button>
+                    <button type="button" class="btn-primary" id="step2nonprofitNext" disabled>Next</button>
+                </div>
+            </div>
+
+            <!-- Step 2/3: Basic Information -->
+            <div class="form-step" id="step2basic" style="display: none;">
+                <div class="card-header">
+                    <h1>Basic information</h1>
+                    <p id="basicInfoSubtitle">Enter your details</p>
+                </div>
+
+                <form id="basicInfoForm" class="account-form">
+                    <!-- Personal/Team Fields -->
+                    <div id="personalFields">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <div class="input-wrapper">
+                                    <input type="text" id="firstName" name="firstName" required placeholder=" ">
+                                    <label for="firstName">First name</label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="input-wrapper">
+                                    <input type="text" id="lastName" name="lastName" required placeholder=" ">
+                                    <label for="lastName">Last name</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Corporate/Nonprofit Fields -->
+                    <div id="corporateFields" style="display: none;">
+                        <div class="form-group">
+                            <div class="input-wrapper">
+                                <input type="text" id="entityName" name="entityName" required placeholder=" ">
+                                <label for="entityName">Organization name</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="input-wrapper">
+                                <input type="text" id="legalEntityName" name="legalEntityName" required placeholder=" ">
+                                <label for="legalEntityName">Legal entity name</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Common Fields -->
+                    <div class="form-group">
+                        <div class="input-wrapper">
+                            <input type="email" id="signupEmail" name="email" required placeholder=" ">
+                            <label for="signupEmail">Email address</label>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <div class="input-wrapper">
+                                <input type="password" id="signupPassword" name="password" required placeholder=" " minlength="8">
+                                <label for="signupPassword">Password</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="input-wrapper">
+                                <input type="password" id="confirmPassword" name="confirmPassword" required placeholder=" ">
+                                <label for="confirmPassword">Confirm</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <p class="form-info">Use 8 or more characters with a mix of letters, numbers & symbols</p>
+
+                    <div class="form-actions">
+                        <button type="button" class="btn-text" id="step2basicBack">Back</button>
+                        <button type="submit" class="btn-primary">Next</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Step 3/4: Location & Contact -->
+            <div class="form-step" id="step3location" style="display: none;">
+                <div class="card-header">
+                    <h1>Location & Contact</h1>
+                    <p>Where are you located?</p>
+                </div>
+
+                <form id="locationForm" class="account-form">
+                    <div class="form-group">
+                        <div class="input-wrapper select-wrapper">
+                            <select id="country" name="country" required>
+                                <option value="">Select country</option>
+                                <option value="United States">United States</option>
+                                <option value="United Kingdom">United Kingdom</option>
+                                <option value="Canada">Canada</option>
+                                <option value="Australia">Australia</option>
+                                <option value="Germany">Germany</option>
+                                <option value="France">France</option>
+                                <option value="Japan">Japan</option>
+                                <option value="India">India</option>
+                                <option value="Switzerland">Switzerland</option>
+                                <option value="Sri Lanka">Sri Lanka</option>
+                                <option value="Singapore">Singapore</option>
+                                <option value="Ireland">Ireland</option>
+                                <option value="Netherlands">Netherlands</option>
+                                <option value="Other">Other</option>
+                            </select>
+                            <label for="country">Country</label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="input-wrapper">
+                            <input type="text" id="city" name="city" required placeholder=" ">
+                            <label for="city">City / Region</label>
+                        </div>
+                    </div>
+
+                    <!-- Corporate Additional Fields -->
+                    <div id="corporateContactFields" style="display: none;">
+                        <div class="form-group">
+                            <div class="input-wrapper">
+                                <input type="text" id="registrationNumber" name="registrationNumber" placeholder=" ">
+                                <label for="registrationNumber" id="regNumberLabel">Company registration number</label>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="input-wrapper">
+                                <input type="url" id="website" name="website" placeholder=" ">
+                                <label for="website">Website (optional)</label>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="input-wrapper">
+                                <input type="tel" id="phoneNumber" name="phoneNumber" placeholder=" ">
+                                <label for="phoneNumber">Phone number</label>
+                            </div>
+                        </div>
+
+                        <div class="form-group" id="employeeCountGroup" style="display: none;">
+                            <div class="input-wrapper select-wrapper">
+                                <select id="employeeCount" name="employeeCount">
+                                    <option value="">Select range</option>
+                                    <option value="1-10">1-10 employees</option>
+                                    <option value="11-50">11-50 employees</option>
+                                    <option value="51-200">51-200 employees</option>
+                                    <option value="201-500">201-500 employees</option>
+                                    <option value="501-1000">501-1000 employees</option>
+                                    <option value="1000+">1000+ employees</option>
+                                </select>
+                                <label for="employeeCount">Number of employees</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="button" class="btn-text" id="step3Back">Back</button>
+                        <button type="submit" class="btn-primary">Next</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Step 4/5: Responsible Authority (Corporate/Nonprofit) -->
+            <div class="form-step" id="step4authority" style="display: none;">
+                <div class="card-header">
+                    <h1>Responsible Authority</h1>
+                    <p>Who is authorized to manage this account?</p>
+                </div>
+
+                <form id="authorityForm" class="account-form">
+                    <div class="form-group">
+                        <div class="input-wrapper">
+                            <input type="text" id="authorityName" name="authorityName" required placeholder=" ">
+                            <label for="authorityName">Full name</label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="input-wrapper">
+                            <input type="text" id="authorityRole" name="authorityRole" required placeholder=" ">
+                            <label for="authorityRole">Job title / Role</label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="input-wrapper">
+                            <input type="email" id="authorityEmail" name="authorityEmail" required placeholder=" ">
+                            <label for="authorityEmail">Work email</label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="input-wrapper">
+                            <input type="tel" id="authorityPhone" name="authorityPhone" placeholder=" ">
+                            <label for="authorityPhone">Phone number (optional)</label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="input-wrapper">
+                            <input type="text" id="teamName" name="teamName" placeholder=" ">
+                            <label for="teamName">Team / Department name (optional)</label>
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="button" class="btn-text" id="step4Back">Back</button>
+                        <button type="submit" class="btn-primary">Next</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Step 5/6: Agreement & Terms -->
+            <div class="form-step" id="step5agreement" style="display: none;">
+                <div class="card-header">
+                    <h1>Terms & Agreement</h1>
+                    <p>Please review and accept our terms</p>
+                </div>
+
+                <div class="agreement-section">
+                    <div class="agreement-title">NonPU License Agreement</div>
+                    <div class="agreement-content">
+                        <p><strong>NONPU SOFTWARE LICENSE AGREEMENT</strong></p>
+                        <p>Last updated: February 2026</p>
+                        <br>
+                        <p>This License Agreement ("Agreement") is entered into between GVMA Incorporated, a Public Benefit Corporation ("Licensor"), and the entity or individual accepting these terms ("Licensee").</p>
+                        <br>
+                        <p><strong>1. GRANT OF LICENSE</strong></p>
+                        <p>Subject to the terms of this Agreement, Licensor grants Licensee a non-exclusive, non-transferable license to use the NonPU software and associated neuromorphic computing architecture.</p>
+                        <br>
+                        <p><strong>2. RESTRICTIONS</strong></p>
+                        <p>Licensee shall not: (a) reverse engineer, decompile, or disassemble the Software; (b) modify, adapt, or create derivative works; (c) rent, lease, or lend the Software to third parties; (d) use the Software for any unlawful purpose.</p>
+                        <br>
+                        <p><strong>3. INTELLECTUAL PROPERTY</strong></p>
+                        <p>The Software and all copies thereof are proprietary to Licensor and title thereto remains exclusively with Licensor. All applicable rights to patents, copyrights, trademarks, and trade secrets in the Software are and will remain in Licensor.</p>
+                        <br>
+                        <p><strong>4. DATA PROTECTION</strong></p>
+                        <p>Licensee agrees that any data processed through the NonPU architecture shall comply with applicable data protection regulations including GDPR, CCPA, and other relevant privacy laws.</p>
+                        <br>
+                        <p><strong>5. LIMITATION OF LIABILITY</strong></p>
+                        <p>IN NO EVENT SHALL LICENSOR BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES ARISING OUT OF OR IN CONNECTION WITH THIS AGREEMENT.</p>
+                        <br>
+                        <p><strong>6. TERMINATION</strong></p>
+                        <p>This Agreement is effective until terminated. Licensor may terminate this Agreement immediately upon written notice if Licensee breaches any provision of this Agreement.</p>
+                        <br>
+                        <p><strong>7. GOVERNING LAW</strong></p>
+                        <p>This Agreement shall be governed by the laws of the State of Delaware, United States, without regard to its conflict of laws principles.</p>
+                        <br>
+                        <p>By creating an account, you acknowledge that you have read, understood, and agree to be bound by this Agreement.</p>
+                    </div>
+                </div>
+
+                <div class="form-group" style="margin-top: 24px;">
+                    <label class="checkbox-wrapper">
+                        <input type="checkbox" id="agreeTerms" required>
+                        <span class="checkbox-label">I agree to the NonPU License Agreement and <a href="#">Privacy Policy</a></span>
+                    </label>
+                </div>
+
+                <div class="form-group">
+                    <label class="checkbox-wrapper">
+                        <input type="checkbox" id="agreeUpdates">
+                        <span class="checkbox-label">Send me product updates and announcements (optional)</span>
+                    </label>
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" class="btn-text" id="step5Back">Back</button>
+                    <button type="button" class="btn-primary" id="createAccountBtn" disabled>Create Account</button>
+                </div>
+            </div>
+
+            <!-- Error Message -->
+            <div class="error-message" id="errorMessage" style="display: none;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
+                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                    <path d="M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0zM7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 4.995z"/>
+                </svg>
+                <span id="errorText"></span>
+            </div>
+        </div>
+
+        <!-- Pending License Notice -->
+        <div class="pending-license-notice" id="pendingLicenseNotice" style="display: none;">
+            <div class="notice-icon">
+                <img src="../assets/nonpu_model_sd_card_b ig.png" alt="SD Card" width="32">
+            </div>
+            <div class="notice-content">
+                <p><strong>License Key Detected</strong></p>
+                <p class="notice-key" id="pendingKeyDisplay"></p>
+                <p class="notice-info">This license will be linked to your new account.</p>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="account-footer">
+            <div class="footer-left">
+                <select class="language-select">
+                    <option value="en">English (United States)</option>
+                </select>
+            </div>
+            <div class="footer-right">
+                <a href="#">Help</a>
+                <a href="#">Privacy</a>
+                <a href="#">Terms</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/auth.js"></script>
+    <script src="js/signup.js"></script>
+</body>
+</html>

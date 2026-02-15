@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard — NonPU Instant</title>
+    <link rel="icon" id="favicon" href="../assets/NonPU_icon.png" type="image/png">
+    <link rel="stylesheet" href="../css/account.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <script>
+        // Theme-aware favicon
+        (function() {
+            const setFavicon = () => {
+                const favicon = document.getElementById('favicon');
+                if (favicon) {
+                    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                        favicon.href = '../assets/NonPU_taskbar_and_desktop_dark_mode_icon.png';
+                    } else {
+                        favicon.href = '../assets/NonPU_icon.png';
+                    }
+                }
+            };
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', setFavicon);
+            } else {
+                setFavicon();
+            }
+            window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', setFavicon);
+        })();
+    </script>
+    <style>
+        /* Dashboard-specific styles */
+        .dashboard-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 24px;
+        }
+        
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 32px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .dashboard-header h1 {
+            font-size: 24px;
+            font-weight: 400;
+            color: var(--text-primary);
+        }
+        
+        .header-brand {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        
+        .header-brand img {
+            height: 28px;
+        }
+        
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--primary-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 18px;
+            font-weight: 500;
+        }
+        
+        .user-info {
+            text-align: right;
+        }
+        
+        .user-name {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+        
+        .user-email {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+        
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 1fr 320px;
+            gap: 24px;
+        }
+        
+        @media (max-width: 900px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .card {
+            background: white;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            padding: 24px;
+            margin-bottom: 24px;
+        }
+        
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .card-title {
+            font-size: 18px;
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+        
+        .card-subtitle {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+        
+        /* License Cards */
+        .license-card {
+            background: var(--background);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 12px;
+        }
+        
+        .license-card:last-child {
+            margin-bottom: 0;
+        }
+        
+        .license-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 12px;
+        }
+        
+        .license-key-display {
+            font-family: 'Roboto Mono', monospace;
+            font-size: 14px;
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+        
+        .license-status {
+            font-size: 12px;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-weight: 500;
+        }
+        
+        .license-status.active {
+            background: #e6f4ea;
+            color: #1e8e3e;
+        }
+        
+        .license-status.pending {
+            background: #fef7e0;
+            color: #f9ab00;
+        }
+        
+        .license-status.expired {
+            background: #fce8e6;
+            color: #d93025;
+        }
+        
+        .license-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+        
+        .license-detail {
+            font-size: 13px;
+        }
+        
+        .license-detail-label {
+            color: var(--text-secondary);
+        }
+        
+        .license-detail-value {
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+        
+        .license-actions {
+            display: flex;
+            gap: 8px;
+        }
+        
+        .license-btn {
+            padding: 8px 16px;
+            border-radius: 4px;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            border: none;
+            transition: background 0.2s ease;
+        }
+        
+        .license-btn-primary {
+            background: var(--primary-color);
+            color: white;
+        }
+        
+        .license-btn-primary:hover {
+            background: var(--primary-hover);
+        }
+        
+        .license-btn-secondary {
+            background: transparent;
+            color: var(--primary-color);
+            border: 1px solid var(--border-color);
+        }
+        
+        .license-btn-secondary:hover {
+            background: var(--background);
+        }
+        
+        /* Pending License Banner */
+        .pending-banner {
+            background: linear-gradient(135deg, #fff8e1 0%, #ffecb3 100%);
+            border: 1px solid #f9ab00;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 24px;
+            display: none;
+        }
+        
+        .pending-banner.visible {
+            display: block;
+        }
+        
+        .pending-banner-title {
+            font-size: 16px;
+            font-weight: 500;
+            color: #b06000;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .pending-banner-key {
+            font-family: 'Roboto Mono', monospace;
+            font-size: 14px;
+            color: #7a4500;
+            margin-bottom: 12px;
+        }
+        
+        .pending-banner-text {
+            font-size: 14px;
+            color: #7a4500;
+            margin-bottom: 16px;
+        }
+        
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+        }
+        
+        .empty-state-icon {
+            width: 64px;
+            height: 64px;
+            margin: 0 auto 16px;
+            opacity: 0.4;
+        }
+        
+        .empty-state-title {
+            font-size: 18px;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+        
+        .empty-state-text {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-bottom: 16px;
+        }
+        
+        /* Quick Actions */
+        .quick-action {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.2s ease;
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        .quick-action:hover {
+            background: var(--background);
+        }
+        
+        .quick-action-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            background: var(--background);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .quick-action-icon svg {
+            width: 20px;
+            height: 20px;
+            color: var(--primary-color);
+        }
+        
+        .quick-action-text {
+            flex: 1;
+        }
+        
+        .quick-action-title {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+        
+        .quick-action-subtitle {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+        
+        /* Account Info */
+        .account-info-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .account-info-item:last-child {
+            border-bottom: none;
+        }
+        
+        .account-info-label {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+        
+        .account-info-value {
+            font-size: 14px;
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+        
+        /* Sign out button */
+        .sign-out-btn {
+            color: #d93025;
+            background: transparent;
+            border: 1px solid #d93025;
+            padding: 8px 16px;
+            border-radius: 4px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background 0.2s ease;
+        }
+        
+        .sign-out-btn:hover {
+            background: #fce8e6;
+        }
+        
+        /* Footer */
+        .dashboard-footer {
+            margin-top: 40px;
+            padding-top: 24px;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .dashboard-footer-brand {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+        
+        .dashboard-footer-brand img {
+            height: 20px;
+            opacity: 0.7;
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading Bar -->
+    <div class="loading-bar" id="loadingBar"></div>
+    
+    <div class="dashboard-container">
+        <!-- Header -->
+        <header class="dashboard-header">
+            <div class="header-brand">
+                <img src="../assets/NonPU_Instant.png" alt="NonPU Instant" id="headerLogo">
+                <h1>Account</h1>
+            </div>
+            
+            <div class="user-menu">
+                <div class="user-info">
+                    <div class="user-name" id="userName">Loading...</div>
+                    <div class="user-email" id="userEmail">Loading...</div>
+                </div>
+                <div class="user-avatar" id="userAvatar">?</div>
+            </div>
+        </header>
+        
+        <!-- Pending License Banner -->
+        <div class="pending-banner" id="pendingBanner">
+            <div class="pending-banner-title">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                </svg>
+                License Ready to Activate
+            </div>
+            <div class="pending-banner-key" id="pendingBannerKey">NP-XXXX-XXXX-XXXX-XXXX</div>
+            <div class="pending-banner-text">
+                Complete payment to activate your NonPU Instant license and start using the software.
+            </div>
+            <button class="primary-btn" onclick="activatePendingLicense()">
+                Activate License — $99.00
+            </button>
+        </div>
+        
+        <!-- Main Grid -->
+        <div class="dashboard-grid">
+            <!-- Main Content -->
+            <div class="main-content">
+                <!-- Licenses Card -->
+                <div class="card">
+                    <div class="card-header">
+                        <div>
+                            <div class="card-title">Your Licenses</div>
+                            <div class="card-subtitle">Manage your NonPU Instant licenses</div>
+                        </div>
+                    </div>
+                    
+                    <div id="licensesContainer">
+                        <!-- Licenses will be rendered here -->
+                        <div class="empty-state" id="emptyState">
+                            <svg class="empty-state-icon" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 3c1.93 0 3.5 1.57 3.5 3.5S13.93 13 12 13s-3.5-1.57-3.5-3.5S10.07 6 12 6zm7 13H5v-.23c0-.62.28-1.2.76-1.58C7.47 15.82 9.64 15 12 15s4.53.82 6.24 2.19c.48.38.76.97.76 1.58V19z"/>
+                            </svg>
+                            <div class="empty-state-title">No licenses yet</div>
+                            <div class="empty-state-text">
+                                Open NonPU Instant on your device to generate a license key, then activate it here.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Account Settings Card -->
+                <div class="card">
+                    <div class="card-header">
+                        <div>
+                            <div class="card-title">Account Information</div>
+                            <div class="card-subtitle">Your account details</div>
+                        </div>
+                        <button class="sign-out-btn" onclick="handleSignOut()">Sign Out</button>
+                    </div>
+                    
+                    <div id="accountInfo">
+                        <div class="account-info-item">
+                            <span class="account-info-label">Entity Type</span>
+                            <span class="account-info-value" id="entityType">—</span>
+                        </div>
+                        <div class="account-info-item">
+                            <span class="account-info-label">Entity Name</span>
+                            <span class="account-info-value" id="entityName">—</span>
+                        </div>
+                        <div class="account-info-item">
+                            <span class="account-info-label">Legal Name</span>
+                            <span class="account-info-value" id="legalName">—</span>
+                        </div>
+                        <div class="account-info-item">
+                            <span class="account-info-label">Location</span>
+                            <span class="account-info-value" id="location">—</span>
+                        </div>
+                        <div class="account-info-item">
+                            <span class="account-info-label">Account Created</span>
+                            <span class="account-info-value" id="createdAt">—</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Sidebar -->
+            <div class="sidebar">
+                <!-- Quick Actions -->
+                <div class="card">
+                    <div class="card-title" style="margin-bottom: 16px;">Quick Actions</div>
+                    
+                    <a href="../activate/" class="quick-action">
+                        <div class="quick-action-icon">
+                            <svg viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/>
+                            </svg>
+                        </div>
+                        <div class="quick-action-text">
+                            <div class="quick-action-title">Enter License Key</div>
+                            <div class="quick-action-subtitle">Manually enter a key</div>
+                        </div>
+                    </a>
+                    
+                    <a href="https://nekshadesilva.com/archive/1778/" class="quick-action">
+                        <div class="quick-action-icon">
+                            <svg viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M19 2H5c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-7 2c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2zm-2 16l-5-5 1.4-1.4 3.6 3.6 7.6-7.6L19 11l-9 9z"/>
+                            </svg>
+                        </div>
+                        <div class="quick-action-text">
+                            <div class="quick-action-title">Download NonPU Instant</div>
+                            <div class="quick-action-subtitle">Get the latest version</div>
+                        </div>
+                    </a>
+                    
+                    <a href="https://nekshadesilva.com/docs/" class="quick-action">
+                        <div class="quick-action-icon">
+                            <svg viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/>
+                            </svg>
+                        </div>
+                        <div class="quick-action-text">
+                            <div class="quick-action-title">Documentation</div>
+                            <div class="quick-action-subtitle">Read the docs</div>
+                        </div>
+                    </a>
+                    
+                    <a href="mailto:support@gvma.org" class="quick-action">
+                        <div class="quick-action-icon">
+                            <svg viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M11.5 2C6.81 2 3 5.81 3 10.5S6.81 19 11.5 19h.5v3c4.86-2.34 8-7 8-11.5C20 5.81 16.19 2 11.5 2zm1 14.5h-2v-2h2v2zm0-3.5h-2c0-3.25 3-3 3-5 0-1.1-.9-2-2-2s-2 .9-2 2h-2c0-2.21 1.79-4 4-4s4 1.79 4 4c0 2.5-3 2.75-3 5z"/>
+                            </svg>
+                        </div>
+                        <div class="quick-action-text">
+                            <div class="quick-action-title">Get Support</div>
+                            <div class="quick-action-subtitle">Contact GVMA</div>
+                        </div>
+                    </a>
+                </div>
+                
+                <!-- Entity Badge -->
+                <div class="card" id="entityBadge" style="text-align: center;">
+                    <img id="entityLogo" src="../assets/nonpu_device_icon.png" alt="" style="width: 64px; height: 64px; margin-bottom: 12px; border-radius: 8px;">
+                    <div style="font-size: 16px; font-weight: 500; color: var(--text-primary);" id="badgeEntityName">—</div>
+                    <div style="font-size: 13px; color: var(--text-secondary); text-transform: capitalize;" id="badgeEntityType">—</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Footer -->
+        <footer class="dashboard-footer">
+            <div class="dashboard-footer-brand">
+                <img src="../assets/brand_logo.png" alt="GVMA" id="footerLogo">
+                <span>© 2026 GVMA Incorporated — Global Vision for Machinery Advancement</span>
+            </div>
+            <div style="font-size: 12px;">
+                <a href="/legal/license.html" style="color: var(--text-secondary); text-decoration: none; margin-right: 16px;">License</a>
+                <a href="/legal/license.html" style="color: var(--text-secondary); text-decoration: none; margin-right: 16px;">Terms</a>
+                <a href="/legal/license.html" style="color: var(--text-secondary); text-decoration: none;">Privacy</a>
+            </div>
+        </footer>
+    </div>
+    
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../js/auth.js"></script>
+    <script>
+        // Dashboard Logic
+        document.addEventListener('DOMContentLoaded', async function() {
+            const loadingBar = document.getElementById('loadingBar');
+            
+            function showLoading() {
+                loadingBar.classList.add('active');
+            }
+            
+            function hideLoading() {
+                loadingBar.classList.remove('active');
+            }
+            
+            showLoading();
+            
+            // Initialize Supabase
+            NonPUAuth.initSupabase();
+            
+            // Check if user is logged in
+            const { data: user, error } = await NonPUAuth.getCurrentUser();
+            
+            if (error || !user) {
+                // Redirect to login
+                window.location.href = '../';
+                return;
+            }
+            
+            // Update UI with user info
+            document.getElementById('userEmail').textContent = user.email;
+            document.getElementById('userAvatar').textContent = user.email.charAt(0).toUpperCase();
+            
+            // Load entity data from localStorage (temporary until DB is set up)
+            const entityData = JSON.parse(localStorage.getItem('nonpu_pending_entity') || '{}');
+            
+            if (entityData.entityName) {
+                document.getElementById('userName').textContent = entityData.entityName;
+                document.getElementById('badgeEntityName').textContent = entityData.entityName;
+                document.getElementById('entityType').textContent = formatEntityType(entityData.entityType);
+                document.getElementById('badgeEntityType').textContent = formatEntityType(entityData.entityType);
+                document.getElementById('entityName').textContent = entityData.entityName;
+                document.getElementById('legalName').textContent = entityData.legalEntityName || entityData.entityName;
+                document.getElementById('location').textContent = `${entityData.entityOriginLocation || ''}, ${entityData.entityCountry || ''}`;
+            } else {
+                document.getElementById('userName').textContent = user.email.split('@')[0];
+                document.getElementById('badgeEntityName').textContent = user.email.split('@')[0];
+            }
+            
+            document.getElementById('createdAt').textContent = new Date(user.created_at).toLocaleDateString();
+            
+            // Check for pending license
+            const pendingKey = NonPUAuth.getPendingLicenseKey();
+            if (pendingKey) {
+                document.getElementById('pendingBanner').classList.add('visible');
+                document.getElementById('pendingBannerKey').textContent = pendingKey;
+            }
+            
+            // Load licenses (mock for now)
+            loadLicenses();
+            
+            hideLoading();
+        });
+        
+        function formatEntityType(type) {
+            if (!type) return '—';
+            return type.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+        }
+        
+        function loadLicenses() {
+            const container = document.getElementById('licensesContainer');
+            const emptyState = document.getElementById('emptyState');
+            
+            // Get pending license
+            const pendingKey = NonPUAuth.getPendingLicenseKey();
+            
+            // Mock licenses (would come from database)
+            const licenses = [];
+            
+            if (pendingKey) {
+                licenses.push({
+                    key: pendingKey,
+                    status: 'pending',
+                    type: 'Standard License',
+                    expiresAt: null,
+                    activatedAt: null
+                });
+            }
+            
+            if (licenses.length === 0) {
+                emptyState.style.display = 'block';
+                return;
+            }
+            
+            emptyState.style.display = 'none';
+            
+            // Render licenses
+            licenses.forEach(license => {
+                const card = document.createElement('div');
+                card.className = 'license-card';
+                card.innerHTML = `
+                    <div class="license-header">
+                        <div class="license-key-display">${license.key}</div>
+                        <span class="license-status ${license.status}">${license.status.charAt(0).toUpperCase() + license.status.slice(1)}</span>
+                    </div>
+                    <div class="license-details">
+                        <div class="license-detail">
+                            <span class="license-detail-label">License Type: </span>
+                            <span class="license-detail-value">${license.type}</span>
+                        </div>
+                        <div class="license-detail">
+                            <span class="license-detail-label">Expires: </span>
+                            <span class="license-detail-value">${license.expiresAt ? new Date(license.expiresAt).toLocaleDateString() : 'Not activated'}</span>
+                        </div>
+                    </div>
+                    ${license.status === 'pending' ? `
+                        <div class="license-actions">
+                            <button class="license-btn license-btn-primary" onclick="activatePendingLicense()">Activate — $99.00</button>
+                            <button class="license-btn license-btn-secondary" onclick="removePendingLicense()">Remove</button>
+                        </div>
+                    ` : ''}
+                `;
+                container.insertBefore(card, emptyState);
+            });
+        }
+        
+        function activatePendingLicense() {
+            const pendingKey = NonPUAuth.getPendingLicenseKey();
+            if (pendingKey) {
+                // Redirect to activation/payment page
+                window.location.href = '../activate/?key=' + encodeURIComponent(pendingKey);
+            }
+        }
+        
+        function removePendingLicense() {
+            if (confirm('Are you sure you want to remove this pending license? You can add it again later.')) {
+                localStorage.removeItem('nonpu_pending_license');
+                window.location.reload();
+            }
+        }
+        
+        async function handleSignOut() {
+            await NonPUAuth.signOut();
+            window.location.href = '../';
+        }
+    </script>
+</body>
+</html>
