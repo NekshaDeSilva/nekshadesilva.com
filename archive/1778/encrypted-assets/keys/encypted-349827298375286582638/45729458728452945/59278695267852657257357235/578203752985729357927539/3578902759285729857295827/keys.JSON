@@ -1,0 +1,847 @@
+{
+  "licenseRegistry": [
+    {
+      "licenseKey": "NP-7492-8361-5028-4917",
+      "entityName": "OpenAI",
+      "legalEntityName": "OpenAI Incorporated",
+      "entityType": "corporate",
+      "expirationDate": "December/31/2027",
+      "entityLogo": "data:image/png;base64,PLACEHOLDER_OPENAI_LOGO_BASE64_DATA_URI",
+      "entityOriginLocationAndCountry": "San Francisco, California, United States",
+      "entityEmail": {
+        "email1": "contact@openai.com",
+        "email2": "licensing@openai.com",
+        "email3": "legal@openai.com",
+        "email4": "support@openai.com",
+        "email5": "partnerships@openai.com"
+      },
+      "companyRegistrationNumber": "C4429886",
+      "website": "https://openai.com",
+      "corporateDetails": {
+        "division": "Research and Development",
+        "corporatePhoneNumber": "+1-415-555-0192",
+        "corporateMobilePhoneNumber": "+1-415-555-0193",
+        "corporateEmail": "corporate@openai.com",
+        "responsibleAuthority": {
+          "individuals": [
+            {
+              "name": "Samuel Altman",
+              "role": "Chief Executive Officer",
+              "email": "sam.altman@openai.com",
+              "phoneNumber": "+1-415-555-0101",
+              "mobileNumber": "+1-415-555-0102"
+            },
+            {
+              "name": "Gregory Brockman",
+              "role": "President",
+              "email": "greg.brockman@openai.com",
+              "phoneNumber": "+1-415-555-0103",
+              "mobileNumber": "+1-415-555-0104"
+            }
+          ],
+          "teamResponsible": "Executive Leadership Team"
+        }
+      }
+    },
+    {
+      "licenseKey": "NP-3847-2956-1038-7462",
+      "entityName": "Microsoft Azure",
+      "legalEntityName": "Microsoft Corporation",
+      "entityType": "corporate",
+      "expirationDate": "June/30/2028",
+      "entityLogo": "data:image/png;base64,PLACEHOLDER_MICROSOFT_AZURE_LOGO_BASE64_DATA_URI",
+      "entityOriginLocationAndCountry": "Redmond, Washington, United States",
+      "entityEmail": {
+        "email1": "azure@microsoft.com",
+        "email2": "licensing@microsoft.com",
+        "email3": "legal@microsoft.com",
+        "email4": "enterprise@microsoft.com",
+        "email5": "support@microsoft.com"
+      },
+      "companyRegistrationNumber": "600413485",
+      "website": "https://azure.microsoft.com",
+      "corporateDetails": {
+        "division": "Azure Cloud Services",
+        "corporatePhoneNumber": "+1-425-882-8080",
+        "corporateMobilePhoneNumber": "+1-425-555-0201",
+        "corporateEmail": "azurecorp@microsoft.com",
+        "responsibleAuthority": {
+          "individuals": [
+            {
+              "name": "Satya Nadella",
+              "role": "Chief Executive Officer",
+              "email": "satya.nadella@microsoft.com",
+              "phoneNumber": "+1-425-555-0301",
+              "mobileNumber": "+1-425-555-0302"
+            },
+            {
+              "name": "Scott Guthrie",
+              "role": "Executive Vice President - Cloud and AI",
+              "email": "scott.guthrie@microsoft.com",
+              "phoneNumber": "+1-425-555-0303",
+              "mobileNumber": "+1-425-555-0304"
+            }
+          ],
+          "teamResponsible": "Azure Engineering Leadership"
+        }
+      }
+    },
+    {
+      "licenseKey": "NP-5829-4716-3058-9241",
+      "entityName": "Nathan Jones",
+      "legalEntityName": "Nathan Jones",
+      "entityType": "personal-individual",
+      "expirationDate": "March/15/2027",
+      "entityLogo": "data:image/jpeg;base64,PLACEHOLDER_NATHAN_JONES_AVATAR_DATA_URI",
+      "entityOriginLocationAndCountry": "Austin, Texas, United States",
+      "entityEmail": {
+        "email1": "nathan.jones@gmail.com",
+        "email2": "njones.work@outlook.com"
+      },
+      "companyRegistrationNumber": null,
+      "website": "https://nathanjones.dev"
+    },
+    {
+      "licenseKey": "NP-6173-8294-5012-3867",
+      "entityName": "Mickey Hamilton",
+      "legalEntityName": "Michael Hamilton",
+      "entityType": "personal-individual",
+      "expirationDate": "September/22/2026",
+      "entityLogo": "data:image/jpeg;base64,PLACEHOLDER_MICKEY_HAMILTON_AVATAR_DATA_URI",
+      "entityOriginLocationAndCountry": "London, England, United Kingdom",
+      "entityEmail": {
+        "email1": "mickey.hamilton@gmail.com",
+        "email2": "m.hamilton@protonmail.com",
+        "email3": "hamilton.mickey@yahoo.co.uk"
+      },
+      "companyRegistrationNumber": null,
+      "website": "https://mickeyhamilton.co.uk"
+    },
+    {
+      "licenseKey": "NP-9482-1736-5029-8147",
+      "entityName": "Meta Oculus",
+      "legalEntityName": "Meta Platforms Incorporated",
+      "entityType": "corporate",
+      "expirationDate": "November/30/2027",
+      "entityLogo": "data:image/png;base64,PLACEHOLDER_META_OCULUS_LOGO_BASE64_DATA_URI",
+      "entityOriginLocationAndCountry": "Menlo Park, California, United States",
+      "entityEmail": {
+        "email1": "oculus@meta.com",
+        "email2": "licensing@meta.com",
+        "email3": "legal@meta.com",
+        "email4": "developer@meta.com",
+        "email5": "partnerships@meta.com"
+      },
+      "companyRegistrationNumber": "C2747618",
+      "website": "https://www.meta.com/quest",
+      "corporateDetails": {
+        "division": "Oculus VR Division - Reality Labs",
+        "corporatePhoneNumber": "+1-650-543-4800",
+        "corporateMobilePhoneNumber": "+1-650-555-0401",
+        "corporateEmail": "oculus.corporate@meta.com",
+        "responsibleAuthority": {
+          "individuals": [
+            {
+              "name": "Mark Zuckerberg",
+              "role": "Chief Executive Officer",
+              "email": "mark.zuckerberg@meta.com",
+              "phoneNumber": "+1-650-555-0501",
+              "mobileNumber": "+1-650-555-0502"
+            },
+            {
+              "name": "Andrew Bosworth",
+              "role": "Chief Technology Officer",
+              "email": "andrew.bosworth@meta.com",
+              "phoneNumber": "+1-650-555-0503",
+              "mobileNumber": "+1-650-555-0504"
+            }
+          ],
+          "teamResponsible": "Reality Labs Executive Team"
+        }
+      }
+    },
+    {
+      "licenseKey": "NP-2847-6193-0574-8326",
+      "entityName": "Red Cross International",
+      "legalEntityName": "International Committee of the Red Cross",
+      "entityType": "non-profit",
+      "expirationDate": "December/31/2028",
+      "entityLogo": "data:image/png;base64,PLACEHOLDER_RED_CROSS_LOGO_BASE64_DATA_URI",
+      "entityOriginLocationAndCountry": "Geneva, Switzerland",
+      "entityEmail": {
+        "email1": "info@icrc.org",
+        "email2": "licensing@icrc.org",
+        "email3": "legal@icrc.org",
+        "email4": "donations@icrc.org"
+      },
+      "companyRegistrationNumber": "CHE-109.814.726",
+      "website": "https://www.icrc.org",
+      "corporateDetails": {
+        "division": "Information Technology Services",
+        "corporatePhoneNumber": "+41-22-734-6001",
+        "corporateMobilePhoneNumber": "+41-79-555-0601",
+        "corporateEmail": "it.services@icrc.org",
+        "responsibleAuthority": {
+          "individuals": [
+            {
+              "name": "Mirjana Spoljaric Egger",
+              "role": "President",
+              "email": "president@icrc.org",
+              "phoneNumber": "+41-22-555-0701",
+              "mobileNumber": "+41-79-555-0702"
+            }
+          ],
+          "teamResponsible": "Executive Board"
+        }
+      }
+    },
+    {
+      "licenseKey": "NP-1938-4726-8051-3942",
+      "entityName": "Johnson Family Studios",
+      "legalEntityName": "Johnson Family Creative Studio",
+      "entityType": "personal-team",
+      "expirationDate": "August/15/2026",
+      "entityLogo": "data:image/png;base64,PLACEHOLDER_JOHNSON_FAMILY_LOGO_DATA_URI",
+      "entityOriginLocationAndCountry": "Portland, Oregon, United States",
+      "entityEmail": {
+        "email1": "team@johnsonfamilystudios.com",
+        "email2": "robert.johnson@johnsonfamilystudios.com",
+        "email3": "sarah.johnson@johnsonfamilystudios.com",
+        "email4": "admin@johnsonfamilystudios.com"
+      },
+      "companyRegistrationNumber": null,
+      "website": "https://johnsonfamilystudios.com"
+    },
+    {
+      "licenseKey": "NP-7361-2948-5073-1846",
+      "entityName": "Google Cloud",
+      "legalEntityName": "Google LLC",
+      "entityType": "corporate",
+      "expirationDate": "April/30/2028",
+      "entityLogo": "data:image/png;base64,PLACEHOLDER_GOOGLE_CLOUD_LOGO_BASE64_DATA_URI",
+      "entityOriginLocationAndCountry": "Mountain View, California, United States",
+      "entityEmail": {
+        "email1": "cloud@google.com",
+        "email2": "licensing@google.com",
+        "email3": "legal@google.com",
+        "email4": "enterprise@google.com",
+        "email5": "support@google.com"
+      },
+      "companyRegistrationNumber": "C3548912",
+      "website": "https://cloud.google.com",
+      "corporateDetails": {
+        "division": "Google Cloud Platform",
+        "corporatePhoneNumber": "+1-650-253-0000",
+        "corporateMobilePhoneNumber": "+1-650-555-0801",
+        "corporateEmail": "gcp.corporate@google.com",
+        "responsibleAuthority": {
+          "individuals": [
+            {
+              "name": "Sundar Pichai",
+              "role": "Chief Executive Officer - Alphabet/Google",
+              "email": "sundar.pichai@google.com",
+              "phoneNumber": "+1-650-555-0901",
+              "mobileNumber": "+1-650-555-0902"
+            },
+            {
+              "name": "Thomas Kurian",
+              "role": "Chief Executive Officer - Google Cloud",
+              "email": "thomas.kurian@google.com",
+              "phoneNumber": "+1-650-555-0903",
+              "mobileNumber": "+1-650-555-0904"
+            }
+          ],
+          "teamResponsible": "Google Cloud Leadership Team"
+        }
+      }
+    },
+    {
+      "licenseKey": "NP-4927-8163-0592-7438",
+      "entityName": "Emily Chen",
+      "legalEntityName": "Emily Wei Chen",
+      "entityType": "personal-individual",
+      "expirationDate": "February/28/2027",
+      "entityLogo": "data:image/jpeg;base64,PLACEHOLDER_EMILY_CHEN_AVATAR_DATA_URI",
+      "entityOriginLocationAndCountry": "Vancouver, British Columbia, Canada",
+      "entityEmail": {
+        "email1": "emily.chen@gmail.com",
+        "email2": "emilychen.dev@outlook.com"
+      },
+      "companyRegistrationNumber": null,
+      "website": "https://emilychen.ca"
+    },
+    {
+      "licenseKey": "NP-8274-1639-5082-4716",
+      "entityName": "Wikimedia Foundation",
+      "legalEntityName": "Wikimedia Foundation Incorporated",
+      "entityType": "non-profit",
+      "expirationDate": "July/31/2028",
+      "entityLogo": "data:image/png;base64,PLACEHOLDER_WIKIMEDIA_LOGO_BASE64_DATA_URI",
+      "entityOriginLocationAndCountry": "San Francisco, California, United States",
+      "entityEmail": {
+        "email1": "info@wikimedia.org",
+        "email2": "licensing@wikimedia.org",
+        "email3": "legal@wikimedia.org",
+        "email4": "donate@wikimedia.org",
+        "email5": "press@wikimedia.org"
+      },
+      "companyRegistrationNumber": "C2933881",
+      "website": "https://www.wikimedia.org",
+      "corporateDetails": {
+        "division": "Technology Department",
+        "corporatePhoneNumber": "+1-415-839-6885",
+        "corporateMobilePhoneNumber": "+1-415-555-1001",
+        "corporateEmail": "tech@wikimedia.org",
+        "responsibleAuthority": {
+          "individuals": [
+            {
+              "name": "Maryana Iskander",
+              "role": "Chief Executive Officer",
+              "email": "maryana.iskander@wikimedia.org",
+              "phoneNumber": "+1-415-555-1101",
+              "mobileNumber": "+1-415-555-1102"
+            }
+          ],
+          "teamResponsible": "Wikimedia Technology Team"
+        }
+      }
+    },
+    {
+      "licenseKey": "NP-3619-7284-0593-1847",
+      "entityName": "Smith Brothers Dev Team",
+      "legalEntityName": "Smith Brothers Development Collective",
+      "entityType": "personal-team",
+      "expirationDate": "October/15/2026",
+      "entityLogo": "data:image/png;base64,PLACEHOLDER_SMITH_BROTHERS_LOGO_DATA_URI",
+      "entityOriginLocationAndCountry": "Dublin, Ireland",
+      "entityEmail": {
+        "email1": "team@smithbrosdev.ie",
+        "email2": "james.smith@smithbrosdev.ie",
+        "email3": "connor.smith@smithbrosdev.ie",
+        "email4": "support@smithbrosdev.ie"
+      },
+      "companyRegistrationNumber": null,
+      "website": "https://smithbrosdev.ie"
+    },
+    {
+      "licenseKey": "NP-5827-3946-1072-8394",
+      "entityName": "Amazon Web Services",
+      "legalEntityName": "Amazon Web Services Incorporated",
+      "entityType": "corporate",
+      "expirationDate": "January/31/2029",
+      "entityLogo": "data:image/png;base64,PLACEHOLDER_AWS_LOGO_BASE64_DATA_URI",
+      "entityOriginLocationAndCountry": "Seattle, Washington, United States",
+      "entityEmail": {
+        "email1": "aws@amazon.com",
+        "email2": "licensing@amazon.com",
+        "email3": "legal@amazon.com",
+        "email4": "enterprise@amazon.com",
+        "email5": "partners@amazon.com"
+      },
+      "companyRegistrationNumber": "C3983412",
+      "website": "https://aws.amazon.com",
+      "corporateDetails": {
+        "division": "Amazon Web Services - Cloud Infrastructure",
+        "corporatePhoneNumber": "+1-206-266-1000",
+        "corporateMobilePhoneNumber": "+1-206-555-1201",
+        "corporateEmail": "aws.corporate@amazon.com",
+        "responsibleAuthority": {
+          "individuals": [
+            {
+              "name": "Andy Jassy",
+              "role": "Chief Executive Officer - Amazon",
+              "email": "andy.jassy@amazon.com",
+              "phoneNumber": "+1-206-555-1301",
+              "mobileNumber": "+1-206-555-1302"
+            },
+            {
+              "name": "Matt Garman",
+              "role": "Chief Executive Officer - AWS",
+              "email": "matt.garman@amazon.com",
+              "phoneNumber": "+1-206-555-1303",
+              "mobileNumber": "+1-206-555-1304"
+            }
+          ],
+          "teamResponsible": "AWS Executive Leadership"
+        }
+      }
+    },
+    {
+      "licenseKey": "NP-9163-4827-0591-3748",
+      "entityName": "Kenji Tanaka",
+      "legalEntityName": "Kenji Tanaka",
+      "entityType": "personal-individual",
+      "expirationDate": "May/20/2027",
+      "entityLogo": "data:image/jpeg;base64,PLACEHOLDER_KENJI_TANAKA_AVATAR_DATA_URI",
+      "entityOriginLocationAndCountry": "Tokyo, Japan",
+      "entityEmail": {
+        "email1": "kenji.tanaka@gmail.com",
+        "email2": "tanaka.dev@yahoo.co.jp"
+      },
+      "companyRegistrationNumber": null,
+      "website": "https://kenjitanaka.jp"
+    },
+    {
+      "licenseKey": "NP-2748-6193-5027-8461",
+      "entityName": "Mozilla Foundation",
+      "legalEntityName": "Mozilla Foundation",
+      "entityType": "non-profit",
+      "expirationDate": "September/30/2027",
+      "entityLogo": "data:image/png;base64,PLACEHOLDER_MOZILLA_LOGO_BASE64_DATA_URI",
+      "entityOriginLocationAndCountry": "San Francisco, California, United States",
+      "entityEmail": {
+        "email1": "info@mozilla.org",
+        "email2": "licensing@mozilla.org",
+        "email3": "legal@mozilla.org",
+        "email4": "donate@mozilla.org"
+      },
+      "companyRegistrationNumber": "C2896201",
+      "website": "https://www.mozilla.org",
+      "corporateDetails": {
+        "division": "Engineering Division",
+        "corporatePhoneNumber": "+1-650-903-0800",
+        "corporateMobilePhoneNumber": "+1-650-555-1401",
+        "corporateEmail": "engineering@mozilla.org",
+        "responsibleAuthority": {
+          "individuals": [
+            {
+              "name": "Laura Chambers",
+              "role": "Chief Executive Officer",
+              "email": "laura.chambers@mozilla.org",
+              "phoneNumber": "+1-650-555-1501",
+              "mobileNumber": "+1-650-555-1502"
+            }
+          ],
+          "teamResponsible": "Mozilla Engineering Leadership"
+        }
+      }
+    },
+    {
+      "licenseKey": "NP-6284-1937-5082-9473",
+      "entityName": "Garcia Creative Collective",
+      "legalEntityName": "Garcia Family Creative Collective",
+      "entityType": "personal-team",
+      "expirationDate": "December/15/2026",
+      "entityLogo": "data:image/png;base64,PLACEHOLDER_GARCIA_COLLECTIVE_LOGO_DATA_URI",
+      "entityOriginLocationAndCountry": "Barcelona, Catalonia, Spain",
+      "entityEmail": {
+        "email1": "team@garciacreative.es",
+        "email2": "maria.garcia@garciacreative.es",
+        "email3": "carlos.garcia@garciacreative.es",
+        "email4": "studio@garciacreative.es"
+      },
+      "companyRegistrationNumber": null,
+      "website": "https://garciacreative.es"
+    },
+    {
+      "licenseKey": "NP-4738-2916-5083-7294",
+      "entityName": "Apple Developer",
+      "legalEntityName": "Apple Incorporated",
+      "entityType": "corporate",
+      "expirationDate": "August/31/2028",
+      "entityLogo": "data:image/png;base64,PLACEHOLDER_APPLE_LOGO_BASE64_DATA_URI",
+      "entityOriginLocationAndCountry": "Cupertino, California, United States",
+      "entityEmail": {
+        "email1": "developer@apple.com",
+        "email2": "licensing@apple.com",
+        "email3": "legal@apple.com",
+        "email4": "enterprise@apple.com",
+        "email5": "appstore@apple.com"
+      },
+      "companyRegistrationNumber": "C0806592",
+      "website": "https://developer.apple.com",
+      "corporateDetails": {
+        "division": "Developer Relations and App Store",
+        "corporatePhoneNumber": "+1-408-996-1010",
+        "corporateMobilePhoneNumber": "+1-408-555-1601",
+        "corporateEmail": "devrelations@apple.com",
+        "responsibleAuthority": {
+          "individuals": [
+            {
+              "name": "Tim Cook",
+              "role": "Chief Executive Officer",
+              "email": "tim.cook@apple.com",
+              "phoneNumber": "+1-408-555-1701",
+              "mobileNumber": "+1-408-555-1702"
+            },
+            {
+              "name": "Craig Federighi",
+              "role": "Senior Vice President - Software Engineering",
+              "email": "craig.federighi@apple.com",
+              "phoneNumber": "+1-408-555-1703",
+              "mobileNumber": "+1-408-555-1704"
+            }
+          ],
+          "teamResponsible": "Apple Developer Relations Team"
+        }
+      }
+    },
+    {
+      "licenseKey": "NP-8193-4726-0582-1947",
+      "entityName": "Sofia Andersson",
+      "legalEntityName": "Sofia Marie Andersson",
+      "entityType": "personal-individual",
+      "expirationDate": "April/10/2027",
+      "entityLogo": "data:image/jpeg;base64,PLACEHOLDER_SOFIA_ANDERSSON_AVATAR_DATA_URI",
+      "entityOriginLocationAndCountry": "Stockholm, Sweden",
+      "entityEmail": {
+        "email1": "sofia.andersson@gmail.com",
+        "email2": "s.andersson@protonmail.com"
+      },
+      "companyRegistrationNumber": null,
+      "website": "https://sofiaandersson.se"
+    },
+    {
+      "licenseKey": "NP-3927-8461-5029-7183",
+      "entityName": "Electronic Frontier Foundation",
+      "legalEntityName": "Electronic Frontier Foundation",
+      "entityType": "non-profit",
+      "expirationDate": "November/15/2027",
+      "entityLogo": "data:image/png;base64,PLACEHOLDER_EFF_LOGO_BASE64_DATA_URI",
+      "entityOriginLocationAndCountry": "San Francisco, California, United States",
+      "entityEmail": {
+        "email1": "info@eff.org",
+        "email2": "licensing@eff.org",
+        "email3": "legal@eff.org",
+        "email4": "action@eff.org",
+        "email5": "press@eff.org"
+      },
+      "companyRegistrationNumber": "94-3091431",
+      "website": "https://www.eff.org",
+      "corporateDetails": {
+        "division": "Technology Projects",
+        "corporatePhoneNumber": "+1-415-436-9333",
+        "corporateMobilePhoneNumber": "+1-415-555-1801",
+        "corporateEmail": "tech@eff.org",
+        "responsibleAuthority": {
+          "individuals": [
+            {
+              "name": "Cindy Cohn",
+              "role": "Executive Director",
+              "email": "cindy.cohn@eff.org",
+              "phoneNumber": "+1-415-555-1901",
+              "mobileNumber": "+1-415-555-1902"
+            }
+          ],
+          "teamResponsible": "EFF Technology Team"
+        }
+      }
+    },
+    {
+      "licenseKey": "NP-7294-1836-5027-4918",
+      "entityName": "Kim Studio Team",
+      "legalEntityName": "Kim Family Studio Collective",
+      "entityType": "personal-team",
+      "expirationDate": "June/20/2026",
+      "entityLogo": "data:image/png;base64,PLACEHOLDER_KIM_STUDIO_LOGO_DATA_URI",
+      "entityOriginLocationAndCountry": "Seoul, South Korea",
+      "entityEmail": {
+        "email1": "team@kimstudio.kr",
+        "email2": "minjun.kim@kimstudio.kr",
+        "email3": "soojin.kim@kimstudio.kr",
+        "email4": "projects@kimstudio.kr"
+      },
+      "companyRegistrationNumber": null,
+      "website": "https://kimstudio.kr"
+    },
+    {
+      "licenseKey": "NP-5183-9274-0628-3741",
+      "entityName": "NVIDIA AI",
+      "legalEntityName": "NVIDIA Corporation",
+      "entityType": "corporate",
+      "expirationDate": "March/31/2028",
+      "entityLogo": "data:image/png;base64,PLACEHOLDER_NVIDIA_LOGO_BASE64_DATA_URI",
+      "entityOriginLocationAndCountry": "Santa Clara, California, United States",
+      "entityEmail": {
+        "email1": "ai@nvidia.com",
+        "email2": "licensing@nvidia.com",
+        "email3": "legal@nvidia.com",
+        "email4": "enterprise@nvidia.com",
+        "email5": "developer@nvidia.com"
+      },
+      "companyRegistrationNumber": "C2188539",
+      "website": "https://www.nvidia.com/ai",
+      "corporateDetails": {
+        "division": "AI and Deep Learning Division",
+        "corporatePhoneNumber": "+1-408-486-2000",
+        "corporateMobilePhoneNumber": "+1-408-555-2001",
+        "corporateEmail": "ai.corporate@nvidia.com",
+        "responsibleAuthority": {
+          "individuals": [
+            {
+              "name": "Jensen Huang",
+              "role": "Chief Executive Officer and Founder",
+              "email": "jensen.huang@nvidia.com",
+              "phoneNumber": "+1-408-555-2101",
+              "mobileNumber": "+1-408-555-2102"
+            }
+          ],
+          "teamResponsible": "NVIDIA AI Research Team"
+        }
+      }
+    },
+    {
+      "licenseKey": "NP-4618-2739-5081-9374",
+      "entityName": "Marco Rossi",
+      "legalEntityName": "Marco Antonio Rossi",
+      "entityType": "personal-individual",
+      "expirationDate": "July/25/2027",
+      "entityLogo": "data:image/jpeg;base64,PLACEHOLDER_MARCO_ROSSI_AVATAR_DATA_URI",
+      "entityOriginLocationAndCountry": "Milan, Lombardy, Italy",
+      "entityEmail": {
+        "email1": "marco.rossi@gmail.com",
+        "email2": "m.rossi.dev@libero.it"
+      },
+      "companyRegistrationNumber": null,
+      "website": "https://marcorossi.it"
+    },
+    {
+      "licenseKey": "NP-9372-4618-0593-2847",
+      "entityName": "Doctors Without Borders Tech",
+      "legalEntityName": "Médecins Sans Frontières International",
+      "entityType": "non-profit",
+      "expirationDate": "February/28/2028",
+      "entityLogo": "data:image/png;base64,PLACEHOLDER_MSF_LOGO_BASE64_DATA_URI",
+      "entityOriginLocationAndCountry": "Geneva, Switzerland",
+      "entityEmail": {
+        "email1": "info@msf.org",
+        "email2": "tech@msf.org",
+        "email3": "legal@msf.org",
+        "email4": "donations@msf.org"
+      },
+      "companyRegistrationNumber": "CHE-108.533.928",
+      "website": "https://www.msf.org",
+      "corporateDetails": {
+        "division": "Medical Technology and Innovation",
+        "corporatePhoneNumber": "+41-22-849-8400",
+        "corporateMobilePhoneNumber": "+41-79-555-2201",
+        "corporateEmail": "innovation@msf.org",
+        "responsibleAuthority": {
+          "individuals": [
+            {
+              "name": "Christos Christou",
+              "role": "International President",
+              "email": "christos.christou@msf.org",
+              "phoneNumber": "+41-22-555-2301",
+              "mobileNumber": "+41-79-555-2302"
+            }
+          ],
+          "teamResponsible": "MSF Technology Innovation Team"
+        }
+      }
+    },
+    {
+      "licenseKey": "NP-2847-6193-5028-7461",
+      "entityName": "Patel Development Group",
+      "legalEntityName": "Patel Brothers Software Development Group",
+      "entityType": "personal-team",
+      "expirationDate": "January/10/2027",
+      "entityLogo": "data:image/png;base64,PLACEHOLDER_PATEL_GROUP_LOGO_DATA_URI",
+      "entityOriginLocationAndCountry": "Mumbai, Maharashtra, India",
+      "entityEmail": {
+        "email1": "team@pateldevgroup.in",
+        "email2": "raj.patel@pateldevgroup.in",
+        "email3": "amit.patel@pateldevgroup.in",
+        "email4": "projects@pateldevgroup.in",
+        "email5": "support@pateldevgroup.in"
+      },
+      "companyRegistrationNumber": null,
+      "website": "https://pateldevgroup.in"
+    },
+    {
+      "licenseKey": "NP-6183-2947-5081-3729",
+      "entityName": "Salesforce Platform",
+      "legalEntityName": "Salesforce Incorporated",
+      "entityType": "corporate",
+      "expirationDate": "October/31/2028",
+      "entityLogo": "data:image/png;base64,PLACEHOLDER_SALESFORCE_LOGO_BASE64_DATA_URI",
+      "entityOriginLocationAndCountry": "San Francisco, California, United States",
+      "entityEmail": {
+        "email1": "platform@salesforce.com",
+        "email2": "licensing@salesforce.com",
+        "email3": "legal@salesforce.com",
+        "email4": "enterprise@salesforce.com",
+        "email5": "partners@salesforce.com"
+      },
+      "companyRegistrationNumber": "C2589631",
+      "website": "https://www.salesforce.com",
+      "corporateDetails": {
+        "division": "Salesforce Platform and Developer Experience",
+        "corporatePhoneNumber": "+1-415-901-7000",
+        "corporateMobilePhoneNumber": "+1-415-555-2401",
+        "corporateEmail": "platform.corporate@salesforce.com",
+        "responsibleAuthority": {
+          "individuals": [
+            {
+              "name": "Marc Benioff",
+              "role": "Chair and Chief Executive Officer",
+              "email": "marc.benioff@salesforce.com",
+              "phoneNumber": "+1-415-555-2501",
+              "mobileNumber": "+1-415-555-2502"
+            }
+          ],
+          "teamResponsible": "Salesforce Platform Engineering"
+        }
+      }
+    },
+    {
+      "licenseKey": "NP-8274-1936-5029-4718",
+      "entityName": "Anna Kowalski",
+      "legalEntityName": "Anna Maria Kowalski",
+      "entityType": "personal-individual",
+      "expirationDate": "August/05/2026",
+      "entityLogo": "data:image/jpeg;base64,PLACEHOLDER_ANNA_KOWALSKI_AVATAR_DATA_URI",
+      "entityOriginLocationAndCountry": "Warsaw, Poland",
+      "entityEmail": {
+        "email1": "anna.kowalski@gmail.com",
+        "email2": "a.kowalski@wp.pl",
+        "email3": "kowalski.anna@protonmail.com"
+      },
+      "companyRegistrationNumber": null,
+      "website": "https://annakowalski.pl"
+    },
+    {
+      "licenseKey": "NP-3948-2716-5083-9274",
+      "entityName": "UNICEF Innovation",
+      "legalEntityName": "United Nations Children's Fund",
+      "entityType": "non-profit",
+      "expirationDate": "May/31/2028",
+      "entityLogo": "data:image/png;base64,PLACEHOLDER_UNICEF_LOGO_BASE64_DATA_URI",
+      "entityOriginLocationAndCountry": "New York City, New York, United States",
+      "entityEmail": {
+        "email1": "info@unicef.org",
+        "email2": "innovation@unicef.org",
+        "email3": "legal@unicef.org",
+        "email4": "donate@unicef.org",
+        "email5": "press@unicef.org"
+      },
+      "companyRegistrationNumber": "13-1760110",
+      "website": "https://www.unicef.org/innovation",
+      "corporateDetails": {
+        "division": "Office of Innovation",
+        "corporatePhoneNumber": "+1-212-326-7000",
+        "corporateMobilePhoneNumber": "+1-212-555-2601",
+        "corporateEmail": "office.innovation@unicef.org",
+        "responsibleAuthority": {
+          "individuals": [
+            {
+              "name": "Catherine Russell",
+              "role": "Executive Director",
+              "email": "catherine.russell@unicef.org",
+              "phoneNumber": "+1-212-555-2701",
+              "mobileNumber": "+1-212-555-2702"
+            }
+          ],
+          "teamResponsible": "UNICEF Innovation Team"
+        }
+      }
+    },
+    {
+      "licenseKey": "NP-7291-4836-5027-1948",
+      "entityName": "Mueller Design Collective",
+      "legalEntityName": "Mueller Family Design Collective",
+      "entityType": "personal-team",
+      "expirationDate": "November/20/2026",
+      "entityLogo": "data:image/png;base64,PLACEHOLDER_MUELLER_COLLECTIVE_LOGO_DATA_URI",
+      "entityOriginLocationAndCountry": "Berlin, Germany",
+      "entityEmail": {
+        "email1": "team@muellerdesign.de",
+        "email2": "hans.mueller@muellerdesign.de",
+        "email3": "greta.mueller@muellerdesign.de",
+        "email4": "studio@muellerdesign.de"
+      },
+      "companyRegistrationNumber": null,
+      "website": "https://muellerdesign.de"
+    },
+    {
+      "licenseKey": "NP-4827-1936-5082-7394",
+      "entityName": "IBM Watson",
+      "legalEntityName": "International Business Machines Corporation",
+      "entityType": "corporate",
+      "expirationDate": "December/31/2027",
+      "entityLogo": "data:image/png;base64,PLACEHOLDER_IBM_WATSON_LOGO_BASE64_DATA_URI",
+      "entityOriginLocationAndCountry": "Armonk, New York, United States",
+      "entityEmail": {
+        "email1": "watson@ibm.com",
+        "email2": "licensing@ibm.com",
+        "email3": "legal@ibm.com",
+        "email4": "enterprise@ibm.com",
+        "email5": "cloud@ibm.com"
+      },
+      "companyRegistrationNumber": "13-0871985",
+      "website": "https://www.ibm.com/watson",
+      "corporateDetails": {
+        "division": "Watson AI and Cloud Division",
+        "corporatePhoneNumber": "+1-914-499-1900",
+        "corporateMobilePhoneNumber": "+1-914-555-2801",
+        "corporateEmail": "watson.corporate@ibm.com",
+        "responsibleAuthority": {
+          "individuals": [
+            {
+              "name": "Arvind Krishna",
+              "role": "Chairman and Chief Executive Officer",
+              "email": "arvind.krishna@ibm.com",
+              "phoneNumber": "+1-914-555-2901",
+              "mobileNumber": "+1-914-555-2902"
+            }
+          ],
+          "teamResponsible": "IBM Watson Leadership Team"
+        }
+      }
+    },
+    {
+      "licenseKey": "NP-5927-3846-1029-7483",
+      "entityName": "Carlos Mendoza",
+      "legalEntityName": "Carlos Eduardo Mendoza",
+      "entityType": "personal-individual",
+      "expirationDate": "September/12/2027",
+      "entityLogo": "data:image/jpeg;base64,PLACEHOLDER_CARLOS_MENDOZA_AVATAR_DATA_URI",
+      "entityOriginLocationAndCountry": "Mexico City, Mexico",
+      "entityEmail": {
+        "email1": "carlos.mendoza@gmail.com",
+        "email2": "c.mendoza.dev@outlook.com"
+      },
+      "companyRegistrationNumber": null,
+      "website": "https://carlosmendoza.mx"
+    },
+    {
+      "licenseKey": "NP-8163-2947-5028-4719",
+      "entityName": "Linux Foundation",
+      "legalEntityName": "The Linux Foundation",
+      "entityType": "non-profit",
+      "expirationDate": "April/15/2028",
+      "entityLogo": "data:image/png;base64,PLACEHOLDER_LINUX_FOUNDATION_LOGO_BASE64_DATA_URI",
+      "entityOriginLocationAndCountry": "San Francisco, California, United States",
+      "entityEmail": {
+        "email1": "info@linuxfoundation.org",
+        "email2": "licensing@linuxfoundation.org",
+        "email3": "legal@linuxfoundation.org",
+        "email4": "membership@linuxfoundation.org",
+        "email5": "events@linuxfoundation.org"
+      },
+      "companyRegistrationNumber": "46-0503801",
+      "website": "https://www.linuxfoundation.org",
+      "corporateDetails": {
+        "division": "Open Source Program Office",
+        "corporatePhoneNumber": "+1-415-723-9709",
+        "corporateMobilePhoneNumber": "+1-415-555-3001",
+        "corporateEmail": "ospo@linuxfoundation.org",
+        "responsibleAuthority": {
+          "individuals": [
+            {
+              "name": "Jim Zemlin",
+              "role": "Executive Director",
+              "email": "jim.zemlin@linuxfoundation.org",
+              "phoneNumber": "+1-415-555-3101",
+              "mobileNumber": "+1-415-555-3102"
+            }
+          ],
+          "teamResponsible": "Linux Foundation Technical Advisory Board"
+        }
+      }
+    }
+  ],
+  "schemaVersion": "1.0.0",
+  "lastUpdated": "February/15/2026",
+  "totalEntries": 30
+}
