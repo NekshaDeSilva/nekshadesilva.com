@@ -300,7 +300,7 @@ document.addEventListener('DOMContentLoaded', async function () {
         }
     }
 
-    // ========== Extend License Payment ==========
+    // ========== Extend License (Free Promotion) ==========
     const extendPayBtn = document.getElementById('extendPayBtn');
     if (extendPayBtn) {
         extendPayBtn.addEventListener('click', async function () {
@@ -316,12 +316,9 @@ document.addEventListener('DOMContentLoaded', async function () {
 
             showLoading();
             extendPayBtn.disabled = true;
-            extendPayBtn.innerHTML = '<span>Processing...</span>';
+            extendPayBtn.innerHTML = '<span>Activating...</span>';
 
             try {
-                // In production: redirect to Stripe checkout
-                await new Promise(resolve => setTimeout(resolve, 2000));
-
                 // Extend the expiration by 1 year from current expiry (or from now)
                 const { data: license } = await NonPUAuth.getLicenseByKey(tempKey);
                 let newExpiry = new Date();
@@ -339,7 +336,10 @@ document.addEventListener('DOMContentLoaded', async function () {
                     entityType: entityData.entityType || ''
                 });
 
-                // Payment successful — clean up
+                // Create payment record (free promotion — $0)
+                await NonPUAuth.createPaymentRecord(tempKey, 0, 'free_promotion');
+
+                // Clean up temp storage
                 localStorage.removeItem(NONPU_CRYPTO.STORAGE_KEY);
 
                 // Show success
@@ -353,17 +353,17 @@ document.addEventListener('DOMContentLoaded', async function () {
                 hideLoading();
                 extendPayBtn.disabled = false;
                 extendPayBtn.innerHTML = `
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg>
-                    Extend — Pay $99.00
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+                    Extend \u2014 Free
                 `;
                 extendError.style.display = 'flex';
-                document.getElementById('extendErrorText').textContent = error.message || 'Payment failed. Please try again.';
+                document.getElementById('extendErrorText').textContent = error.message || 'Activation failed. Please try again.';
                 sendAppCallback(0);
             }
         });
     }
 
-    // ========== New License / Activate Payment ==========
+    // ========== New License / Activate (Free Promotion) ==========
     const newLicensePayBtn = document.getElementById('newLicensePayBtn');
     if (newLicensePayBtn) {
         newLicensePayBtn.addEventListener('click', async function () {
@@ -379,26 +379,40 @@ document.addEventListener('DOMContentLoaded', async function () {
 
             showLoading();
             newLicensePayBtn.disabled = true;
-            newLicensePayBtn.innerHTML = '<span>Processing...</span>';
+            newLicensePayBtn.innerHTML = '<span>Activating...</span>';
 
             try {
-                // In production: redirect to Stripe checkout
-                await new Promise(resolve => setTimeout(resolve, 2000));
+                // 1. Register key in license_key_registry
+                await NonPUAuth.markKeyAssigned(tempKey);
 
-                // Create new license entry in database
+                // 2. Create new license entry in database
                 await NonPUAuth.addPendingLicense(tempKey);
 
-                // Activate it immediately after payment
+                // 3. Activate it immediately (free promotion — no Stripe)
                 await NonPUAuth.activateLicense(tempKey, {
                     entityName: entityData.entityName || '',
                     legalEntityName: entityData.legalEntityName || '',
-                    entityType: entityData.entityType || ''
+                    entityType: entityData.entityType || '',
+                    entityOriginLocationAndCountry: entityData.entityOriginLocationAndCountry || (buildLocation(entityData) !== '\u2014' ? buildLocation(entityData) : ''),
+                    entityEmail: entityData.entityEmails || {},
+                    companyRegistrationNumber: entityData.companyRegistrationNumber || null,
+                    website: entityData.website || null
                 });
 
-                // Create payment record
-                await NonPUAuth.createPaymentRecord(tempKey, 9900, 'card');
+                // 4. Also save entity account if not already saved
+                try {
+                    const existingEntity = await NonPUAuth.getEntityAccount();
+                    if (!existingEntity.data) {
+                        await NonPUAuth.createEntityAccount(entityData);
+                    }
+                } catch (eErr) {
+                    console.warn('Entity save skipped:', eErr);
+                }
 
-                // Payment successful — clean up
+                // 5. Create payment record (free promotion — $0)
+                await NonPUAuth.createPaymentRecord(tempKey, 0, 'free_promotion');
+
+                // Clean up temp storage
                 localStorage.removeItem(NONPU_CRYPTO.STORAGE_KEY);
 
                 // Show success
@@ -412,11 +426,11 @@ document.addEventListener('DOMContentLoaded', async function () {
                 hideLoading();
                 newLicensePayBtn.disabled = false;
                 newLicensePayBtn.innerHTML = `
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg>
-                    Activate — Pay $99.00
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+                    Activate \u2014 Free
                 `;
                 newError.style.display = 'flex';
-                document.getElementById('newLicenseErrorText').textContent = error.message || 'Payment failed. Please try again.';
+                document.getElementById('newLicenseErrorText').textContent = error.message || 'Activation failed. Please try again.';
                 sendAppCallback(0);
             }
         });
@@ -503,7 +517,7 @@ document.addEventListener('DOMContentLoaded', async function () {
                 </div>
                 ${license.status === 'pending' ? `
                     <div class="dash-license-actions">
-                        <button class="dash-license-btn dash-license-btn-primary" onclick="activatePendingLicense()">Activate — $99.00</button>
+                        <button class="dash-license-btn dash-license-btn-primary" onclick="activatePendingLicense()">Activate \u2014 Free</button>
                         <button class="dash-license-btn dash-license-btn-secondary" onclick="removePendingLicense()">Remove</button>
                     </div>
                 ` : ''}
