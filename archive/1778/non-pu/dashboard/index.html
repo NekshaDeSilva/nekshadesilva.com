@@ -27,7 +27,7 @@
             window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', setFavicon);
         })();
     </script>
-    <link rel="stylesheet" href="dashboard.css?v=20260216c">
+    <link rel="stylesheet" href="dashboard.css?v=20260216d">
 </head>
 <body>
     <!-- Loading Bar -->
@@ -445,62 +445,10 @@
 
                 <!-- ======== ACCOUNT PAGE ======== -->
                 <section class="dash-page" id="page-account" style="display:none">
-                    <!-- DEBUG: This text proves the section renders -->
-                    <p style="color:red;font-size:24px;font-weight:bold;padding:20px;background:#fff;border:3px solid red;margin-bottom:20px;">✅ ACCOUNT SECTION IS RENDERING — If you see this, the HTML is working.</p>
-                    <div class="dash-two-col">
-                        <div class="dash-card dash-card-main">
-                            <div class="dash-card-header">
-                                <div>
-                                    <div class="dash-card-title">Account Information</div>
-                                    <div class="dash-card-subtitle">Your entity and account details</div>
-                                </div>
-                                <button class="dash-btn dash-btn-danger" onclick="handleSignOut()">Sign Out</button>
-                            </div>
-                            <div class="dash-card-body">
-                                <div class="dash-info-grid" id="accountInfo">
-                                    <div class="dash-info-row">
-                                        <span class="dash-info-label">Entity Type</span>
-                                        <span class="dash-info-value" id="entityType">—</span>
-                                    </div>
-                                    <div class="dash-info-row">
-                                        <span class="dash-info-label">Entity Name</span>
-                                        <span class="dash-info-value" id="entityName">—</span>
-                                    </div>
-                                    <div class="dash-info-row">
-                                        <span class="dash-info-label">Legal Name</span>
-                                        <span class="dash-info-value" id="legalName">—</span>
-                                    </div>
-                                    <div class="dash-info-row">
-                                        <span class="dash-info-label">Email</span>
-                                        <span class="dash-info-value" id="accountEmail">—</span>
-                                    </div>
-                                    <div class="dash-info-row">
-                                        <span class="dash-info-label">Location</span>
-                                        <span class="dash-info-value" id="accountLocation">—</span>
-                                    </div>
-                                    <div class="dash-info-row">
-                                        <span class="dash-info-label">Account Created</span>
-                                        <span class="dash-info-value" id="createdAt">—</span>
-                                    </div>
-                                </div>
-                            </div>
+                    <div id="accountPageContent">
+                        <div class="dash-account-loading" id="accountLoading" style="text-align:center;padding:60px 20px;">
+                            <div style="font-size:14px;color:#65676b;">Loading account data…</div>
                         </div>
-                        <div class="dash-side-panel">
-                            <!-- Entity Badge Card -->
-                            <div class="dash-card dash-entity-badge-card">
-                                <div class="dash-entity-badge-logo-wrap" id="badgeLogoWrap">
-                                    <img id="badgeEntityLogo" src="../../assets/NONPU_INSTSNT.PNG" alt="" class="dash-entity-badge-logo">
-                                </div>
-                                <div class="dash-entity-badge-name" id="badgeEntityName">—</div>
-                                <div class="dash-entity-badge-type" id="badgeEntityType">—</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Celebratory Note -->
-                    <div class="dash-celebrate">
-                        <img src="../../assets/NONPU_INSTSNT.PNG" alt="NonPU Instant" class="dash-celebrate-icon">
-                        <div class="dash-celebrate-text">We are celebrating the world's first Neuronal Processing Unit and the neuromorphic processor that is available to both consumers and industry — by making it free for you.</div>
                     </div>
                 </section>
 
@@ -564,7 +512,7 @@
             document.head.appendChild(s);
         })();
     </script>
-    <script src="../js/auth.js?v=20260216c"></script>
-    <script src="dashboard.js?v=20260216c"></script>
+    <script src="../js/auth.js?v=20260216d"></script>
+    <script src="dashboard.js?v=20260216d"></script>
 </body>
 </html>

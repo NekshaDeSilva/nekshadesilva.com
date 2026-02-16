@@ -178,8 +178,6 @@ document.addEventListener('DOMContentLoaded', async function () {
     };
 
     function switchPage(name) {
-        console.log('[Dashboard] switchPage called:', name);
-
         // Update nav items
         navItems.forEach(item => {
             item.classList.toggle('active', item.dataset.nav === name);
@@ -187,12 +185,7 @@ document.addEventListener('DOMContentLoaded', async function () {
 
         // Show/hide pages
         pages.forEach(page => {
-            const isTarget = page.id === 'page-' + name;
-            page.style.display = isTarget ? '' : 'none';
-            if (isTarget) {
-                page.removeAttribute('style'); // ensure no leftover inline styles
-                console.log('[Dashboard] Showing page:', page.id, 'childNodes:', page.childNodes.length, 'innerHTML length:', page.innerHTML.length);
-            }
+            page.style.display = page.id === 'page-' + name ? 'block' : 'none';
         });
 
         // Title
@@ -201,6 +194,11 @@ document.addEventListener('DOMContentLoaded', async function () {
         // Scroll content area to top
         var contentArea = document.getElementById('contentArea');
         if (contentArea) contentArea.scrollTop = 0;
+
+        // Load account data fresh from DB every time user switches to Account
+        if (name === 'account') {
+            loadAccountPage();
+        }
 
         // Close sidebar on mobile
         if (window.innerWidth <= 768) {
@@ -255,11 +253,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     const userEmail   = user.email || '';
     const userInitial = userEmail.charAt(0).toUpperCase();
 
-    document.getElementById('userEmail').textContent   = userEmail;
-    document.getElementById('accountEmail').textContent = userEmail;
-    document.getElementById('createdAt').textContent    = user.created_at
-        ? new Date(user.created_at).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })
-        : '—';
+    document.getElementById('userEmail').textContent = userEmail;
 
     // ========== Entity Data (from Supabase, with localStorage fallback) ==========
     let entityData = {};
@@ -306,34 +300,13 @@ document.addEventListener('DOMContentLoaded', async function () {
     const entityType = formatEntityType(entityData.entityType);
     const location   = buildLocation(entityData);
 
-    console.log('[Dashboard] Entity data loaded:', { entityName, entityType, location, entityData });
-
     // Dashboard hero
-    try {
-        document.getElementById('heroEntityName').textContent = entityName;
-        document.getElementById('heroEntityType').textContent = entityType;
-        document.getElementById('heroLocation').textContent   = location;
-    } catch (heroErr) { console.warn('Hero populate error:', heroErr); }
+    document.getElementById('heroEntityName').textContent = entityName;
+    document.getElementById('heroEntityType').textContent = entityType;
+    document.getElementById('heroLocation').textContent   = location;
 
     // User name in titlebar
-    try { document.getElementById('userName').textContent = entityName; } catch(e){}
-
-    // Account page — always populate with best available data
-    try {
-        document.getElementById('entityType').textContent = entityType || '—';
-        document.getElementById('entityName').textContent = entityData.entityName || entityName || '—';
-        document.getElementById('legalName').textContent  = entityData.legalEntityName || entityData.entityName || entityName || '—';
-        document.getElementById('accountLocation').textContent = location || '—';
-        console.log('[Dashboard] Account fields populated successfully');
-    } catch (acctErr) {
-        console.error('[Dashboard] Account populate error:', acctErr);
-    }
-
-    // Badge card (Account sidebar)
-    try {
-        document.getElementById('badgeEntityName').textContent = entityName;
-        document.getElementById('badgeEntityType').textContent = entityType;
-    } catch(e){}
+    document.getElementById('userName').textContent = entityName;
 
     // Entity logo (if we have one in the pending data)
     if (entityData.entityLogo) {
@@ -677,13 +650,159 @@ document.addEventListener('DOMContentLoaded', async function () {
         return parts.length > 0 ? parts.join(', ') : '—';
     }
 
+    // ========================================================
+    //  ACCOUNT PAGE — fetches from Supabase and renders fully
+    // ========================================================
+    async function loadAccountPage() {
+        var container = document.getElementById('accountPageContent');
+        if (!container) return;
+
+        // Show loading state
+        container.innerHTML = '<div style="text-align:center;padding:60px 20px;"><div style="font-size:14px;color:#65676b;">Loading account data…</div></div>';
+
+        // 1. Get current user from Supabase auth
+        var user = null;
+        try {
+            user = await NonPUAuth.getCurrentUser();
+        } catch (e) {
+            container.innerHTML = '<div class="dash-card" style="padding:32px;text-align:center;color:#e53e3e;">Failed to load user. Please sign in again.</div>';
+            return;
+        }
+        if (!user) {
+            container.innerHTML = '<div class="dash-card" style="padding:32px;text-align:center;color:#e53e3e;">Not signed in.</div>';
+            return;
+        }
+
+        var email = user.email || '—';
+        var createdAt = user.created_at
+            ? new Date(user.created_at).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })
+            : '—';
+
+        // 2. Get entity data from Supabase entities table
+        var entityType = '—';
+        var entityName = email.split('@')[0];
+        var legalName  = '—';
+        var location   = '—';
+        var entityLogo = '../../assets/NONPU_INSTSNT.PNG';
+        var entityEmails = '';
+        var companyReg = '';
+        var website = '';
+
+        try {
+            var result = await NonPUAuth.getEntityAccount();
+            if (result.data && !result.error) {
+                var db = result.data;
+                entityType = formatEntityType(db.entity_type) || '—';
+                entityName = db.entity_name || email.split('@')[0];
+                legalName  = db.legal_entity_name || db.entity_name || '—';
+                entityEmails = db.entity_emails || '';
+                companyReg = db.company_registration_number || '';
+                website = db.website || '';
+                if (db.entity_logo) entityLogo = db.entity_logo;
+
+                // Build location
+                var locParts = [];
+                if (db.entity_origin_location) locParts.push(db.entity_origin_location);
+                if (db.entity_country) locParts.push(db.entity_country);
+                location = locParts.length > 0 ? locParts.join(', ') : '—';
+            } else {
+                // Try localStorage fallback
+                var ls = JSON.parse(localStorage.getItem('nonpu_pending_entity') || '{}');
+                if (ls.entityName) {
+                    entityType = formatEntityType(ls.entityType) || '—';
+                    entityName = ls.entityName;
+                    legalName  = ls.legalEntityName || ls.entityName || '—';
+                    location   = buildLocation(ls);
+                    if (ls.entityLogo) entityLogo = ls.entityLogo;
+                }
+            }
+        } catch (err) {
+            // Fallback to localStorage
+            var ls = JSON.parse(localStorage.getItem('nonpu_pending_entity') || '{}');
+            if (ls.entityName) {
+                entityType = formatEntityType(ls.entityType) || '—';
+                entityName = ls.entityName;
+                legalName  = ls.legalEntityName || ls.entityName || '—';
+                location   = buildLocation(ls);
+            }
+        }
+
+        // 3. Get license count from Supabase
+        var licenseCount = 0;
+        var activeCount = 0;
+        try {
+            var licResult = await NonPUAuth.getUserLicenses();
+            if (licResult.data && !licResult.error) {
+                licenseCount = licResult.data.length;
+                activeCount = licResult.data.filter(function(l){ return l.status === 'active'; }).length;
+            }
+        } catch(e){}
+
+        // 4. Render the full Account page HTML
+        var html = '';
+
+        // Main two-column layout
+        html += '<div class="dash-two-col">';
+
+        // LEFT: Account Information card
+        html += '<div class="dash-card dash-card-main">';
+        html += '  <div class="dash-card-header">';
+        html += '    <div>';
+        html += '      <div class="dash-card-title">Account Information</div>';
+        html += '      <div class="dash-card-subtitle">Your entity and account details</div>';
+        html += '    </div>';
+        html += '    <button class="dash-btn dash-btn-danger" onclick="handleSignOut()">Sign Out</button>';
+        html += '  </div>';
+        html += '  <div class="dash-card-body">';
+        html += '    <div class="dash-info-grid">';
+        html += buildInfoRow('Entity Type', entityType);
+        html += buildInfoRow('Entity Name', entityName);
+        html += buildInfoRow('Legal Name', legalName);
+        html += buildInfoRow('Email', email);
+        html += buildInfoRow('Location', location);
+        html += buildInfoRow('Account Created', createdAt);
+        if (entityEmails) html += buildInfoRow('Contact Emails', entityEmails);
+        if (companyReg)   html += buildInfoRow('Registration No.', companyReg);
+        if (website)      html += buildInfoRow('Website', website);
+        html += buildInfoRow('Licenses', licenseCount + ' total, ' + activeCount + ' active');
+        html += '    </div>';
+        html += '  </div>';
+        html += '</div>';
+
+        // RIGHT: Entity Badge card
+        html += '<div class="dash-side-panel">';
+        html += '  <div class="dash-card dash-entity-badge-card">';
+        html += '    <div class="dash-entity-badge-logo-wrap">';
+        html += '      <img src="' + escapeHtml(entityLogo) + '" alt="" class="dash-entity-badge-logo">';
+        html += '    </div>';
+        html += '    <div class="dash-entity-badge-name">' + escapeHtml(entityName) + '</div>';
+        html += '    <div class="dash-entity-badge-type">' + escapeHtml(entityType) + '</div>';
+        html += '  </div>';
+        html += '</div>';
+
+        html += '</div>'; // close dash-two-col
+
+        // Celebratory Note
+        html += '<div class="dash-celebrate">';
+        html += '  <img src="../../assets/NONPU_INSTSNT.PNG" alt="NonPU Instant" class="dash-celebrate-icon">';
+        html += '  <div class="dash-celebrate-text">We are celebrating the world\'s first Neuronal Processing Unit and the neuromorphic processor that is available to both consumers and industry — by making it free for you.</div>';
+        html += '</div>';
+
+        container.innerHTML = html;
+    }
+
+    function buildInfoRow(label, value) {
+        return '<div class="dash-info-row">' +
+               '  <span class="dash-info-label">' + escapeHtml(label) + '</span>' +
+               '  <span class="dash-info-value">' + escapeHtml(value || '—') + '</span>' +
+               '</div>';
+    }
+
     function setEntityLogo(src) {
-        const heroLogo  = document.getElementById('heroEntityLogo');
-        const badgeLogo = document.getElementById('badgeEntityLogo');
-        const watermark = document.getElementById('heroWatermark');
+        var heroLogo  = document.getElementById('heroEntityLogo');
+        var watermark = document.getElementById('heroWatermark');
         if (heroLogo)  heroLogo.src  = src;
-        if (badgeLogo) badgeLogo.src = src;
-        if (watermark)  watermark.src = src;
+        if (watermark) watermark.src = src;
     }
 
     async function loadLicenses(pendingKey) {
