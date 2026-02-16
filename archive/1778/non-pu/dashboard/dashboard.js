@@ -303,13 +303,11 @@ document.addEventListener('DOMContentLoaded', async function () {
     // User name in titlebar
     document.getElementById('userName').textContent = entityName;
 
-    // Account page
-    if (entityData.entityName) {
-        document.getElementById('entityType').textContent = entityType;
-        document.getElementById('entityName').textContent = entityData.entityName;
-        document.getElementById('legalName').textContent  = entityData.legalEntityName || entityData.entityName;
-        document.getElementById('accountLocation').textContent = location;
-    }
+    // Account page — always populate with best available data
+    document.getElementById('entityType').textContent = entityType || '—';
+    document.getElementById('entityName').textContent = entityData.entityName || entityName || '—';
+    document.getElementById('legalName').textContent  = entityData.legalEntityName || entityData.entityName || entityName || '—';
+    document.getElementById('accountLocation').textContent = location || '—';
 
     // Badge card (Account sidebar)
     document.getElementById('badgeEntityName').textContent = entityName;
