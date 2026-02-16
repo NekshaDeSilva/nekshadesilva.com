@@ -334,7 +334,10 @@ async function getUserLicenses() {
 }
 
 /**
- * Add a pending license to user's account
+ * Add a pending license to user's account.
+ * If the key already exists in the licenses table (e.g. seed data),
+ * returns the existing row instead of erroring — the caller will
+ * proceed to activate / claim it.
  */
 async function addPendingLicense(licenseKey) {
     const client = initSupabase();
@@ -346,7 +349,14 @@ async function addPendingLicense(licenseKey) {
     // Check if license already exists
     const { exists } = await checkLicenseKeyExists(licenseKey);
     if (exists) {
-        return { error: 'License key already registered' };
+        // Key already in the licenses table — return the existing row
+        // so the activation step can claim / update it.
+        const { data: existing, error: fetchErr } = await client
+            .from('licenses')
+            .select('*')
+            .eq('license_key', licenseKey)
+            .single();
+        return { data: existing, error: fetchErr, alreadyExists: true };
     }
     
     const { data, error } = await client
@@ -364,7 +374,11 @@ async function addPendingLicense(licenseKey) {
 }
 
 /**
- * Activate a license after payment
+ * Activate a license after payment.
+ * Handles two cases:
+ *  1. License already belongs to this user (user_id matches) → update in place.
+ *  2. License exists but is unclaimed (user_id IS NULL — seed data) → claim it
+ *     for the current user and activate.
  */
 async function activateLicense(licenseKey, entityData) {
     const client = initSupabase();
@@ -377,28 +391,47 @@ async function activateLicense(licenseKey, entityData) {
     const expirationDate = new Date();
     expirationDate.setFullYear(expirationDate.getFullYear() + 1);
     
-    const { data, error } = await client
+    const updatePayload = {
+        status: 'active',
+        user_id: user.id,
+        entity_name: entityData.entityName,
+        legal_entity_name: entityData.legalEntityName,
+        entity_type: entityData.entityType,
+        entity_details: entityData,
+        activated_at: new Date().toISOString(),
+        expiration_date: expirationDate.toISOString()
+    };
+    
+    // Attempt 1: update the license that already belongs to this user
+    let { data, error } = await client
         .from('licenses')
-        .update({
-            status: 'active',
-            entity_name: entityData.entityName,
-            legal_entity_name: entityData.legalEntityName,
-            entity_type: entityData.entityType,
-            entity_details: entityData,
-            activated_at: new Date().toISOString(),
-            expiration_date: expirationDate.toISOString()
-        })
+        .update(updatePayload)
         .eq('license_key', licenseKey)
         .eq('user_id', user.id)
-        .select()
-        .single();
+        .select();
     
-    // Clear the pending license from localStorage
-    if (!error) {
+    if (!error && data && data.length > 0) {
+        // Matched by user_id — normal update
         clearPendingLicenseKey();
+        return { data: data[0], error: null };
     }
     
-    return { data, error };
+    // Attempt 2: license exists but user_id is NULL (unclaimed seed data).
+    // Claim it for this user.
+    const result = await client
+        .from('licenses')
+        .update(updatePayload)
+        .eq('license_key', licenseKey)
+        .is('user_id', null)
+        .select();
+    
+    if (!result.error && result.data && result.data.length > 0) {
+        clearPendingLicenseKey();
+        return { data: result.data[0], error: null };
+    }
+    
+    // If we still got nothing, return a helpful error
+    return { data: null, error: result.error || { message: 'License key not found or already claimed by another user.' } };
 }
 
 /**
@@ -520,12 +553,11 @@ async function createPaymentRecord(licenseKey, amountCents, paymentMethod) {
     const user = await getCurrentUser();
     if (!user) return { error: 'User not authenticated' };
 
-    // Find the license record
+    // Find the license record (may not have user_id yet if seed data)
     const { data: license } = await client
         .from('licenses')
         .select('id')
         .eq('license_key', licenseKey)
-        .eq('user_id', user.id)
         .single();
 
     const { data, error } = await client

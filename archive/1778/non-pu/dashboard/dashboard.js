@@ -390,12 +390,15 @@ document.addEventListener('DOMContentLoaded', async function () {
                 }
                 newExpiry.setFullYear(newExpiry.getFullYear() + 1);
 
-                // Update expiration in database
-                await NonPUAuth.activateLicense(tempKey, {
+                // Update expiration in database (claims unclaimed seed keys)
+                const activateResult = await NonPUAuth.activateLicense(tempKey, {
                     entityName: entityData.entityName || '',
                     legalEntityName: entityData.legalEntityName || '',
                     entityType: entityData.entityType || ''
                 });
+                if (activateResult.error) {
+                    throw new Error(activateResult.error.message || activateResult.error || 'License activation failed');
+                }
 
                 // Create payment record (free promotion — $0)
                 await NonPUAuth.createPaymentRecord(tempKey, 0, 'free_promotion');
@@ -450,7 +453,8 @@ document.addEventListener('DOMContentLoaded', async function () {
                 await NonPUAuth.addPendingLicense(tempKey);
 
                 // 3. Activate it immediately (free promotion — no Stripe)
-                await NonPUAuth.activateLicense(tempKey, {
+                //    This also claims unclaimed seed keys (user_id = null → current user)
+                const activateResult = await NonPUAuth.activateLicense(tempKey, {
                     entityName: entityData.entityName || '',
                     legalEntityName: entityData.legalEntityName || '',
                     entityType: entityData.entityType || '',
@@ -459,6 +463,9 @@ document.addEventListener('DOMContentLoaded', async function () {
                     companyRegistrationNumber: entityData.companyRegistrationNumber || null,
                     website: entityData.website || null
                 });
+                if (activateResult.error) {
+                    throw new Error(activateResult.error.message || activateResult.error || 'License activation failed');
+                }
 
                 // 4. Also save entity account if not already saved
                 try {
