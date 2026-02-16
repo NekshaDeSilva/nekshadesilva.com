@@ -379,17 +379,24 @@ async function addPendingLicense(licenseKey) {
  *  1. License already belongs to this user (user_id matches) → update in place.
  *  2. License exists but is unclaimed (user_id IS NULL — seed data) → claim it
  *     for the current user and activate.
+ *
+ * @param {string}  licenseKey   - The NP-XXXX-XXXX-XXXX-XXXX key
+ * @param {Object}  entityData   - Entity details to write into the license row
+ * @param {Date}   [expirationDate] - Optional expiry override. If omitted,
+ *                                     defaults to 1 year from now.
  */
-async function activateLicense(licenseKey, entityData) {
+async function activateLicense(licenseKey, entityData, expirationDate) {
     const client = initSupabase();
     if (!client) return { error: 'Supabase not initialized' };
     
     const user = await getCurrentUser();
     if (!user) return { error: 'User not authenticated' };
     
-    // Calculate expiration date (1 year from now)
-    const expirationDate = new Date();
-    expirationDate.setFullYear(expirationDate.getFullYear() + 1);
+    // Use caller-supplied expiration, or default to 1 year from now
+    if (!expirationDate) {
+        expirationDate = new Date();
+        expirationDate.setFullYear(expirationDate.getFullYear() + 1);
+    }
     
     const updatePayload = {
         status: 'active',
@@ -527,14 +534,21 @@ async function generateUniqueLicenseKey() {
 /**
  * Mark a license key as assigned in the registry
  */
+/**
+ * Mark a license key as assigned in the registry.
+ * Uses upsert: if the key doesn't exist yet it's inserted;
+ * if it already exists it's updated to is_assigned = true.
+ */
 async function markKeyAssigned(licenseKey) {
     const client = initSupabase();
     if (!client) return { error: 'Supabase not initialized' };
 
     const { error } = await client
         .from('license_key_registry')
-        .update({ is_assigned: true })
-        .eq('license_key', licenseKey);
+        .upsert(
+            { license_key: licenseKey, is_assigned: true },
+            { onConflict: 'license_key' }
+        );
 
     return { error };
 }

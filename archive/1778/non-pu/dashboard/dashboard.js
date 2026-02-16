@@ -391,11 +391,17 @@ document.addEventListener('DOMContentLoaded', async function () {
                 newExpiry.setFullYear(newExpiry.getFullYear() + 1);
 
                 // Update expiration in database (claims unclaimed seed keys)
+                // Pass the computed newExpiry so we extend from the current
+                // expiration date rather than resetting to 1-year-from-today.
                 const activateResult = await NonPUAuth.activateLicense(tempKey, {
                     entityName: entityData.entityName || '',
                     legalEntityName: entityData.legalEntityName || '',
-                    entityType: entityData.entityType || ''
-                });
+                    entityType: entityData.entityType || '',
+                    entityOriginLocationAndCountry: entityData.entityOriginLocationAndCountry || (buildLocation(entityData) !== '\u2014' ? buildLocation(entityData) : ''),
+                    entityEmail: entityData.entityEmails || {},
+                    companyRegistrationNumber: entityData.companyRegistrationNumber || null,
+                    website: entityData.website || null
+                }, newExpiry);
                 if (activateResult.error) {
                     throw new Error(activateResult.error.message || activateResult.error || 'License activation failed');
                 }
