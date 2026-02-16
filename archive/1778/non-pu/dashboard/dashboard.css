@@ -1115,6 +1115,30 @@ a {
     letter-spacing: -0.02em;
 }
 
+/* Celebratory note at bottom of dashboard */
+.dash-celebrate {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    margin-top: 32px;
+    padding: 0;
+}
+
+.dash-celebrate-icon {
+    width: 36px;
+    height: 36px;
+    flex-shrink: 0;
+    margin-top: 4px;
+}
+
+.dash-celebrate-text {
+    font-size: 22px;
+    font-weight: 300;
+    line-height: 1.5;
+    color: var(--text);
+    letter-spacing: -0.01em;
+}
+
 .dash-extend-success {
     text-align: center;
     padding: 32px 16px;
