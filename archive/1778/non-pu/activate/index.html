@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Activate License — NonPU Instant</title>
-    <link rel="icon" id="favicon" href="../assets/NonPU_icon.png" type="image/png">
+    <link rel="icon" id="favicon" href="../../assets/NonPU_icon.png" type="image/png">
     <link rel="stylesheet" href="../css/account.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
     <script>
@@ -14,9 +14,9 @@
                 const favicon = document.getElementById('favicon');
                 if (favicon) {
                     if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-                        favicon.href = '../assets/NonPU_taskbar_and_desktop_dark_mode_icon.png';
+                        favicon.href = '../../assets/nonpu_taskbar%20and_desktop_darkmodeuseonly.png';
                     } else {
-                        favicon.href = '../assets/NonPU_icon.png';
+                        favicon.href = '../../assets/NonPU_icon.png';
                     }
                 }
             };
@@ -383,7 +383,7 @@
         <header class="activation-header">
             <div class="activation-header-inner">
                 <div class="activation-logo">
-                    <img src="../assets/NonPU_Instant.png" alt="NonPU Instant" id="headerLogo">
+                    <img src="../../assets/NONPU_INSTSNT.PNG" alt="NonPU Instant" id="headerLogo">
                 </div>
                 <a href="../dashboard/" class="text-btn">Back to Dashboard</a>
             </div>
@@ -519,14 +519,23 @@
         <footer class="activation-footer">
             <p>By completing this purchase, you agree to the <a href="/legal/license.html">NonPU Instant License Agreement</a> and <a href="/legal/license.html">Terms of Service</a>.</p>
             <div class="activation-footer-brand">
-                <img src="../assets/brand_logo.png" alt="GVMA" id="footerLogo">
-                <span>© 2026 GVMA Incorporated — Global Vision for Machinery Advancement</span>
+                <img src="../../assets/brand_logo.png" alt="GVMA" id="footerLogo">
             </div>
         </footer>
     </div>
     
     <!-- Scripts -->
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        // Load Supabase from CDN asynchronously so UI always works
+        (function() {
+            var s = document.createElement('script');
+            s.src = 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2';
+            s.onerror = function() {
+                console.warn('Supabase CDN failed to load – activation UI will still render.');
+            };
+            document.head.appendChild(s);
+        })();
+    </script>
     <script src="../js/auth.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', async function() {
@@ -564,13 +573,24 @@
             showLoading();
             
             // Initialize Supabase
-            NonPUAuth.initSupabase();
+            try {
+                NonPUAuth.initSupabase();
+            } catch (err) {
+                console.warn('Supabase init skipped:', err.message);
+            }
             
             // Check if user is logged in
-            const { data: user, error } = await NonPUAuth.getCurrentUser();
+            let user = null;
+            try {
+                const result = await NonPUAuth.getCurrentUser();
+                user = result && result.data ? result.data : result;
+            } catch (err) {
+                console.warn('Auth check failed:', err.message);
+            }
             
-            if (error || !user) {
+            if (!user) {
                 // Redirect to login with return URL
+                hideLoading();
                 window.location.href = '../?redirect=' + encodeURIComponent(window.location.href);
                 return;
             }

@@ -1,6 +1,6 @@
 /**
  * NonPU Account System - Supabase Authentication Module
- * GVMA Incorporated — Global Vision for Machinery Advancement
+ * GVMA PBC
  * 
  * This module handles all authentication and database operations
  * for the NonPU licensing system.
@@ -10,8 +10,19 @@
 // CONFIGURATION - Replace with your Supabase credentials
 // ============================================
 const SUPABASE_CONFIG = {
-    url: 'YOUR_SUPABASE_PROJECT_URL', // e.g., https://xyzabc.supabase.co
-    anonKey: 'YOUR_SUPABASE_ANON_KEY'
+    url: 'https://vgnxpefbzvralyoowrvs.supabase.co',
+    anonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZnbnhwZWZienZyYWx5b293cnZzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzExNDI4NjAsImV4cCI6MjA4NjcxODg2MH0.IqBB7hVudKyuJhsCwZ3XEUeJDTtWCX-4VPPxyDUtdWI',
+    publishableKey: 'sb_publishable_MHVPSPBNrC5TTDWCgsvK6g_oaGoWk8V',
+    secretKey: 'sb_secret_LDegxaYARLPt9zI_RLvDmA_XZi9G1R6',
+    projectId: 'vgnxpefbzvralyoowrvs'
+};
+
+// ============================================
+// hCaptcha Configuration
+// ============================================
+const HCAPTCHA_CONFIG = {
+    siteKey: '47be45ae-5ea0-48ce-b962-84cc0da02b7e'
+    // Secret key (ES_7ef22685b2af40e1828cc334fc9fc081) is for server-side verification only
 };
 
 // ============================================
@@ -102,6 +113,9 @@ async function checkLicenseKeyExists(licenseKey) {
 
 /**
  * Sign up a new user with email and password
+ * Note: Email confirmation is disabled during testing phase.
+ * To re-enable, remove the emailRedirectTo option and enable
+ * "Confirm email" in Supabase Dashboard > Authentication > Settings.
  */
 async function signUp(email, password) {
     const client = initSupabase();
@@ -109,7 +123,11 @@ async function signUp(email, password) {
     
     const { data, error } = await client.auth.signUp({
         email: email,
-        password: password
+        password: password,
+        options: {
+            // During testing: skip email confirmation
+            emailRedirectTo: window.location.origin + '/archive/1778/non-pu/dashboard/'
+        }
     });
     
     return { data, error };
@@ -169,6 +187,7 @@ async function getSession() {
 
 /**
  * Create a new entity account
+ * Data structure aligned with keys.JSON license registry schema
  * @param {Object} entityData - The entity information
  */
 async function createEntityAccount(entityData) {
@@ -185,8 +204,10 @@ async function createEntityAccount(entityData) {
             entity_type: entityData.entityType,
             entity_name: entityData.entityName,
             legal_entity_name: entityData.legalEntityName,
+            entity_logo: entityData.entityLogo || null,
             entity_origin_location: entityData.entityOriginLocation,
             entity_country: entityData.entityCountry,
+            entity_origin_location_and_country: entityData.entityOriginLocationAndCountry || null,
             entity_emails: entityData.entityEmails,
             company_registration_number: entityData.companyRegistrationNumber,
             website: entityData.website,
@@ -380,6 +401,200 @@ function generateLicenseKey() {
 }
 
 /**
+ * Generate a unique license key that does not already exist in the registry
+ * Keeps regenerating until a unique one is found
+ */
+async function generateUniqueLicenseKey() {
+    const client = initSupabase();
+    if (!client) return { data: null, error: 'Supabase not initialized' };
+
+    let attempts = 0;
+    const maxAttempts = 10;
+
+    while (attempts < maxAttempts) {
+        const key = generateLicenseKey();
+
+        // Check registry for duplicates
+        const { data } = await client
+            .from('license_key_registry')
+            .select('license_key')
+            .eq('license_key', key)
+            .single();
+
+        if (!data) {
+            // Key doesn't exist — register it
+            const { error: insertError } = await client
+                .from('license_key_registry')
+                .insert([{ license_key: key, is_assigned: false }]);
+
+            if (!insertError) {
+                return { data: key, error: null };
+            }
+        }
+
+        attempts++;
+    }
+
+    return { data: null, error: 'Failed to generate unique key after ' + maxAttempts + ' attempts' };
+}
+
+/**
+ * Mark a license key as assigned in the registry
+ */
+async function markKeyAssigned(licenseKey) {
+    const client = initSupabase();
+    if (!client) return { error: 'Supabase not initialized' };
+
+    const { error } = await client
+        .from('license_key_registry')
+        .update({ is_assigned: true })
+        .eq('license_key', licenseKey);
+
+    return { error };
+}
+
+// ============================================
+// PAYMENT MANAGEMENT
+// ============================================
+
+/**
+ * Create a pending payment record before redirecting to Stripe
+ */
+async function createPaymentRecord(licenseKey, amountCents, paymentMethod) {
+    const client = initSupabase();
+    if (!client) return { error: 'Supabase not initialized' };
+
+    const user = await getCurrentUser();
+    if (!user) return { error: 'User not authenticated' };
+
+    // Find the license record
+    const { data: license } = await client
+        .from('licenses')
+        .select('id')
+        .eq('license_key', licenseKey)
+        .eq('user_id', user.id)
+        .single();
+
+    const { data, error } = await client
+        .from('payments')
+        .insert([{
+            user_id: user.id,
+            license_id: license ? license.id : null,
+            license_key: licenseKey,
+            amount_cents: amountCents || 9900,
+            currency: 'usd',
+            status: 'pending',
+            payment_method: paymentMethod || 'card',
+            created_at: new Date().toISOString()
+        }])
+        .select()
+        .single();
+
+    return { data, error };
+}
+
+/**
+ * Update payment status after Stripe callback
+ */
+async function updatePaymentStatus(paymentId, status, stripeSessionId, stripePaymentIntentId) {
+    const client = initSupabase();
+    if (!client) return { error: 'Supabase not initialized' };
+
+    const updates = { status: status };
+    if (stripeSessionId) updates.stripe_session_id = stripeSessionId;
+    if (stripePaymentIntentId) updates.stripe_payment_intent_id = stripePaymentIntentId;
+    if (status === 'completed') updates.paid_at = new Date().toISOString();
+
+    const { data, error } = await client
+        .from('payments')
+        .update(updates)
+        .eq('id', paymentId)
+        .select()
+        .single();
+
+    return { data, error };
+}
+
+/**
+ * Get all payments for the current user
+ */
+async function getUserPayments() {
+    const client = initSupabase();
+    if (!client) return { error: 'Supabase not initialized' };
+
+    const user = await getCurrentUser();
+    if (!user) return { error: 'User not authenticated' };
+
+    const { data, error } = await client
+        .from('payments')
+        .select('*')
+        .eq('user_id', user.id)
+        .order('created_at', { ascending: false });
+
+    return { data, error };
+}
+
+// ============================================
+// DEVICE BINDING
+// ============================================
+
+/**
+ * Bind a license to a specific device/SD card
+ */
+async function bindLicenseToDevice(licenseKey, deviceIdentifier) {
+    const client = initSupabase();
+    if (!client) return { error: 'Supabase not initialized' };
+
+    // Get the license record
+    const { data: license, error: licenseError } = await client
+        .from('licenses')
+        .select('id, user_id')
+        .eq('license_key', licenseKey)
+        .single();
+
+    if (licenseError || !license) return { error: 'License not found' };
+
+    // Deactivate any existing binding for this license
+    await client
+        .from('device_bindings')
+        .update({ is_active: false, unbound_at: new Date().toISOString() })
+        .eq('license_id', license.id)
+        .eq('is_active', true);
+
+    // Create new binding
+    const { data, error } = await client
+        .from('device_bindings')
+        .insert([{
+            license_id: license.id,
+            license_key: licenseKey,
+            device_identifier: deviceIdentifier,
+            bound_at: new Date().toISOString(),
+            is_active: true
+        }])
+        .select()
+        .single();
+
+    return { data, error };
+}
+
+/**
+ * Get device binding for a license
+ */
+async function getDeviceBinding(licenseKey) {
+    const client = initSupabase();
+    if (!client) return { error: 'Supabase not initialized' };
+
+    const { data, error } = await client
+        .from('device_bindings')
+        .select('*')
+        .eq('license_key', licenseKey)
+        .eq('is_active', true)
+        .single();
+
+    return { data, error };
+}
+
+/**
  * Validate license key format
  */
 function validateLicenseKeyFormat(key) {
@@ -426,6 +641,17 @@ const NonPUAuth = {
     addPendingLicense,
     activateLicense,
     getLicenseByKey,
+    generateUniqueLicenseKey,
+    markKeyAssigned,
+
+    // Payment management
+    createPaymentRecord,
+    updatePaymentStatus,
+    getUserPayments,
+
+    // Device binding
+    bindLicenseToDevice,
+    getDeviceBinding,
     
     // State listener
     onAuthStateChange,

@@ -1,42 +1,35 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Create Account — NonPU Instant</title>
-    <link rel="icon" id="favicon" href="../assets/NonPU_icon.png" type="image/png">
+    <title>Create Account  NonPU Instant</title>
+    <link rel="icon" id="favicon" href="../../assets/NonPU_icon.png" type="image/png">
     <link rel="stylesheet" href="../css/account.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+    <!-- hCaptcha -->
+    <script src="https://js.hcaptcha.com/1/api.js" async defer></script>
     <script>
-        // Theme-aware favicon
         (function() {
-            const setFavicon = () => {
-                const favicon = document.getElementById('favicon');
-                if (favicon) {
-                    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-                        favicon.href = '../assets/NonPU_taskbar_and_desktop_dark_mode_icon.png';
-                    } else {
-                        favicon.href = '../assets/NonPU_icon.png';
-                    }
-                }
+            var setFav = function() {
+                var el = document.getElementById('favicon');
+                if (!el) return;
+                el.href = window.matchMedia('(prefers-color-scheme: dark)').matches
+                    ? '../../assets/nonpu_taskbar%20and_desktop_darkmodeuseonly.png'
+                    : '../../assets/NonPU_icon.png';
             };
-            
-            // Set on load
             if (document.readyState === 'loading') {
-                document.addEventListener('DOMContentLoaded', setFavicon);
-            } else {
-                setFavicon();
-            }
-            
-            // Listen for theme changes
-            window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', setFavicon);
+                document.addEventListener('DOMContentLoaded', setFav);
+            } else { setFav(); }
+            window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', setFav);
         })();
     </script>
 </head>
 <body>
     <!-- Loading Bar -->
     <div class="loading-bar" id="loadingBar"></div>
-    
+
     <div class="auth-container">
         <!-- Pending License Notice -->
         <div class="pending-license-notice" id="pendingLicenseNotice" style="display: none;">
@@ -45,15 +38,15 @@
             </svg>
             <span>License key detected: <strong id="pendingKeyDisplay">NP-XXXX-XXXX-XXXX-XXXX</strong></span>
         </div>
-        
+
         <div class="auth-card animate-fadeIn">
             <!-- Header with NonPU Instant Text Logo -->
             <div class="auth-header">
-                <img src="../assets/NonPU_Instant.png" alt="NonPU Instant" class="auth-logo" id="headerLogo">
+                <img src="../../assets/NONPU_INSTSNT.PNG" alt="NonPU Instant" class="auth-logo" id="headerLogo">
                 <h1 class="auth-title">Create an Account</h1>
                 <p class="auth-subtitle" id="stepSubtitle">Select your entity type to access NonPU Instant software</p>
             </div>
-            
+
             <!-- Error Message -->
             <div class="error-message" id="errorMessage" style="display: none;">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
@@ -61,7 +54,7 @@
                 </svg>
                 <span id="errorText">Error message here</span>
             </div>
-            
+
             <!-- Step Progress -->
             <div class="step-progress" id="stepProgress">
                 <div class="step-dot active" data-step="1"></div>
@@ -70,7 +63,7 @@
                 <div class="step-dot" data-step="4"></div>
                 <div class="step-dot" data-step="5"></div>
             </div>
-            
+
             <!-- Step 1: Entity Type Selection -->
             <div class="step-content" id="step1">
                 <div class="entity-type-grid">
@@ -83,7 +76,7 @@
                         <div class="entity-type-name">Individual</div>
                         <div class="entity-type-desc">Personal research or development use</div>
                     </div>
-                    
+
                     <div class="entity-type-card" data-type="personal-team" tabindex="0">
                         <div class="entity-type-icon">
                             <svg viewBox="0 0 24 24" fill="currentColor">
@@ -93,7 +86,7 @@
                         <div class="entity-type-name">Research Team</div>
                         <div class="entity-type-desc">Small team or research group</div>
                     </div>
-                    
+
                     <div class="entity-type-card" data-type="corporate" tabindex="0">
                         <div class="entity-type-icon">
                             <svg viewBox="0 0 24 24" fill="currentColor">
@@ -103,7 +96,7 @@
                         <div class="entity-type-name">Corporate</div>
                         <div class="entity-type-desc">Enterprise or commercial organization</div>
                     </div>
-                    
+
                     <div class="entity-type-card" data-type="non-profit" tabindex="0">
                         <div class="entity-type-icon">
                             <svg viewBox="0 0 24 24" fill="currentColor">
@@ -114,13 +107,13 @@
                         <div class="entity-type-desc">Educational or research institution</div>
                     </div>
                 </div>
-                
+
                 <div class="form-actions">
                     <a href="../" class="text-btn">Sign in instead</a>
                     <button type="button" class="primary-btn" id="step1Next" disabled>Continue</button>
                 </div>
             </div>
-            
+
             <!-- Step 2 (Nonprofit Only): Subtype Selection -->
             <div class="step-content" id="step2nonprofit" style="display: none;">
                 <h2 class="step-title">Select Institution Type</h2>
@@ -134,7 +127,7 @@
                         <div class="entity-type-name">University</div>
                         <div class="entity-type-desc">Higher education institution</div>
                     </div>
-                    
+
                     <div class="entity-type-card" data-subtype="educational-school" tabindex="0">
                         <div class="entity-type-icon">
                             <svg viewBox="0 0 24 24" fill="currentColor">
@@ -144,7 +137,7 @@
                         <div class="entity-type-name">School</div>
                         <div class="entity-type-desc">Primary or secondary education</div>
                     </div>
-                    
+
                     <div class="entity-type-card" data-subtype="research-institution" tabindex="0">
                         <div class="entity-type-icon">
                             <svg viewBox="0 0 24 24" fill="currentColor">
@@ -154,7 +147,7 @@
                         <div class="entity-type-name">Research Institution</div>
                         <div class="entity-type-desc">Independent research organization</div>
                     </div>
-                    
+
                     <div class="entity-type-card" data-subtype="other-nonprofit" tabindex="0">
                         <div class="entity-type-icon">
                             <svg viewBox="0 0 24 24" fill="currentColor">
@@ -165,18 +158,18 @@
                         <div class="entity-type-desc">NGO or charitable organization</div>
                     </div>
                 </div>
-                
+
                 <div class="form-actions">
                     <button type="button" class="text-btn" id="step2nonprofitBack">Back</button>
                     <button type="button" class="primary-btn" id="step2nonprofitNext" disabled>Continue</button>
                 </div>
             </div>
-            
+
             <!-- Step 2/3: Basic Information -->
             <div class="step-content" id="step2basic" style="display: none;">
                 <h2 class="step-title">Account Information</h2>
                 <p class="step-subtitle" id="basicInfoSubtitle">Enter your details</p>
-                
+
                 <form id="basicInfoForm">
                     <!-- Personal fields (for individual/team) -->
                     <div id="personalFields">
@@ -195,7 +188,7 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <!-- Corporate/Nonprofit fields -->
                     <div id="corporateFields" style="display: none;">
                         <div class="form-group">
@@ -211,8 +204,26 @@
                             </div>
                             <span class="input-hint">As registered with your jurisdiction</span>
                         </div>
+
+                        <!-- Company / Legal Logo Upload -->
+                        <div class="form-group">
+                            <label class="logo-upload-label">Company / Legal Logo</label>
+                            <div class="logo-upload-area" id="logoUploadArea">
+                                <div class="logo-upload-placeholder" id="logoPlaceholder">
+                                    <svg width="40" height="40" viewBox="0 0 24 24" fill="currentColor">
+                                        <path d="M19 7v2.99s-1.99.01-2 0V7h-3s.01-1.99 0-2h3V2h2v3h3v2h-3zm-3 4V8h-3V5H5c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2v-8h-3zM5 19l3-4 2 3 3-4 4 5H5z"/>
+                                    </svg>
+                                    <span>Click to upload or drag and drop</span>
+                                    <span class="logo-upload-hint">PNG, JPG, or SVG (max 2MB)</span>
+                                </div>
+                                <img class="logo-upload-preview" id="logoPreview" alt="Logo preview" style="display: none;">
+                                <button type="button" class="logo-remove-btn" id="logoRemoveBtn" style="display: none;">&times;</button>
+                            </div>
+                            <input type="file" id="entityLogoInput" accept="image/png,image/jpeg,image/svg+xml" style="display: none;">
+                            <span class="input-hint">Optional — your organization logo for license identification</span>
+                        </div>
                     </div>
-                    
+
                     <div class="form-group">
                         <div class="input-container">
                             <input type="email" id="signupEmail" name="email" required placeholder=" ">
@@ -220,7 +231,7 @@
                         </div>
                         <span class="input-hint">This will be your primary account email</span>
                     </div>
-                    
+
                     <div class="form-group">
                         <div class="input-container">
                             <input type="password" id="signupPassword" name="password" required minlength="8" placeholder=" ">
@@ -228,26 +239,26 @@
                         </div>
                         <span class="input-hint">Minimum 8 characters</span>
                     </div>
-                    
+
                     <div class="form-group">
                         <div class="input-container">
                             <input type="password" id="confirmPassword" name="confirmPassword" required placeholder=" ">
                             <label for="confirmPassword">Confirm password</label>
                         </div>
                     </div>
-                    
+
                     <div class="form-actions">
                         <button type="button" class="text-btn" id="step2basicBack">Back</button>
                         <button type="submit" class="primary-btn">Continue</button>
                     </div>
                 </form>
             </div>
-            
+
             <!-- Step 3/4: Location & Contact -->
             <div class="step-content" id="step3location" style="display: none;">
                 <h2 class="step-title">Location & Contact</h2>
                 <p class="step-subtitle">Where is your organization based?</p>
-                
+
                 <form id="locationForm">
                     <div class="form-row">
                         <div class="form-group">
@@ -263,7 +274,7 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <!-- Corporate/Nonprofit additional fields -->
                     <div id="corporateContactFields" style="display: none;">
                         <div class="form-group">
@@ -273,21 +284,29 @@
                             </div>
                             <span class="input-hint">Optional but recommended for verification</span>
                         </div>
-                        
+
+                        <div class="form-group">
+                            <div class="input-container">
+                                <input type="text" id="division" name="division" placeholder=" ">
+                                <label for="division">Division / Department</label>
+                            </div>
+                            <span class="input-hint">Optional — primary division using NonPU Instant</span>
+                        </div>
+
                         <div class="form-group">
                             <div class="input-container">
                                 <input type="url" id="website" name="website" placeholder=" ">
                                 <label for="website">Website</label>
                             </div>
                         </div>
-                        
+
                         <div class="form-group">
                             <div class="input-container">
                                 <input type="tel" id="phoneNumber" name="phoneNumber" placeholder=" ">
                                 <label for="phoneNumber">Phone number</label>
                             </div>
                         </div>
-                        
+
                         <div class="form-group" id="employeeCountGroup">
                             <div class="input-container">
                                 <select id="employeeCount" name="employeeCount">
@@ -303,19 +322,19 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <div class="form-actions">
                         <button type="button" class="text-btn" id="step3Back">Back</button>
                         <button type="submit" class="primary-btn">Continue</button>
                     </div>
                 </form>
             </div>
-            
+
             <!-- Step 4/5: Responsible Authority (Corporate/Nonprofit only) -->
             <div class="step-content" id="step4authority" style="display: none;">
                 <h2 class="step-title">Responsible Authority</h2>
                 <p class="step-subtitle">Designate the person authorized to manage this license</p>
-                
+
                 <form id="authorityForm">
                     <div class="form-row">
                         <div class="form-group">
@@ -331,21 +350,21 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <div class="form-group">
                         <div class="input-container">
                             <input type="email" id="authorityEmail" name="authorityEmail" required placeholder=" ">
                             <label for="authorityEmail">Email address</label>
                         </div>
                     </div>
-                    
+
                     <div class="form-group">
                         <div class="input-container">
                             <input type="tel" id="authorityPhone" name="authorityPhone" placeholder=" ">
                             <label for="authorityPhone">Phone number</label>
                         </div>
                     </div>
-                    
+
                     <div class="form-group">
                         <div class="input-container">
                             <input type="text" id="teamName" name="teamName" placeholder=" ">
@@ -353,19 +372,19 @@
                         </div>
                         <span class="input-hint">Optional</span>
                     </div>
-                    
+
                     <div class="form-actions">
                         <button type="button" class="text-btn" id="step4Back">Back</button>
                         <button type="submit" class="primary-btn">Continue</button>
                     </div>
                 </form>
             </div>
-            
+
             <!-- Step 5/6: Terms Agreement -->
             <div class="step-content" id="step5agreement" style="display: none;">
                 <h2 class="step-title">License Agreement</h2>
                 <p class="step-subtitle">Review and accept the terms</p>
-                
+
                 <div class="terms-box">
                     <p>By creating an account, you acknowledge that:</p>
                     <ul>
@@ -375,7 +394,7 @@
                         <li>You agree to the <a href="/legal/license.html" target="_blank">Terms of Service</a> and <a href="/legal/license.html" target="_blank">Privacy Policy</a></li>
                     </ul>
                 </div>
-                
+
                 <div class="checkbox-group">
                     <label class="checkbox-label">
                         <input type="checkbox" id="agreeTerms" required>
@@ -383,7 +402,7 @@
                         <span>I agree to the NonPU Instant License Agreement and Terms of Service</span>
                     </label>
                 </div>
-                
+
                 <div class="checkbox-group">
                     <label class="checkbox-label">
                         <input type="checkbox" id="agreeUpdates">
@@ -391,29 +410,52 @@
                         <span>Send me updates about NonPU systems and GVMA products (optional)</span>
                     </label>
                 </div>
-                
+
+                <!-- hCaptcha Verification -->
+                <div class="hcaptcha-container">
+                    <div id="hcaptcha-signup" class="h-captcha" data-sitekey="47be45ae-5ea0-48ce-b962-84cc0da02b7e" data-theme="light" data-size="normal"></div>
+                    <p class="hcaptcha-error" id="hcaptchaError" style="display: none;">Please complete the verification to create your account</p>
+                </div>
+
                 <div class="form-actions">
                     <button type="button" class="text-btn" id="step5Back">Back</button>
                     <button type="button" class="primary-btn" id="createAccountBtn" disabled>Create Account</button>
                 </div>
             </div>
-            
-            <!-- Footer -->
-            <div class="auth-footer">
-                <div class="footer-links">
-                    <a href="/legal/license.html">License</a>
-                    <a href="/legal/license.html">Terms</a>
-                    <a href="/legal/license.html">Privacy</a>
-                </div>
-                <div class="footer-brand">
-                    <img src="../assets/brand_logo.png" alt="GVMA" class="footer-logo" id="footerLogo">
-                    <span>GVMA Incorporated</span>
-                </div>
-            </div>
         </div>
+
+        <!-- Separate page footer (outside the card) -->
+        <footer class="page-footer">
+            <div class="footer-links">
+                <a href="/legal/license.html">License</a>
+                <a href="/legal/license.html">Terms</a>
+                <a href="/legal/license.html">Privacy</a>
+            </div>
+            <div class="footer-brand">
+                <img src="../../assets/brand_logo.png" alt="GVMA" class="footer-logo" id="footerLogo">
+            </div>
+        </footer>
     </div>
-    
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <script>
+        // Load Supabase from CDN with timeout fallback so auth.js/signup.js always run
+        (function() {
+            var loaded = false;
+            var s = document.createElement('script');
+            s.src = 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2';
+            s.onload = function() { loaded = true; };
+            s.onerror = function() {
+                console.warn('Supabase CDN failed to load – signup UI will still work, but account creation requires connectivity.');
+            };
+            document.head.appendChild(s);
+            // Fallback: if CDN hasn't responded in 5 seconds, continue without it
+            setTimeout(function() {
+                if (!loaded) {
+                    console.warn('Supabase CDN timed out – continuing without it.');
+                }
+            }, 5000);
+        })();
+    </script>
     <script src="../js/auth.js"></script>
     <script src="../js/signup.js"></script>
 </body>

@@ -1,8 +1,9 @@
-/**
- * NonPU Account System - Styles
- * GVMA Incorporated — Global Vision for Machinery Advancement
+﻿/**
+ * NonPU Instant Account System - Styles
+ * GVMA PBC
  * 
  * Google Accounts-inspired professional UI
+ * Classes aligned with HTML templates (.auth-* naming convention)
  */
 
 /* ============================================
@@ -35,7 +36,7 @@
 }
 
 /* ============================================
-   Reset & Base
+   Reset and Base
    ============================================ */
 *, *::before, *::after {
     margin: 0;
@@ -78,35 +79,39 @@ body {
     opacity: 1;
 }
 
+.loading-bar::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 30%;
+    height: 100%;
+    background: #fff;
+    animation: loading-slide 2s ease-in-out infinite;
+    border-radius: 0 4px 4px 0;
+}
+
 .loading-bar-inner {
     position: absolute;
     top: 0;
     left: 0;
     width: 30%;
     height: 100%;
-    background: linear-gradient(90deg, var(--primary-color), #4285f4, #34a853, #fbbc04, #ea4335, var(--primary-color));
-    background-size: 200% 100%;
+    background: #fff;
     animation: loading-slide 2s ease-in-out infinite;
     border-radius: 0 4px 4px 0;
 }
 
 @keyframes loading-slide {
-    0% {
-        left: -30%;
-        width: 30%;
-    }
-    50% {
-        width: 50%;
-    }
-    100% {
-        left: 100%;
-        width: 30%;
-    }
+    0% { left: -30%; width: 30%; }
+    50% { width: 50%; }
+    100% { left: 100%; width: 30%; }
 }
 
 /* ============================================
-   Account Container
+   Auth Container (page wrapper)
    ============================================ */
+.auth-container,
 .account-container {
     min-height: 100vh;
     display: flex;
@@ -114,6 +119,7 @@ body {
     align-items: center;
     justify-content: center;
     padding: 24px;
+    background-color: #000;
 }
 
 /* ============================================
@@ -136,8 +142,9 @@ body {
 }
 
 /* ============================================
-   Account Card
+   Auth Card
    ============================================ */
+.auth-card,
 .account-card {
     width: 100%;
     max-width: 450px;
@@ -149,12 +156,13 @@ body {
 }
 
 @media (max-width: 480px) {
+    .auth-card,
     .account-card {
         padding: 32px 24px 24px;
         border: none;
         box-shadow: none;
     }
-    
+    .auth-container,
     .account-container {
         justify-content: flex-start;
         padding-top: 48px;
@@ -162,13 +170,21 @@ body {
 }
 
 /* ============================================
-   Card Header
+   Auth Header (logo + title + subtitle in card)
    ============================================ */
+.auth-header,
 .card-header {
     text-align: center;
     margin-bottom: 32px;
 }
 
+.auth-logo {
+    height: 52px;
+    width: auto;
+    margin-bottom: 16px;
+}
+
+.auth-title,
 .card-header h1 {
     font-family: var(--font-main);
     font-size: 24px;
@@ -177,6 +193,7 @@ body {
     margin-bottom: 8px;
 }
 
+.auth-subtitle,
 .card-header p {
     font-size: 16px;
     color: var(--text-secondary);
@@ -189,8 +206,66 @@ body {
 }
 
 /* ============================================
+   User Chip (email display on sign-in step 2)
+   ============================================ */
+.user-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 4px 12px 4px 4px;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-large);
+    margin-bottom: 24px;
+    cursor: default;
+    max-width: 100%;
+}
+
+.user-chip-avatar {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--primary-color);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 500;
+    flex-shrink: 0;
+}
+
+.user-chip-email,
+.user-chip span {
+    font-size: 14px;
+    color: var(--text-primary);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.user-chip-change {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    background: none;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    color: var(--text-secondary);
+    flex-shrink: 0;
+    transition: background-color var(--transition-fast);
+}
+
+.user-chip-change:hover {
+    background: var(--background-hover);
+}
+
+/* ============================================
    Form Elements
    ============================================ */
+.auth-form,
 .account-form {
     width: 100%;
 }
@@ -208,11 +283,17 @@ body {
     flex: 1;
 }
 
-/* Input Wrapper with Floating Label */
+/* ============================================
+   Input Container with Floating Label
+   ============================================ */
+.input-container,
 .input-wrapper {
     position: relative;
 }
 
+.input-container input,
+.input-container select,
+.input-container textarea,
 .input-wrapper input,
 .input-wrapper select,
 .input-wrapper textarea {
@@ -228,6 +309,9 @@ body {
     transition: border-color var(--transition-fast);
 }
 
+.input-container input:focus,
+.input-container select:focus,
+.input-container textarea:focus,
 .input-wrapper input:focus,
 .input-wrapper select:focus,
 .input-wrapper textarea:focus {
@@ -236,10 +320,14 @@ body {
     padding: 12px 14px;
 }
 
+.input-container input:focus + label,
+.input-container input:not(:placeholder-shown) + label,
+.input-container select:focus + label,
+.input-container textarea:focus + label,
+.input-container textarea:not(:placeholder-shown) + label,
 .input-wrapper input:focus + label,
 .input-wrapper input:not(:placeholder-shown) + label,
 .input-wrapper select:focus + label,
-.input-wrapper select:not([value=""]) + label,
 .input-wrapper textarea:focus + label,
 .input-wrapper textarea:not(:placeholder-shown) + label {
     top: -8px;
@@ -250,6 +338,7 @@ body {
     color: var(--primary-color);
 }
 
+.input-container label,
 .input-wrapper label {
     position: absolute;
     top: 50%;
@@ -262,14 +351,36 @@ body {
     background: transparent;
 }
 
+.input-container textarea + label,
 .input-wrapper textarea + label {
     top: 16px;
     transform: none;
 }
 
+.input-container input::placeholder,
+.input-container textarea::placeholder,
 .input-wrapper input::placeholder,
 .input-wrapper textarea::placeholder {
     color: transparent;
+}
+
+.input-hint {
+    display: block;
+    font-size: 12px;
+    color: var(--text-secondary);
+    margin-top: 4px;
+    padding-left: 2px;
+}
+
+.select-label {
+    position: absolute;
+    top: -8px;
+    left: 12px;
+    font-size: 12px;
+    background: var(--background-main);
+    padding: 0 4px;
+    color: var(--text-secondary);
+    pointer-events: none;
 }
 
 /* Input with icon */
@@ -292,12 +403,16 @@ body {
 }
 
 /* Error state */
+.input-container.error input,
+.input-container.error select,
+.input-container.error textarea,
 .input-wrapper.error input,
 .input-wrapper.error select,
 .input-wrapper.error textarea {
     border-color: var(--error-color);
 }
 
+.input-container.error label,
 .input-wrapper.error label {
     color: var(--error-color);
 }
@@ -339,7 +454,7 @@ body {
 }
 
 /* ============================================
-   Checkbox & Radio
+   Checkbox and Radio
    ============================================ */
 .checkbox-wrapper,
 .radio-wrapper {
@@ -358,7 +473,33 @@ body {
     accent-color: var(--primary-color);
 }
 
-.checkbox-label,
+.checkbox-group {
+    margin-bottom: 16px;
+}
+
+.checkbox-label {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    cursor: pointer;
+    font-size: 14px;
+    color: var(--text-primary);
+    line-height: 1.5;
+}
+
+.checkbox-label input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    margin-top: 2px;
+    cursor: pointer;
+    accent-color: var(--primary-color);
+    flex-shrink: 0;
+}
+
+.checkbox-custom {
+    display: none;
+}
+
 .radio-label {
     font-size: 14px;
     color: var(--text-primary);
@@ -368,6 +509,7 @@ body {
 /* ============================================
    Buttons
    ============================================ */
+.primary-btn,
 .btn-primary {
     display: inline-flex;
     align-items: center;
@@ -383,13 +525,16 @@ body {
     cursor: pointer;
     transition: background-color var(--transition-fast), box-shadow var(--transition-fast);
     min-width: 88px;
+    text-decoration: none;
 }
 
+.primary-btn:hover,
 .btn-primary:hover {
     background: var(--primary-hover);
     box-shadow: var(--shadow-1);
 }
 
+.primary-btn:disabled,
 .btn-primary:disabled {
     background: var(--text-disabled);
     cursor: not-allowed;
@@ -416,6 +561,7 @@ body {
     border-color: var(--primary-light);
 }
 
+.text-btn,
 .btn-text {
     display: inline-flex;
     align-items: center;
@@ -432,6 +578,7 @@ body {
     transition: background-color var(--transition-fast);
 }
 
+.text-btn:hover,
 .btn-text:hover {
     background: var(--primary-light);
 }
@@ -512,7 +659,7 @@ body {
     padding: 16px;
     background: #fce8e6;
     border-radius: var(--radius-small);
-    margin-top: 24px;
+    margin-bottom: 24px;
     color: var(--error-color);
 }
 
@@ -531,7 +678,7 @@ body {
     padding: 16px;
     background: #e6f4ea;
     border-radius: var(--radius-small);
-    margin-top: 24px;
+    margin-bottom: 24px;
     color: var(--success-color);
 }
 
@@ -540,14 +687,21 @@ body {
    ============================================ */
 .pending-license-notice {
     display: flex;
-    align-items: flex-start;
-    gap: 16px;
-    padding: 16px 20px;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 20px;
     background: var(--primary-light);
     border-radius: var(--radius-medium);
-    margin-top: 24px;
+    margin-bottom: 24px;
     max-width: 450px;
     width: 100%;
+    font-size: 14px;
+    color: var(--text-primary);
+}
+
+.pending-license-notice svg {
+    flex-shrink: 0;
+    color: var(--primary-color);
 }
 
 .notice-icon {
@@ -571,8 +725,75 @@ body {
 }
 
 /* ============================================
-   Account Footer
+   hCaptcha Container
    ============================================ */
+.hcaptcha-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin: 20px 0 8px;
+}
+
+.hcaptcha-error {
+    font-size: 12px;
+    color: var(--error-color);
+    margin-top: 8px;
+    text-align: center;
+}
+
+/* ============================================
+   Page Footer (separate element below card)
+   ============================================ */
+.page-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    max-width: 450px;
+    margin-top: 24px;
+    padding: 16px 8px 0;
+}
+
+/* Legacy: kept for backward compatibility */
+.auth-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 32px;
+    padding-top: 24px;
+    border-top: 1px solid var(--border-color);
+}
+
+.footer-links {
+    display: flex;
+    gap: 16px;
+}
+
+.footer-links a {
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+}
+
+.footer-links a:hover {
+    color: #fff;
+}
+
+.footer-brand {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.footer-logo {
+    height: 18px;
+    width: auto;
+    opacity: 0.85;
+}
+
+/* Legacy footer */
 .account-footer {
     display: flex;
     justify-content: space-between;
@@ -608,13 +829,35 @@ body {
 }
 
 /* ============================================
-   Entity Type Selection (Signup Step 1)
+   Step Content (multi-step panels)
+   ============================================ */
+.step-content {
+    width: 100%;
+}
+
+.step-title {
+    font-family: var(--font-main);
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--text-primary);
+    margin-bottom: 4px;
+}
+
+.step-subtitle {
+    font-size: 14px;
+    color: var(--text-secondary);
+    margin-bottom: 20px;
+}
+
+/* ============================================
+   Entity Type Selection
    ============================================ */
 .entity-type-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 16px;
     margin-top: 24px;
+    margin-bottom: 8px;
 }
 
 .entity-type-card {
@@ -660,6 +903,11 @@ body {
     color: var(--primary-color);
 }
 
+.entity-type-icon svg {
+    width: 100%;
+    height: 100%;
+}
+
 .entity-type-name {
     font-family: var(--font-main);
     font-size: 14px;
@@ -677,6 +925,102 @@ body {
     .entity-type-grid {
         grid-template-columns: 1fr;
     }
+}
+
+/* ============================================
+   Logo Upload Area
+   ============================================ */
+.logo-upload-label {
+    font-family: var(--font-main);
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    margin-bottom: 8px;
+    display: block;
+}
+
+.logo-upload-area {
+    position: relative;
+    border: 2px dashed var(--border-color);
+    border-radius: var(--radius-medium);
+    padding: 24px;
+    text-align: center;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    background: var(--background-main);
+    min-height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.logo-upload-area:hover {
+    border-color: var(--primary-color);
+    background: var(--primary-light);
+}
+
+.logo-upload-area.drag-over {
+    border-color: var(--primary-color);
+    background: var(--primary-light);
+    box-shadow: 0 0 0 3px rgba(26, 115, 232, 0.2);
+}
+
+.logo-upload-area.has-image {
+    border-style: solid;
+    padding: 12px;
+}
+
+.logo-upload-placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    color: var(--text-secondary);
+}
+
+.logo-upload-placeholder svg {
+    opacity: 0.5;
+}
+
+.logo-upload-placeholder span {
+    font-family: var(--font-main);
+    font-size: 13px;
+}
+
+.logo-upload-hint {
+    font-size: 11px !important;
+    opacity: 0.7;
+}
+
+.logo-upload-preview {
+    max-width: 200px;
+    max-height: 100px;
+    object-fit: contain;
+    border-radius: var(--radius-small);
+}
+
+.logo-remove-btn {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    border: none;
+    background: var(--error-color);
+    color: white;
+    font-size: 16px;
+    line-height: 1;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    transition: opacity var(--transition-fast);
+}
+
+.logo-remove-btn:hover {
+    opacity: 0.8;
 }
 
 /* ============================================
@@ -708,7 +1052,29 @@ body {
 }
 
 /* ============================================
-   Corporate/Nonprofit Details Section
+   Terms Box
+   ============================================ */
+.terms-box {
+    max-height: 200px;
+    overflow-y: auto;
+    padding: 16px;
+    background: var(--background-hover);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-small);
+    margin-bottom: 20px;
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+}
+
+.terms-box p { margin-bottom: 8px; }
+.terms-box ul { padding-left: 20px; }
+.terms-box li { margin-bottom: 6px; }
+.terms-box a { color: var(--primary-color); text-decoration: none; }
+.terms-box a:hover { text-decoration: underline; }
+
+/* ============================================
+   Details Section
    ============================================ */
 .details-section {
     margin-top: 24px;
@@ -725,7 +1091,7 @@ body {
 }
 
 /* ============================================
-   Responsible Authority Section
+   Authority Section
    ============================================ */
 .authority-card {
     padding: 16px;
@@ -759,7 +1125,7 @@ body {
 }
 
 /* ============================================
-   Agreement Section
+   Agreement Section (legacy)
    ============================================ */
 .agreement-section {
     margin-top: 32px;
@@ -870,9 +1236,7 @@ body {
     box-shadow: var(--shadow-1);
 }
 
-.license-info {
-    flex: 1;
-}
+.license-info { flex: 1; }
 
 .license-key {
     font-family: 'Roboto Mono', monospace;
@@ -964,14 +1328,8 @@ body {
 }
 
 @keyframes slideUp {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
 .animate-fadeIn {
@@ -983,32 +1341,41 @@ body {
 }
 
 /* ============================================
-   Responsive Adjustments
+   Responsive
    ============================================ */
 @media (max-width: 600px) {
     .form-row {
         flex-direction: column;
         gap: 0;
     }
-    
     .form-actions {
         flex-direction: column-reverse;
         gap: 16px;
     }
-    
+    .form-actions .primary-btn,
     .form-actions .btn-primary {
         width: 100%;
     }
-    
     .license-card {
         flex-direction: column;
         gap: 16px;
     }
-    
     .license-actions {
         flex-direction: row;
         align-items: center;
         width: 100%;
         justify-content: space-between;
+    }
+    .auth-footer,
+    .page-footer {
+        flex-direction: column;
+        gap: 12px;
+        text-align: center;
+    }
+    .footer-links {
+        justify-content: center;
+    }
+    .footer-brand {
+        justify-content: center;
     }
 }

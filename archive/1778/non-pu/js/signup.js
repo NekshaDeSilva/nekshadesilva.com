@@ -1,16 +1,19 @@
 /**
  * NonPU Instant Account System - Signup Flow Logic
- * GVMA Incorporated — Global Vision for Machinery Advancement
+ * GVMA PBC
  * 
  * Multi-step signup wizard with entity type handling
  */
 
 document.addEventListener('DOMContentLoaded', function() {
-    // Initialize Supabase
-    NonPUAuth.initSupabase();
-    
-    // Handle license key from URL
-    const pendingKey = NonPUAuth.handleLicenseKeyFromURL();
+    // Initialize Supabase (wrapped in try-catch so UI still works if Supabase isn't configured yet)
+    var pendingKey = null;
+    try {
+        NonPUAuth.initSupabase();
+        pendingKey = NonPUAuth.handleLicenseKeyFromURL();
+    } catch (err) {
+        console.warn('Supabase init skipped:', err.message);
+    }
     
     // Show pending license notice if exists
     if (pendingKey) {
@@ -33,11 +36,13 @@ document.addEventListener('DOMContentLoaded', function() {
         lastName: null,
         entityName: null,
         legalEntityName: null,
+        entityLogo: null,
         email: null,
         password: null,
         country: null,
         city: null,
         registrationNumber: null,
+        division: null,
         website: null,
         phoneNumber: null,
         employeeCount: null,
@@ -226,17 +231,128 @@ document.addEventListener('DOMContentLoaded', function() {
     const step2basicBackBtn = document.getElementById('step2basicBack');
     
     function setupBasicInfoStep() {
+        // Toggle visibility AND disable hidden required fields so the browser
+        // doesn't try to validate inputs that are display:none (which causes
+        // "An invalid form control with name='...' is not focusable" errors).
         if (entityType === 'personal-individual' || entityType === 'personal-team') {
             personalFields.style.display = 'block';
             corporateFields.style.display = 'none';
             basicInfoSubtitle.textContent = entityType === 'personal-team' 
                 ? 'Enter the primary account holder details' 
                 : 'Enter your details';
+            // Enable personal, disable corporate
+            document.getElementById('firstName').disabled = false;
+            document.getElementById('lastName').disabled = false;
+            document.getElementById('entityName').disabled = true;
+            document.getElementById('legalEntityName').disabled = true;
         } else {
             personalFields.style.display = 'none';
             corporateFields.style.display = 'block';
             basicInfoSubtitle.textContent = 'Enter your organization details';
+            // Disable personal, enable corporate
+            document.getElementById('firstName').disabled = true;
+            document.getElementById('lastName').disabled = true;
+            document.getElementById('entityName').disabled = false;
+            document.getElementById('legalEntityName').disabled = false;
         }
+    }
+    
+    // ============================================
+    // Logo Upload Handling (Corporate / Non-Profit)
+    // ============================================
+    const logoUploadArea = document.getElementById('logoUploadArea');
+    const logoPlaceholder = document.getElementById('logoPlaceholder');
+    const logoPreview = document.getElementById('logoPreview');
+    const logoRemoveBtn = document.getElementById('logoRemoveBtn');
+    const entityLogoInput = document.getElementById('entityLogoInput');
+    
+    const MAX_LOGO_SIZE = 2 * 1024 * 1024; // 2MB
+    
+    function handleLogoFile(file) {
+        if (!file) return;
+        
+        // Validate file type
+        const validTypes = ['image/png', 'image/jpeg', 'image/svg+xml'];
+        if (!validTypes.includes(file.type)) {
+            showError('Logo must be a PNG, JPG, or SVG file');
+            return;
+        }
+        
+        // Validate file size
+        if (file.size > MAX_LOGO_SIZE) {
+            showError('Logo file must be under 2MB');
+            return;
+        }
+        
+        hideError();
+        
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const dataUri = e.target.result;
+            formData.entityLogo = dataUri;
+            
+            // Show preview
+            logoPreview.src = dataUri;
+            logoPreview.style.display = 'block';
+            logoPlaceholder.style.display = 'none';
+            logoRemoveBtn.style.display = 'flex';
+            logoUploadArea.classList.add('has-image');
+        };
+        reader.readAsDataURL(file);
+    }
+    
+    function removeLogo() {
+        formData.entityLogo = null;
+        logoPreview.src = '';
+        logoPreview.style.display = 'none';
+        logoPlaceholder.style.display = 'flex';
+        logoRemoveBtn.style.display = 'none';
+        logoUploadArea.classList.remove('has-image');
+        entityLogoInput.value = '';
+    }
+    
+    if (logoUploadArea) {
+        // Click to upload
+        logoUploadArea.addEventListener('click', function(e) {
+            if (e.target === logoRemoveBtn || logoRemoveBtn.contains(e.target)) return;
+            entityLogoInput.click();
+        });
+        
+        // File selected via input
+        entityLogoInput.addEventListener('change', function() {
+            if (this.files && this.files[0]) {
+                handleLogoFile(this.files[0]);
+            }
+        });
+        
+        // Remove button
+        logoRemoveBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            removeLogo();
+        });
+        
+        // Drag and drop
+        logoUploadArea.addEventListener('dragover', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            this.classList.add('drag-over');
+        });
+        
+        logoUploadArea.addEventListener('dragleave', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            this.classList.remove('drag-over');
+        });
+        
+        logoUploadArea.addEventListener('drop', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            this.classList.remove('drag-over');
+            
+            if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+                handleLogoFile(e.dataTransfer.files[0]);
+            }
+        });
     }
     
     basicInfoForm.addEventListener('submit', function(e) {
@@ -329,6 +445,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         if (entityType === 'corporate' || entityType === 'non-profit') {
             formData.registrationNumber = document.getElementById('registrationNumber').value;
+            formData.division = document.getElementById('division').value;
             formData.website = document.getElementById('website').value;
             formData.phoneNumber = document.getElementById('phoneNumber').value;
             
@@ -414,6 +531,22 @@ document.addEventListener('DOMContentLoaded', function() {
     
     createAccountBtn.addEventListener('click', async function() {
         hideError();
+
+        // Validate hCaptcha
+        const hcaptchaError = document.getElementById('hcaptchaError');
+        let captchaToken = '';
+        try {
+            captchaToken = hcaptcha.getResponse();
+        } catch(err) {
+            console.warn('hCaptcha not loaded yet');
+        }
+        if (!captchaToken) {
+            if (hcaptchaError) hcaptchaError.style.display = 'block';
+            showError('Please complete the captcha verification.');
+            return;
+        }
+        if (hcaptchaError) hcaptchaError.style.display = 'none';
+
         showLoading();
         createAccountBtn.disabled = true;
         createAccountBtn.textContent = 'Creating...';
@@ -445,8 +578,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 entityType: formData.entityType,
                 entityName: formData.entityName,
                 legalEntityName: formData.legalEntityName,
+                entityLogo: formData.entityLogo || null,
                 entityOriginLocation: formData.city,
                 entityCountry: formData.country,
+                entityOriginLocationAndCountry: formData.city && formData.country 
+                    ? `${formData.city}, ${formData.country}` : null,
                 entityEmails: {
                     email1: formData.email,
                     email2: formData.authority?.email || null
@@ -454,6 +590,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 companyRegistrationNumber: formData.registrationNumber,
                 website: formData.website,
                 corporateDetails: (formData.entityType === 'corporate' || formData.entityType === 'non-profit') ? {
+                    division: formData.division,
                     phoneNumber: formData.phoneNumber,
                     employeeCount: formData.employeeCount,
                     responsibleAuthority: {

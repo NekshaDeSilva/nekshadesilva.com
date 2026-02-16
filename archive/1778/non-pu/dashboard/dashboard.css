@@ -1,0 +1,1376 @@
+/**
+ * NonPU Instant Dashboard — Styles
+ * Clean black & white theme
+ *
+ * Adapted from the NonPU Instant desktop application (ui.c):
+ *   COLOR_BG          #f5f5f5   Page background
+ *   COLOR_SIDEBAR_BG  #ffffff   White sidebar
+ *   COLOR_CARD_BG     #ffffff   White cards
+ *   COLOR_BORDER      #d9d9d9   Defined borders
+ *   COLOR_TEXT         #1c1e21   Primary text
+ *   COLOR_TEXT_DIM     #65676b   Secondary text
+ *   COLOR_TEXT_LIGHT   #90949c   Tertiary text
+ *   COLOR_ACCENT       #1877f2   Blue (interactive elements only)
+ */
+
+/* ============================================
+   Variables
+   ============================================ */
+:root {
+    --bg: #f5f5f5;
+    --sidebar-bg: #ffffff;
+    --card-bg: #ffffff;
+    --border: #d9d9d9;
+    --text: #1c1e21;
+    --text-dim: #65676b;
+    --text-light: #90949c;
+    --accent: #1877f2;
+    --accent-light: #f0f0f0;
+
+    --sidebar-w: 260px;
+    --titlebar-h: 52px;
+    --nav-item-h: 40px;
+    --card-radius: 8px;
+    --content-pad: 24px;
+
+    --font: 'Inter', 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-mono: 'Roboto Mono', 'Consolas', monospace;
+    --shadow-card: 0 1px 2px rgba(0,0,0,0.06), 0 1px 3px rgba(0,0,0,0.04);
+    --transition: 0.2s ease;
+}
+
+/* ============================================
+   Reset
+   ============================================ */
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+    overflow: hidden;
+}
+
+body {
+    font-family: var(--font);
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--text);
+    background: var(--bg);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+/* ============================================
+   Loading Bar (splash-style, like splash.c)
+   ============================================ */
+.dash-loading-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    z-index: 9999;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+
+.dash-loading-bar.active {
+    opacity: 1;
+}
+
+.dash-loading-bar-inner {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 30%;
+    background: var(--text);
+    border-radius: 0 2px 2px 0;
+    animation: dash-loading-slide 1.8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+@keyframes dash-loading-slide {
+    0%   { left: -30%; width: 30%; }
+    50%  { left: 40%;  width: 40%; }
+    100% { left: 100%; width: 30%; }
+}
+
+/* ============================================
+   Top Brand Bar (above entire shell)
+   ============================================ */
+.dash-top-bar {
+    width: 100%;
+    height: 32px;
+    background: var(--card-bg);
+    display: flex;
+    align-items: flex-end;
+    padding: 0 16px 0;
+}
+
+.dash-top-bar-logo {
+    height: 24px;
+    width: auto;
+    object-fit: contain;
+    filter: invert(1);
+}
+
+/* ============================================
+   Shell Layout
+   ============================================ */
+.dash-shell {
+    display: flex;
+    height: calc(100vh - 32px);
+    width: 100%;
+}
+
+/* ============================================
+   Sidebar (like ui_paint_sidebar)
+   ============================================ */
+.dash-sidebar {
+    width: var(--sidebar-w);
+    min-width: var(--sidebar-w);
+    background: var(--sidebar-bg);
+    border-right: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    transition: margin-left var(--transition), opacity var(--transition);
+    z-index: 100;
+}
+
+.dash-sidebar.collapsed {
+    margin-left: calc(-1 * var(--sidebar-w));
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Brand area */
+.dash-sidebar-brand {
+    padding: 2px 16px 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.dash-sidebar-logo {
+    height: 34px;
+    width: auto;
+    object-fit: contain;
+}
+
+/* Section labels (like font_section: 11px bold uppercase) */
+.dash-sidebar-section {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    color: var(--text-light);
+    padding: 16px 16px 6px;
+}
+
+/* Nav items (like SIDEBAR_ITEM_HEIGHT: 40) */
+.dash-sidebar-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: 0 8px;
+}
+
+.dash-nav-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    height: var(--nav-item-h);
+    padding: 0 12px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text);
+    transition: background var(--transition), color var(--transition);
+    cursor: pointer;
+}
+
+.dash-nav-item:hover {
+    background: var(--bg);
+}
+
+.dash-nav-item.active {
+    background: var(--text);
+    color: #fff;
+}
+
+.dash-nav-item.active .dash-nav-icon {
+    color: #fff;
+}
+
+.dash-nav-icon {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+    color: var(--text-dim);
+}
+
+/* Bootstrap icon images in sidebar */
+.dash-nav-bi {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+    opacity: 0.55;
+    transition: opacity var(--transition);
+}
+
+.dash-nav-item:hover .dash-nav-bi {
+    opacity: 0.75;
+}
+
+.dash-nav-item.active .dash-nav-bi {
+    opacity: 1;
+    filter: invert(1);
+}
+
+/* Sidebar footer */
+.dash-sidebar-footer {
+    margin-top: auto;
+    padding-bottom: 8px;
+}
+
+.dash-sidebar-footer .dash-nav-item {
+    font-weight: 400;
+    color: var(--text-dim);
+    font-size: 13px;
+}
+
+/* Sidebar brand footer — GVMA branding */
+.dash-sidebar-brand-footer {
+    padding: 20px 16px 16px;
+    margin-top: 16px;
+    border-top: 1px solid var(--border);
+    text-align: left;
+}
+
+.dash-sidebar-brand-logo {
+    height: 28px;
+    width: auto;
+    object-fit: contain;
+    opacity: 0.7;
+    margin-bottom: 8px;
+    display: block;
+    filter: invert(1);
+}
+
+.dash-sidebar-brand-text {
+    display: block;
+    font-size: 11px;
+    color: var(--text-light);
+    margin-bottom: 8px;
+}
+
+.dash-sidebar-about {
+    font-size: 11px;
+    color: var(--text-light);
+    transition: color var(--transition);
+}
+
+.dash-sidebar-about:hover {
+    color: var(--text-dim);
+}
+
+/* ============================================
+   Main Area
+   ============================================ */
+.dash-main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    overflow: hidden;
+}
+
+/* ============================================
+   Title Bar (like ui_paint_header)
+   ============================================ */
+.dash-titlebar {
+    height: var(--titlebar-h);
+    min-height: var(--titlebar-h);
+    background: var(--card-bg);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+}
+
+.dash-titlebar-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.dash-sidebar-toggle {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 6px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-dim);
+    transition: background var(--transition);
+}
+
+.dash-sidebar-toggle:hover {
+    background: var(--bg);
+}
+
+.dash-page-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--text);
+}
+
+/* Breadcrumb (icon / page name — shown when sidebar collapsed) */
+.dash-breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.dash-breadcrumb-icon {
+    width: 22px;
+    height: 22px;
+    object-fit: contain;
+    display: none;
+}
+
+.dash-breadcrumb-sep {
+    font-size: 18px;
+    font-weight: 300;
+    color: var(--text-light);
+    display: none;
+}
+
+/* When sidebar is collapsed, show the icon + separator */
+.dash-sidebar.collapsed ~ .dash-main .dash-breadcrumb-icon,
+.dash-sidebar.collapsed ~ .dash-main .dash-breadcrumb-sep {
+    display: inline-block;
+}
+
+.dash-titlebar-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.dash-user-info {
+    text-align: right;
+}
+
+.dash-user-name {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text);
+}
+
+.dash-user-email {
+    font-size: 11px;
+    color: var(--text-dim);
+}
+
+/* avatar removed */
+
+/* ============================================
+   Content Area (scrollable)
+   ============================================ */
+.dash-content {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: var(--content-pad);
+    background: var(--bg);
+}
+
+/* Page sections */
+.dash-page {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* ============================================
+   Hero Card (entity identity — like dashboard hero in ui.c)
+   ============================================ */
+.dash-hero-card {
+    background: var(--card-bg);
+    border-radius: var(--card-radius) var(--card-radius) 0 0;
+    border: 1px solid var(--border);
+    border-bottom: none;
+    box-shadow: var(--shadow-card);
+    padding: 28px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    overflow: clip;
+}
+
+.dash-hero-left {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.dash-hero-logo {
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+    flex-shrink: 0;
+}
+
+.dash-hero-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.dash-hero-name {
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--text);
+    line-height: 1.3;
+}
+
+.dash-hero-sub {
+    font-size: 14px;
+    color: var(--text-dim);
+    text-transform: capitalize;
+}
+
+.dash-hero-right {
+    position: absolute;
+    right: -20px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+}
+
+.dash-hero-watermark {
+    height: 200px;
+    width: auto;
+    object-fit: contain;
+    opacity: 0.35;
+    -webkit-mask-image: linear-gradient(to left, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0) 100%);
+    mask-image: linear-gradient(to left, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0) 100%);
+}
+
+/* Location row — separated from hero card */
+.dash-hero-location-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    color: var(--text-light);
+    padding: 10px 32px;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-top: none;
+    border-radius: 0 0 var(--card-radius) var(--card-radius);
+    margin-top: -20px;
+    margin-bottom: 20px;
+    position: relative;
+    z-index: 1;
+}
+
+.dash-location-icon {
+    flex-shrink: 0;
+    opacity: 0.5;
+}
+
+/* ============================================
+   Metrics Row (like dashboard status row)
+   ============================================ */
+.dash-metrics-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-bottom: 20px;
+}
+
+.dash-metric-card {
+    background: var(--card-bg);
+    border-radius: var(--card-radius);
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow-card);
+    padding: 18px 20px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.dash-metric-data {
+    min-width: 0;
+}
+
+.dash-metric-value {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1.2;
+}
+
+.dash-metric-label {
+    font-size: 12px;
+    color: var(--text-dim);
+    font-weight: 500;
+}
+
+/* ============================================
+   Alert Banner (pending license)
+   ============================================ */
+.dash-alert-banner {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: var(--card-radius);
+    padding: 18px 24px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 20px;
+}
+
+.dash-alert-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--bg);
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.dash-alert-content {
+    flex: 1;
+    min-width: 0;
+}
+
+.dash-alert-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 2px;
+}
+
+.dash-alert-key {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--text);
+    margin-bottom: 2px;
+}
+
+.dash-alert-text {
+    font-size: 13px;
+    color: var(--text-dim);
+}
+
+/* ============================================
+   Two-column Layout
+   ============================================ */
+.dash-two-col {
+    display: grid;
+    grid-template-columns: 1fr 320px;
+    gap: 20px;
+}
+
+.dash-card-main {
+    min-width: 0;
+}
+
+.dash-side-panel {
+    min-width: 0;
+}
+
+/* ============================================
+   Cards (like ui_draw_card with border radius 8)
+   ============================================ */
+.dash-card {
+    background: var(--card-bg);
+    border-radius: var(--card-radius);
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow-card);
+    padding: 24px;
+    margin-bottom: 20px;
+}
+
+.dash-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 20px;
+}
+
+.dash-card-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text);
+}
+
+.dash-card-subtitle {
+    font-size: 13px;
+    color: var(--text-dim);
+    margin-top: 2px;
+}
+
+.dash-card-body {
+    min-height: 60px;
+}
+
+/* ============================================
+   Buttons
+   ============================================ */
+.dash-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 18px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    transition: background var(--transition), box-shadow var(--transition);
+    font-family: var(--font);
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+.dash-btn-primary {
+    background: var(--accent);
+    color: #fff;
+}
+
+.dash-btn-primary:hover {
+    background: #1565c0;
+    box-shadow: 0 2px 8px rgba(24, 119, 242, 0.3);
+}
+
+.dash-btn-accent {
+    background: var(--text);
+    color: #fff;
+}
+
+.dash-btn-accent:hover {
+    background: #333;
+}
+
+.dash-btn-danger {
+    background: transparent;
+    color: var(--text);
+    border: 1px solid var(--border);
+}
+
+.dash-btn-danger:hover {
+    background: var(--bg);
+}
+
+.dash-btn-sm {
+    padding: 6px 14px;
+    font-size: 12px;
+}
+
+/* ============================================
+   License Cards (rendered by JS)
+   ============================================ */
+.dash-license-card {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 12px;
+    transition: box-shadow var(--transition);
+}
+
+.dash-license-card:hover {
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+
+.dash-license-card:last-child {
+    margin-bottom: 0;
+}
+
+.dash-license-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.dash-license-key {
+    font-family: var(--font-mono);
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text);
+    letter-spacing: 0.3px;
+}
+
+.dash-license-status {
+    font-size: 11px;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+}
+
+.dash-license-status.active {
+    background: var(--text);
+    color: #fff;
+}
+
+.dash-license-status.pending {
+    background: var(--bg);
+    color: var(--text);
+    border: 1px solid var(--border);
+}
+
+.dash-license-status.expired {
+    background: var(--bg);
+    color: var(--text-dim);
+    border: 1px solid var(--border);
+}
+
+.dash-license-details {
+    display: flex;
+    gap: 24px;
+    font-size: 13px;
+    margin-bottom: 12px;
+}
+
+.dash-license-detail-label {
+    color: var(--text-dim);
+}
+
+.dash-license-detail-value {
+    color: var(--text);
+    font-weight: 500;
+}
+
+.dash-license-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.dash-license-btn {
+    padding: 6px 14px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    font-family: var(--font);
+    transition: background var(--transition);
+}
+
+.dash-license-btn-primary {
+    background: var(--accent);
+    color: #fff;
+}
+
+.dash-license-btn-primary:hover {
+    background: #1565c0;
+}
+
+.dash-license-btn-secondary {
+    background: transparent;
+    color: var(--accent);
+    border: 1px solid var(--border);
+}
+
+.dash-license-btn-secondary:hover {
+    background: var(--bg);
+}
+
+/* ============================================
+   Download NonPU Instant (App Store style)
+   ============================================ */
+.dash-download-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 32px 24px 28px;
+    background: var(--text);
+    border-color: var(--text);
+}
+
+.dash-download-icon-wrap {
+    width: 96px;
+    height: 96px;
+    border-radius: 22px;
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 18px;
+}
+
+.dash-download-icon {
+    width: 64px;
+    height: 64px;
+    object-fit: contain;
+    filter: invert(1);
+}
+
+.dash-download-name {
+    font-size: 18px;
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: -0.2px;
+    margin-bottom: 2px;
+}
+
+.dash-download-developer {
+    font-size: 12px;
+    color: rgba(255,255,255,0.5);
+    margin-bottom: 6px;
+}
+
+.dash-download-version {
+    font-size: 11px;
+    font-weight: 600;
+    color: rgba(255,255,255,0.4);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 20px;
+}
+
+.dash-download-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    padding: 12px 24px;
+    background: #fff;
+    color: var(--text);
+    font-size: 15px;
+    font-weight: 700;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    transition: background var(--transition), box-shadow var(--transition);
+    font-family: var(--font);
+    text-decoration: none;
+    letter-spacing: 0.2px;
+}
+
+.dash-download-btn:hover {
+    background: rgba(255,255,255,0.85);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+}
+
+.dash-download-btn svg {
+    flex-shrink: 0;
+}
+
+.dash-download-meta {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 14px;
+    font-size: 11px;
+    color: rgba(255,255,255,0.35);
+}
+
+.dash-download-dot {
+    font-size: 8px;
+    opacity: 0.5;
+}
+
+/* ============================================
+   Extend License Card
+   ============================================ */
+.dash-extend-card {
+    overflow: hidden;
+}
+
+.dash-extend-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.dash-extend-icon-wrap {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    background: var(--bg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    color: var(--text);
+}
+
+.dash-extend-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text);
+}
+
+.dash-extend-sub {
+    font-size: 13px;
+    color: var(--text-dim);
+    margin-top: 2px;
+}
+
+.dash-extend-key-status {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 20px;
+}
+
+.dash-extend-key-label {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--text-light);
+    margin-bottom: 8px;
+}
+
+.dash-extend-key-check {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: var(--text);
+}
+
+.dash-extend-key-check svg {
+    color: #1e8e3e;
+    flex-shrink: 0;
+}
+
+.dash-extend-pricing {
+    border-top: 1px solid var(--border);
+    padding-top: 16px;
+    margin-bottom: 20px;
+}
+
+.dash-extend-pricing-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+    padding: 8px 0;
+    color: var(--text-dim);
+}
+
+.dash-extend-pricing-row span:last-child {
+    font-weight: 500;
+    color: var(--text);
+}
+
+.dash-extend-total {
+    border-top: 1px solid var(--border);
+    margin-top: 8px;
+    padding-top: 12px;
+    font-weight: 700 !important;
+    font-size: 16px !important;
+}
+
+.dash-extend-total span {
+    color: var(--text) !important;
+    font-weight: 700 !important;
+}
+
+.dash-extend-error {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: #fef2f2;
+    color: #b91c1c;
+    padding: 10px 14px;
+    border-radius: 8px;
+    font-size: 13px;
+    margin-bottom: 16px;
+}
+
+.dash-extend-pay-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    padding: 14px 24px;
+    background: var(--text);
+    color: #fff;
+    font-size: 15px;
+    font-weight: 700;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    font-family: var(--font);
+    transition: background var(--transition), box-shadow var(--transition);
+}
+
+.dash-extend-pay-btn:hover:not(:disabled) {
+    background: #333;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+}
+
+.dash-extend-pay-btn:disabled {
+    background: #999;
+    cursor: not-allowed;
+}
+
+.dash-extend-secure {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    margin-top: 12px;
+    font-size: 11px;
+    color: var(--text-light);
+}
+
+.dash-extend-secure svg {
+    color: #1e8e3e;
+}
+
+.dash-extend-success {
+    text-align: center;
+    padding: 32px 16px;
+}
+
+.dash-extend-success-icon {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: var(--bg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 16px;
+    color: var(--text);
+}
+
+.dash-extend-success-title {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 8px;
+}
+
+.dash-extend-success-text {
+    font-size: 13px;
+    color: var(--text-dim);
+    margin-bottom: 20px;
+    max-width: 360px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* ============================================
+   Account Info Grid
+   ============================================ */
+.dash-info-grid {
+    display: flex;
+    flex-direction: column;
+}
+
+.dash-info-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--border);
+}
+
+.dash-info-row:last-child {
+    border-bottom: none;
+}
+
+.dash-info-label {
+    font-size: 14px;
+    color: var(--text-dim);
+}
+
+.dash-info-value {
+    font-size: 14px;
+    color: var(--text);
+    font-weight: 500;
+    text-align: right;
+}
+
+/* ============================================
+   Entity Badge Card (Account page sidebar)
+   ============================================ */
+.dash-entity-badge-card {
+    text-align: center;
+    padding: 32px 24px;
+}
+
+.dash-entity-badge-logo-wrap {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.dash-entity-badge-logo {
+    max-width: 72px;
+    max-height: 72px;
+    object-fit: contain;
+}
+
+.dash-entity-badge-name {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 4px;
+}
+
+.dash-entity-badge-type {
+    font-size: 13px;
+    color: var(--text-dim);
+    text-transform: capitalize;
+}
+
+/* ============================================
+   Empty State
+   ============================================ */
+.dash-empty-state {
+    text-align: center;
+    padding: 48px 24px;
+}
+
+.dash-empty-icon {
+    width: 56px;
+    height: 56px;
+    margin: 0 auto 16px;
+    color: var(--text-light);
+    opacity: 0.4;
+}
+
+.dash-empty-image {
+    width: 180px;
+    height: auto;
+    object-fit: contain;
+    margin: 0 auto 20px;
+    display: block;
+    opacity: 0.8;
+}
+
+.dash-alert-payment-img {
+    width: 56px;
+    height: auto;
+    object-fit: contain;
+    flex-shrink: 0;
+    border-radius: 6px;
+}
+
+/* License pile mockup (stacked rotated cards) */
+.dash-license-pile {
+    position: relative;
+    width: 240px;
+    height: 170px;
+    margin: 0 auto 24px;
+}
+
+.dash-pile-card {
+    position: absolute;
+    width: 210px;
+    height: auto;
+    object-fit: contain;
+    border-radius: 6px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    left: 50%;
+    top: 50%;
+}
+
+.dash-pile-7 {
+    transform: translate(-50%, -50%) rotate(18deg);
+    opacity: 0.2;
+    z-index: 1;
+}
+
+.dash-pile-6 {
+    transform: translate(-50%, -50%) rotate(14deg);
+    opacity: 0.3;
+    z-index: 2;
+}
+
+.dash-pile-5 {
+    transform: translate(-50%, -50%) rotate(10deg);
+    opacity: 0.4;
+    z-index: 3;
+}
+
+.dash-pile-4 {
+    transform: translate(-50%, -50%) rotate(7deg);
+    opacity: 0.5;
+    z-index: 4;
+}
+
+.dash-pile-3 {
+    transform: translate(-50%, -50%) rotate(4.5deg);
+    opacity: 0.6;
+    z-index: 5;
+}
+
+.dash-pile-2 {
+    transform: translate(-50%, -50%) rotate(2deg);
+    opacity: 0.75;
+    z-index: 6;
+}
+
+.dash-pile-1 {
+    transform: translate(-50%, -50%) rotate(0deg);
+    opacity: 0.9;
+    z-index: 7;
+}
+
+.dash-empty-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 6px;
+}
+
+.dash-empty-text {
+    font-size: 13px;
+    color: var(--text-dim);
+    margin-bottom: 20px;
+    max-width: 320px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* ============================================
+   Shimmer / Skeleton Loading (like ui_paint_shimmer_rect)
+   ============================================ */
+.shimmer-text,
+.shimmer-block {
+    display: inline-block;
+    background: linear-gradient(90deg, #e4e6eb 25%, #f0f2f5 50%, #e4e6eb 75%);
+    background-size: 200% 100%;
+    animation: shimmer-sweep 1.2s ease-in-out infinite;
+    border-radius: 4px;
+}
+
+.dash-shimmer-row {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+@keyframes shimmer-sweep {
+    0%   { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+
+/* (statusbar moved into sidebar footer) */
+
+/* ============================================
+   Responsive (tablet + mobile)
+   ============================================ */
+@media (max-width: 1024px) {
+    .dash-metrics-row {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .dash-two-col {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    :root {
+        --sidebar-w: 240px;
+        --content-pad: 16px;
+    }
+
+    .dash-sidebar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100vh;
+        z-index: 1000;
+        box-shadow: 4px 0 24px rgba(0,0,0,0.15);
+    }
+
+    .dash-sidebar.collapsed {
+        margin-left: calc(-1 * var(--sidebar-w));
+    }
+
+    .dash-hero-card {
+        padding: 20px;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+    }
+
+    .dash-hero-right {
+        display: none;
+    }
+
+    .dash-metrics-row {
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+    }
+
+    .dash-metric-card {
+        padding: 14px;
+    }
+
+    .dash-metric-value {
+        font-size: 20px;
+    }
+
+    .dash-alert-banner {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .dash-user-info {
+        display: none;
+    }
+}
+
+@media (max-width: 480px) {
+    .dash-metrics-row {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ============================================
+   Mobile sidebar overlay
+   ============================================ */
+.dash-sidebar-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.3);
+    z-index: 999;
+}
+
+.dash-sidebar-overlay.visible {
+    display: block;
+}
