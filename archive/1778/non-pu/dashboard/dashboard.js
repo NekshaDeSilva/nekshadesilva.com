@@ -200,8 +200,47 @@ document.addEventListener('DOMContentLoaded', async function () {
         ? new Date(user.created_at).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })
         : '—';
 
-    // ========== Entity Data (from localStorage) ==========
-    const entityData = JSON.parse(localStorage.getItem('nonpu_pending_entity') || '{}');
+    // ========== Entity Data (from Supabase, with localStorage fallback) ==========
+    let entityData = {};
+    try {
+        const { data: dbEntity, error: dbError } = await NonPUAuth.getEntityAccount();
+        if (dbEntity && !dbError) {
+            // Map DB column names → camelCase keys used by the dashboard
+            entityData = {
+                entityType:                    dbEntity.entity_type,
+                entityName:                    dbEntity.entity_name,
+                legalEntityName:               dbEntity.legal_entity_name,
+                entityLogo:                    dbEntity.entity_logo,
+                entityOriginLocation:          dbEntity.entity_origin_location,
+                entityCountry:                 dbEntity.entity_country,
+                entityOriginLocationAndCountry: dbEntity.entity_origin_location_and_country,
+                entityEmails:                  dbEntity.entity_emails,
+                companyRegistrationNumber:     dbEntity.company_registration_number,
+                website:                       dbEntity.website,
+                corporateDetails:              dbEntity.corporate_details,
+                nonprofitDetails:              dbEntity.nonprofit_details
+            };
+            // Sync to localStorage so it stays fresh
+            localStorage.setItem('nonpu_pending_entity', JSON.stringify(entityData));
+        } else {
+            // DB miss — fall back to localStorage (first-time signup before DB write finishes)
+            entityData = JSON.parse(localStorage.getItem('nonpu_pending_entity') || '{}');
+
+            // If we have localStorage data but no DB row, try to create it now
+            if (entityData.entityName) {
+                NonPUAuth.createEntityAccount(entityData).then(function(res) {
+                    if (res.error) console.warn('Deferred entity save failed:', res.error);
+                    else console.log('Deferred entity saved to DB');
+                }).catch(function(err) {
+                    console.warn('Deferred entity save error:', err);
+                });
+            }
+        }
+    } catch (entityErr) {
+        console.warn('Entity fetch failed, using localStorage:', entityErr);
+        entityData = JSON.parse(localStorage.getItem('nonpu_pending_entity') || '{}');
+    }
+
     const entityName = entityData.entityName || userEmail.split('@')[0];
     const entityType = formatEntityType(entityData.entityType);
     const location   = buildLocation(entityData);

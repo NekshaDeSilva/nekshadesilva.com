@@ -552,6 +552,10 @@ document.addEventListener('DOMContentLoaded', function() {
         createAccountBtn.textContent = 'Creating...';
         
         try {
+            // 0. Ensure Supabase CDN is ready
+            await NonPUAuth.waitForSupabase(10000);
+            NonPUAuth.initSupabase();
+
             // 1. Create user account in Supabase Auth
             const { data: authData, error: authError } = await NonPUAuth.signUp(
                 formData.email,
@@ -608,15 +612,26 @@ document.addEventListener('DOMContentLoaded', function() {
                 } : null
             };
             
-            // Note: Entity creation would happen here if user is signed in
-            // For now, we'll store it in localStorage to be saved after email verification
+            // Save to localStorage as fallback
             localStorage.setItem('nonpu_pending_entity', JSON.stringify(entityData));
-            
+
+            // Persist entity to Supabase database
+            if (signInData && signInData.user) {
+                try {
+                    const { data: entityRow, error: entityError } = await NonPUAuth.createEntityAccount(entityData);
+                    if (entityError) {
+                        console.warn('Entity DB insert failed (will retry from dashboard):', entityError);
+                    } else {
+                        console.log('Entity saved to database:', entityRow);
+                    }
+                } catch (dbErr) {
+                    console.warn('Entity DB insert error (will retry from dashboard):', dbErr);
+                }
+            }
+
             // 4. If there's a pending license key, add it
             const pendingKey = NonPUAuth.getPendingLicenseKey();
             if (pendingKey) {
-                // This would normally add the license to the database
-                // For now, keep it in localStorage
                 console.log('Pending license to be activated:', pendingKey);
             }
             
