@@ -414,6 +414,46 @@ document.addEventListener('DOMContentLoaded', async function () {
         }
     }
 
+    // ========== Activation Overlay Helpers ==========
+    function showActivationOverlay(title, sub) {
+        var ol = document.getElementById('activationOverlay');
+        document.getElementById('activationTitle').textContent = title || 'Activating License';
+        document.getElementById('activationSub').textContent   = sub || 'Verifying your license key and setting up your account…';
+        document.getElementById('activationSpinner').style.display = '';
+        document.getElementById('activationSteps').style.display   = '';
+        document.getElementById('activationSuccess').style.display = 'none';
+        // Reset all steps
+        ['step-verify','step-register','step-activate','step-done'].forEach(function(id) {
+            var el = document.getElementById(id);
+            el.classList.remove('done');
+            el.querySelector('.nonpu-step-icon').classList.remove('nonpu-step-active','nonpu-step-done');
+        });
+        // Start first step
+        var first = document.getElementById('step-verify');
+        first.querySelector('.nonpu-step-icon').classList.add('nonpu-step-active');
+        ol.classList.add('visible');
+    }
+    function advanceStep(stepId) {
+        var el = document.getElementById(stepId);
+        el.classList.add('done');
+        el.querySelector('.nonpu-step-icon').classList.remove('nonpu-step-active');
+        el.querySelector('.nonpu-step-icon').classList.add('nonpu-step-done');
+        // Activate next sibling step
+        var next = el.nextElementSibling;
+        if (next && next.classList.contains('nonpu-step')) {
+            next.querySelector('.nonpu-step-icon').classList.add('nonpu-step-active');
+        }
+    }
+    function showActivationSuccess() {
+        document.getElementById('activationSpinner').style.display = '';
+        document.getElementById('activationSteps').style.display   = 'none';
+        document.getElementById('activationSuccess').style.display = '';
+        document.getElementById('activationSpinner').style.display = 'none';
+    }
+    function hideActivationOverlay() {
+        document.getElementById('activationOverlay').classList.remove('visible');
+    }
+
     // ========== Extend License (Free Promotion) ==========
     const extendPayBtn = document.getElementById('extendPayBtn');
     if (extendPayBtn) {
@@ -428,24 +468,26 @@ document.addEventListener('DOMContentLoaded', async function () {
                 return;
             }
 
-            showLoading();
-            extendPayBtn.disabled = true;
-            extendPayBtn.innerHTML = '<span>Activating...</span>';
+            showActivationOverlay('Extending License', 'Extending your subscription period…');
 
             try {
-                // Extend the expiration by 1 year from current expiry (or from now)
+                // Step 1 — Verify
+                await sleep(400);
                 const { data: license } = await NonPUAuth.getLicenseByKey(tempKey);
                 let newExpiry = new Date();
                 if (license && license.expiration_date) {
                     const currentExpiry = new Date(license.expiration_date);
-                    // If current expiry is in the future, extend from there; otherwise from now
                     newExpiry = currentExpiry > new Date() ? currentExpiry : new Date();
                 }
                 newExpiry.setFullYear(newExpiry.getFullYear() + 1);
+                advanceStep('step-verify');
 
-                // Update expiration in database (claims unclaimed seed keys)
-                // Pass the computed newExpiry so we extend from the current
-                // expiration date rather than resetting to 1-year-from-today.
+                // Step 2 — Register
+                await sleep(350);
+                advanceStep('step-register');
+
+                // Step 3 — Activate
+                await sleep(300);
                 const activateResult = await NonPUAuth.activateLicense(tempKey, {
                     entityName: entityData.entityName || '',
                     legalEntityName: entityData.legalEntityName || '',
@@ -458,27 +500,32 @@ document.addEventListener('DOMContentLoaded', async function () {
                 if (activateResult.error) {
                     throw new Error(activateResult.error.message || activateResult.error || 'License activation failed');
                 }
+                advanceStep('step-activate');
 
-                // Create payment record (free promotion — $0)
+                // Step 4 — Finalize
+                await sleep(300);
                 await NonPUAuth.createPaymentRecord(tempKey, 0, 'free_promotion');
-
-                // Clean up temp storage
                 localStorage.removeItem(NONPU_CRYPTO.STORAGE_KEY);
+                advanceStep('step-done');
 
-                // Show success
+                // Show success state
+                await sleep(500);
+                showActivationSuccess();
+                sendAppCallback(1);
+
+                // Return to dashboard after brief pause
+                await sleep(2200);
+                hideActivationOverlay();
                 document.getElementById('extendPaymentForm').style.display = 'none';
                 document.getElementById('extendSuccess').style.display = '';
-
-                // Send success callback to desktop app
-                sendAppCallback(1);
-                hideLoading();
+                await loadLicenses(null);   // Refresh license list
+                switchPage('dashboard');
             } catch (error) {
-                hideLoading();
+                hideActivationOverlay();
                 extendPayBtn.disabled = false;
-                extendPayBtn.innerHTML = `
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
-                    Extend \u2014 Free
-                `;
+                extendPayBtn.innerHTML =
+                    '<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>' +
+                    ' Extend \u2014 Free';
                 extendError.style.display = 'flex';
                 document.getElementById('extendErrorText').textContent = error.message || 'Activation failed. Please try again.';
                 sendAppCallback(0);
@@ -500,19 +547,21 @@ document.addEventListener('DOMContentLoaded', async function () {
                 return;
             }
 
-            showLoading();
-            newLicensePayBtn.disabled = true;
-            newLicensePayBtn.innerHTML = '<span>Activating...</span>';
+            showActivationOverlay('Activating License', 'Setting up your new NonPU Instant license…');
 
             try {
-                // 1. Register key in license_key_registry
+                // Step 1 — Verify key
+                await sleep(400);
+                advanceStep('step-verify');
+
+                // Step 2 — Register key
+                await sleep(350);
                 await NonPUAuth.markKeyAssigned(tempKey);
-
-                // 2. Create new license entry in database
                 await NonPUAuth.addPendingLicense(tempKey);
+                advanceStep('step-register');
 
-                // 3. Activate it immediately (free promotion — no Stripe)
-                //    This also claims unclaimed seed keys (user_id = null → current user)
+                // Step 3 — Activate
+                await sleep(300);
                 const activateResult = await NonPUAuth.activateLicense(tempKey, {
                     entityName: entityData.entityName || '',
                     legalEntityName: entityData.legalEntityName || '',
@@ -526,7 +575,7 @@ document.addEventListener('DOMContentLoaded', async function () {
                     throw new Error(activateResult.error.message || activateResult.error || 'License activation failed');
                 }
 
-                // 4. Also save entity account if not already saved
+                // Save entity if needed
                 try {
                     const existingEntity = await NonPUAuth.getEntityAccount();
                     if (!existingEntity.data) {
@@ -535,27 +584,32 @@ document.addEventListener('DOMContentLoaded', async function () {
                 } catch (eErr) {
                     console.warn('Entity save skipped:', eErr);
                 }
+                advanceStep('step-activate');
 
-                // 5. Create payment record (free promotion — $0)
+                // Step 4 — Finalize
+                await sleep(300);
                 await NonPUAuth.createPaymentRecord(tempKey, 0, 'free_promotion');
-
-                // Clean up temp storage
                 localStorage.removeItem(NONPU_CRYPTO.STORAGE_KEY);
+                advanceStep('step-done');
 
                 // Show success
+                await sleep(500);
+                showActivationSuccess();
+                sendAppCallback(1);
+
+                // Return to dashboard after brief pause
+                await sleep(2200);
+                hideActivationOverlay();
                 document.getElementById('newLicensePaymentForm').style.display = 'none';
                 document.getElementById('newLicenseSuccess').style.display = '';
-
-                // Send success callback to desktop app
-                sendAppCallback(1);
-                hideLoading();
+                await loadLicenses(null);   // Refresh license list
+                switchPage('dashboard');
             } catch (error) {
-                hideLoading();
+                hideActivationOverlay();
                 newLicensePayBtn.disabled = false;
-                newLicensePayBtn.innerHTML = `
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
-                    Activate \u2014 Free
-                `;
+                newLicensePayBtn.innerHTML =
+                    '<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>' +
+                    ' Activate \u2014 Free';
                 newError.style.display = 'flex';
                 document.getElementById('newLicenseErrorText').textContent = error.message || 'Activation failed. Please try again.';
                 sendAppCallback(0);
@@ -569,6 +623,8 @@ document.addEventListener('DOMContentLoaded', async function () {
     // ========================================================
     //  HELPER FUNCTIONS
     // ========================================================
+
+    function sleep(ms) { return new Promise(function(r){ setTimeout(r, ms); }); }
 
     function formatEntityType(type) {
         if (!type) return '—';
@@ -591,66 +647,180 @@ document.addEventListener('DOMContentLoaded', async function () {
         if (watermark)  watermark.src = src;
     }
 
-    function loadLicenses(pendingKey) {
-        const shimmer    = document.getElementById('licenseShimmer');
-        const container  = document.getElementById('licensesContainer');
-        const emptyState = document.getElementById('emptyState');
+    async function loadLicenses(pendingKey) {
+        const shimmer          = document.getElementById('licenseShimmer');
+        const container        = document.getElementById('licensesContainer');
+        const emptyState       = document.getElementById('emptyState');
+        const fullContainer    = document.getElementById('licensesFullContainer');
+        const fullEmpty        = document.getElementById('licensesFullEmpty');
+        const devicesContainer = document.getElementById('devicesContainer');
+        const devicesEmpty     = document.getElementById('devicesEmpty');
 
-        // Hide shimmer
-        if (shimmer) shimmer.style.display = 'none';
+        // ---- Fetch real license data from Supabase ----
+        let licenses = [];
+        try {
+            const { data, error } = await NonPUAuth.getUserLicenses();
+            if (!error && data && data.length > 0) {
+                licenses = data.map(function(l) {
+                    return {
+                        key:         l.license_key || '',
+                        status:      l.status || 'pending',
+                        type:        'NonPU Instant License',
+                        entityName:  l.entity_name || '',
+                        expiresAt:   l.expiration_date || null,
+                        activatedAt: l.activated_at || l.created_at || null
+                    };
+                });
+            }
+        } catch (err) {
+            console.warn('Failed to load licenses from DB:', err);
+        }
 
-        const licenses = [];
-
-        if (pendingKey) {
-            licenses.push({
+        // Add local pending key if it's not already in the DB list
+        if (pendingKey && !licenses.some(function(l){ return l.key === pendingKey; })) {
+            licenses.unshift({
                 key: pendingKey,
                 status: 'pending',
-                type: 'Standard License',
+                type: 'NonPU Instant License',
+                entityName: '',
                 expiresAt: null,
                 activatedAt: null
             });
         }
 
-        // Update metrics
+        // ---- Compute metrics ----
+        var activeCount  = licenses.filter(function(l){ return l.status === 'active'; }).length;
+        var expiredCount = licenses.filter(function(l){ return l.status === 'expired'; }).length;
+
         document.getElementById('metricLicenses').textContent = licenses.length;
-        document.getElementById('metricActive').textContent   = licenses.filter(l => l.status === 'active').length;
+        document.getElementById('metricActive').textContent   = activeCount;
+
+        // Next expiry (soonest future date)
+        var now = new Date();
+        var nextExpiry = null;
+        licenses.forEach(function(l) {
+            if (l.expiresAt) {
+                var d = new Date(l.expiresAt);
+                if (d > now && (!nextExpiry || d < nextExpiry)) nextExpiry = d;
+            }
+        });
+        document.getElementById('metricExpiry').textContent = nextExpiry
+            ? nextExpiry.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })
+            : '—';
+
+        // ---- Render: Dashboard "Your Licenses" card ----
+        if (shimmer) shimmer.style.display = 'none';
+
+        // Remove any previously rendered license cards
+        container.querySelectorAll('.dash-license-card').forEach(function(el){ el.remove(); });
 
         if (licenses.length === 0) {
             emptyState.style.display = 'block';
-            return;
+        } else {
+            emptyState.style.display = 'none';
+            licenses.forEach(function(license) {
+                container.insertBefore(buildLicenseCard(license, true), emptyState);
+            });
         }
 
-        emptyState.style.display = 'none';
+        // ---- Render: Licenses page full list ----
+        if (fullContainer) {
+            fullContainer.querySelectorAll('.dash-license-card').forEach(function(el){ el.remove(); });
+            if (licenses.length === 0) {
+                if (fullEmpty) fullEmpty.style.display = '';
+            } else {
+                if (fullEmpty) fullEmpty.style.display = 'none';
+                licenses.forEach(function(license) {
+                    fullContainer.insertBefore(buildLicenseCard(license, false), fullEmpty);
+                });
+            }
+        }
 
-        licenses.forEach(license => {
-            const card = document.createElement('div');
-            card.className = 'dash-license-card';
-            card.innerHTML = `
-                <div class="dash-license-top">
-                    <span class="dash-license-key">${escapeHtml(license.key)}</span>
-                    <span class="dash-license-status ${license.status}">
-                        ${license.status.charAt(0).toUpperCase() + license.status.slice(1)}
-                    </span>
-                </div>
-                <div class="dash-license-details">
-                    <div>
-                        <span class="dash-license-detail-label">Type: </span>
-                        <span class="dash-license-detail-value">${escapeHtml(license.type)}</span>
-                    </div>
-                    <div>
-                        <span class="dash-license-detail-label">Expires: </span>
-                        <span class="dash-license-detail-value">${license.expiresAt ? new Date(license.expiresAt).toLocaleDateString() : 'Not activated'}</span>
-                    </div>
-                </div>
-                ${license.status === 'pending' ? `
-                    <div class="dash-license-actions">
-                        <button class="dash-license-btn dash-license-btn-primary" onclick="activatePendingLicense()">Activate \u2014 Free</button>
-                        <button class="dash-license-btn dash-license-btn-secondary" onclick="removePendingLicense()">Remove</button>
-                    </div>
-                ` : ''}
-            `;
-            container.insertBefore(card, emptyState);
-        });
+        // ---- Load and render device bindings ----
+        var deviceCount = 0;
+        if (devicesContainer) {
+            devicesContainer.querySelectorAll('.dash-device-card').forEach(function(el){ el.remove(); });
+
+            try {
+                // Gather device bindings for each active license
+                var devicePromises = licenses
+                    .filter(function(l){ return l.status === 'active'; })
+                    .map(function(l){ return NonPUAuth.getDeviceBinding(l.key).then(function(r){ return { license: l, data: r.data }; }).catch(function(){ return null; }); });
+
+                var deviceResults = await Promise.all(devicePromises);
+                deviceResults.forEach(function(r) {
+                    if (r && r.data) {
+                        deviceCount++;
+                        var d = r.data;
+                        var card = document.createElement('div');
+                        card.className = 'dash-device-card dash-license-card';
+                        card.innerHTML =
+                            '<div class="dash-license-top">' +
+                                '<span class="dash-license-key">' + escapeHtml(d.device_name || d.device_id || 'Unknown Device') + '</span>' +
+                                '<span class="dash-license-status active">Bound</span>' +
+                            '</div>' +
+                            '<div class="dash-license-details">' +
+                                '<div><span class="dash-license-detail-label">License: </span><span class="dash-license-detail-value">' + escapeHtml(r.license.key) + '</span></div>' +
+                                '<div><span class="dash-license-detail-label">Bound: </span><span class="dash-license-detail-value">' +
+                                    (d.created_at ? new Date(d.created_at).toLocaleDateString('en-US', { year:'numeric', month:'short', day:'numeric' }) : '—') +
+                                '</span></div>' +
+                            '</div>';
+                        devicesContainer.insertBefore(card, devicesEmpty);
+                    }
+                });
+            } catch (devErr) {
+                console.warn('Device bindings load error:', devErr);
+            }
+
+            if (deviceCount === 0) {
+                if (devicesEmpty) devicesEmpty.style.display = '';
+            } else {
+                if (devicesEmpty) devicesEmpty.style.display = 'none';
+            }
+        }
+        document.getElementById('metricDevices').textContent = deviceCount;
+    }
+
+    /**
+     * Build a styled license card element.
+     * @param {Object} license   - { key, status, type, entityName, expiresAt, activatedAt }
+     * @param {boolean} compact  - true = dashboard summary, false = full licenses page
+     */
+    function buildLicenseCard(license, compact) {
+        var statusClass = license.status === 'active' ? 'active'
+                        : license.status === 'expired' ? 'expired'
+                        : 'pending';
+        var statusLabel = license.status.charAt(0).toUpperCase() + license.status.slice(1);
+
+        var expiryText = license.expiresAt
+            ? new Date(license.expiresAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
+            : 'Not activated';
+
+        var activatedText = license.activatedAt
+            ? new Date(license.activatedAt).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })
+            : '—';
+
+        var card = document.createElement('div');
+        card.className = 'dash-license-card';
+        card.innerHTML =
+            '<div class="dash-license-top">' +
+                '<span class="dash-license-key">' + escapeHtml(license.key) + '</span>' +
+                '<span class="dash-license-status ' + statusClass + '">' + statusLabel + '</span>' +
+            '</div>' +
+            '<div class="dash-license-details">' +
+                '<div><span class="dash-license-detail-label">Type: </span><span class="dash-license-detail-value">' + escapeHtml(license.type) + '</span></div>' +
+                '<div><span class="dash-license-detail-label">Expires: </span><span class="dash-license-detail-value">' + expiryText + '</span></div>' +
+                (compact ? '' : '<div><span class="dash-license-detail-label">Activated: </span><span class="dash-license-detail-value">' + activatedText + '</span></div>') +
+                (license.entityName && !compact ? '<div><span class="dash-license-detail-label">Entity: </span><span class="dash-license-detail-value">' + escapeHtml(license.entityName) + '</span></div>' : '') +
+            '</div>' +
+            (license.status === 'pending' ? (
+                '<div class="dash-license-actions">' +
+                    '<button class="dash-license-btn dash-license-btn-primary" onclick="activatePendingLicense()">Activate \u2014 Free</button>' +
+                    '<button class="dash-license-btn dash-license-btn-secondary" onclick="removePendingLicense()">Remove</button>' +
+                '</div>'
+            ) : '');
+
+        return card;
     }
 
     function escapeHtml(str) {

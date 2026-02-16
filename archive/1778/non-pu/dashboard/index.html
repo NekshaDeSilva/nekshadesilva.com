@@ -510,6 +510,46 @@
         </div>
     </div>
 
+    <!-- Activation Overlay (prestigious full-screen state) -->
+    <div class="nonpu-activation-overlay" id="activationOverlay">
+        <div class="nonpu-activation-content">
+            <div class="nonpu-activation-logo-wrap">
+                <img src="../../assets/NONPU_INSTSNT.PNG" alt="NonPU Instant" class="nonpu-activation-logo">
+            </div>
+            <div class="nonpu-activation-spinner" id="activationSpinner">
+                <div class="nonpu-spinner-ring"></div>
+            </div>
+            <div class="nonpu-activation-title" id="activationTitle">Activating License</div>
+            <div class="nonpu-activation-sub" id="activationSub">Verifying your license key and setting up your account…</div>
+            <div class="nonpu-activation-steps" id="activationSteps">
+                <div class="nonpu-step" id="step-verify">
+                    <div class="nonpu-step-icon nonpu-step-active"><div class="nonpu-step-dot"></div></div>
+                    <span>Verifying license key</span>
+                </div>
+                <div class="nonpu-step" id="step-register">
+                    <div class="nonpu-step-icon"><div class="nonpu-step-dot"></div></div>
+                    <span>Registering license</span>
+                </div>
+                <div class="nonpu-step" id="step-activate">
+                    <div class="nonpu-step-icon"><div class="nonpu-step-dot"></div></div>
+                    <span>Activating subscription</span>
+                </div>
+                <div class="nonpu-step" id="step-done">
+                    <div class="nonpu-step-icon"><div class="nonpu-step-dot"></div></div>
+                    <span>Finalizing</span>
+                </div>
+            </div>
+            <!-- Success state (hidden initially) -->
+            <div class="nonpu-activation-success" id="activationSuccess" style="display:none">
+                <div class="nonpu-success-check">
+                    <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+                </div>
+                <div class="nonpu-activation-title" style="margin-top:18px">License Activated</div>
+                <div class="nonpu-activation-sub">Your NonPU Instant license is now active. Returning to dashboard…</div>
+            </div>
+        </div>
+    </div>
+
     <!-- Scripts -->
     <script>
         // Load Supabase from CDN asynchronously so UI always works

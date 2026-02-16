@@ -1400,3 +1400,153 @@ a {
 .dash-sidebar-overlay.visible {
     display: block;
 }
+
+/* ============================================
+   License Activation Overlay — Full-screen
+   ============================================ */
+.nonpu-activation-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+    background: var(--bg-surface);
+    align-items: center;
+    justify-content: center;
+    animation: overlayFadeIn 0.4s ease;
+}
+.nonpu-activation-overlay.visible {
+    display: flex;
+}
+@keyframes overlayFadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+.nonpu-activation-content {
+    text-align: center;
+    max-width: 380px;
+    padding: 40px 32px;
+}
+.nonpu-activation-logo-wrap {
+    margin-bottom: 32px;
+}
+.nonpu-activation-logo {
+    height: 36px;
+    opacity: 0.55;
+}
+.nonpu-activation-spinner {
+    width: 56px;
+    height: 56px;
+    margin: 0 auto 28px;
+}
+.nonpu-spinner-ring {
+    width: 56px;
+    height: 56px;
+    border: 3px solid var(--border);
+    border-top-color: var(--text);
+    border-radius: 50%;
+    animation: spinnerRotate 1s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+@keyframes spinnerRotate {
+    to { transform: rotate(360deg); }
+}
+.nonpu-activation-title {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 6px;
+    letter-spacing: -0.2px;
+}
+.nonpu-activation-sub {
+    font-size: 13px;
+    color: var(--text-dim);
+    line-height: 1.5;
+    margin-bottom: 32px;
+}
+.nonpu-activation-steps {
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+.nonpu-step {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 13px;
+    color: var(--text-dim);
+    transition: color 0.3s ease;
+}
+.nonpu-step.done {
+    color: var(--text);
+    font-weight: 500;
+}
+.nonpu-step-icon {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    border: 2px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: border-color 0.3s ease, background 0.3s ease;
+}
+.nonpu-step-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: transparent;
+    transition: background 0.3s ease, transform 0.3s ease;
+}
+/* Active step — pulsing dot */
+.nonpu-step-icon.nonpu-step-active {
+    border-color: var(--text);
+}
+.nonpu-step-icon.nonpu-step-active .nonpu-step-dot {
+    background: var(--text);
+    animation: stepPulse 1.2s ease-in-out infinite;
+}
+@keyframes stepPulse {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50%      { transform: scale(0.65); opacity: 0.5; }
+}
+/* Completed step — filled check */
+.nonpu-step-icon.nonpu-step-done {
+    border-color: var(--text);
+    background: var(--text);
+}
+.nonpu-step-icon.nonpu-step-done .nonpu-step-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 0;
+    background: transparent;
+    animation: none;
+    /* CSS checkmark */
+    border-right: 2px solid var(--bg-surface);
+    border-bottom: 2px solid var(--bg-surface);
+    transform: rotate(45deg) translate(-1px, -1px);
+}
+/* Success state */
+.nonpu-activation-success {
+    animation: successFadeIn 0.5s ease;
+}
+@keyframes successFadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+.nonpu-success-check {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    background: var(--text);
+    color: var(--bg-surface);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    animation: checkPop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+@keyframes checkPop {
+    from { transform: scale(0); }
+    to   { transform: scale(1); }
+}
