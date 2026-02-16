@@ -178,6 +178,8 @@ document.addEventListener('DOMContentLoaded', async function () {
     };
 
     function switchPage(name) {
+        console.log('[Dashboard] switchPage called:', name);
+
         // Update nav items
         navItems.forEach(item => {
             item.classList.toggle('active', item.dataset.nav === name);
@@ -185,7 +187,12 @@ document.addEventListener('DOMContentLoaded', async function () {
 
         // Show/hide pages
         pages.forEach(page => {
-            page.style.display = page.id === 'page-' + name ? '' : 'none';
+            const isTarget = page.id === 'page-' + name;
+            page.style.display = isTarget ? '' : 'none';
+            if (isTarget) {
+                page.removeAttribute('style'); // ensure no leftover inline styles
+                console.log('[Dashboard] Showing page:', page.id, 'childNodes:', page.childNodes.length, 'innerHTML length:', page.innerHTML.length);
+            }
         });
 
         // Title
