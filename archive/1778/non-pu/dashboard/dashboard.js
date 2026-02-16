@@ -415,13 +415,15 @@ document.addEventListener('DOMContentLoaded', async function () {
     }
 
     // ========== Activation Overlay Helpers ==========
-    function showActivationOverlay(title, sub) {
+    function showActivationOverlay(title, sub, mode) {
         var ol = document.getElementById('activationOverlay');
         document.getElementById('activationTitle').textContent = title || 'Activating License';
         document.getElementById('activationSub').textContent   = sub || 'Verifying your license key and setting up your account…';
         document.getElementById('activationSpinner').style.display = '';
         document.getElementById('activationSteps').style.display   = '';
         document.getElementById('activationSuccess').style.display = 'none';
+        // Store mode so success knows which image to show
+        ol.dataset.mode = mode || 'extend';
         // Reset all steps
         ['step-verify','step-register','step-activate','step-done'].forEach(function(id) {
             var el = document.getElementById(id);
@@ -445,10 +447,27 @@ document.addEventListener('DOMContentLoaded', async function () {
         }
     }
     function showActivationSuccess() {
-        document.getElementById('activationSpinner').style.display = '';
+        var ol = document.getElementById('activationOverlay');
+        var mode = ol.dataset.mode || 'extend';
+        var img = document.getElementById('activationSuccessImg');
+        var highlight = document.getElementById('activationSuccessHighlight');
+
+        // Set the correct mockup image and highlight text
+        if (mode === 'new') {
+            img.src = '../../assets/nonpu_model_sd_card_b ig.png';
+            img.alt = 'NonPU Micro SD';
+            highlight.textContent = 'Your NonPU Instant license is now active.';
+            document.querySelector('.nonpu-activation-success-title').textContent = 'License Activated';
+        } else {
+            img.src = '../../assets/nonpu_license_dummy.png';
+            img.alt = 'License';
+            highlight.textContent = 'Your subscription has been extended by 1 year.';
+            document.querySelector('.nonpu-activation-success-title').textContent = 'License Extended';
+        }
+
+        document.getElementById('activationSpinner').style.display = 'none';
         document.getElementById('activationSteps').style.display   = 'none';
         document.getElementById('activationSuccess').style.display = '';
-        document.getElementById('activationSpinner').style.display = 'none';
     }
     function hideActivationOverlay() {
         document.getElementById('activationOverlay').classList.remove('visible');
@@ -468,7 +487,7 @@ document.addEventListener('DOMContentLoaded', async function () {
                 return;
             }
 
-            showActivationOverlay('Extending License', 'Extending your subscription period…');
+            showActivationOverlay('Extending License', 'Extending your subscription period…', 'extend');
 
             try {
                 // Step 1 — Verify
@@ -547,7 +566,7 @@ document.addEventListener('DOMContentLoaded', async function () {
                 return;
             }
 
-            showActivationOverlay('Activating License', 'Setting up your new NonPU Instant license…');
+            showActivationOverlay('Activating License', 'Setting up your new NonPU Instant license…', 'new');
 
             try {
                 // Step 1 — Verify key

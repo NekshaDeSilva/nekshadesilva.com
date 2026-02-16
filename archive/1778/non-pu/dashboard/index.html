@@ -261,47 +261,37 @@
                     <!-- Extend License Card (shown when key EXISTS in database) -->
                     <div class="dash-card dash-extend-card" id="extendLicenseCard" style="display:none">
                         <div class="dash-extend-header">
-                            <div class="dash-extend-icon-wrap">
-                                <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg>
+                            <div class="dash-extend-img-wrap">
+                                <img src="../../assets/nonpu_license_dummy.png" alt="License" class="dash-extend-header-img">
                             </div>
                             <div>
                                 <div class="dash-extend-title">Extend Your License</div>
-                                <div class="dash-extend-sub">This license key already exists. Complete payment to extend the expiration period.</div>
+                                <div class="dash-extend-sub">Complete payment to extend the expiration period of your license.</div>
                             </div>
                         </div>
 
                         <div id="extendPaymentForm">
-                            <!-- License status -->
-                            <div class="dash-extend-key-status">
-                                <div class="dash-extend-key-label">Existing License Detected</div>
-                                <div class="dash-extend-key-check">
-                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
-                                    <span>License found in database — extension eligible</span>
-                                </div>
-                                <div class="dash-extend-key-expiry" id="extendCurrentExpiry"></div>
-                            </div>
-
-                            <!-- Free Promotion Banner -->
+                            <!-- Free Access Banner -->
                             <div class="dash-promo-banner">
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M21.41 11.58l-9-9C12.05 2.22 11.55 2 11 2H4c-1.1 0-2 .9-2 2v7c0 .55.22 1.05.59 1.42l9 9c.36.36.86.58 1.41.58.55 0 1.05-.22 1.41-.59l7-7c.37-.36.59-.86.59-1.41 0-.55-.23-1.06-.59-1.42zM5.5 7C4.67 7 4 6.33 4 5.5S4.67 4 5.5 4 7 4.67 7 5.5 6.33 7 5.5 7z"/></svg>
+                                <img src="../../assets/NonPU_icon.png" alt="NonPU" class="dash-promo-icon">
                                 <div>
-                                    <strong>Limited-Time Free Access</strong>
-                                    <div style="font-size:12px;opacity:0.85;margin-top:2px">We are offering this service free for a limited time for all new users as part of our launch.</div>
+                                    <strong>Try NonPU for Free</strong>
+                                    <div style="font-size:12px;opacity:0.85;margin-top:2px">We are offering this service free for a limited time for all new users as part of our first launch.</div>
                                 </div>
                             </div>
 
                             <!-- Pricing -->
                             <div class="dash-extend-pricing">
                                 <div class="dash-extend-pricing-row">
-                                    <span>License Extension — 1 Year</span>
-                                    <span style="text-decoration:line-through;opacity:0.5">$99.00</span>
+                                    <span>License Extension</span>
+                                    <span class="dash-pricing-period">1 Year</span>
                                 </div>
                                 <div class="dash-extend-pricing-row">
-                                    <span>Launch Promotion Discount</span>
+                                    <span>First Launch</span>
                                     <span style="color:#16a34a;font-weight:600">−$99.00</span>
                                 </div>
                                 <div class="dash-extend-pricing-row">
-                                    <span>Support & Updates</span>
+                                    <span>Help, Call & Email Support</span>
                                     <span>Included</span>
                                 </div>
                                 <div class="dash-extend-pricing-row dash-extend-total">
@@ -319,7 +309,7 @@
                             <!-- Activate Button -->
                             <button class="dash-extend-pay-btn" id="extendPayBtn">
                                 <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
-                                Extend — Free
+                                Click to Extend
                             </button>
 
                             <div class="dash-extend-secure">
@@ -331,11 +321,12 @@
                         <!-- Success State -->
                         <div id="extendSuccess" style="display:none">
                             <div class="dash-extend-success">
-                                <div class="dash-extend-success-icon">
-                                    <svg width="40" height="40" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+                                <div class="dash-success-mockup">
+                                    <img src="../../assets/nonpu_license_dummy.png" alt="License" class="dash-success-mockup-img">
                                 </div>
                                 <div class="dash-extend-success-title">License Extended!</div>
-                                <div class="dash-extend-success-text">Your license expiration has been extended by 1 year. The NonPU Instant application will verify this automatically.</div>
+                                <div class="dash-extend-success-highlight">Your subscription has been extended by 1 year.</div>
+                                <div class="dash-extend-success-text">The NonPU Instant application will verify this automatically on next launch.</div>
                                 <button class="dash-btn dash-btn-primary" onclick="switchPage('dashboard')">Back to Dashboard</button>
                             </div>
                         </div>
@@ -344,46 +335,37 @@
                     <!-- New License / Activate Card (shown when key does NOT exist in database) -->
                     <div class="dash-card dash-extend-card" id="newLicenseCard" style="display:none">
                         <div class="dash-extend-header">
-                            <div class="dash-extend-icon-wrap">
-                                <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M12.65 10C11.83 7.67 9.61 6 7 6c-3.31 0-6 2.69-6 6s2.69 6 6 6c2.61 0 4.83-1.67 5.65-4H17v4h4v-4h2v-4H12.65zM7 14c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z"/></svg>
+                            <div class="dash-extend-img-wrap">
+                                <img src="../../assets/nonpu_model_sd_card_b ig.png" alt="NonPU Micro SD" class="dash-extend-header-img dash-extend-header-img-sd">
                             </div>
                             <div>
                                 <div class="dash-extend-title">Activate New License</div>
-                                <div class="dash-extend-sub">A new Micro SD card license key has been received. Complete payment to activate it.</div>
+                                <div class="dash-extend-sub">Complete payment to activate the new license key received for your Micro SD card.</div>
                             </div>
                         </div>
 
                         <div id="newLicensePaymentForm">
-                            <!-- License status -->
-                            <div class="dash-extend-key-status">
-                                <div class="dash-extend-key-label">New License Key</div>
-                                <div class="dash-extend-key-check">
-                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
-                                    <span>Valid license key received from NonPU Instant device</span>
-                                </div>
-                            </div>
-
-                            <!-- Free Promotion Banner -->
+                            <!-- Free Access Banner -->
                             <div class="dash-promo-banner">
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M21.41 11.58l-9-9C12.05 2.22 11.55 2 11 2H4c-1.1 0-2 .9-2 2v7c0 .55.22 1.05.59 1.42l9 9c.36.36.86.58 1.41.58.55 0 1.05-.22 1.41-.59l7-7c.37-.36.59-.86.59-1.41 0-.55-.23-1.06-.59-1.42zM5.5 7C4.67 7 4 6.33 4 5.5S4.67 4 5.5 4 7 4.67 7 5.5 6.33 7 5.5 7z"/></svg>
+                                <img src="../../assets/NonPU_icon.png" alt="NonPU" class="dash-promo-icon">
                                 <div>
-                                    <strong>Limited-Time Free Access</strong>
-                                    <div style="font-size:12px;opacity:0.85;margin-top:2px">We are offering this service free for a limited time for all new users as part of our launch.</div>
+                                    <strong>Try NonPU for Free</strong>
+                                    <div style="font-size:12px;opacity:0.85;margin-top:2px">We are offering this service free for a limited time for all new users as part of our first launch.</div>
                                 </div>
                             </div>
 
                             <!-- Pricing -->
                             <div class="dash-extend-pricing">
                                 <div class="dash-extend-pricing-row">
-                                    <span>NonPU Instant License — 1 Year</span>
-                                    <span style="text-decoration:line-through;opacity:0.5">$99.00</span>
+                                    <span>NonPU Instant License</span>
+                                    <span class="dash-pricing-period">1 Year</span>
                                 </div>
                                 <div class="dash-extend-pricing-row">
-                                    <span>Launch Promotion Discount</span>
+                                    <span>First Launch</span>
                                     <span style="color:#16a34a;font-weight:600">−$99.00</span>
                                 </div>
                                 <div class="dash-extend-pricing-row">
-                                    <span>Support & Updates</span>
+                                    <span>Help, Call & Email Support</span>
                                     <span>Included</span>
                                 </div>
                                 <div class="dash-extend-pricing-row dash-extend-total">
@@ -401,7 +383,7 @@
                             <!-- Activate Button -->
                             <button class="dash-extend-pay-btn" id="newLicensePayBtn">
                                 <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
-                                Activate — Free
+                                Click to Activate
                             </button>
 
                             <div class="dash-extend-secure">
@@ -413,11 +395,12 @@
                         <!-- Success State -->
                         <div id="newLicenseSuccess" style="display:none">
                             <div class="dash-extend-success">
-                                <div class="dash-extend-success-icon">
-                                    <svg width="40" height="40" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+                                <div class="dash-success-mockup">
+                                    <img src="../../assets/nonpu_model_sd_card_b ig.png" alt="NonPU Micro SD" class="dash-success-mockup-img dash-success-mockup-sd">
                                 </div>
                                 <div class="dash-extend-success-title">License Activated!</div>
-                                <div class="dash-extend-success-text">Your new NonPU Instant license has been activated. The application will verify this automatically.</div>
+                                <div class="dash-extend-success-highlight">Your NonPU Instant license is now active.</div>
+                                <div class="dash-extend-success-text">The application will verify this automatically on next launch.</div>
                                 <button class="dash-btn dash-btn-primary" onclick="switchPage('dashboard')">Back to Dashboard</button>
                             </div>
                         </div>
@@ -512,40 +495,43 @@
 
     <!-- Activation Overlay (prestigious full-screen state) -->
     <div class="nonpu-activation-overlay" id="activationOverlay">
-        <div class="nonpu-activation-content">
-            <div class="nonpu-activation-logo-wrap">
-                <img src="../../assets/NONPU_INSTSNT.PNG" alt="NonPU Instant" class="nonpu-activation-logo">
-            </div>
-            <div class="nonpu-activation-spinner" id="activationSpinner">
-                <div class="nonpu-spinner-ring"></div>
-            </div>
-            <div class="nonpu-activation-title" id="activationTitle">Activating License</div>
-            <div class="nonpu-activation-sub" id="activationSub">Verifying your license key and setting up your account…</div>
-            <div class="nonpu-activation-steps" id="activationSteps">
-                <div class="nonpu-step" id="step-verify">
-                    <div class="nonpu-step-icon nonpu-step-active"><div class="nonpu-step-dot"></div></div>
-                    <span>Verifying license key</span>
+        <div class="nonpu-activation-card">
+            <div class="nonpu-activation-content">
+                <div class="nonpu-activation-logo-wrap">
+                    <img src="../../assets/NONPU_INSTSNT.PNG" alt="NonPU Instant" class="nonpu-activation-logo">
                 </div>
-                <div class="nonpu-step" id="step-register">
-                    <div class="nonpu-step-icon"><div class="nonpu-step-dot"></div></div>
-                    <span>Registering license</span>
+                <div class="nonpu-activation-spinner" id="activationSpinner">
+                    <div class="nonpu-spinner-ring"></div>
                 </div>
-                <div class="nonpu-step" id="step-activate">
-                    <div class="nonpu-step-icon"><div class="nonpu-step-dot"></div></div>
-                    <span>Activating subscription</span>
+                <div class="nonpu-activation-title" id="activationTitle">Activating License</div>
+                <div class="nonpu-activation-sub" id="activationSub">Verifying your license key and setting up your account…</div>
+                <div class="nonpu-activation-steps" id="activationSteps">
+                    <div class="nonpu-step" id="step-verify">
+                        <div class="nonpu-step-icon nonpu-step-active"><div class="nonpu-step-dot"></div></div>
+                        <span>Verifying license key</span>
+                    </div>
+                    <div class="nonpu-step" id="step-register">
+                        <div class="nonpu-step-icon"><div class="nonpu-step-dot"></div></div>
+                        <span>Registering license</span>
+                    </div>
+                    <div class="nonpu-step" id="step-activate">
+                        <div class="nonpu-step-icon"><div class="nonpu-step-dot"></div></div>
+                        <span>Activating subscription</span>
+                    </div>
+                    <div class="nonpu-step" id="step-done">
+                        <div class="nonpu-step-icon"><div class="nonpu-step-dot"></div></div>
+                        <span>Finalizing</span>
+                    </div>
                 </div>
-                <div class="nonpu-step" id="step-done">
-                    <div class="nonpu-step-icon"><div class="nonpu-step-dot"></div></div>
-                    <span>Finalizing</span>
+                <!-- Success state (hidden initially) -->
+                <div class="nonpu-activation-success" id="activationSuccess" style="display:none">
+                    <div class="nonpu-success-mockup" id="activationSuccessImage">
+                        <img src="../../assets/nonpu_license_dummy.png" alt="License" class="nonpu-success-mockup-img" id="activationSuccessImg">
+                    </div>
+                    <div class="nonpu-activation-success-title">License Activated</div>
+                    <div class="nonpu-activation-success-highlight" id="activationSuccessHighlight">Your license is now active.</div>
+                    <div class="nonpu-activation-sub">Returning to dashboard…</div>
                 </div>
-            </div>
-            <!-- Success state (hidden initially) -->
-            <div class="nonpu-activation-success" id="activationSuccess" style="display:none">
-                <div class="nonpu-success-check">
-                    <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
-                </div>
-                <div class="nonpu-activation-title" style="margin-top:18px">License Activated</div>
-                <div class="nonpu-activation-sub">Your NonPU Instant license is now active. Returning to dashboard…</div>
             </div>
         </div>
     </div>
