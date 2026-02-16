@@ -258,26 +258,27 @@
                         </div>
                     </div>
 
-                    <!-- Extend License Card (hidden by default, shown when encrypted key arrives) -->
+                    <!-- Extend License Card (shown when key EXISTS in database) -->
                     <div class="dash-card dash-extend-card" id="extendLicenseCard" style="display:none">
                         <div class="dash-extend-header">
                             <div class="dash-extend-icon-wrap">
-                                <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M12.65 10C11.83 7.67 9.61 6 7 6c-3.31 0-6 2.69-6 6s2.69 6 6 6c2.61 0 4.83-1.67 5.65-4H17v4h4v-4h2v-4H12.65zM7 14c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z"/></svg>
+                                <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg>
                             </div>
                             <div>
                                 <div class="dash-extend-title">Extend Your License</div>
-                                <div class="dash-extend-sub">Complete payment to extend your NonPU Instant license expiry</div>
+                                <div class="dash-extend-sub">This license key already exists. Complete payment to extend the expiration period.</div>
                             </div>
                         </div>
 
                         <div id="extendPaymentForm">
-                            <!-- License status (read-only, derived from encrypted URL param) -->
+                            <!-- License status -->
                             <div class="dash-extend-key-status">
-                                <div class="dash-extend-key-label">License Detected</div>
+                                <div class="dash-extend-key-label">Existing License Detected</div>
                                 <div class="dash-extend-key-check">
                                     <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
-                                    <span>Valid license key received from NonPU Instant device</span>
+                                    <span>License found in database — extension eligible</span>
                                 </div>
+                                <div class="dash-extend-key-expiry" id="extendCurrentExpiry"></div>
                             </div>
 
                             <!-- Pricing -->
@@ -305,7 +306,7 @@
                             <!-- Pay Button -->
                             <button class="dash-extend-pay-btn" id="extendPayBtn">
                                 <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg>
-                                Pay $99.00
+                                Extend — Pay $99.00
                             </button>
 
                             <div class="dash-extend-secure">
@@ -321,7 +322,76 @@
                                     <svg width="40" height="40" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
                                 </div>
                                 <div class="dash-extend-success-title">License Extended!</div>
-                                <div class="dash-extend-success-text">Your NonPU Instant license has been successfully extended. The application will verify this automatically.</div>
+                                <div class="dash-extend-success-text">Your license expiration has been extended by 1 year. The NonPU Instant application will verify this automatically.</div>
+                                <button class="dash-btn dash-btn-primary" onclick="switchPage('dashboard')">Back to Dashboard</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- New License / Activate Card (shown when key does NOT exist in database) -->
+                    <div class="dash-card dash-extend-card" id="newLicenseCard" style="display:none">
+                        <div class="dash-extend-header">
+                            <div class="dash-extend-icon-wrap">
+                                <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M12.65 10C11.83 7.67 9.61 6 7 6c-3.31 0-6 2.69-6 6s2.69 6 6 6c2.61 0 4.83-1.67 5.65-4H17v4h4v-4h2v-4H12.65zM7 14c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z"/></svg>
+                            </div>
+                            <div>
+                                <div class="dash-extend-title">Activate New License</div>
+                                <div class="dash-extend-sub">A new Micro SD card license key has been received. Complete payment to activate it.</div>
+                            </div>
+                        </div>
+
+                        <div id="newLicensePaymentForm">
+                            <!-- License status -->
+                            <div class="dash-extend-key-status">
+                                <div class="dash-extend-key-label">New License Key</div>
+                                <div class="dash-extend-key-check">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+                                    <span>Valid license key received from NonPU Instant device</span>
+                                </div>
+                            </div>
+
+                            <!-- Pricing -->
+                            <div class="dash-extend-pricing">
+                                <div class="dash-extend-pricing-row">
+                                    <span>NonPU Instant License — 1 Year</span>
+                                    <span>$99.00</span>
+                                </div>
+                                <div class="dash-extend-pricing-row">
+                                    <span>Support & Updates</span>
+                                    <span>Included</span>
+                                </div>
+                                <div class="dash-extend-pricing-row dash-extend-total">
+                                    <span>Total</span>
+                                    <span>$99.00 USD</span>
+                                </div>
+                            </div>
+
+                            <!-- Error Message -->
+                            <div class="dash-extend-error" id="newLicenseError" style="display:none">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
+                                <span id="newLicenseErrorText">Error</span>
+                            </div>
+
+                            <!-- Pay Button -->
+                            <button class="dash-extend-pay-btn" id="newLicensePayBtn">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg>
+                                Activate — Pay $99.00
+                            </button>
+
+                            <div class="dash-extend-secure">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/></svg>
+                                <span>Secure payment</span>
+                            </div>
+                        </div>
+
+                        <!-- Success State -->
+                        <div id="newLicenseSuccess" style="display:none">
+                            <div class="dash-extend-success">
+                                <div class="dash-extend-success-icon">
+                                    <svg width="40" height="40" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+                                </div>
+                                <div class="dash-extend-success-title">License Activated!</div>
+                                <div class="dash-extend-success-text">Your new NonPU Instant license has been activated. The application will verify this automatically.</div>
                                 <button class="dash-btn dash-btn-primary" onclick="switchPage('dashboard')">Back to Dashboard</button>
                             </div>
                         </div>

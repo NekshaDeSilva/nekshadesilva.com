@@ -965,6 +965,13 @@ a {
     flex-shrink: 0;
 }
 
+.dash-extend-key-expiry {
+    font-size: 12px;
+    color: var(--text-dim);
+    margin-top: 8px;
+    display: none;
+}
+
 .dash-extend-pricing {
     border-top: 1px solid var(--border);
     padding-top: 16px;

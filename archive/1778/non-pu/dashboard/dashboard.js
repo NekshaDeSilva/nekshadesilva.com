@@ -239,13 +239,13 @@ document.addEventListener('DOMContentLoaded', async function () {
                 // Valid license key — store temporarily, never show to user
                 localStorage.setItem(NONPU_CRYPTO.STORAGE_KEY, decryptedKey);
 
-                // Switch to Licenses tab and show extend card
-                switchPage('licenses');
-                document.getElementById('extendLicenseCard').style.display = '';
-
                 // Clean the URL (remove enc param)
                 const cleanUrl = window.location.pathname;
                 window.history.replaceState({}, '', cleanUrl);
+
+                // Check if this key already exists in the database
+                switchPage('licenses');
+                await routeLicenseKey(decryptedKey);
             } else {
                 // Decryption produced invalid data
                 switchPage('licenses');
@@ -262,7 +262,41 @@ document.addEventListener('DOMContentLoaded', async function () {
         // Check if there's a stored temp license (user may have refreshed)
         const storedTempKey = localStorage.getItem(NONPU_CRYPTO.STORAGE_KEY);
         if (storedTempKey) {
-            document.getElementById('extendLicenseCard').style.display = '';
+            await routeLicenseKey(storedTempKey);
+        }
+    }
+
+    /**
+     * Route to the correct card based on whether the license key exists in DB.
+     * - Key EXISTS → Extend License (extend expiration)
+     * - Key does NOT exist → Activate New License (new DB entry)
+     */
+    async function routeLicenseKey(licenseKey) {
+        try {
+            const { data: existingLicense } = await NonPUAuth.getLicenseByKey(licenseKey);
+
+            if (existingLicense) {
+                // KEY EXISTS → show Extend card
+                document.getElementById('extendLicenseCard').style.display = '';
+                document.getElementById('newLicenseCard').style.display = 'none';
+
+                // Show current expiry if available
+                const expiryEl = document.getElementById('extendCurrentExpiry');
+                if (expiryEl && existingLicense.expiration_date) {
+                    const expDate = new Date(existingLicense.expiration_date);
+                    expiryEl.textContent = 'Current expiry: ' + expDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+                    expiryEl.style.display = '';
+                }
+            } else {
+                // KEY DOES NOT EXIST → show New License / Activate card
+                document.getElementById('newLicenseCard').style.display = '';
+                document.getElementById('extendLicenseCard').style.display = 'none';
+            }
+        } catch (e) {
+            console.warn('DB check failed, defaulting to new license flow:', e);
+            // If DB check fails, default to new license
+            document.getElementById('newLicenseCard').style.display = '';
+            document.getElementById('extendLicenseCard').style.display = 'none';
         }
     }
 
@@ -286,11 +320,24 @@ document.addEventListener('DOMContentLoaded', async function () {
 
             try {
                 // In production: redirect to Stripe checkout
-                // const session = await fetch('/api/create-checkout', { ... });
-                // window.location.href = session.url;
-
-                // Simulated payment delay
                 await new Promise(resolve => setTimeout(resolve, 2000));
+
+                // Extend the expiration by 1 year from current expiry (or from now)
+                const { data: license } = await NonPUAuth.getLicenseByKey(tempKey);
+                let newExpiry = new Date();
+                if (license && license.expiration_date) {
+                    const currentExpiry = new Date(license.expiration_date);
+                    // If current expiry is in the future, extend from there; otherwise from now
+                    newExpiry = currentExpiry > new Date() ? currentExpiry : new Date();
+                }
+                newExpiry.setFullYear(newExpiry.getFullYear() + 1);
+
+                // Update expiration in database
+                await NonPUAuth.activateLicense(tempKey, {
+                    entityName: entityData.entityName || '',
+                    legalEntityName: entityData.legalEntityName || '',
+                    entityType: entityData.entityType || ''
+                });
 
                 // Payment successful — clean up
                 localStorage.removeItem(NONPU_CRYPTO.STORAGE_KEY);
@@ -301,19 +348,75 @@ document.addEventListener('DOMContentLoaded', async function () {
 
                 // Send success callback to desktop app
                 sendAppCallback(1);
-
                 hideLoading();
             } catch (error) {
                 hideLoading();
                 extendPayBtn.disabled = false;
                 extendPayBtn.innerHTML = `
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg>
-                    Pay $99.00
+                    Extend — Pay $99.00
                 `;
                 extendError.style.display = 'flex';
                 document.getElementById('extendErrorText').textContent = error.message || 'Payment failed. Please try again.';
+                sendAppCallback(0);
+            }
+        });
+    }
 
-                // Send failure callback
+    // ========== New License / Activate Payment ==========
+    const newLicensePayBtn = document.getElementById('newLicensePayBtn');
+    if (newLicensePayBtn) {
+        newLicensePayBtn.addEventListener('click', async function () {
+            const newError = document.getElementById('newLicenseError');
+            newError.style.display = 'none';
+
+            const tempKey = localStorage.getItem(NONPU_CRYPTO.STORAGE_KEY);
+            if (!tempKey) {
+                newError.style.display = 'flex';
+                document.getElementById('newLicenseErrorText').textContent = 'No license key found. Please initiate from the NonPU Instant application.';
+                return;
+            }
+
+            showLoading();
+            newLicensePayBtn.disabled = true;
+            newLicensePayBtn.innerHTML = '<span>Processing...</span>';
+
+            try {
+                // In production: redirect to Stripe checkout
+                await new Promise(resolve => setTimeout(resolve, 2000));
+
+                // Create new license entry in database
+                await NonPUAuth.addPendingLicense(tempKey);
+
+                // Activate it immediately after payment
+                await NonPUAuth.activateLicense(tempKey, {
+                    entityName: entityData.entityName || '',
+                    legalEntityName: entityData.legalEntityName || '',
+                    entityType: entityData.entityType || ''
+                });
+
+                // Create payment record
+                await NonPUAuth.createPaymentRecord(tempKey, 9900, 'card');
+
+                // Payment successful — clean up
+                localStorage.removeItem(NONPU_CRYPTO.STORAGE_KEY);
+
+                // Show success
+                document.getElementById('newLicensePaymentForm').style.display = 'none';
+                document.getElementById('newLicenseSuccess').style.display = '';
+
+                // Send success callback to desktop app
+                sendAppCallback(1);
+                hideLoading();
+            } catch (error) {
+                hideLoading();
+                newLicensePayBtn.disabled = false;
+                newLicensePayBtn.innerHTML = `
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg>
+                    Activate — Pay $99.00
+                `;
+                newError.style.display = 'flex';
+                document.getElementById('newLicenseErrorText').textContent = error.message || 'Payment failed. Please try again.';
                 sendAppCallback(0);
             }
         });
