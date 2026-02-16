@@ -140,22 +140,40 @@
     <script src="js/auth.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            try {
-                NonPUAuth.initSupabase();
 
-                var pendingKey = NonPUAuth.handleLicenseKeyFromURL();
-                if (pendingKey) {
-                    document.getElementById('pendingLicenseNotice').style.display = 'flex';
-                    document.getElementById('pendingKeyDisplay').textContent = pendingKey;
-                }
+            // ========================================================
+            // STEP 1: Capture URL params IMMEDIATELY (no Supabase needed)
+            // This must happen before ANY redirect so the enc/key is never lost
+            // ========================================================
+            var captured = NonPUAuth.captureURLParams();
 
-                NonPUAuth.getSession().then(function(session) {
-                    if (session) { window.location.href = 'dashboard/'; }
-                });
-            } catch (err) {
-                console.warn('Supabase init skipped:', err.message);
+            // Show pending key notice if applicable
+            var pendingKey = captured.key;
+            if (pendingKey) {
+                document.getElementById('pendingLicenseNotice').style.display = 'flex';
+                document.getElementById('pendingKeyDisplay').textContent = pendingKey;
             }
 
+            // ========================================================
+            // STEP 2: Wait for Supabase CDN, then check session
+            // If already signed in → go straight to dashboard
+            // ========================================================
+            NonPUAuth.waitForSupabase().then(function() {
+                NonPUAuth.initSupabase();
+                return NonPUAuth.getSession();
+            }).then(function(session) {
+                if (session) {
+                    // User is already signed in — skip login, go to dashboard
+                    window.location.href = 'dashboard/';
+                }
+            }).catch(function(err) {
+                // Supabase CDN didn't load — show login form anyway
+                console.warn('Session check skipped:', err.message);
+            });
+
+            // ========================================================
+            // STEP 3: Login form handlers
+            // ========================================================
             var loadingBar = document.getElementById('loadingBar');
             var errorMessage = document.getElementById('errorMessage');
             var errorText = document.getElementById('errorText');
@@ -213,12 +231,16 @@
                 showLoading();
                 var password = document.getElementById('password').value;
                 try {
+                    // Make sure Supabase is ready before sign-in
+                    await NonPUAuth.waitForSupabase();
+                    NonPUAuth.initSupabase();
+
                     var result = await NonPUAuth.signIn(currentEmail, password);
                     hideLoading();
                     if (result.error) { showError(result.error.message || 'Invalid email or password'); return; }
-                    var urlParams = new URLSearchParams(window.location.search);
-                    var redirect = urlParams.get('redirect');
-                    window.location.href = redirect || 'dashboard/';
+                    // Sign-in succeeded — go to dashboard
+                    // The enc/key are already safely in localStorage from Step 1
+                    window.location.href = 'dashboard/';
                 } catch (err) {
                     hideLoading();
                     showError(err.message || 'An error occurred. Please try again.');

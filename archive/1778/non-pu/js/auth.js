@@ -30,6 +30,25 @@ const HCAPTCHA_CONFIG = {
 // ============================================
 let supabaseClient = null;
 
+/**
+ * Wait for the Supabase CDN script to finish loading.
+ * Returns a promise that resolves when window.supabase is available.
+ */
+function waitForSupabase(timeout) {
+    if (typeof timeout === 'undefined') timeout = 8000;
+    return new Promise(function (resolve, reject) {
+        if (window.supabase) { resolve(); return; }
+        var start = Date.now();
+        var interval = setInterval(function () {
+            if (window.supabase) { clearInterval(interval); resolve(); return; }
+            if (Date.now() - start > timeout) {
+                clearInterval(interval);
+                reject(new Error('Supabase CDN did not load within ' + timeout + 'ms'));
+            }
+        }, 50);
+    });
+}
+
 function initSupabase() {
     if (!window.supabase) {
         console.error('Supabase library not loaded');
@@ -48,6 +67,40 @@ function initSupabase() {
 // ============================================
 // LICENSE KEY MANAGEMENT
 // ============================================
+
+/**
+ * Capture ALL URL parameters (key and enc) IMMEDIATELY — no Supabase needed.
+ * This must run before any auth checks or redirects.
+ * Stores them in localStorage so they survive redirects between login ↔ dashboard.
+ */
+function captureURLParams() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const encParam = urlParams.get('enc');
+    const keyParam = urlParams.get('key');
+    let captured = false;
+
+    if (encParam) {
+        localStorage.setItem('nonpu_pending_enc', encParam);
+        captured = true;
+    }
+
+    if (keyParam) {
+        localStorage.setItem('nonpu_pending_license_key', keyParam);
+        localStorage.setItem('nonpu_license_key_timestamp', Date.now().toString());
+        captured = true;
+    }
+
+    // Clean URL — remove parameters for security (prevent history exposure)
+    if (captured) {
+        const cleanURL = window.location.origin + window.location.pathname;
+        window.history.replaceState({}, document.title, cleanURL);
+    }
+
+    return {
+        enc: encParam || localStorage.getItem('nonpu_pending_enc'),
+        key: keyParam || localStorage.getItem('nonpu_pending_license_key')
+    };
+}
 
 /**
  * Save license key from URL parameter to localStorage
@@ -616,7 +669,9 @@ function formatDate(dateString) {
 // ============================================
 const NonPUAuth = {
     // Initialization
+    waitForSupabase,
     initSupabase,
+    captureURLParams,
     
     // License key handling
     handleLicenseKeyFromURL,

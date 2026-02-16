@@ -90,6 +90,13 @@ document.addEventListener('DOMContentLoaded', async function () {
 
     showLoading();
 
+    // ==================================================================
+    // CRITICAL: Capture URL params (enc / key) IMMEDIATELY — before any
+    // auth check or redirect. This ensures the encrypted license key is
+    // never lost even if the user needs to be sent to the login page.
+    // ==================================================================
+    NonPUAuth.captureURLParams();
+
     // ========== Sidebar Toggle ==========
     // On mobile, start collapsed
     let sidebarOpen = window.innerWidth > 768;
@@ -153,11 +160,16 @@ document.addEventListener('DOMContentLoaded', async function () {
         });
     });
 
-    // ========== Initialize Supabase ==========
+    // ========== Wait for Supabase CDN, then Initialize ==========
     try {
+        await NonPUAuth.waitForSupabase(10000);
         NonPUAuth.initSupabase();
     } catch (err) {
-        console.warn('Supabase init skipped:', err.message);
+        console.warn('Supabase CDN timeout:', err.message);
+        // Cannot proceed without Supabase — send to login
+        hideLoading();
+        window.location.href = '../';
+        return;
     }
 
     // ========== Auth Check ==========
@@ -170,6 +182,9 @@ document.addEventListener('DOMContentLoaded', async function () {
     }
 
     if (!user) {
+        // Not signed in — redirect to login page.
+        // The enc/key are already safely stored in localStorage
+        // by captureURLParams() above, so they will survive this redirect.
         hideLoading();
         window.location.href = '../';
         return;
@@ -227,8 +242,10 @@ document.addEventListener('DOMContentLoaded', async function () {
     loadLicenses(pendingKey);
 
     // ========== Encrypted License Key from Desktop Client ==========
-    const urlParams = new URLSearchParams(window.location.search);
-    const encryptedParam = urlParams.get('enc');
+    // Check localStorage first (saved by captureURLParams before auth redirect),
+    // then fall back to URL param (direct visit while already signed in)
+    const encryptedParam = localStorage.getItem('nonpu_pending_enc')
+        || new URLSearchParams(window.location.search).get('enc');
 
     if (encryptedParam) {
         // Desktop client sent an encrypted license key — decrypt it
@@ -239,6 +256,9 @@ document.addEventListener('DOMContentLoaded', async function () {
                 // Valid license key — store temporarily, never show to user
                 localStorage.setItem(NONPU_CRYPTO.STORAGE_KEY, decryptedKey);
 
+                // Clear the pending enc — it's been consumed
+                localStorage.removeItem('nonpu_pending_enc');
+
                 // Clean the URL (remove enc param)
                 const cleanUrl = window.location.pathname;
                 window.history.replaceState({}, '', cleanUrl);
@@ -248,12 +268,14 @@ document.addEventListener('DOMContentLoaded', async function () {
                 await routeLicenseKey(decryptedKey);
             } else {
                 // Decryption produced invalid data
+                localStorage.removeItem('nonpu_pending_enc');
                 switchPage('licenses');
                 document.getElementById('extendInvalidCard').style.display = '';
                 sendAppCallback(0);
             }
         } catch (e) {
             console.error('License decryption error:', e);
+            localStorage.removeItem('nonpu_pending_enc');
             switchPage('licenses');
             document.getElementById('extendInvalidCard').style.display = '';
             sendAppCallback(0);
