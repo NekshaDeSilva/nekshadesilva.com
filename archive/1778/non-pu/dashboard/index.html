@@ -27,7 +27,7 @@
             window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', setFavicon);
         })();
     </script>
-    <link rel="stylesheet" href="dashboard.css?v=20260216d">
+    <link rel="stylesheet" href="dashboard.css?v=20260216e">
 </head>
 <body>
     <!-- Loading Bar -->
@@ -286,7 +286,9 @@
                                     <div class="dash-promo-note">This offer is valid for one year only. After 1 year of the license period, you will be charged $99 per year.</div>
                                 </div>
                             </div>
-                                </div>
+
+                            <!-- Pricing -->
+                            <div class="dash-extend-pricing">
                                 <div class="dash-extend-pricing-row">
                                     <span>First Launch</span>
                                     <span style="color:#16a34a;font-weight:600">−$99.00</span>
@@ -446,8 +448,57 @@
                 <!-- ======== ACCOUNT PAGE ======== -->
                 <section class="dash-page" id="page-account" style="display:none">
                     <div id="accountPageContent">
-                        <div class="dash-account-loading" id="accountLoading" style="text-align:center;padding:60px 20px;">
-                            <div style="font-size:14px;color:#65676b;">Loading account data…</div>
+                        <div class="dash-two-col">
+                            <div class="dash-card dash-card-main">
+                                <div class="dash-card-header">
+                                    <div>
+                                        <div class="dash-card-title">Account Information</div>
+                                        <div class="dash-card-subtitle">Your entity and account details</div>
+                                    </div>
+                                    <button class="dash-btn dash-btn-danger" onclick="handleSignOut()">Sign Out</button>
+                                </div>
+                                <div class="dash-card-body">
+                                    <div class="dash-info-grid">
+                                        <div class="dash-info-row">
+                                            <span class="dash-info-label">Entity Type</span>
+                                            <span class="dash-info-value">Loading…</span>
+                                        </div>
+                                        <div class="dash-info-row">
+                                            <span class="dash-info-label">Entity Name</span>
+                                            <span class="dash-info-value">Loading…</span>
+                                        </div>
+                                        <div class="dash-info-row">
+                                            <span class="dash-info-label">Legal Name</span>
+                                            <span class="dash-info-value">Loading…</span>
+                                        </div>
+                                        <div class="dash-info-row">
+                                            <span class="dash-info-label">Email</span>
+                                            <span class="dash-info-value">Loading…</span>
+                                        </div>
+                                        <div class="dash-info-row">
+                                            <span class="dash-info-label">Location</span>
+                                            <span class="dash-info-value">Loading…</span>
+                                        </div>
+                                        <div class="dash-info-row">
+                                            <span class="dash-info-label">Account Created</span>
+                                            <span class="dash-info-value">Loading…</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="dash-side-panel">
+                                <div class="dash-card dash-entity-badge-card">
+                                    <div class="dash-entity-badge-logo-wrap">
+                                        <img src="../../assets/NONPU_INSTSNT.PNG" alt="" class="dash-entity-badge-logo">
+                                    </div>
+                                    <div class="dash-entity-badge-name">Loading…</div>
+                                    <div class="dash-entity-badge-type">Loading…</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="dash-celebrate">
+                            <img src="../../assets/NONPU_INSTSNT.PNG" alt="NonPU Instant" class="dash-celebrate-icon">
+                            <div class="dash-celebrate-text">We are celebrating the world's first Neuronal Processing Unit and the neuromorphic processor that is available to both consumers and industry — by making it free for you.</div>
                         </div>
                     </div>
                 </section>
@@ -512,7 +563,7 @@
             document.head.appendChild(s);
         })();
     </script>
-    <script src="../js/auth.js?v=20260216d"></script>
-    <script src="dashboard.js?v=20260216d"></script>
+    <script src="../js/auth.js?v=20260216e"></script>
+    <script src="dashboard.js?v=20260216e"></script>
 </body>
 </html>
