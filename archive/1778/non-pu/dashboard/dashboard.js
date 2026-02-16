@@ -784,8 +784,8 @@ document.addEventListener('DOMContentLoaded', async function () {
 
         // Celebratory Note
         html += '<div class="dash-celebrate">';
-        html += '  <img src="../../assets/NONPU_INSTSNT.PNG" alt="NonPU Instant" class="dash-celebrate-icon">';
-        html += '  <div class="dash-celebrate-text">We are celebrating the world\'s first Neuronal Processing Unit and the neuromorphic processor that is available to both consumers and industry — by making it free for you.</div>';
+        html += '  <img src="../../assets/NONPU_icon.PNG" alt="NonPU Instant" class="dash-celebrate-icon">';
+        html += '  <div class="dash-celebrate-text">We are celebrating the world\'s first Neuronal Processing Unit and the neuromorphic processor that is available to both consumers and industry, by making the first year free for you.</div>';
         html += '</div>';
 
         container.innerHTML = html;
