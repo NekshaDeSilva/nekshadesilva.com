@@ -39,20 +39,43 @@ async function deriveKey(salt) {
  */
 async function decryptLicenseKey(encryptedB64) {
     try {
-        const raw = atob(encryptedB64);
+        // Normalize base64: fix URL-transport corruption
+        // Spaces → +  (URLSearchParams decodes + as space)
+        // -  → +  and  _  → /  (URL-safe base64 variant)
+        let b64 = encryptedB64
+            .replace(/ /g, '+')
+            .replace(/-/g, '+')
+            .replace(/_/g, '/');
+        // Restore padding if stripped
+        while (b64.length % 4 !== 0) b64 += '=';
+
+        console.log('[NonPU] Attempting decryption, b64 length:', b64.length);
+
+        const raw = atob(b64);
         const bytes = new Uint8Array([...raw].map(c => c.charCodeAt(0)));
+        console.log('[NonPU] Decoded bytes:', bytes.length, '(IV=16 + cipher=' + (bytes.length - 16) + ')');
+
         // First 16 bytes = IV, rest = ciphertext
         const iv = bytes.slice(0, 16);
         const ciphertext = bytes.slice(16);
+
+        if (ciphertext.length === 0) {
+            console.error('[NonPU] Ciphertext is empty after removing IV');
+            return null;
+        }
+
         const key = await deriveKey(NONPU_CRYPTO.SALT);
         const decrypted = await crypto.subtle.decrypt(
             { name: NONPU_CRYPTO.ALGO, iv: iv },
             key,
             ciphertext
         );
-        return new TextDecoder().decode(decrypted);
+        const result = new TextDecoder().decode(decrypted);
+        console.log('[NonPU] Decryption succeeded, starts with:', result.substring(0, 3));
+        return result;
     } catch (e) {
-        console.error('Decryption failed:', e);
+        console.error('[NonPU] Decryption failed:', e.message || e);
+        console.error('[NonPU] Input (first 40 chars):', encryptedB64 ? encryptedB64.substring(0, 40) + '...' : 'null');
         return null;
     }
 }
@@ -288,10 +311,12 @@ document.addEventListener('DOMContentLoaded', async function () {
 
     if (encryptedParam) {
         // Desktop client sent an encrypted license key — decrypt it
+        console.log('[NonPU] Encrypted param found, length:', encryptedParam.length);
         try {
             const decryptedKey = await decryptLicenseKey(encryptedParam);
 
             if (decryptedKey && decryptedKey.startsWith('NP-')) {
+                console.log('[NonPU] Valid key decrypted:', decryptedKey.substring(0, 7) + '...');
                 // Valid license key — store temporarily, never show to user
                 localStorage.setItem(NONPU_CRYPTO.STORAGE_KEY, decryptedKey);
 
@@ -307,6 +332,7 @@ document.addEventListener('DOMContentLoaded', async function () {
                 await routeLicenseKey(decryptedKey);
             } else {
                 // Decryption produced invalid data
+                console.error('[NonPU] Decryption result invalid:', decryptedKey ? ('got: ' + decryptedKey.substring(0, 20)) : 'null');
                 localStorage.removeItem('nonpu_pending_enc');
                 switchPage('licenses');
                 document.getElementById('extendInvalidCard').style.display = '';

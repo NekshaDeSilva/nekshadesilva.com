@@ -75,11 +75,15 @@ function initSupabase() {
  */
 function captureURLParams() {
     const urlParams = new URLSearchParams(window.location.search);
-    const encParam = urlParams.get('enc');
+    let encParam = urlParams.get('enc');
     const keyParam = urlParams.get('key');
     let captured = false;
 
     if (encParam) {
+        // Fix base64 corruption from URL transport:
+        // URLSearchParams decodes + as space — restore it.
+        // Also handle URL-safe base64 variant (- → +, _ → /).
+        encParam = encParam.replace(/ /g, '+').replace(/-/g, '+').replace(/_/g, '/');
         localStorage.setItem('nonpu_pending_enc', encParam);
         captured = true;
     }
