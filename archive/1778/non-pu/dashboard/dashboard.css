@@ -26,6 +26,7 @@
     --text-light: #90949c;
     --accent: #1877f2;
     --accent-light: #f0f0f0;
+    --bg-surface: #ffffff;
 
     --sidebar-w: 260px;
     --titlebar-h: 52px;
@@ -632,6 +633,7 @@ a {
 
 .dash-card-body {
     min-height: 60px;
+    padding: 4px 0 0 0;
 }
 
 /* ============================================

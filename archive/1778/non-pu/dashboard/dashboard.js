@@ -191,6 +191,10 @@ document.addEventListener('DOMContentLoaded', async function () {
         // Title
         pageTitle.textContent = PAGE_TITLES[name] || 'Dashboard';
 
+        // Scroll content area to top
+        var contentArea = document.getElementById('contentArea');
+        if (contentArea) contentArea.scrollTop = 0;
+
         // Close sidebar on mobile
         if (window.innerWidth <= 768) {
             sidebarOpen = false;
@@ -295,23 +299,34 @@ document.addEventListener('DOMContentLoaded', async function () {
     const entityType = formatEntityType(entityData.entityType);
     const location   = buildLocation(entityData);
 
+    console.log('[Dashboard] Entity data loaded:', { entityName, entityType, location, entityData });
+
     // Dashboard hero
-    document.getElementById('heroEntityName').textContent = entityName;
-    document.getElementById('heroEntityType').textContent = entityType;
-    document.getElementById('heroLocation').textContent   = location;
+    try {
+        document.getElementById('heroEntityName').textContent = entityName;
+        document.getElementById('heroEntityType').textContent = entityType;
+        document.getElementById('heroLocation').textContent   = location;
+    } catch (heroErr) { console.warn('Hero populate error:', heroErr); }
 
     // User name in titlebar
-    document.getElementById('userName').textContent = entityName;
+    try { document.getElementById('userName').textContent = entityName; } catch(e){}
 
     // Account page — always populate with best available data
-    document.getElementById('entityType').textContent = entityType || '—';
-    document.getElementById('entityName').textContent = entityData.entityName || entityName || '—';
-    document.getElementById('legalName').textContent  = entityData.legalEntityName || entityData.entityName || entityName || '—';
-    document.getElementById('accountLocation').textContent = location || '—';
+    try {
+        document.getElementById('entityType').textContent = entityType || '—';
+        document.getElementById('entityName').textContent = entityData.entityName || entityName || '—';
+        document.getElementById('legalName').textContent  = entityData.legalEntityName || entityData.entityName || entityName || '—';
+        document.getElementById('accountLocation').textContent = location || '—';
+        console.log('[Dashboard] Account fields populated successfully');
+    } catch (acctErr) {
+        console.error('[Dashboard] Account populate error:', acctErr);
+    }
 
     // Badge card (Account sidebar)
-    document.getElementById('badgeEntityName').textContent = entityName;
-    document.getElementById('badgeEntityType').textContent = entityType;
+    try {
+        document.getElementById('badgeEntityName').textContent = entityName;
+        document.getElementById('badgeEntityType').textContent = entityType;
+    } catch(e){}
 
     // Entity logo (if we have one in the pending data)
     if (entityData.entityLogo) {
