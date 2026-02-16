@@ -15,22 +15,98 @@ const NONPU_CRYPTO = {
 };
 
 /**
- * Derive a 256-bit AES key from the secret salt using PBKDF2.
- * The salt is hashed with SHA-256 to produce a stable derivation salt.
+ * Derive AES-256 key compatible with the NonPU Instant desktop C client.
+ * Tries multiple key derivation methods to match the C-side encryption.
+ * Returns an array of { key, method } objects to attempt.
  */
-async function deriveKey(salt) {
+async function deriveKeys(salt) {
     const enc = new TextEncoder();
-    const keyMaterial = await crypto.subtle.importKey(
-        'raw', enc.encode(salt), 'PBKDF2', false, ['deriveKey']
-    );
-    const derivationSalt = await crypto.subtle.digest('SHA-256', enc.encode(salt));
-    return crypto.subtle.deriveKey(
-        { name: 'PBKDF2', salt: new Uint8Array(derivationSalt), iterations: 100000, hash: 'SHA-256' },
-        keyMaterial,
-        { name: 'AES-CBC', length: 256 },
-        false,
-        ['decrypt']
-    );
+    const saltBytes = enc.encode(salt);
+    const keys = [];
+
+    // Method 1: SHA-256 of salt = AES key (common in C OpenSSL code)
+    try {
+        const hash = await crypto.subtle.digest('SHA-256', saltBytes);
+        const key = await crypto.subtle.importKey(
+            'raw', hash, { name: 'AES-CBC' }, false, ['decrypt']
+        );
+        keys.push({ key, method: 'SHA-256(salt)' });
+    } catch (e) { /* skip */ }
+
+    // Method 2: OpenSSL EVP_BytesToKey with MD5 (openssl enc -aes-256-cbc default)
+    // key = MD5(password + salt_bytes) + MD5(prev_hash + password + salt_bytes)
+    // When no explicit salt: key = MD5(password) + MD5(MD5(password) + password)
+    try {
+        async function md5(data) {
+            // Use subtle if available, otherwise skip
+            // MD5 not available in Web Crypto — skip this method
+            return null;
+        }
+        // Skip MD5 — not available in Web Crypto API
+    } catch (e) { /* skip */ }
+
+    // Method 3: PBKDF2 with raw salt bytes (not hashed), 100k iterations
+    try {
+        const keyMaterial = await crypto.subtle.importKey(
+            'raw', saltBytes, 'PBKDF2', false, ['deriveKey']
+        );
+        const key = await crypto.subtle.deriveKey(
+            { name: 'PBKDF2', salt: saltBytes, iterations: 100000, hash: 'SHA-256' },
+            keyMaterial,
+            { name: 'AES-CBC', length: 256 },
+            false,
+            ['decrypt']
+        );
+        keys.push({ key, method: 'PBKDF2(salt=raw, 100k, SHA-256)' });
+    } catch (e) { /* skip */ }
+
+    // Method 4: PBKDF2 with SHA-256(salt) as derivation salt (original code)
+    try {
+        const keyMaterial = await crypto.subtle.importKey(
+            'raw', saltBytes, 'PBKDF2', false, ['deriveKey']
+        );
+        const derivationSalt = await crypto.subtle.digest('SHA-256', saltBytes);
+        const key = await crypto.subtle.deriveKey(
+            { name: 'PBKDF2', salt: new Uint8Array(derivationSalt), iterations: 100000, hash: 'SHA-256' },
+            keyMaterial,
+            { name: 'AES-CBC', length: 256 },
+            false,
+            ['decrypt']
+        );
+        keys.push({ key, method: 'PBKDF2(salt=SHA256, 100k, SHA-256)' });
+    } catch (e) { /* skip */ }
+
+    // Method 5: PBKDF2 with 10k iterations (common default)
+    try {
+        const keyMaterial = await crypto.subtle.importKey(
+            'raw', saltBytes, 'PBKDF2', false, ['deriveKey']
+        );
+        const key = await crypto.subtle.deriveKey(
+            { name: 'PBKDF2', salt: saltBytes, iterations: 10000, hash: 'SHA-256' },
+            keyMaterial,
+            { name: 'AES-CBC', length: 256 },
+            false,
+            ['decrypt']
+        );
+        keys.push({ key, method: 'PBKDF2(salt=raw, 10k, SHA-256)' });
+    } catch (e) { /* skip */ }
+
+    // Method 6: PBKDF2 with 1 iteration (minimal)
+    try {
+        const keyMaterial = await crypto.subtle.importKey(
+            'raw', saltBytes, 'PBKDF2', false, ['deriveKey']
+        );
+        const key = await crypto.subtle.deriveKey(
+            { name: 'PBKDF2', salt: saltBytes, iterations: 1, hash: 'SHA-256' },
+            keyMaterial,
+            { name: 'AES-CBC', length: 256 },
+            false,
+            ['decrypt']
+        );
+        keys.push({ key, method: 'PBKDF2(salt=raw, 1, SHA-256)' });
+    } catch (e) { /* skip */ }
+
+    return keys;
 }
 
 /**
@@ -64,15 +140,31 @@ async function decryptLicenseKey(encryptedB64) {
             return null;
         }
 
-        const key = await deriveKey(NONPU_CRYPTO.SALT);
-        const decrypted = await crypto.subtle.decrypt(
-            { name: NONPU_CRYPTO.ALGO, iv: iv },
-            key,
-            ciphertext
-        );
-        const result = new TextDecoder().decode(decrypted);
-        console.log('[NonPU] Decryption succeeded, starts with:', result.substring(0, 3));
-        return result;
+        // Try all key derivation methods until one succeeds
+        const candidates = await deriveKeys(NONPU_CRYPTO.SALT);
+        console.log('[NonPU] Trying', candidates.length, 'key derivation methods...');
+
+        for (const candidate of candidates) {
+            try {
+                const decrypted = await crypto.subtle.decrypt(
+                    { name: NONPU_CRYPTO.ALGO, iv: iv },
+                    candidate.key,
+                    ciphertext
+                );
+                const result = new TextDecoder().decode(decrypted);
+                // Validate it looks like a license key
+                if (result && result.startsWith('NP-')) {
+                    console.log('[NonPU] SUCCESS with method:', candidate.method, '→', result.substring(0, 7) + '...');
+                    return result;
+                }
+                console.log('[NonPU] Method', candidate.method, 'decrypted but invalid result:', result.substring(0, 20));
+            } catch (innerErr) {
+                console.log('[NonPU] Method', candidate.method, 'failed:', innerErr.message || 'OperationError');
+            }
+        }
+
+        console.error('[NonPU] All key derivation methods failed');
+        return null;
     } catch (e) {
         console.error('[NonPU] Decryption failed:', e.message || e);
         console.error('[NonPU] Input (first 40 chars):', encryptedB64 ? encryptedB64.substring(0, 40) + '...' : 'null');
