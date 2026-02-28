@@ -99,34 +99,48 @@
         <main class="main-content">
       
             <section id="intro" class="intro-section">
+               
+            <div class="pinned-post-card">
+                <div class="post-card-meta">
+                    <span class="post-pin-label"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="currentColor" class="bi bi-pin-angle-fill" viewBox="0 0 16 16"><path d="M9.828.722a.5.5 0 0 1 .354.146l4.95 4.95a.5.5 0 0 1 0 .707c-.48.48-1.072.588-1.503.588-.177 0-.335-.018-.46-.039l-3.134 3.134a6 6 0 0 1 .16 1.013c.046.702-.032 1.687-.72 2.375a.5.5 0 0 1-.707 0l-2.829-2.828-3.182 3.182c-.195.195-1.219.902-1.414.707s.512-1.22.707-1.414l3.182-3.182-2.828-2.829a.5.5 0 0 1 0-.707c.688-.688 1.673-.767 2.375-.72a6 6 0 0 1 1.013.16l3.134-3.133a3 3 0 0 1-.04-.461c0-.43.108-1.022.589-1.503a.5.5 0 0 1 .353-.146"/></svg> Pinned</span>
+                    <span class="post-date">December 29, 2025</span>
+                </div>
+                <div style="display: flex; gap: 0.75rem; align-items: center; margin-bottom: 0.75rem; flex-wrap: wrap;">
+                    <img src="https://fiaos.org/assets/media/umbrella-logo-clean.png" alt="FIA Operating Systems Logo" class="theme-adaptive-logo" style="height: 26px; width: auto;" title="FIA Operating Systems">
+                    FIA Operating Systems
+                </div>
+    <!-- Title Section -->
+             
+        <h3 style="font-size: 10pt; font-weight: bold;  margin: 0 0 0.5rem 0; color: var(--text-primary);">
+                    FIA FiaPhy Dual Node Flat Array: <a href="https://fiaos.org" target="_blank">FiaOS.org/silicon</a><br>
+                    
 
-                <article class="pinned-post">
-                    <div class="pinned-post-header">
-                        <span class="pinned-label">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="currentColor" class="bi bi-pin-angle-fill" viewBox="0 0 16 16">
-                                <path d="M9.828.722a.5.5 0 0 1 .354.146l4.95 4.95a.5.5 0 0 1 0 .707c-.48.48-1.072.588-1.503.588-.177 0-.335-.018-.46-.039l-3.134 3.134a6 6 0 0 1 .16 1.013c.046.702-.032 1.687-.72 2.375a.5.5 0 0 1-.707 0l-2.829-2.828-3.182 3.182c-.195.195-1.219.902-1.414.707s.512-1.22.707-1.414l3.182-3.182-2.828-2.829a.5.5 0 0 1 0-.707c.688-.688 1.673-.767 2.375-.72a6 6 0 0 1 1.013.16l3.134-3.133a3 3 0 0 1-.04-.461c0-.43.108-1.022.589-1.503a.5.5 0 0 1 .353-.146"/>
-                            </svg>
-                            Pinned
-                        </span>
-                        <time class="pinned-post-date" datetime="2025-12-29">Dec 29, 2025</time>
-                    </div>
-                    <div class="pinned-post-source">
-                        <img src="https://fiaos.org/assets/media/umbrella-logo-clean.png" alt="FIA Operating Systems Logo" class="theme-adaptive-logo" style="height: 20px; width: auto;">
-                        FIA Operating Systems
-                    </div>
-                    <h3 class="pinned-post-title">FIA FiaPhy Dual Node Flat Array &middot; <a href="https://fiaos.org" target="_blank">fiaos.org/silicon</a></h3>
-                    <p class="pinned-post-meta">Patent Pending &middot; US 63/937,986 &middot; IEEE SouthEastCon 2026 (ID: 1571241750) &middot; IEEE ESCI 2026 (ID: 3684)</p>
-                    <div class="pinned-post-body">
-                        <p>System and Method for Indirect Estimation of Solar Irradiance and Heat Flux via Differential Thermodynamic Sensing.</p>
+                </h3>
+                  <div class="expandable-content">
+                    <div class="content-full">
+                        <p style="font-weight: 600;">Patent Pending Granted in The United States of America.<br>IEEE 61st SouthEastCon Accepted Paper (ID:1571241750)<br>IEEE ESCI 2026 Accepted Paper (ID: 3684)</p>
+                        <p class="patent-info">System an Method for Indirect Estimation of Solar Irradiance and Heat Flux via Differential Thermodynamic Sensing<br>
+                        US 63/937,986 Filed Dec 29, 2025</p>
                         <p>Modern environmental monitoring systems, from automotive platforms such as Apple CarPlay and Android Auto, to weather balloon systems and industrial platforms, often rely on sensing architectures that have remained largely unchanged for decades. Advances in algorithmic processing have outpaced sensor hardware development, and many functional sensors are discarded annually because they are not considered capable of measurements such as solar radiation or heat flux.</p>
                         <p>This approach addresses hardware obsolescence by shifting computation from physical components to software. Standard commodity sensors can serve as high-precision radiometric instruments without requiring firmware changes, extending their useful life within modern autonomous systems.</p>
                         <p>The framework is built around the Differential Temporal Derivative Soft-Sensing method, known as DTDSS, which is designed to replace specialized instruments such as pyranometers that are costly and difficult to integrate into autonomous systems.</p>
+                            
                         <p>The system uses a differential thermodynamic architecture with two paired sensors. A Reference Node works alongside a Flux Node to isolate active energy exchanges from ambient conditions. A filter known as the Inertial Noise Reduction filter, or INR, compensates for thermal inertia by estimating equilibrium temperatures in real time.</p>
                         <p>Rather than relying on machine learning models, this system uses physics-based derivations where each calculation is grounded in thermodynamic principles. Air density and enthalpy are derived from first-principles equations, supporting reliable operation across a range of altitudes and climates. The implementation requires under 60 bytes of RAM and is compatible with 8-bit microcontrollers.</p>
-                        <p>FIA Operating Systems is a network of scientists, developers, and industry professionals working on hardware-agnostic sensing solutions. For research contributions or collaboration, contact <a href="mailto:research@fiaos.org">research@fiaos.org</a> or visit <a href="https://fiaos.org/about" target="_blank">fiaos.org/about</a>.</p>
+                        <p>FIA Operating Systems is a network of scientists, developers, and industry professionals working on hardware-agnostic sensing solutions. Research contributions or collaboration inquiries may be directed to <a href="mailto:research@FIAOS.org">research@FIAOS.org</a>.</p>
+                        
+                        <p>I created an open source library before filing the patent, as I was not initially familiar with the patent process. It was Dr. Jehan Seneviratne, Ph.D. who suggested pursuing a patent, even after the library had already been published on GitHub with four releases.</p>
+                        <p>When Dr. Seneviratne noted that public disclosure might affect patentability, I had concerns. However, the United States Patent and Trademark Office provides a one-year grace period, meaning that if no similar patent has been filed by another party in the meantime, public disclosure does not prevent an inventor from proceeding with an application.</p>
+                        <p>This patent supports the long-term direction of FIA Operating Systems, which aims to become a nonprofit organization focused on sensor longevity, sensing technologies, and autonomous systems.</p>
+                        
+                        <p>A large number of deployed sensors are used only for simple measurements, often because that is how they were originally classified. Mathematical approximation allows combinations of sensors to produce derived parameters that are not directly measurable with any single sensor. In many applications, exact precision is not a requirement.</p>
+                        <p>Sensors of different types and generations can be combined to derive more advanced real-world parameters where absolute precision is not needed. Making better use of existing hardware reduces unnecessary waste and extends the value of infrastructure already in place.</p>
+                        <p>FiaPhy is a research initiative focused on expanding the measurable range of deployed sensors. The goal is to develop frameworks that integrate with existing systems and remain relevant as sensing technologies continue to evolve.</p>
+                        <p class="cta-box">FIA Operating Systems: for research contributions or collaboration inquiries, contact <a href="mailto:research@fiaos.org">research@fiaos.org</a> or visit <a href="https://fiaos.org/about" target="_blank">fiaos.org/about</a>.</p>
+                       
                     </div>
-                </article>
-
+                </div>
+            </div>
             </section>
            
             <section id="articles" class="articles-section">
