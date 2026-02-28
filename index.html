@@ -99,59 +99,34 @@
         <main class="main-content">
       
             <section id="intro" class="intro-section">
-               
-            <br>
-                <p><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pin-angle-fill" viewBox="0 0 16 16">
-  <path d="M9.828.722a.5.5 0 0 1 .354.146l4.95 4.95a.5.5 0 0 1 0 .707c-.48.48-1.072.588-1.503.588-.177 0-.335-.018-.46-.039l-3.134 3.134a6 6 0 0 1 .16 1.013c.046.702-.032 1.687-.72 2.375a.5.5 0 0 1-.707 0l-2.829-2.828-3.182 3.182c-.195.195-1.219.902-1.414.707s.512-1.22.707-1.414l3.182-3.182-2.828-2.829a.5.5 0 0 1 0-.707c.688-.688 1.673-.767 2.375-.72a6 6 0 0 1 1.013.16l3.134-3.133a3 3 0 0 1-.04-.461c0-.43.108-1.022.589-1.503a.5.5 0 0 1 .353-.146"/>
-</svg> Pinned</p>
-<div style="display: flex; gap: 1rem; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap;">
-                            <img src="https://fiaos.org/assets/media/umbrella-logo-clean.png" alt="FIA Operating Systems Logo" class="theme-adaptive-logo" style="height: 30px; width: auto;" title="FIA Operating Systems">
-                       FIA Operating Systems
-                        </div>
-    <!-- Title Section -->
-             
-        <h3 style="font-size: 10pt; font-weight: bold;  margin: 0 0 0.5rem 0; color: var(--text-primary);">
-                    FIA FiaPhy Dual Node Flat Array: <a href="https://fiaos.org" target="_blank">FiaOS.org/silicon</a><br>
-                    
 
-                </h3>
-                  <div class="expandable-content">
-                    <div class="content-full">
-                        <p style="font-weight: 600;">Patent Pending Granted in The United States of America.<br>IEEE 61st SouthEastCon Accepted Paper (ID:1571241750)<br>IEEE ESCI 2026 Accepted Paper (ID: 3684)</p>
-                        <p class="patent-info">System an Method for Indirect Estimation of Solar Irradiance and Heat Flux via Differential Thermodynamic Sensing<br>
-                        US 63/937,986 Filed Dec 29, 2025</p>
-                        <p>Modern environmental monitoring systems, from Apple CarPlay, Android Auto, Weather Balloon systems to industrial platforms, often rely on sensing architectures decades old. While sensor hardware has plateaued, algorithmic processing potential has grown exponentially. This creates an engineering hurdle as billions of functional sensors are discarded annually, perceived as incapable of advanced measurements like solar radiation or heat flux.</p>
-                        <p>This technology mitigates hardware obsolescence by transferring computation from physical components to intelligent software. By upcycling commodity sensors into high-precision radiometric instruments without firmware changes, it preserves global sensor infrastructure utility in modern autonomous frameworks.</p>
-                        <p>The core is the (DTDSS) Differential Temporal Derivative Soft-Sensing framework, replacing expensive and fragile specialized equipment like pyranometers which are prohibitive in autonomous systems.</p>
-                            
-                        <p>It uses a differential thermodynamic architecture with paired sensors. A Reference Node alongside a Flux Node isolates active energy exchanges from ambient conditions. An Inertial Noise Reduction (INR) filter compensates for thermal inertia, predicting equilibrium temperatures in real time.</p>
-                        <p>Unlike "black box" machine learning, this system uses physics-based derivations. Air density and enthalpy are calculated via first-principles thermodynamics, ensuring accuracy across altitudes and climates. The state machine is optimized for extreme efficiency, requiring under 60 bytes of RAM, compatible with 8 bit microcontrollers.</p>
-                        <p>I have formed FIA Operating Systems, a network of scientists, developers, and industry professionals advances hardware-agnostic solutions for global sustainability. This ensures established innovations continue contributing to a data-rich, sustainable future. Research contributions or technical collaboration inquiries may be directed to <a href="mailto:research@FIAOS.org">research@FIAOS.org</a>.</p>
-                        
-                        <h4 class="section-heading">From Open Source to Patent</h4>
-                        <p>Interestingly, I did not just patent this. I created an open source library even before filing the patent. I honestly did not know about patenting at first. It was <strong>Dr. Jehan Seneviratne, Ph.D.</strong> who advised me to patent this technology, even after I had already published it as an open source library on GitHub with four releases.</p>
-                        <p>I was genuinely scared when Dr. Seneviratne mentioned that publicly disclosing an invention might prevent patenting. But fortunately, the <strong>United States Patent and Trademark Office</strong> offers a generous one-year grace period. Even if you have publicly disclosed your work, as long as no one else has filed a similar patent first, you can still proceed.</p>
-                        <p>Patenting in the United States has always been my dream. Some of the greatest inventions in history have been patented through the USPTO, and I am deeply honored to be part of that tradition. I immediately worked with a patent lawyer and filed the application.</p>
-                        <p>This patent will set up the future for <strong>FIA Operating Systems</strong>. I am committed to building this into a nonprofit organization dedicated to the longevity of sensors, sensing technologies, and autonomous systems.</p>
-                        
-                        <h4 class="section-subheading">Unlocking the Hidden Potential of Every Sensor</h4>
-                        <p>Billions of sensors exist right now, measuring simple parameters only because that is how they were labeled. We are overlooking the true value of mathematical approximation. As demonstrated in countless applications involving these sensors and sensing devices, a combination of such sensors can yield derived parameters. These are values we often cannot obtain directly with perfect precision.</p>
-                        <p>But do we always need perfect precision?</p>
-                        <p>Let us end this information crisis. Restricting sensor potential is like blocking our future generations from building upon what we create today. Old or new sensors, built for various purposes, combined together, can derive far more advanced real-world parameters in applications that do not demand absolute precision. We are wasting resources. A single such waste can cause millions of organisms to suffer, fall behind, or be restricted.</p>
-                        <p>Contribute to the next wave of planetary recovery. We can build frameworks that rely on frameworks. FiaPhy is a research initiative focused on maximizing the potential of sensors, the near-future carriers of full-human automation, to help sustain existing and upcoming innovations while enabling them to work with our frameworks for generations to come.</p>
-                        <p class="cta-box"><strong>FIA Operating Systems</strong><br>If you are interested in contributing to the future of autonomous systems and improving fundamental sensing principles, please reach out at <a href="mailto:research@fiaos.org">research@fiaos.org</a>.</p>
-                       
+                <article class="pinned-post">
+                    <div class="pinned-post-header">
+                        <span class="pinned-label">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="currentColor" class="bi bi-pin-angle-fill" viewBox="0 0 16 16">
+                                <path d="M9.828.722a.5.5 0 0 1 .354.146l4.95 4.95a.5.5 0 0 1 0 .707c-.48.48-1.072.588-1.503.588-.177 0-.335-.018-.46-.039l-3.134 3.134a6 6 0 0 1 .16 1.013c.046.702-.032 1.687-.72 2.375a.5.5 0 0 1-.707 0l-2.829-2.828-3.182 3.182c-.195.195-1.219.902-1.414.707s.512-1.22.707-1.414l3.182-3.182-2.828-2.829a.5.5 0 0 1 0-.707c.688-.688 1.673-.767 2.375-.72a6 6 0 0 1 1.013.16l3.134-3.133a3 3 0 0 1-.04-.461c0-.43.108-1.022.589-1.503a.5.5 0 0 1 .353-.146"/>
+                            </svg>
+                            Pinned
+                        </span>
+                        <time class="pinned-post-date" datetime="2025-12-29">Dec 29, 2025</time>
                     </div>
-                </div>
-                <br>
- <hr><br>
-              <img src="https://miro.medium.com/v2/1*63sGPbvLLpvlD16hG1bvmA.gif" style="width: 20%">
-            <!-- Title Section -->
-        <h3 style="font-size: 10pt; font-weight: bold;  margin: 0 0 0.5rem 0; color: var(--text-primary);">
-                    <a href="/notes.html">Advanced Signal Processing Framework for EEG Decoding : Presentation video supportive document [pleaase click here]</a>
-                </h3>
-                <br>
-              
+                    <div class="pinned-post-source">
+                        <img src="https://fiaos.org/assets/media/umbrella-logo-clean.png" alt="FIA Operating Systems Logo" class="theme-adaptive-logo" style="height: 20px; width: auto;">
+                        FIA Operating Systems
+                    </div>
+                    <h3 class="pinned-post-title">FIA FiaPhy Dual Node Flat Array &middot; <a href="https://fiaos.org" target="_blank">fiaos.org/silicon</a></h3>
+                    <p class="pinned-post-meta">Patent Pending &middot; US 63/937,986 &middot; IEEE SouthEastCon 2026 (ID: 1571241750) &middot; IEEE ESCI 2026 (ID: 3684)</p>
+                    <div class="pinned-post-body">
+                        <p>System and Method for Indirect Estimation of Solar Irradiance and Heat Flux via Differential Thermodynamic Sensing.</p>
+                        <p>Modern environmental monitoring systems, from automotive platforms such as Apple CarPlay and Android Auto, to weather balloon systems and industrial platforms, often rely on sensing architectures that have remained largely unchanged for decades. Advances in algorithmic processing have outpaced sensor hardware development, and many functional sensors are discarded annually because they are not considered capable of measurements such as solar radiation or heat flux.</p>
+                        <p>This approach addresses hardware obsolescence by shifting computation from physical components to software. Standard commodity sensors can serve as high-precision radiometric instruments without requiring firmware changes, extending their useful life within modern autonomous systems.</p>
+                        <p>The framework is built around the Differential Temporal Derivative Soft-Sensing method, known as DTDSS, which is designed to replace specialized instruments such as pyranometers that are costly and difficult to integrate into autonomous systems.</p>
+                        <p>The system uses a differential thermodynamic architecture with two paired sensors. A Reference Node works alongside a Flux Node to isolate active energy exchanges from ambient conditions. A filter known as the Inertial Noise Reduction filter, or INR, compensates for thermal inertia by estimating equilibrium temperatures in real time.</p>
+                        <p>Rather than relying on machine learning models, this system uses physics-based derivations where each calculation is grounded in thermodynamic principles. Air density and enthalpy are derived from first-principles equations, supporting reliable operation across a range of altitudes and climates. The implementation requires under 60 bytes of RAM and is compatible with 8-bit microcontrollers.</p>
+                        <p>FIA Operating Systems is a network of scientists, developers, and industry professionals working on hardware-agnostic sensing solutions. For research contributions or collaboration, contact <a href="mailto:research@fiaos.org">research@fiaos.org</a> or visit <a href="https://fiaos.org/about" target="_blank">fiaos.org/about</a>.</p>
+                    </div>
+                </article>
+
             </section>
            
             <section id="articles" class="articles-section">

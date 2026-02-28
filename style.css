@@ -418,6 +418,72 @@ header nav a:hover {
 }
 
 /* ============================================
+   Pinned Post Cards
+   ============================================ */
+.pinned-post {
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 1.75rem;
+    background-color: var(--bg-secondary);
+}
+
+.pinned-post-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.6rem;
+}
+
+.pinned-label {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.pinned-post-date {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+}
+
+.pinned-post-source {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-bottom: 0.6rem;
+}
+
+.pinned-post-title {
+    font-size: 1rem;
+    font-weight: 600;
+    margin: 0 0 0.4rem 0;
+    color: var(--text-primary);
+    line-height: 1.4;
+}
+
+.pinned-post-meta {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    margin-bottom: 1rem;
+}
+
+.pinned-post-body p {
+    font-size: 0.93rem;
+    margin-bottom: 0.75rem;
+    color: var(--text-secondary);
+}
+
+.pinned-post-body p:last-child {
+    margin-bottom: 0;
+}
+
+/* ============================================
    Articles Section
    ============================================ */
 .articles-section h2 {
