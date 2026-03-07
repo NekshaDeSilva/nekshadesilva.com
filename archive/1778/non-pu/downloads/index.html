@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Downloads â€” NonPU Instant</title>
-    <link rel="icon" href="../assets/NonPU_icon.png" type="image/png">
+    <link rel="icon" href="../../assets/NonPU_icon.png" type="image/png">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -106,15 +106,6 @@
             line-height: 1.6;
         }
 
-        .steps {
-            margin-top: 20px;
-            padding-left: 18px;
-            color: var(--dim);
-            font-size: 13px;
-            line-height: 2.1;
-        }
-        .steps li { padding-left: 4px; }
-
         .footer {
             margin-top: 36px;
             padding-top: 16px;
@@ -128,7 +119,50 @@
         }
         .footer a { color: var(--light); }
         .footer a:hover { color: var(--dim); }
-    </style>
+
+        .win-logo {
+            display: block;
+            width: 28px;
+            height: 28px;
+            object-fit: contain;
+            margin-bottom: 14px;
+        }
+
+        .drivers-block {
+            background: var(--card);
+            border: 1px solid var(--border);
+            padding: 16px 22px;
+            margin-bottom: 12px;
+        }
+
+        .drivers-block-title {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--dim);
+            text-transform: uppercase;
+            letter-spacing: 0.4px;
+            margin-bottom: 10px;
+        }
+
+        .driver-row {
+            display: flex;
+            align-items: baseline;
+            gap: 10px;
+            font-size: 13px;
+            color: var(--dim);
+            padding: 5px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        .driver-row:last-child { border-bottom: none; }
+
+        .driver-filename {
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            color: var(--text);
+            min-width: 200px;
+        }
+
+        .driver-desc { color: var(--light); font-size: 12px; }
 </head>
 <body>
 
@@ -147,8 +181,9 @@
     <div class="content">
 
         <div class="dl-block">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c7/Windows_logo_-_2012.png/500px-Windows_logo_-_2012.png" alt="Windows" class="win-logo">
             <div class="dl-block-title">NonPU Instant</div>
-            <div class="dl-block-meta">v1.0 &nbsp;&middot;&nbsp; Windows 10 / 11 (64-bit) &nbsp;&middot;&nbsp; 0.58 MB</div>
+            <div class="dl-block-meta">v1.0 &nbsp; Windows 10 / 11 (64-bit) &nbsp; 0.58 MB</div>
             <a class="dl-btn" href="nonpu-instant.zip" download="nonpu-instant.zip">
                 <svg viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                     <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
@@ -156,12 +191,35 @@
                 </svg>
                 Download .zip
             </a>
-            <p class="note">Extract the zip and run <strong>nonpu-instant.exe</strong>. The setup wizard handles everything else.</p>
-            <ol class="steps">
-                <li>Extract the zip to any folder.</li>
-                <li>Run <strong style="color: var(--text);">nonpu-instant.exe</strong>.</li>
-                <li>Follow the on-screen setup and license activation steps.</li>
-            </ol>
+            <p class="note">Extract the zip to any folder and run <strong>nonpu-instant.exe</strong>. The setup wizard handles driver installation and license activation.</p>
+        </div>
+
+        <div class="drivers-block">
+            <div class="drivers-block-title">Drivers installed on your system</div>
+            <div class="driver-row">
+                <span class="driver-filename">ch341ser.inf</span>
+                <span class="driver-desc">CH340 USB-Serial driver — INF descriptor, installed via Windows PnP</span>
+            </div>
+            <div class="driver-row">
+                <span class="driver-filename">CH341S64.SYS</span>
+                <span class="driver-desc">CH340 kernel-mode driver (x64)</span>
+            </div>
+            <div class="driver-row">
+                <span class="driver-filename">CH341PORTSA64.DLL</span>
+                <span class="driver-desc">CH340 serial port driver DLL (x64)</span>
+            </div>
+            <div class="driver-row">
+                <span class="driver-filename">CH341PT.DLL</span>
+                <span class="driver-desc">CH340 port type library</span>
+            </div>
+            <div class="driver-row">
+                <span class="driver-filename">CH341PTA64.DLL</span>
+                <span class="driver-desc">CH340 port type library (x64)</span>
+            </div>
+            <div class="driver-row">
+                <span class="driver-filename">CH341SER.CAT</span>
+                <span class="driver-desc">Security catalog — Windows driver signature verification</span>
+            </div>
         </div>
 
         <div class="footer">
