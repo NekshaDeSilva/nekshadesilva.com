@@ -5,6 +5,177 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Downloads — NonPU Instant</title>
     <link rel="icon" href="../assets/NonPU_icon.png" type="image/png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #f5f5f5;
+            --card: #ffffff;
+            --border: #d9d9d9;
+            --text: #1c1e21;
+            --dim: #65676b;
+            --light: #90949c;
+            --font: 'Inter', 'Segoe UI', sans-serif;
+        }
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: var(--font);
+            font-size: 14px;
+            background: var(--bg);
+            color: var(--text);
+            -webkit-font-smoothing: antialiased;
+        }
+        a { color: inherit; text-decoration: none; }
+
+        .topbar {
+            height: 32px;
+            background: var(--card);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
+            gap: 10px;
+        }
+        .topbar-logo { height: 20px; filter: invert(1); }
+        .topbar-back {
+            margin-left: auto;
+            font-size: 12px;
+            color: var(--light);
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .topbar-back:hover { color: var(--dim); }
+
+        .titlebar {
+            height: 52px;
+            background: var(--card);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            padding: 0 24px;
+        }
+        .titlebar h1 { font-size: 17px; font-weight: 600; }
+
+        .content {
+            max-width: 680px;
+            margin: 32px auto;
+            padding: 0 24px;
+        }
+
+        .dl-block {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 20px 22px;
+            margin-bottom: 12px;
+        }
+
+        .dl-block-title {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .dl-block-meta {
+            font-size: 12px;
+            color: var(--light);
+            margin-bottom: 14px;
+        }
+
+        .dl-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            background: var(--text);
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            padding: 8px 16px;
+            font-size: 13px;
+            font-weight: 600;
+            font-family: var(--font);
+            cursor: pointer;
+            text-decoration: none;
+        }
+        .dl-btn:hover { opacity: 0.85; }
+        .dl-btn svg { width: 15px; height: 15px; flex-shrink: 0; }
+
+        .note {
+            font-size: 12px;
+            color: var(--light);
+            margin-top: 12px;
+            line-height: 1.6;
+        }
+
+        .steps {
+            margin-top: 20px;
+            padding-left: 18px;
+            color: var(--dim);
+            font-size: 13px;
+            line-height: 2.1;
+        }
+        .steps li { padding-left: 4px; }
+
+        .footer {
+            margin-top: 36px;
+            padding-top: 16px;
+            border-top: 1px solid var(--border);
+            font-size: 12px;
+            color: var(--light);
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+        .footer a { color: var(--light); }
+        .footer a:hover { color: var(--dim); }
+    </style>
+</head>
+<body>
+
+    <div class="topbar">
+        <img src="../assets/NonPU_build.png" alt="NonPU" class="topbar-logo">
+        <a href="../index.html" class="topbar-back">
+            <svg viewBox="0 0 16 16" fill="currentColor" width="11" height="11"><path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/></svg>
+            Back
+        </a>
+    </div>
+
+    <div class="titlebar">
+        <h1>Downloads</h1>
+    </div>
+
+    <div class="content">
+
+        <div class="dl-block">
+            <div class="dl-block-title">NonPU Instant</div>
+            <div class="dl-block-meta">v1.0 &nbsp;&middot;&nbsp; Windows 10 / 11 (64-bit) &nbsp;&middot;&nbsp; 0.58 MB</div>
+            <a class="dl-btn" href="nonpu-instant.zip" download="nonpu-instant.zip">
+                <svg viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
+                    <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/>
+                </svg>
+                Download .zip
+            </a>
+            <p class="note">Extract the zip and run <strong>nonpu-instant.exe</strong>. The setup wizard handles everything else.</p>
+            <ol class="steps">
+                <li>Extract the zip to any folder.</li>
+                <li>Run <strong style="color: var(--text);">nonpu-instant.exe</strong>.</li>
+                <li>Follow the on-screen setup and license activation steps.</li>
+            </ol>
+        </div>
+
+        <div class="footer">
+            <span>NonPU Instant &copy; 2026 Neksha DeSilva</span>
+            <span><a href="mailto:support@gvma.org">support@gvma.org</a></span>
+        </div>
+
+    </div>
+
+</body>
+</html>
+
+    <link rel="icon" href="../assets/NonPU_icon.png" type="image/png">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
     <style>
         :root {
