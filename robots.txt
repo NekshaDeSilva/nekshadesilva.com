@@ -1,3 +1,4 @@
 User-agent: *
 Disallow: /archive/
 Disallow: /1778/
+Disallow: /doc325/
