@@ -74,6 +74,7 @@
         setLoading(true);
         rpc('site_auth', { p_password: pw })
             .then(function (tok) {
+                console.log('[lock] site_auth response:', JSON.stringify(tok), typeof tok);
                 if (tok && typeof tok === 'string' && tok.length > 10) {
                     sessionStorage.setItem(TOKEN_KEY, tok);
                     dismiss();
