@@ -2,6 +2,10 @@
 (function () {
     'use strict';
 
+    /* ── Search engine bots bypass the lock entirely ── */
+    var BOT_RE = /googlebot|bingbot|slurp|duckduckbot|baiduspider|yandexbot|sogou|exabot|facebot|ia_archiver|linkedinbot|twitterbot|whatsapp|telegrambot|applebot/i;
+    if (BOT_RE.test(navigator.userAgent)) return;
+
     var SUPA_URL = 'https://vgnxpefbzvralyoowrvs.supabase.co';
     var SUPA_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZnbnhwZWZienZyYWx5b293cnZzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzExNDI4NjAsImV4cCI6MjA4NjcxODg2MH0.IqBB7hVudKyuJhsCwZ3XEUeJDTtWCX-4VPPxyDUtdWI';
     var TOKEN_KEY  = '_sl_tok';
@@ -12,12 +16,6 @@
     hideStyle.id  = '_sl_hide';
     hideStyle.textContent = 'html{visibility:hidden!important}';
     document.head.appendChild(hideStyle);
-
-    /* ── Suppress scrollbar while locked ── */
-    var scrollStyle = document.createElement('style');
-    scrollStyle.id  = '_sl_noscroll';
-    scrollStyle.textContent = 'html,body{overflow:hidden!important}';
-    document.head.appendChild(scrollStyle);
 
     var wipeTimer = null;
     var overlay   = null;
@@ -44,6 +42,11 @@
     function restoreScroll() {
         var ns = document.getElementById('_sl_noscroll');
         if (ns && ns.parentNode) ns.parentNode.removeChild(ns);
+        /* Force-clear any residual overflow so scrollbar always comes back */
+        document.documentElement.style.overflow = '';
+        document.documentElement.style.overflowY = '';
+        document.body.style.overflow = '';
+        document.body.style.overflowY = '';
     }
 
     function dismiss() {
@@ -159,6 +162,12 @@
     /* ── Show the overlay on top of the (hidden) page ── */
 
     function showOverlay() {
+        /* Suppress scrollbar only while overlay is active */
+        var scrollStyle = document.createElement('style');
+        scrollStyle.id  = '_sl_noscroll';
+        scrollStyle.textContent = 'html,body{overflow:hidden!important}';
+        document.head.appendChild(scrollStyle);
+
         overlay = buildOverlay();
         document.body.appendChild(overlay);
         reveal(); /* page is now visible behind the overlay */
